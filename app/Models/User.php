@@ -65,4 +65,46 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    /**
+     * Get the cart items for the user.
+     */
+    public function carts()
+    {
+        return $this->hasMany(Cart::class);
+    }
+
+    /**
+     * Get the orders for the user.
+     */
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
+
+    /**
+     * Get the reviews written by the user.
+     */
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+
+    /**
+     * Get the point transactions for the user.
+     */
+    public function pointTransactions()
+    {
+        return $this->hasMany(PointTransaction::class);
+    }
+
+    /**
+     * Get the total points balance for the user.
+     */
+    public function getPointsBalanceAttribute()
+    {
+        $earned = $this->pointTransactions()->where('type', 'earn')->sum('points');
+        $redeemed = $this->pointTransactions()->where('type', 'redeem')->sum('points');
+        return $earned - $redeemed;
+    }
 }
