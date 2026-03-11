@@ -26,7 +26,20 @@ class CategoryController extends Controller
             ->active()
             ->get();
 
-        return view('admin.ecommerce.categories.index', compact('categories', 'parentCategories'));
+        // Statistics for the view
+        $totalCategories = Category::count();
+        $activeCategories = Category::where('is_active', true)->count();
+        $rootCategories = Category::whereNull('parent_id')->count();
+        $categoriesWithProducts = Category::has('products')->count();
+
+        return view('admin.ecommerce.categories.index', compact(
+            'categories',
+            'parentCategories',
+            'totalCategories',
+            'activeCategories',
+            'rootCategories',
+            'categoriesWithProducts'
+        ));
     }
 
     /**

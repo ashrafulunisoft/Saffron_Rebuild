@@ -26,7 +26,22 @@ class ProductController extends Controller
 
         $categories = Category::active()->orderBy('name_en')->get();
 
-        return view('admin.ecommerce.products.index', compact('products', 'categories'));
+        // Get statistics
+        $totalProducts = Product::count();
+        $activeProducts = Product::where('is_active', true)->count();
+        $featuredProducts = Product::where('is_featured', true)->count();
+        $lowStock = Product::where('stock', '<=', 10)->where('stock', '>', 0)->count();
+        $outOfStock = Product::where('stock', 0)->count();
+
+        return view('admin.ecommerce.products.index', compact(
+            'products',
+            'categories',
+            'totalProducts',
+            'activeProducts',
+            'featuredProducts',
+            'lowStock',
+            'outOfStock'
+        ));
     }
 
     /**

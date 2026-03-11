@@ -1,179 +1,210 @@
 @extends('layouts.admin')
 
-@section('title', 'Order Details - Saffron Admin')
+@section('title', "Order #{$order->order_number} - Saffron Admin")
 
 @section('content')
-<div class="header-section">
-    <div>
-        <h2 class="fw-bold text-white mb-1">Order Details <span class="text-white">অর্ডার বিবরণ</span></h2>
-        <p class="text-white mb-0">Order #{{ $order->order_number }}</p>
-    </div>
-    <div>
-        <a href="{{ route('admin.ecommerce.orders.index') }}" class="btn btn-outline">
-            <i class="fas fa-arrow-left me-2"></i> Back to Orders
-        </a>
-    </div>
-</div>
-
-<!-- Order Details -->
-<div class="glass-card mb-4">
-    <div class="row">
-        <div class="col-md-8">
-            <div class="card bg-dark border-secondary h-100">
-                <div class="card-header bg-primary border-secondary">
-                    <h5 class="mb-0 text-white"><i class="fas fa-shopping-cart me-2"></i>Order Information</h5>
+<div class="container-fluid">
+    <div class="glass-card glass-card-dark">
+        <!-- Header -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2.5rem; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 1.5rem;">
+            <div class="d-flex align-items-center gap-3">
+                <div class="logo-vms" style="width: 44px; height: 44px; font-size: 1.2rem; background: linear-gradient(135deg, var(--accent-blue), #8b5cf6);">S</div>
+                <div>
+                    <h6 class="fw-800 mb-0 text-white text-shadow-white" style="font-size: 1.1rem;">SAFFRON</h6>
+                    <span class="permission-title" style="font-size: 0.7rem; margin: 0; text-shadow-blue">ORDER MANAGEMENT</span>
                 </div>
-                <div class="card-body">
-                    <div class="row mb-3">
-                        <div class="col-sm-4"><label class="text-muted">Order Number:</label></div>
-                        <div class="col-sm-8"><code class="text-warning">{{ $order->order_number }}</code></div>
+            </div>
+            <div class="d-flex align-items-center gap-3">
+                <h2 class="fw-800 mb-0 text-white letter-spacing-1 text-shadow-white" style="font-size: 2rem;">Order Details</h2>
+                <a href="{{ route('admin.ecommerce.orders.index') }}" class="btn-outline" style="padding: 0.75rem 1.5rem; border-radius: 100px; text-decoration: none;">
+                    <i class="fas fa-arrow-left me-2"></i>Back
+                </a>
+            </div>
+        </div>
+
+        <!-- Order Summary -->
+        <div class="row g-4 mb-5">
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <div>
+                        <h6 class="text-white mb-2" style="font-size: 0.85rem; opacity: 0.7;">Order Number</h6>
+                        <code style="color: #fbbf24; font-size: 0.9rem;">{{ $order->order_number }}</code>
                     </div>
-                    <div class="row mb-3">
-                        <div class="col-sm-4"><label class="text-muted">Order Date:</label></div>
-                        <div class="col-sm-8"><span class="text-white">{{ $order->created_at->format('M d, Y h:i A') }}</span></div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <div>
+                        <h6 class="text-white mb-2" style="font-size: 0.85rem; opacity: 0.7;">Order Date</h6>
+                        <div class="text-white" style="font-size: 0.9rem;">{{ $order->created_at->format('M d, Y') }}</div>
                     </div>
-                    <div class="row mb-3">
-                        <div class="col-sm-4"><label class="text-muted">Customer:</label></div>
-                        <div class="col-sm-8">
-                            <span class="text-white fw-bold">{{ $order->user->name ?? 'Guest' }}</span><br>
-                            <small class="text-info">{{ $order->user->email ?? 'N/A' }}</small>
-                        </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <div>
+                        <h6 class="text-white mb-2" style="font-size: 0.85rem; opacity: 0.7;">Total Amount</h6>
+                        <div class="text-white fw-800" style="font-size: 1.2rem;">৳{{ number_format($order->final_amount, 2) }}</div>
                     </div>
-                    <div class="row mb-3">
-                        <div class="col-sm-4"><label class="text-muted">Order Status:</label></div>
-                        <div class="col-sm-8">
-                            @if($order->status === 'pending')
-                                <span class="badge bg-warning">Pending / মুলতুম্বর</span>
-                            @elseif($order->status === 'processing')
-                                <span class="badge bg-info">Processing / প্রক্রিয়া</span>
-                            @elseif($order->status === 'shipped')
-                                <span class="badge bg-primary">Shipped / পাঠানো হয়েছে</span>
-                            @elseif($order->status === 'delivered')
-                                <span class="badge bg-success">Delivered / বিতরণ করা হয়েছে</span>
-                            @elseif($order->status === 'cancelled')
-                                <span class="badge bg-danger">Cancelled / বাতিল</span>
-                            @endif
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-4"><label class="text-muted">Payment Status:</label></div>
-                        <div class="col-sm-8">
-                            @if($order->payment_status === 'paid')
-                                <span class="badge bg-success">Paid / পরিশোধ করা হয়েছে</span>
-                            @elseif($order->payment_status === 'pending')
-                                <span class="badge bg-warning">Pending / মুলতুম্বর</span>
-                            @elseif($order->payment_status === 'failed')
-                                <span class="badge bg-danger">Failed / ব্যর্থ</span>
-                            @else
-                                <span class="badge bg-info">Refunded / রিফান্ড</span>
-                            @endif
-                        </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <div>
+                        <h6 class="text-white mb-2" style="font-size: 0.85rem; opacity: 0.7;">Items</h6>
+                        <div class="text-white fw-800" style="font-size: 1.2rem;">{{ $order->orderItems->count() }}</div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="card bg-dark border-secondary h-100">
-                <div class="card-header bg-success border-secondary">
-                    <h5 class="mb-0 text-white"><i class="fas fa-calculator me-2"></i>Order Totals</h5>
-                </div>
-                <div class="card-body">
-                    <div class="row mb-3">
-                        <div class="col-sm-6"><label class="text-muted">Subtotal:</label></div>
-                        <div class="col-sm-6"><span class="text-white">৳{{ number_format($order->total_amount, 2) }}</span></div>
-                    </div>
-                    @if($order->coupon)
-                        <div class="row mb-3">
-                            <div class="col-sm-6"><label class="text-muted">Coupon Applied:</label></div>
-                            <div class="col-sm-6">
-                                <span class="badge bg-primary">{{ strtoupper($order->coupon->code) }}</span>
+
+        <!-- Order Details & Status -->
+        <div class="row g-4 mb-5">
+            <!-- Order Information -->
+            <div class="col-md-8">
+                <div class="permission-title">Order Information</div>
+                <div style="background: rgba(15, 23, 42, 0.6); border-radius: 16px; border: 1px solid rgba(255,255,255,0.05); padding: 1.5rem;">
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <label class="text-muted" style="font-size: 0.75rem;">CUSTOMER NAME</label>
+                            <div class="text-white fw-600" style="font-size: 0.95rem;">{{ $order->user->name ?? 'Guest' }}</div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="text-muted" style="font-size: 0.75rem;">CUSTOMER EMAIL</label>
+                            <div style="font-size: 0.9rem; opacity: 0.8;">{{ $order->user->email ?? 'N/A' }}</div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="text-muted" style="font-size: 0.75rem;">ORDER STATUS</label>
+                            <div>
+                                @if($order->status === 'pending')
+                                    <span class="badge badge-pending">Pending</span>
+                                @elseif($order->status === 'processing')
+                                    <span class="badge badge-visit-type">Processing</span>
+                                @elseif($order->status === 'shipped')
+                                    <span class="badge badge-completed">Shipped</span>
+                                @elseif($order->status === 'delivered')
+                                    <span class="badge badge-approved">Delivered</span>
+                                @elseif($order->status === 'cancelled')
+                                    <span class="badge badge-cancelled">Cancelled</span>
+                                @endif
                             </div>
                         </div>
-                    @endif
-                    <div class="row mb-3">
-                        <div class="col-sm-6"><label class="text-muted">Discount:</label></div>
-                        <div class="col-sm-6"><span class="text-danger">-৳{{ number_format($order->discount, 2) }}</span></div>
+                        <div class="col-md-6">
+                            <label class="text-muted" style="font-size: 0.75rem;">PAYMENT STATUS</label>
+                            <div>
+                                @if($order->payment_status === 'paid')
+                                    <span class="badge badge-approved">Paid</span>
+                                @elseif($order->payment_status === 'pending')
+                                    <span class="badge badge-pending">Pending</span>
+                                @elseif($order->payment_status === 'failed')
+                                    <span class="badge badge-cancelled">Failed</span>
+                                @else
+                                    <span class="badge badge-completed">Refunded</span>
+                                @endif
+                            </div>
+                        </div>
                     </div>
-                    <div class="row">
-                        <div class="col-sm-6"><label class="text-muted">Total:</label></div>
-                        <div class="col-sm-6"><span class="text-success fs-5 fw-bold">৳{{ number_format($order->final_amount, 2) }}</span></div>
+                </div>
+            </div>
+
+            <!-- Order Totals -->
+            <div class="col-md-4">
+                <div class="permission-title">Order Totals</div>
+                <div style="background: rgba(15, 23, 42, 0.6); border-radius: 16px; border: 1px solid rgba(255,255,255,0.05); padding: 1.5rem;">
+                    <div class="d-flex justify-content-between mb-3">
+                        <span class="text-muted" style="font-size: 0.85rem;">Subtotal</span>
+                        <span class="text-white" style="font-size: 0.9rem;">৳{{ number_format($order->total_amount, 2) }}</span>
+                    </div>
+                    @if($order->coupon)
+                        <div class="d-flex justify-content-between mb-3">
+                            <span class="text-muted" style="font-size: 0.85rem;">Coupon</span>
+                            <span class="badge badge-visit-type">{{ strtoupper($order->coupon->code) }}</span>
+                        </div>
+                    @endif
+                    <div class="d-flex justify-content-between mb-3">
+                        <span class="text-muted" style="font-size: 0.85rem;">Discount</span>
+                        <span style="color: #ef4444; font-size: 0.9rem;">-৳{{ number_format($order->discount, 2) }}</span>
+                    </div>
+                    <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1rem; margin-top: 0.5rem;">
+                        <div class="d-flex justify-content-between">
+                            <span class="text-white fw-600" style="font-size: 0.95rem;">Total</span>
+                            <span class="text-success fw-800" style="font-size: 1.2rem;">৳{{ number_format($order->final_amount, 2) }}</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
 
-<!-- Order Items -->
-<div class="glass-card mb-4">
-    <div class="card-header bg-info border-secondary">
-        <h5 class="mb-0 text-white"><i class="fas fa-box me-2"></i>Order Items ({{ $order->orderItems->count() }})</h5>
-    </div>
-    <div class="card-body bg-dark">
-        <div class="table-responsive">
-            <table class="table table-hover table-dark">
+        <!-- Order Items -->
+        <div class="permission-title">Order Items</div>
+        <div style="background: rgba(15, 23, 42, 0.4); border-radius: 16px; padding: 0;">
+            <table class="table-custom" style="margin-bottom: 0;">
                 <thead>
                     <tr>
-                        <th class="text-white">Product</th>
-                        <th class="text-white">SKU</th>
-                        <th class="text-white">Price</th>
-                        <th class="text-white">Quantity</th>
-                      <th class="text-white">Subtotal</th>
+                        <th>Product</th>
+                        <th>SKU</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Subtotal</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach($order->orderItems as $item)
-                        <tr>
-                            <td>
-                                <div class="fw-bold text-white">{{ $item->product->name_en }}</div>
-                                <small class="text-info">{{ $item->product->name_bn }}</small>
-                                <br><small class="text-white-50">{{ $item->product->category->name_en ?? 'N/A' }}</small>
-                            </td>
-                            <td><code class="text-warning">{{ $item->product->sku }}</code></td>
-                            <td><span class="text-white">৳{{ number_format($item->price, 2) }}</span></td>
-                            <td><span class="badge bg-primary">{{ $item->quantity }}</span></td>
-                            <td><span class="text-success fw-bold">৳{{ number_format($item->subtotal, 2) }}</span></td>
-                        </tr>
+                    <tr>
+                        <td>
+                            <div class="text-white fw-600" style="font-size: 0.9rem;">{{ $item->product->name_en }}</div>
+                            <div style="font-size: 0.75rem; opacity: 0.6;">{{ $item->product->name_bn }}</div>
+                            @if($item->product->category)
+                                <div style="font-size: 0.7rem; opacity: 0.5; margin-top: 0.25rem;">{{ $item->product->category->name_en }}</div>
+                            @endif
+                        </td>
+                        <td>
+                            <code style="font-size: 0.85rem;">{{ $item->product->sku }}</code>
+                        </td>
+                        <td>
+                            <div style="font-size: 0.9rem;">৳{{ number_format($item->price, 2) }}</div>
+                        </td>
+                        <td>
+                            <span class="badge badge-completed">{{ $item->quantity }}</span>
+                        </td>
+                        <td>
+                            <div class="text-success fw-700" style="font-size: 0.95rem;">৳{{ number_format($item->subtotal, 2) }}</div>
+                        </td>
+                    </tr>
                     @endforeach
                 </tbody>
             </table>
         </div>
-    </div>
-</div>
 
-<!-- Update Order Status -->
-<div class="glass-card">
-    <div class="card-header bg-warning border-secondary">
-        <h5 class="mb-0 text-white"><i class="fas fa-edit me-2"></i>Update Order Status</h5>
-    </div>
-    <div class="card-body bg-dark">
-        <form action="{{ route('admin.ecommerce.orders.update', $order) }}" method="POST">
+        <!-- Update Status Form -->
+        <div class="permission-title" style="margin-top: 2.5rem;">Update Order Status</div>
+        <form action="{{ route('admin.ecommerce.orders.update', $order) }}" method="POST" style="background: rgba(15, 23, 42, 0.6); border-radius: 16px; border: 1px solid rgba(255,255,255,0.05); padding: 1.5rem;">
             @csrf
             @method('PUT')
 
-            <div class="row">
-                <div class="col-md-6 mb-3">
-                    <label class="form-label text-white">Order Status</label>
-                    <select name="status" class="form-select bg-dark text-white border-secondary">
-                        <option value="pending" @if($order->status === 'pending') selected @endif>Pending / মুলতুম্বর</option>
-                        <option value="processing" @if($order->status === 'processing') selected @endif>Processing / প্রক্রিয়া</option>
-                        <option value="shipped" @if($order->status === 'shipped') selected @endif>Shipped / পাঠানো হয়েছে</option>
-                        <option value="delivered" @if($order->status === 'delivered') selected @endif>Delivered / বিতরণ করা হয়েছে</option>
-                        <option value="cancelled" @if($order->status === 'cancelled') selected @endif>Cancelled / বাতিল</option>
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <label class="form-label">Order Status</label>
+                    <select name="status" class="input-dark input-custom">
+                        <option value="pending" @if($order->status === 'pending') selected @endif>Pending</option>
+                        <option value="processing" @if($order->status === 'processing') selected @endif>Processing</option>
+                        <option value="shipped" @if($order->status === 'shipped') selected @endif>Shipped</option>
+                        <option value="delivered" @if($order->status === 'delivered') selected @endif>Delivered</option>
+                        <option value="cancelled" @if($order->status === 'cancelled') selected @endif>Cancelled</option>
                     </select>
                 </div>
-                <div class="col-md-6 mb-3">
-                    <label class="form-label text-white">Payment Status</label>
-                    <select name="payment_status" class="form-select bg-dark text-white border-secondary">
-                        <option value="pending" @if($order->payment_status === 'pending') selected @endif>Pending / মুলতুম্বর</option>
-                        <option value="paid" @if($order->payment_status === 'paid') selected @endif>Paid / পরিশোধ করা হয়েছে</option>
-                        <option value="failed" @if($order->payment_status === 'failed') selected @endif>Failed / ব্যর্থ</option>
-                        <option value="refunded" @if($order->payment_status === 'refunded') selected @endif>Refunded / রিফান্ড</option>
+                <div class="col-md-6">
+                    <label class="form-label">Payment Status</label>
+                    <select name="payment_status" class="input-dark input-custom">
+                        <option value="pending" @if($order->payment_status === 'pending') selected @endif>Pending</option>
+                        <option value="paid" @if($order->payment_status === 'paid') selected @endif>Paid</option>
+                        <option value="failed" @if($order->payment_status === 'failed') selected @endif>Failed</option>
+                        <option value="refunded" @if($order->payment_status === 'refunded') selected @endif>Refunded</option>
                     </select>
                 </div>
                 <div class="col-12">
-                    <button type="submit" class="btn btn-gradient w-100">
-                        <i class="fas fa-save me-2"></i> Update Status / আপডেট করুন
+                    <button type="submit" class="btn-gradient" style="width: 100%; padding: 0.75rem 2rem; border-radius: 100px;">
+                        <i class="fas fa-save me-2"></i>Update Status
                     </button>
                 </div>
             </div>
@@ -181,4 +212,7 @@
     </div>
 </div>
 
+@push('styles')
+@include('admin.ecommerce.partials.common-styles')
+@endpush
 @endsection

@@ -17,7 +17,25 @@ class CouponController extends Controller
             ->orderBy('created_at', 'desc')
             ->paginate(20);
 
-        return view('admin.ecommerce.coupons.index', compact('coupons'));
+        // Statistics for the view
+        $totalCoupons = Coupon::count();
+        $activeCoupons = Coupon::where(function($q) {
+            $q->whereNull('expires_at')->orWhere('expires_at', '>', now());
+        })->where(function($q) {
+            $q->whereNull('usage_limit')->orWhereRaw('usage_count < usage_limit');
+        })->count();
+        $expiredCoupons = Coupon::where('expires_at', '<', now())->count();
+        $exhaustedCoupons = Coupon::where('usage_limit', '>', 0)
+            ->whereColumn('usage_count', '>=', 'usage_limit')
+            ->count();
+
+        return view('admin.ecommerce.coupons.index', compact(
+            'coupons',
+            'totalCoupons',
+            'activeCoupons',
+            'expiredCoupons',
+            'exhaustedCoupons'
+        ));
     }
 
     /**

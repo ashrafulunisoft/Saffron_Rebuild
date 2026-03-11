@@ -3,207 +3,236 @@
 @section('title', 'Orders - Saffron Admin')
 
 @section('content')
-<div class="header-section">
-    <div>
-        <h2 class="fw-bold text-white mb-1">Orders <span class="text-white">অর্ডার</span></h2>
-        <p class="text-white mb-0">Manage customer orders and track shipments</p>
-    </div>
-</div>
+<div class="container-fluid">
+    <div class="glass-card glass-card-dark">
+        <!-- Header -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2.5rem; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 1.5rem;">
+            <div class="d-flex align-items-center gap-3">
+                <div class="logo-vms" style="width: 44px; height: 44px; font-size: 1.2rem; background: linear-gradient(135deg, var(--accent-blue), #8b5cf6);">S</div>
+                <div>
+                    <h6 class="fw-800 mb-0 text-white text-shadow-white" style="font-size: 1.1rem;">SAFFRON</h6>
+                    <span class="permission-title" style="font-size: 0.7rem; margin: 0; text-shadow-blue">ORDER MANAGEMENT</span>
+                </div>
+            </div>
+            <h2 class="fw-800 mb-0 text-white letter-spacing-1 text-shadow-white" style="font-size: 2rem;">Orders</h2>
+        </div>
 
-<!-- Statistics Cards -->
-<div class="row mb-4">
-    <div class="col-md-2 mb-3">
-        <div class="card bg-dark border-secondary">
-            <div class="card-body text-center">
-                <h6 class="text-white-50 mb-2">Total / মোট</h6>
-                <h3 class="fw-bold text-primary mb-0">{{ $stats['total'] }}</h3>
+        <!-- Stats Cards -->
+        <div class="row g-4 mb-5">
+            <div class="col-md-2">
+                <div class="stat-card">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-white mb-2" style="font-size: 0.75rem; opacity: 0.7;">Total</h6>
+                            <h3 class="text-white fw-800 mb-0" style="font-size: 1.5rem;">{{ $stats['total'] }}</h3>
+                        </div>
+                        <div class="stat-icon" style="background: rgba(59, 130, 246, 0.2); width: 40px; height: 40px; font-size: 1rem;">
+                            <i class="fas fa-shopping-cart" style="color: var(--accent-blue);"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="stat-card">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-white mb-2" style="font-size: 0.75rem; opacity: 0.7;">Pending</h6>
+                            <h3 class="text-white fw-800 mb-0" style="font-size: 1.5rem;">{{ $stats['pending'] }}</h3>
+                        </div>
+                        <div class="stat-icon" style="background: rgba(251, 191, 36, 0.2); width: 40px; height: 40px; font-size: 1rem;">
+                            <i class="fas fa-clock" style="color: #fbbf24;"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="stat-card">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-white mb-2" style="font-size: 0.75rem; opacity: 0.7;">Processing</h6>
+                            <h3 class="text-white fw-800 mb-0" style="font-size: 1.5rem;">{{ $stats['processing'] }}</h3>
+                        </div>
+                        <div class="stat-icon" style="background: rgba(59, 130, 246, 0.2); width: 40px; height: 40px; font-size: 1rem;">
+                            <i class="fas fa-cog" style="color: var(--accent-blue);"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="stat-card">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-white mb-2" style="font-size: 0.75rem; opacity: 0.7;">Shipped</h6>
+                            <h3 class="text-white fw-800 mb-0" style="font-size: 1.5rem;">{{ $stats['shipped'] }}</h3>
+                        </div>
+                        <div class="stat-icon" style="background: rgba(168, 85, 247, 0.2); width: 40px; height: 40px; font-size: 1rem;">
+                            <i class="fas fa-truck" style="color: #a855f7;"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="stat-card">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-white mb-2" style="font-size: 0.75rem; opacity: 0.7;">Delivered</h6>
+                            <h3 class="text-white fw-800 mb-0" style="font-size: 1.5rem;">{{ $stats['delivered'] }}</h3>
+                        </div>
+                        <div class="stat-icon" style="background: rgba(34, 197, 94, 0.2); width: 40px; height: 40px; font-size: 1rem;">
+                            <i class="fas fa-check-circle" style="color: #22c55e;"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="stat-card">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-white mb-2" style="font-size: 0.75rem; opacity: 0.7;">Cancelled</h6>
+                            <h3 class="text-white fw-800 mb-0" style="font-size: 1.5rem;">{{ $stats['cancelled'] }}</h3>
+                        </div>
+                        <div class="stat-icon" style="background: rgba(239, 68, 68, 0.2); width: 40px; height: 40px; font-size: 1rem;">
+                            <i class="fas fa-times-circle" style="color: #ef4444;"></i>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="col-md-2 mb-3">
-        <div class="card bg-dark border-secondary">
-            <div class="card-body text-center">
-                <h6 class="text-white-50 mb-2">Pending / মুলতুম্বর</h6>
-                <h3 class="fw-bold text-warning mb-0">{{ $stats['pending'] }}</h3>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-2 mb-3">
-        <div class="card bg-dark border-secondary">
-            <div class="card-body text-center">
-                <h6 class="text-white-50 mb-2">Processing / প্রক্রিয়া</h6>
-                <h3 class="fw-bold text-info mb-0">{{ $stats['processing'] }}</h3>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-2 mb-3">
-        <div class="card bg-dark border-secondary">
-            <div class="card-body text-center">
-                <h6 class="text-white-50 mb-2">Shipped / পাঠানো হয়েছে</h6>
-                <h3 class="fw-bold text-primary mb-0">{{ $stats['shipped'] }}</h3>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-2 mb-3">
-        <div class="card bg-dark border-secondary">
-            <div class="card-body text-center">
-                <h6 class="text-white-50 mb-2">Delivered / বিতরণ করা হয়েছে</h6>
-                <h3 class="fw-bold text-success mb-0">{{ $stats['delivered'] }}</h3>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-2 mb-3">
-        <div class="card bg-dark border-secondary">
-            <div class="card-body text-center">
-                <h6 class="text-white-50 mb-2">Cancelled / বাতিল</h6>
-                <h3 class="fw-bold text-danger mb-0">{{ $stats['cancelled'] }}</h3>
-            </div>
-        </div>
-    </div>
-</div>
 
-<div class="glass-card">
-    <!-- Search and Filter -->
-    <div class="row mb-4 p-4">
-        <div class="col-md-6">
-            <div class="input-group">
-                <span class="input-group-text bg-dark text-white border-secondary">
-                    <i class="fas fa-search"></i>
-                </span>
-                <input type="text" id="orderSearch" class="form-control bg-dark text-white border-secondary" placeholder="Search orders... / অর্ডার খুঁজুন..." style="color: white;">
+        <!-- Filter Section -->
+        <div class="row g-3 mb-4" style="background: rgba(15, 23, 42, 0.6); padding: 1.5rem; border-radius: 16px; border: 1px solid rgba(255,255,255,0.05);">
+            <div class="col-md-6">
+                <div class="position-relative">
+                    <input type="text" id="orderSearch" class="input-dark input-custom" placeholder="Search orders..." style="color: white;">
+                    <i class="fas fa-search input-icon"></i>
+                </div>
             </div>
-            <style>
-                #orderSearch::placeholder {
-                    color: #adb5bd !important;
-                    opacity: 1 !important;
-                }
-                #orderSearch::-webkit-input-placeholder {
-                    color: #adb5bd !important;
-                }
-                #orderSearch::-moz-placeholder {
-                    color: #adb5bd !important;
-                    opacity: 1 !important;
-                }
-            </style>
+            <div class="col-md-6">
+                <select class="input-dark input-custom" id="statusFilter">
+                    <option value="">All Status</option>
+                    <option value="pending">Pending</option>
+                    <option value="processing">Processing</option>
+                    <option value="shipped">Shipped</option>
+                    <option value="delivered">Delivered</option>
+                    <option value="cancelled">Cancelled</option>
+                </select>
+            </div>
         </div>
-        <div class="col-md-6 text-end">
-            <select class="form-select bg-dark text-white border-secondary d-inline-block" id="statusFilter" style="width: auto;">
-                <option value="">All Status / সকল স্থিতি</option>
-                <option value="pending">Pending / মুলতুম্বর</option>
-                <option value="processing">Processing / প্রক্রিয়া</option>
-                <option value="shipped">Shipped / পাঠানো হয়েছে</option>
-                <option value="delivered">Delivered / বিতরণ করা হয়েছে</option>
-                <option value="cancelled">Cancelled / বাতিল</option>
-            </select>
-        </div>
-    </div>
 
-    <!-- Orders Table -->
-    <div class="table-responsive p-4">
-        <table class="table table-hover table-dark" id="ordersTable" style="background: transparent !important;">
-            <thead class="table-dark">
-                <tr>
-                    <th class="text-white" style="border-color: #495057 !important;">Order #</th>
-                    <th class="text-white" style="border-color: #495057 !important;">Customer</th>
-                    <th class="text-white" style="border-color: #495057 !important;">Items</th>
-                    <th class="text-white" style="border-color: #495057 !important;">Amount</th>
-                    <th class="text-white" style="border-color: #495057 !important;">Payment</th>
-                    <th class="text-white" style="border-color: #495057 !important;">Status</th>
-                    <th class="text-white" style="border-color: #495057 !important;">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse($orders as $order)
-                    <tr style="border-color: #495057 !important;">
+        <!-- Orders Table -->
+        <div class="table-responsive">
+            <table class="table-custom" id="ordersTable">
+                <thead>
+                    <tr>
+                        <th style="width: 60px;">#</th>
+                        <th>Order #</th>
+                        <th>Customer</th>
+                        <th>Items</th>
+                        <th>Amount</th>
+                        <th>Payment</th>
+                        <th>Status</th>
+                        <th style="width: 180px;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse($orders as $index => $order)
+                    <tr>
+                        <td>{{ ($orders->currentPage() - 1) * $orders->perPage() + $index + 1 }}</td>
                         <td>
-                            <code class="text-warning">{{ $order->order_number }}</code>
-                            <br><small class="text-white-50">{{ $order->created_at->format('M d, Y') }}</small>
+                            <div>
+                                <code style="font-size: 0.85rem;">{{ $order->order_number }}</code>
+                            </div>
+                            <div style="font-size: 0.7rem; opacity: 0.5; margin-top: 0.25rem;">{{ $order->created_at->format('M d, Y') }}</div>
                         </td>
                         <td>
-                            <div class="fw-bold text-white">{{ $order->user->name ?? 'Guest' }}</div>
-                            <small class="text-info">{{ $order->user->email ?? 'N/A' }}</small>
+                            @if($order->user)
+                                <div class="text-white fw-600" style="font-size: 0.9rem;">{{ $order->user->name }}</div>
+                                <div style="font-size: 0.75rem; opacity: 0.6;">{{ $order->user->email }}</div>
+                            @else
+                                <span style="opacity: 0.5;">Guest</span>
+                            @endif
                         </td>
                         <td>
-                            <span class="badge bg-primary">{{ $order->order_items_count }} items</span>
+                            <span class="badge badge-completed">{{ $order->order_items_count }} items</span>
                         </td>
                         <td>
-                            <span class="text-white fs-6 fw-bold">৳{{ number_format($order->final_amount, 2) }}</span>
+                            <div style="font-size: 0.9rem;">৳{{ number_format($order->final_amount, 2) }}</div>
                         </td>
                         <td>
                             @if($order->payment_status === 'paid')
-                                <span class="badge bg-success">Paid</span>
+                                <span class="badge badge-approved">Paid</span>
                             @elseif($order->payment_status === 'pending')
-                                <span class="badge bg-warning">Pending</span>
+                                <span class="badge badge-pending">Pending</span>
                             @elseif($order->payment_status === 'failed')
-                                <span class="badge bg-danger">Failed</span>
+                                <span class="badge badge-cancelled">Failed</span>
                             @else
-                                <span class="badge bg-info">Refunded</span>
+                                <span class="badge badge-completed">Refunded</span>
                             @endif
                         </td>
                         <td>
                             @if($order->status === 'pending')
-                                <span class="badge bg-warning">Pending</span>
+                                <span class="badge badge-pending">Pending</span>
                             @elseif($order->status === 'processing')
-                                <span class="badge bg-info">Processing</span>
+                                <span class="badge badge-visit-type">Processing</span>
                             @elseif($order->status === 'shipped')
-                                <span class="badge bg-primary">Shipped</span>
+                                <span class="badge badge-completed">Shipped</span>
                             @elseif($order->status === 'delivered')
-                                <span class="badge bg-success">Delivered</span>
+                                <span class="badge badge-approved">Delivered</span>
                             @elseif($order->status === 'cancelled')
-                                <span class="badge bg-danger">Cancelled</span>
+                                <span class="badge badge-cancelled">Cancelled</span>
                             @endif
                         </td>
                         <td>
-                            <div class="d-flex gap-2">
-                                <a href="{{ route('admin.ecommerce.orders.show', $order) }}"
-                                   class="btn btn-sm btn-info" title="View">
+                            <div class="action-buttons">
+                                <a href="{{ route('admin.ecommerce.orders.show', $order) }}" class="action-btn btn-view" title="View">
                                     <i class="fas fa-eye"></i>
                                 </a>
                                 @if($order->status !== 'delivered' && $order->status !== 'cancelled')
-                                    <button onclick="updateOrderStatus({{ $order->id }}, 'processing')"
-                                            class="btn btn-sm btn-secondary" title="Mark as Processing">
+                                    <button onclick="updateOrderStatus({{ $order->id }}, 'processing')" class="action-btn btn-visit-type" title="Mark Processing" style="background: rgba(59, 130, 246, 0.2); color: var(--accent-blue);">
                                         <i class="fas fa-cog"></i>
                                     </button>
-                                    <button onclick="updateOrderStatus({{ $order->id }}, 'shipped')"
-                                            class="btn btn-sm btn-primary" title="Mark as Shipped">
+                                    <button onclick="updateOrderStatus({{ $order->id }}, 'shipped')" class="action-btn" title="Mark Shipped" style="background: rgba(168, 85, 247, 0.2); color: #a855f7;">
                                         <i class="fas fa-truck"></i>
                                     </button>
-                                    <button onclick="updateOrderStatus({{ $order->id }}, 'delivered')"
-                                            class="btn btn-sm btn-success" title="Mark as Delivered">
+                                    <button onclick="updateOrderStatus({{ $order->id }}, 'delivered')" class="action-btn btn-approve" title="Mark Delivered">
                                         <i class="fas fa-check"></i>
                                     </button>
                                 @endif
                                 @if($order->status === 'pending' || $order->status === 'cancelled')
-                                    <button onclick="deleteOrder({{ $order->id }}, '{{ $order->order_number }}')"
-                                            class="btn btn-sm btn-danger" title="Delete">
+                                    <button onclick="deleteOrder({{ $order->id }}, '{{ $order->order_number }}')" class="action-btn btn-delete" title="Delete">
                                         <i class="fas fa-trash"></i>
                                     </button>
                                 @endif
                             </div>
                         </td>
                     </tr>
-                @empty
+                    @empty
                     <tr>
-                        <td colspan="7" class="text-center py-5">
-                            <div class="text-muted">
-                                <i class="fas fa-shopping-bag text-white-50 fs-1 mb-3 d-block"></i>
-                                <p class="text-white">No orders found / কোন অর্ডার পাওয়া যায়নি</p>
-                            </div>
+                        <td colspan="8" class="text-center py-5">
+                            <i class="fas fa-shopping-bag" style="font-size: 48px; opacity: 0.3; margin-bottom: 1rem;"></i>
+                            <div class="text-white" style="opacity: 0.5;">No orders found</div>
                         </td>
                     </tr>
-                @endforelse
-            </tbody>
-        </table>
-    </div>
-
-    <!-- Pagination -->
-    @if($orders->hasPages())
-        <div class="d-flex justify-content-center p-4">
-            {{ $orders->links() }}
+                    @endforelse
+                </tbody>
+            </table>
         </div>
-    @endif
+
+        <!-- Pagination -->
+        @if($orders->hasPages())
+        <div class="d-flex justify-content-between align-items-center mt-4 pt-4" style="border-top: 1px solid rgba(255,255,255,0.05);">
+            <div class="text-white" style="font-size: 0.85rem; opacity: 0.7;">
+                Showing {{ ($orders->currentPage() - 1) * $orders->perPage() + 1 }}
+                to {{ min($orders->currentPage() * $orders->perPage(), $orders->total()) }}
+                of {{ $orders->total() }} orders
+            </div>
+            {{ $orders->links('vendor.pagination.bootstrap-5') }}
+        </div>
+        @endif
+    </div>
 </div>
 
+@push('scripts')
 <script>
 function updateOrderStatus(orderId, newStatus) {
     const statusText = {
@@ -215,14 +244,16 @@ function updateOrderStatus(orderId, newStatus) {
     };
 
     Swal.fire({
-        title: 'Update Order Status?',
-        html: `Change order status to <strong>${statusText[newStatus]}</strong>?<br>আপনি কি অর্ডারের স্থিতি পরিবর্তন করতে চান?`,
+        title: 'Update Status?',
+        text: `Change order status to "${statusText[newStatus]}"?`,
         icon: 'question',
         showCancelButton: true,
         confirmButtonColor: '#3b82f6',
         cancelButtonColor: '#6b7280',
         confirmButtonText: 'Yes, update!',
-        cancelButtonText: 'Cancel'
+        cancelButtonText: 'Cancel',
+        background: '#0f172a',
+        color: '#fff'
     }).then((result) => {
         if (result.isConfirmed) {
             fetch(`/admin/ecommerce/orders/${orderId}/status`, {
@@ -244,7 +275,9 @@ function updateOrderStatus(orderId, newStatus) {
                         title: 'Updated!',
                         text: 'Order status updated successfully!',
                         timer: 1500,
-                        showConfirmButton: false
+                        showConfirmButton: false,
+                        background: '#0f172a',
+                        color: '#fff'
                     }).then(() => {
                         location.reload();
                     });
@@ -254,7 +287,9 @@ function updateOrderStatus(orderId, newStatus) {
                 Swal.fire({
                     icon: 'error',
                     title: 'Error!',
-                    text: 'Something went wrong.'
+                    text: 'Something went wrong.',
+                    background: '#0f172a',
+                    color: '#fff'
                 });
             });
         }
@@ -263,91 +298,26 @@ function updateOrderStatus(orderId, newStatus) {
 
 function deleteOrder(orderId, orderNumber) {
     Swal.fire({
-        title: 'Are you sure?',
-        html: `You want to delete order <strong>${orderNumber}</strong>?<br>আপনি কি <strong>${orderNumber}</strong> অর্ডার মুছে ফেলতে চান?`,
+        title: 'Delete Order?',
+        text: `Are you sure you want to delete "${orderNumber}"? This action cannot be undone.`,
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#ef4444',
-        cancelButtonColor: '#3b82f6',
+        cancelButtonColor: '#6b7280',
         confirmButtonText: 'Yes, delete it!',
-        cancelButtonText: 'No, cancel!'
+        cancelButtonText: 'No, cancel!',
+        background: '#0f172a',
+        color: '#fff'
     }).then((result) => {
         if (result.isConfirmed) {
-            fetch(`/admin/ecommerce/orders/${orderId}`, {
-                method: 'DELETE',
-                headers: {
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success || !data.error) {
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Deleted!',
-                        text: 'Order has been deleted.',
-                        timer: 1500,
-                        showConfirmButton: false
-                    }).then(() => {
-                        location.reload();
-                    });
-                } else {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error!',
-                        text: data.message || 'Cannot delete this order.'
-                    });
-                }
-            })
-            .catch(error => {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error!',
-                    text: 'Something went wrong.'
-                });
-            });
+            window.location.href = `/admin/ecommerce/orders/${orderId}`;
         }
     });
 }
-
-// Search functionality
-document.getElementById('orderSearch')?.addEventListener('keyup', function(e) {
-    const searchValue = e.target.value.toLowerCase();
-    const table = document.getElementById('ordersTable');
-    const rows = table.getElementsByTagName('tr');
-
-    for (let i = 1; i < rows.length; i++) {
-        const orderNumber = rows[i].getElementsByTagName('td')[0]?.textContent.toLowerCase() || '';
-        const customer = rows[i].getElementsByTagName('td')[1]?.textContent.toLowerCase() || '';
-
-        if (orderNumber.includes(searchValue) || customer.includes(searchValue)) {
-            rows[i].style.display = '';
-        } else {
-            rows[i].style.display = 'none';
-        }
-    }
-});
-
-// Status filter
-document.getElementById('statusFilter')?.addEventListener('change', function(e) {
-    const status = e.target.value;
-    const table = document.getElementById('ordersTable');
-    const rows = table.getElementsByTagName('tr');
-
-    for (let i = 1; i < rows.length; i++) {
-        if (!status) {
-            rows[i].style.display = '';
-        } else {
-            const statusCell = rows[i].getElementsByTagName('td')[6];
-            const orderStatus = statusCell?.textContent.toLowerCase() || '';
-
-            if (orderStatus.includes(status.toLowerCase())) {
-                rows[i].style.display = '';
-            } else {
-                rows[i].style.display = 'none';
-            }
-        }
-    }
-});
 </script>
+@endpush
+
+@push('styles')
+@include('admin.ecommerce.partials.common-styles')
+@endpush
 @endsection

@@ -3,300 +3,286 @@
 @section('title', 'Products - Saffron Admin')
 
 @section('content')
-<div class="header-section">
-    <div>
-        <h2 class="fw-bold text-white mb-1">Products <span class="text-white">পণ্য</span></h2>
-        <p class="text-white mb-0">Manage product inventory with bilingual support</p>
-    </div>
-    <div>
-        <a href="{{ route('admin.ecommerce.products.create') }}" class="btn btn-gradient">
-            <i class="fas fa-plus me-2"></i> Add Product
-        </a>
-    </div>
-</div>
-
-<div class="glass-card">
-    <!-- Search and Filter -->
-    <div class="row mb-4 p-4">
-        <div class="col-md-6">
-            <div class="input-group">
-                <span class="input-group-text bg-dark text-white border-secondary">
-                    <i class="fas fa-search"></i>
-                </span>
-                <input type="text" id="productSearch" class="form-control bg-dark text-white border-secondary" placeholder="Search products... / পণ্য খুঁজুন..." style="color: white;">
+<div class="container-fluid">
+    <div class="glass-card glass-card-dark">
+        <!-- Header -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2.5rem; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 1.5rem;">
+            <div class="d-flex align-items-center gap-3">
+                <div class="logo-vms" style="width: 44px; height: 44px; font-size: 1.2rem; background: linear-gradient(135deg, var(--accent-blue), #8b5cf6);">S</div>
+                <div>
+                    <h6 class="fw-800 mb-0 text-white text-shadow-white" style="font-size: 1.1rem;">SAFFRON</h6>
+                    <span class="permission-title" style="font-size: 0.7rem; margin: 0; text-shadow-blue">PRODUCT MANAGEMENT</span>
+                </div>
             </div>
-            <style>
-                #productSearch::placeholder {
-                    color: #adb5bd !important;
-                    opacity: 1 !important;
-                }
-                #productSearch::-webkit-input-placeholder {
-                    color: #adb5bd !important;
-                }
-                #productSearch::-moz-placeholder {
-                    color: #adb5bd !important;
-                    opacity: 1 !important;
-                }
-            </style>
+            <div class="d-flex align-items-center gap-3">
+                <h2 class="fw-800 mb-0 text-white letter-spacing-1 text-shadow-white" style="font-size: 2rem;">Products</h2>
+                <a href="{{ route('admin.ecommerce.products.create') }}" class="btn-gradient" style="padding: 0.75rem 1.5rem; border-radius: 100px; text-decoration: none;">
+                    <i class="fas fa-plus me-2"></i>Add Product
+                </a>
+            </div>
         </div>
-        <div class="col-md-6 text-end">
-            <select class="form-select bg-dark text-white border-secondary d-inline-block" id="categoryFilter" style="width: auto;">
-                <option value="">All Categories / সকল ক্যাটাগরি</option>
-                @foreach($categories as $category)
-                    <option value="{{ $category->id }}">{{ $category->name_en }} / {{ $category->name_bn }}</option>
-                @endforeach
-            </select>
-        </div>
-    </div>
 
-    <!-- Products Table -->
-    <div class="table-responsive p-4">
-        <table class="table table-hover table-dark" id="productsTable" style="background: transparent !important;">
-            <thead class="table-dark">
-                <tr>
-                    <th class="text-white" style="border-color: #495057 !important;">Image</th>
-                    <th class="text-white" style="border-color: #495057 !important;">Product (EN) / পণ্য (বাংলা)</th>
-                    <th class="text-white" style="border-color: #495057 !important;">SKU</th>
-                    <th class="text-white" style="border-color: #495057 !important;">Price</th>
-                    <th class="text-white" style="border-color: #495057 !important;">Stock</th>
-                    <th class="text-white" style="border-color: #495057 !important;">Category</th>
-                    <th class="text-white" style="border-color: #495057 !important;">Tags</th>
-                    <th class="text-white" style="border-color: #495057 !important;">Status</th>
-                    <th class="text-white" style="border-color: #495057 !important;">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse($products as $product)
-                    <tr style="border-color: #495057 !important;">
+        <!-- Stats Cards -->
+        <div class="row g-4 mb-5">
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-white mb-2" style="font-size: 0.85rem; opacity: 0.7;">Total Products</h6>
+                            <h3 class="text-white fw-800 mb-0">{{ $totalProducts }}</h3>
+                        </div>
+                        <div class="stat-icon" style="background: rgba(59, 130, 246, 0.2);">
+                            <i class="fas fa-box" style="color: var(--accent-blue);"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-white mb-2" style="font-size: 0.85rem; opacity: 0.7;">Active</h6>
+                            <h3 class="text-white fw-800 mb-0">{{ $activeProducts }}</h3>
+                        </div>
+                        <div class="stat-icon" style="background: rgba(34, 197, 94, 0.2);">
+                            <i class="fas fa-check-circle" style="color: #22c55e;"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-white mb-2" style="font-size: 0.85rem; opacity: 0.7;">Featured</h6>
+                            <h3 class="text-white fw-800 mb-0">{{ $featuredProducts }}</h3>
+                        </div>
+                        <div class="stat-icon" style="background: rgba(251, 191, 36, 0.2);">
+                            <i class="fas fa-star" style="color: #fbbf24;"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-white mb-2" style="font-size: 0.85rem; opacity: 0.7;">Low Stock</h6>
+                            <h3 class="text-white fw-800 mb-0">{{ $lowStock }}</h3>
+                        </div>
+                        <div class="stat-icon" style="background: rgba(239, 68, 68, 0.2);">
+                            <i class="fas fa-exclamation-triangle" style="color: #ef4444;"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filter Section -->
+        <div class="row g-3 mb-4" style="background: rgba(15, 23, 42, 0.6); padding: 1.5rem; border-radius: 16px; border: 1px solid rgba(255,255,255,0.05);">
+            <div class="col-md-4">
+                <div class="position-relative">
+                    <input type="text" id="productSearch" class="input-dark input-custom" placeholder="Search products..." style="color: white;">
+                    <i class="fas fa-search input-icon"></i>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <select class="input-dark input-custom" id="categoryFilter">
+                    <option value="">All Categories</option>
+                    @foreach($categories as $category)
+                        <option value="{{ $category->id }}">{{ $category->name_en }} / {{ $category->name_bn }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="col-md-4">
+                <select class="input-dark input-custom" id="statusFilter">
+                    <option value="">All Status</option>
+                    <option value="active">Active</option>
+                    <option value="inactive">Inactive</option>
+                    <option value="featured">Featured Only</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Products Table -->
+        <div class="table-responsive">
+            <table class="table-custom" id="productsTable">
+                <thead>
+                    <tr>
+                        <th style="width: 60px;">#</th>
+                        <th>Image</th>
+                        <th>Product Name</th>
+                        <th>SKU</th>
+                        <th>Price</th>
+                        <th>Stock</th>
+                        <th>Category</th>
+                        <th>Tags</th>
+                        <th>Status</th>
+                        <th style="width: 180px;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse($products as $index => $product)
+                    <tr>
+                        <td>{{ ($products->currentPage() - 1) * $products->perPage() + $index + 1 }}</td>
                         <td>
                             @if($product->primaryImage)
                                 <img src="{{ asset('storage/' . $product->primaryImage->image) }}"
                                      alt="{{ $product->name_en }}"
-                                     class="rounded"
-                                     style="width: 50px; height: 50px; object-fit: cover;">
+                                     class="product-img">
                             @elseif($product->images->count() > 0)
                                 <img src="{{ asset('storage/' . $product->images->first()->image) }}"
                                      alt="{{ $product->name_en }}"
-                                     class="rounded"
-                                     style="width: 50px; height: 50px; object-fit: cover;">
+                                     class="product-img">
                             @else
-                                <div class="bg-secondary rounded d-flex align-items-center justify-content-center"
-                                     style="width: 50px; height: 50px;">
-                                    <i class="fas fa-image text-muted"></i>
+                                <div class="product-img-placeholder">
+                                    <i class="fas fa-image"></i>
                                 </div>
                             @endif
                         </td>
                         <td>
-                            <div class="d-flex align-items-center">
+                            <div class="d-flex align-items-center gap-2">
                                 @if($product->is_featured)
-                                    <span class="badge bg-warning me-2"><i class="fas fa-star"></i></span>
+                                    <span class="badge badge-featured"><i class="fas fa-star"></i></span>
                                 @endif
                                 <div>
-                                    <div class="fw-bold text-white">{{ $product->name_en }}</div>
-                                    <small class="text-info">{{ $product->name_bn }}</small>
+                                    <div class="text-white fw-600" style="font-size: 0.9rem;">{{ $product->name_en }}</div>
+                                    <div style="font-size: 0.75rem; opacity: 0.6;">{{ $product->name_bn }}</div>
                                 </div>
                             </div>
                         </td>
                         <td>
-                            <code class="text-warning">{{ $product->sku }}</code>
+                            <code style="font-size: 0.85rem;">{{ $product->sku }}</code>
                         </td>
                         <td>
-                            <span class="text-white">৳{{ number_format($product->price, 2) }}</span>
+                            <div style="font-size: 0.9rem;">৳{{ number_format($product->price, 2) }}</div>
                             @if($product->sale_price)
-                                <br><small class="text-success">Sale: ৳{{ number_format($product->sale_price, 2) }}</small>
+                                <div style="font-size: 0.75rem; color: #22c55e;">Sale: ৳{{ number_format($product->sale_price, 2) }}</div>
                             @endif
                         </td>
                         <td>
-                            <span class="badge @if($product->stock > 10) bg-success @elseif($product->stock > 0) bg-warning @else bg-danger @endif">
-                                {{ $product->stock }} in stock
-                            </span>
+                            @if($product->stock > 10)
+                                <span class="badge badge-approved">{{ $product->stock }} in stock</span>
+                            @elseif($product->stock > 0)
+                                <span class="badge badge-pending">Low: {{ $product->stock }}</span>
+                            @else
+                                <span class="badge badge-cancelled">Out of stock</span>
+                            @endif
                         </td>
                         <td>
                             @if($product->category)
-                                <span class="badge bg-secondary">{{ $product->category->name_en }}</span>
+                                <span class="badge badge-visit-type">{{ $product->category->name_en }}</span>
                             @else
-                                <span class="text-muted">-</span>
+                                <span style="opacity: 0.5;">-</span>
                             @endif
                         </td>
                         <td>
                             @if($product->tags->count() > 0)
-                                @foreach($product->tags->take(2) as $tag)
-                                    <span class="badge bg-info me-1">{{ $tag->name_en }}</span>
-                                @endforeach
-                                @if($product->tags->count() > 2)
-                                    <span class="badge bg-secondary">+{{ $product->tags->count() - 2 }}</span>
-                                @endif
+                                <div class="d-flex flex-wrap gap-1">
+                                    @foreach($product->tags->take(2) as $tag)
+                                        <span class="badge" style="background: rgba(59, 130, 246, 0.2); color: var(--accent-blue); font-size: 0.7rem;">{{ $tag->name_en }}</span>
+                                    @endforeach
+                                    @if($product->tags->count() > 2)
+                                        <span class="badge" style="background: rgba(107, 114, 128, 0.2); color: #94a3b8; font-size: 0.7rem;">+{{ $product->tags->count() - 2 }}</span>
+                                    @endif
+                                </div>
                             @else
-                                <span class="text-muted">-</span>
+                                <span style="opacity: 0.5;">-</span>
                             @endif
                         </td>
                         <td>
                             @if($product->is_active)
-                                <span class="badge bg-success">Active / সক্রিয়</span>
+                                <span class="badge badge-approved">Active</span>
                             @else
-                                <span class="badge bg-danger">Inactive / নিষ্ক্রিয়</span>
+                                <span class="badge badge-cancelled">Inactive</span>
                             @endif
                         </td>
                         <td>
-                            <div class="d-flex gap-2">
-                                <a href="{{ route('admin.ecommerce.products.show', $product) }}"
-                                   class="btn btn-sm btn-info" title="View">
+                            <div class="action-buttons">
+                                <a href="{{ route('admin.ecommerce.products.show', $product) }}" class="action-btn btn-view" title="View">
                                     <i class="fas fa-eye"></i>
                                 </a>
-                                <a href="{{ route('admin.ecommerce.products.edit', $product) }}"
-                                   class="btn btn-sm btn-warning" title="Edit">
+                                <a href="{{ route('admin.ecommerce.products.edit', $product) }}" class="action-btn btn-edit" title="Edit">
                                     <i class="fas fa-edit"></i>
                                 </a>
-                                <button onclick="toggleFeaturedStatus({{ $product->id }})"
-                                        class="btn btn-sm @if($product->is_featured) btn-warning @else btn-secondary @endif"
-                                        title="Toggle Featured">
+                                <button onclick="toggleFeaturedStatus({{ $product->id }})" class="action-btn @if($product->is_featured) 'btn-featured' @else 'btn-inactive' @endif" title="Toggle Featured">
                                     <i class="fas fa-star"></i>
                                 </button>
-                                <button onclick="toggleProductStatus({{ $product->id }})"
-                                        class="btn btn-sm @if($product->is_active) btn-warning @else btn-success @endif"
-                                        title="Toggle Status">
+                                <button onclick="toggleProductStatus({{ $product->id }})" class="action-btn @if($product->is_active) 'btn-warning-action' @else 'btn-approve' @endif" title="Toggle Status">
                                     <i class="fas fa-power-off"></i>
                                 </button>
-                                <button onclick="deleteProduct({{ $product->id }}, '{{ $product->name_en }}')"
-                                        class="btn btn-sm btn-danger" title="Delete">
+                                <button onclick="deleteProduct({{ $product->id }}, '{{ $product->name_en }}')" class="action-btn btn-delete" title="Delete">
                                     <i class="fas fa-trash"></i>
                                 </button>
                             </div>
                         </td>
                     </tr>
-                @empty
+                    @empty
                     <tr>
-                        <td colspan="9" class="text-center py-5">
-                            <div class="text-muted">
-                                <i class="fas fa-box-open fs-1 mb-3 d-block"></i>
-                                <p class="text-white">No products found / কোন পণ্য পাওয়া যায়নি</p>
-                                <a href="{{ route('admin.ecommerce.products.create') }}" class="btn btn-gradient mt-3">
-                                    Create First Product
-                                </a>
-                            </div>
+                        <td colspan="10" class="text-center py-5">
+                            <i class="fas fa-box-open" style="font-size: 48px; opacity: 0.3; margin-bottom: 1rem;"></i>
+                            <div class="text-white" style="opacity: 0.5;">No products found</div>
+                            <a href="{{ route('admin.ecommerce.products.create') }}" class="btn-gradient" style="display: inline-block; margin-top: 1rem; padding: 0.75rem 2rem; border-radius: 100px; text-decoration: none;">
+                                <i class="fas fa-plus me-2"></i>Add Your First Product
+                            </a>
                         </td>
                     </tr>
-                @endforelse
-            </tbody>
-        </table>
-    </div>
-
-    <!-- Pagination -->
-    @if($products->hasPages())
-        <div class="d-flex justify-content-center p-4">
-            {{ $products->appends(['search' => request('search')])->links() }}
+                    @endforelse
+                </tbody>
+            </table>
         </div>
-    @endif
+
+        <!-- Pagination -->
+        @if($products->hasPages())
+        <div class="d-flex justify-content-between align-items-center mt-4 pt-4" style="border-top: 1px solid rgba(255,255,255,0.05);">
+            <div class="text-white" style="font-size: 0.85rem; opacity: 0.7;">
+                Showing {{ ($products->currentPage() - 1) * $products->perPage() + 1 }}
+                to {{ min($products->currentPage() * $products->perPage(), $products->total()) }}
+                of {{ $products->total() }} products
+            </div>
+            {{ $products->links('vendor.pagination.bootstrap-5') }}
+        </div>
+        @endif
+    </div>
 </div>
 
+@push('scripts')
 <script>
 function toggleFeaturedStatus(productId) {
-    if (!confirm('Are you sure you want to toggle this product featured status? / আপনি কি এই পণ্যের বৈশিষ্ট্য স্থিতি পরিবর্তন করতে চান?')) {
-        return;
-    }
-
-    fetch(`/admin/ecommerce/products/${productId}/toggle-featured`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-        },
-        body: JSON.stringify({})
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            Swal.fire({
-                icon: 'success',
-                title: 'Success!',
-                text: data.message,
-                timer: 1500,
-                showConfirmButton: false
-            }).then(() => {
-                location.reload();
-            });
-        }
-    })
-    .catch(error => {
-        Swal.fire({
-            icon: 'error',
-            title: 'Error!',
-            text: 'Something went wrong.'
-        });
-    });
-}
-
-function toggleProductStatus(productId) {
-    if (!confirm('Are you sure you want to toggle this product status? / আপনি কি এই পণ্যর স্থিতি পরিবর্তন করতে চান?')) {
-        return;
-    }
-
-    fetch(`/admin/ecommerce/products/${productId}/toggle-status`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-        },
-        body: JSON.stringify({})
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            Swal.fire({
-                icon: 'success',
-                title: 'Success!',
-                text: data.message,
-                timer: 1500,
-                showConfirmButton: false
-            }).then(() => {
-                location.reload();
-            });
-        }
-    })
-    .catch(error => {
-        Swal.fire({
-            icon: 'error',
-            title: 'Error!',
-            text: 'Something went wrong.'
-        });
-    });
-}
-
-function deleteProduct(productId, productName) {
     Swal.fire({
-        title: 'Are you sure?',
-        html: `You want to delete <strong>${productName}</strong> product?<br>আপনি কি <strong>${productName}</strong> পণ্য মুছে ফেলতে চান?`,
-        icon: 'warning',
+        title: 'Toggle Featured?',
+        text: "Are you sure you want to toggle this product's featured status?",
+        icon: 'question',
         showCancelButton: true,
-        confirmButtonColor: '#ef4444',
-        cancelButtonColor: '#3b82f6',
-        confirmButtonText: 'Yes, delete it!',
-        cancelButtonText: 'No, cancel!'
+        confirmButtonColor: '#fbbf24',
+        cancelButtonColor: '#6b7280',
+        confirmButtonText: 'Yes, toggle it!',
+        cancelButtonText: 'Cancel',
+        background: '#0f172a',
+        color: '#fff'
     }).then((result) => {
         if (result.isConfirmed) {
-            fetch(`/admin/ecommerce/products/${productId}`, {
-                method: 'DELETE',
+            fetch(`/admin/ecommerce/products/${productId}/toggle-featured`, {
+                method: 'POST',
                 headers: {
+                    'Content-Type': 'application/json',
                     'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                }
+                },
+                body: JSON.stringify({})
             })
             .then(response => response.json())
             .then(data => {
-                if (data.success || !data.error) {
+                if (data.success) {
                     Swal.fire({
                         icon: 'success',
-                        title: 'Deleted!',
-                        text: 'Product has been deleted.',
+                        title: 'Success!',
+                        text: data.message,
                         timer: 1500,
-                        showConfirmButton: false
+                        showConfirmButton: false,
+                        background: '#0f172a',
+                        color: '#fff'
                     }).then(() => {
                         location.reload();
-                    });
-                } else {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error!',
-                        text: data.message || 'Cannot delete this product.'
                     });
                 }
             })
@@ -304,29 +290,147 @@ function deleteProduct(productId, productName) {
                 Swal.fire({
                     icon: 'error',
                     title: 'Error!',
-                    text: 'Something went wrong.'
+                    text: 'Something went wrong.',
+                    background: '#0f172a',
+                    color: '#fff'
                 });
             });
         }
     });
 }
 
-// Search functionality
-document.getElementById('productSearch')?.addEventListener('keyup', function(e) {
-    const searchValue = e.target.value.toLowerCase();
-    const table = document.getElementById('productsTable');
-    const rows = table.getElementsByTagName('tr');
-
-    for (let i = 1; i < rows.length; i++) {
-        const nameEn = rows[i].getElementsByTagName('td')[0]?.textContent.toLowerCase() || '';
-        const sku = rows[i].getElementsByTagName('td')[1]?.textContent.toLowerCase() || '';
-
-        if (nameEn.includes(searchValue) || sku.includes(searchValue)) {
-            rows[i].style.display = '';
-        } else {
-            rows[i].style.display = 'none';
+function toggleProductStatus(productId) {
+    Swal.fire({
+        title: 'Toggle Status?',
+        text: "Are you sure you want to toggle this product's status?",
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#3b82f6',
+        cancelButtonColor: '#6b7280',
+        confirmButtonText: 'Yes, toggle it!',
+        cancelButtonText: 'Cancel',
+        background: '#0f172a',
+        color: '#fff'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            fetch(`/admin/ecommerce/products/${productId}/toggle-status`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({})
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success!',
+                        text: data.message,
+                        timer: 1500,
+                        showConfirmButton: false,
+                        background: '#0f172a',
+                        color: '#fff'
+                    }).then(() => {
+                        location.reload();
+                    });
+                }
+            })
+            .catch(error => {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error!',
+                    text: 'Something went wrong.',
+                    background: '#0f172a',
+                    color: '#fff'
+                });
+            });
         }
-    }
-});
+    });
+}
+
+function deleteProduct(productId, productName) {
+    Swal.fire({
+        title: 'Delete Product?',
+        text: `Are you sure you want to delete "${productName}"? This action cannot be undone.`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#ef4444',
+        cancelButtonColor: '#6b7280',
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'No, cancel!',
+        background: '#0f172a',
+        color: '#fff'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = `/admin/ecommerce/products/${productId}/delete`;
+        }
+    });
+}
 </script>
+@endpush
+
+@push('styles')
+@include('admin.ecommerce.partials.common-styles')
+
+<style>
+    .product-img {
+        width: 50px;
+        height: 50px;
+        border-radius: 12px;
+        object-fit: cover;
+        border: 2px solid rgba(59, 130, 246, 0.3);
+    }
+
+    .product-img-placeholder {
+        width: 50px;
+        height: 50px;
+        border-radius: 12px;
+        background: rgba(107, 114, 128, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: rgba(255, 255, 255, 0.3);
+        border: 2px solid rgba(107, 114, 128, 0.3);
+    }
+
+    .badge-featured {
+        background: rgba(251, 191, 36, 0.2);
+        color: #fbbf24;
+        border: 1px solid rgba(251, 191, 36, 0.3);
+        font-size: 0.7rem;
+    }
+
+    .btn-featured {
+        background: rgba(251, 191, 36, 0.2);
+        color: #fbbf24;
+    }
+
+    .btn-featured:hover {
+        background: #fbbf24;
+        color: #000;
+    }
+
+    .btn-inactive {
+        background: rgba(107, 114, 128, 0.2);
+        color: #94a3b8;
+    }
+
+    .btn-inactive:hover {
+        background: #94a3b8;
+        color: #fff;
+    }
+
+    .btn-warning-action {
+        background: rgba(251, 191, 36, 0.2);
+        color: #fbbf24;
+    }
+
+    .btn-warning-action:hover {
+        background: #fbbf24;
+        color: #000;
+    }
+</style>
+@endpush
 @endsection

@@ -3,265 +3,279 @@
 @section('title', 'Coupons - Saffron Admin')
 
 @section('content')
-<div class="header-section">
-    <div>
-        <h2 class="fw-bold text-white mb-1">Coupons <span class="text-white">কুপন</span></h2>
-        <p class="text-white mb-0">Manage discount codes and promotions</p>
-    </div>
-    <div>
-        <a href="{{ route('admin.ecommerce.coupons.create') }}" class="btn btn-gradient">
-            <i class="fas fa-plus me-2"></i> Add New Coupon
-        </a>
-    </div>
-</div>
+<div class="container-fluid">
+    <div class="glass-card glass-card-dark">
+        <!-- Header -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2.5rem; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 1.5rem;">
+            <div class="d-flex align-items-center gap-3">
+                <div class="logo-vms" style="width: 44px; height: 44px; font-size: 1.2rem; background: linear-gradient(135deg, var(--accent-blue), #8b5cf6);">S</div>
+                <div>
+                    <h6 class="fw-800 mb-0 text-white text-shadow-white" style="font-size: 1.1rem;">SAFFRON</h6>
+                    <span class="permission-title" style="font-size: 0.7rem; margin: 0; text-shadow-blue">COUPON MANAGEMENT</span>
+                </div>
+            </div>
+            <div class="d-flex align-items-center gap-3">
+                <h2 class="fw-800 mb-0 text-white letter-spacing-1 text-shadow-white" style="font-size: 2rem;">Coupons</h2>
+                <a href="{{ route('admin.ecommerce.coupons.create') }}" class="btn-gradient" style="padding: 0.75rem 1.5rem; border-radius: 100px; text-decoration: none;">
+                    <i class="fas fa-plus me-2"></i>Add Coupon
+                </a>
+            </div>
+        </div>
 
-<!-- Search -->
-<div class="glass-card mb-4">
-    <div class="card-body bg-dark">
-        <form action="{{ route('admin.ecommerce.coupons.search') }}" method="GET" class="row g-3">
+        <!-- Stats Cards -->
+        <div class="row g-4 mb-5">
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-white mb-2" style="font-size: 0.85rem; opacity: 0.7;">Total Coupons</h6>
+                            <h3 class="text-white fw-800 mb-0">{{ $totalCoupons }}</h3>
+                        </div>
+                        <div class="stat-icon" style="background: rgba(59, 130, 246, 0.2);">
+                            <i class="fas fa-ticket-alt" style="color: var(--accent-blue);"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-white mb-2" style="font-size: 0.85rem; opacity: 0.7;">Active</h6>
+                            <h3 class="text-white fw-800 mb-0">{{ $activeCoupons }}</h3>
+                        </div>
+                        <div class="stat-icon" style="background: rgba(34, 197, 94, 0.2);">
+                            <i class="fas fa-check-circle" style="color: #22c55e;"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-white mb-2" style="font-size: 0.85rem; opacity: 0.7;">Expired</h6>
+                            <h3 class="text-white fw-800 mb-0">{{ $expiredCoupons }}</h3>
+                        </div>
+                        <div class="stat-icon" style="background: rgba(239, 68, 68, 0.2);">
+                            <i class="fas fa-clock" style="color: #ef4444;"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-white mb-2" style="font-size: 0.85rem; opacity: 0.7;">Exhausted</h6>
+                            <h3 class="text-white fw-800 mb-0">{{ $exhaustedCoupons }}</h3>
+                        </div>
+                        <div class="stat-icon" style="background: rgba(251, 191, 36, 0.2);">
+                            <i class="fas fa-ban" style="color: #fbbf24;"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filter Section -->
+        <div class="row g-3 mb-4" style="background: rgba(15, 23, 42, 0.6); padding: 1.5rem; border-radius: 16px; border: 1px solid rgba(255,255,255,0.05);">
             <div class="col-md-12">
-                <div class="input-group">
-                    <span class="input-group-text bg-dark border-secondary text-white">
-                        <i class="fas fa-search"></i>
-                    </span>
-                    <input type="text"
-                           name="q"
-                           class="form-control bg-dark text-white border-secondary"
-                           placeholder="Search coupons... / কুপন খুঁজুন..."
-                           value="{{ $query ?? '' }}"
-                           autofocus>
-                    <button type="submit" class="btn btn-gradient">Search</button>
+                <form action="{{ route('admin.ecommerce.coupons.search') }}" method="GET" class="d-flex gap-2">
+                    <div class="position-relative flex-grow-1">
+                        <input type="text"
+                               name="q"
+                               class="input-dark input-custom"
+                               placeholder="Search coupons..."
+                               value="{{ $query ?? '' }}"
+                               style="color: white;">
+                        <i class="fas fa-search input-icon"></i>
+                    </div>
+                    <button type="submit" class="btn-gradient" style="padding: 0.75rem 1.5rem; border-radius: 12px;">
+                        <i class="fas fa-search me-2"></i>Search
+                    </button>
                     @isset($query)
-                        <a href="{{ route('admin.ecommerce.coupons.index') }}" class="btn btn-outline-secondary">
+                        <a href="{{ route('admin.ecommerce.coupons.index') }}" class="btn-outline" style="padding: 0.75rem 1rem; border-radius: 12px; text-decoration: none;">
                             <i class="fas fa-times me-2"></i>Clear
                         </a>
                     @endisset
-                </div>
+                </form>
             </div>
-        </form>
-    </div>
-</div>
+        </div>
 
-<!-- Coupons Table -->
-<div class="glass-card">
-    <div class="card-body bg-dark p-0">
+        <!-- Coupons Table -->
         <div class="table-responsive">
-            <table class="table table-hover table-dark mb-0" style="background: transparent !important;">
-                <thead class="table-dark">
+            <table class="table-custom">
+                <thead>
                     <tr>
-                        <th class="text-white" style="border-color: #495057 !important;">ID</th>
-                        <th class="text-white" style="border-color: #495057 !important;">Code</th>
-                        <th class="text-white" style="border-color: #495057 !important;">Type</th>
-                        <th class="text-white" style="border-color: #495057 !important;">Value</th>
-                        <th class="text-white" style="border-color: #495057 !important;">Usage</th>
-                        <th class="text-white" style="border-color: #495057 !important;">Expires</th>
-                        <th class="text-white" style="border-color: #495057 !important;">Status</th>
-                        <th class="text-white" style="border-color: #495057 !important;">Actions</th>
+                        <th style="width: 60px;">#</th>
+                        <th>Code</th>
+                        <th>Type</th>
+                        <th>Value</th>
+                        <th>Usage</th>
+                        <th>Expires</th>
+                        <th>Status</th>
+                        <th style="width: 180px;">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse($coupons as $coupon)
-                        <tr style="border-color: #495057 !important;">
-                            <td><code class="text-warning">#{{ $coupon->id }}</code></td>
-                            <td>
-                                <div class="fw-bold text-white">{{ strtoupper($coupon->code) }}</div>
-                            </td>
-                            <td>
-                                @if($coupon->type === 'percent')
-                                    <span class="badge bg-info">Percentage %</span>
-                                @else
-                                    <span class="badge bg-success">Fixed Amount ৳</span>
+                    @forelse($coupons as $index => $coupon)
+                    <tr>
+                        <td>{{ ($coupons->currentPage() - 1) * $coupons->perPage() + $index + 1 }}</td>
+                        <td>
+                            <div class="text-white fw-700" style="font-size: 1rem; letter-spacing: 1px;">{{ strtoupper($coupon->code) }}</div>
+                        </td>
+                        <td>
+                            @if($coupon->type === 'percent')
+                                <span class="badge badge-completed">Percentage %</span>
+                            @else
+                                <span class="badge badge-approved">Fixed ৳</span>
+                            @endif
+                        </td>
+                        <td>
+                            @if($coupon->type === 'percent')
+                                <div class="text-white fw-700" style="font-size: 1.1rem;">{{ $coupon->value }}%</div>
+                                @if($coupon->max_discount)
+                                    <div style="font-size: 0.7rem; color: #fbbf24;">Max: ৳{{ number_format($coupon->max_discount, 2) }}</div>
                                 @endif
-                            </td>
-                            <td>
-                                @if($coupon->type === 'percent')
-                                    <span class="text-white fs-5">{{ $coupon->value }}%</span>
-                                    @if($coupon->max_discount)
-                                        <br><small class="text-warning">Max: ৳{{ number_format($coupon->max_discount, 2) }}</small>
-                                    @endif
-                                @else
-                                    <span class="text-white fs-5">৳{{ number_format($coupon->value, 2) }}</span>
-                                @endif
-                            </td>
-                            <td>
-                                <div class="text-white">{{ $coupon->usage_count }}</div>
+                            @else
+                                <div class="text-white fw-700" style="font-size: 1.1rem;">৳{{ number_format($coupon->value, 2) }}</div>
+                            @endif
+                        </td>
+                        <td>
+                            <div class="text-white" style="font-size: 0.9rem;">{{ $coupon->usage_count }}</div>
+                            <div style="font-size: 0.75rem; opacity: 0.6;">
                                 @if($coupon->usage_limit)
-                                    <small class="text-muted">/ {{ $coupon->usage_limit }}</small>
+                                    / {{ $coupon->usage_limit }}
                                 @else
-                                    <small class="text-muted">/ Unlimited</small>
+                                    / Unlimited
                                 @endif
-                            </td>
-                            <td>
-                                @if($coupon->expires_at)
-                                    <span class="text-white">{{ $coupon->expires_at->format('M d, Y') }}</span>
-                                    <br><small class="{{ $coupon->expires_at->isPast() ? 'text-danger' : 'text-success' }}">
-                                        {{ $coupon->expires_at->isPast() ? 'Expired' : $coupon->expires_at->diffForHumans() }}
-                                    </small>
-                                @else
-                                    <span class="text-muted">Never</span>
-                                @endif
-                            </td>
-                            <td>
-                                @if(!$coupon->expires_at || $coupon->expires_at->isFuture())
-                                    @if($coupon->usage_limit && $coupon->usage_count >= $coupon->usage_limit)
-                                        <span class="badge bg-danger">Exhausted</span>
-                                    @else
-                                        <span class="badge bg-success">Active / সক্রিয়</span>
-                                    @endif
-                                @else
-                                    <span class="badge bg-danger">Expired / মেয়াদ উত্তীর্ণ</span>
-                                @endif
-                            </td>
-                            <td>
-                                <div class="d-flex gap-2">
-                                    <a href="{{ route('admin.ecommerce.coupons.show', $coupon) }}"
-                                       class="btn btn-sm btn-info" title="View">
-                                        <i class="fas fa-eye"></i>
-                                    </a>
-                                    <a href="{{ route('admin.ecommerce.coupons.edit', $coupon) }}"
-                                       class="btn btn-sm btn-warning" title="Edit">
-                                        <i class="fas fa-edit"></i>
-                                    </a>
-                                    <button onclick="toggleCouponStatus({{ $coupon->id }}, '{{ strtoupper($coupon->code) }}')"
-                                            class="btn btn-sm @if(!$coupon->expires_at || $coupon->expires_at->isFuture()) btn-secondary @else btn-success @endif"
-                                            title="{{ (!$coupon->expires_at || $coupon->expires_at->isFuture()) ? 'Expire' : 'Activate' }}">
-                                        <i class="fas fa-{{ (!$coupon->expires_at || $coupon->expires_at->isFuture()) ? 'clock' : 'check' }}"></i>
-                                    </button>
-                                    <button onclick="deleteCoupon({{ $coupon->id }}, '{{ strtoupper($coupon->code) }}')"
-                                            class="btn btn-sm btn-danger" title="Delete">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
+                            </div>
+                        </td>
+                        <td>
+                            @if($coupon->expires_at)
+                                <div style="font-size: 0.85rem;">{{ $coupon->expires_at->format('M d, Y') }}</div>
+                                <div style="font-size: 0.7rem; {{ $coupon->expires_at->isPast() ? 'color: #ef4444;' : 'color: #22c55e;' }}">
+                                    {{ $coupon->expires_at->isPast() ? 'Expired' : $coupon->expires_at->diffForHumans() }}
                                 </div>
-                            </td>
-                        </tr>
+                            @else
+                                <span style="opacity: 0.5;">Never</span>
+                            @endif
+                        </td>
+                        <td>
+                            @if(!$coupon->expires_at || $coupon->expires_at->isFuture())
+                                @if($coupon->usage_limit && $coupon->usage_count >= $coupon->usage_limit)
+                                    <span class="badge badge-cancelled">Exhausted</span>
+                                @else
+                                    <span class="badge badge-approved">Active</span>
+                                @endif
+                            @else
+                                <span class="badge badge-cancelled">Expired</span>
+                            @endif
+                        </td>
+                        <td>
+                            <div class="action-buttons">
+                                <a href="{{ route('admin.ecommerce.coupons.show', $coupon) }}" class="action-btn btn-view" title="View">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                                <a href="{{ route('admin.ecommerce.coupons.edit', $coupon) }}" class="action-btn btn-edit" title="Edit">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <button onclick="toggleCouponStatus({{ $coupon->id }}, '{{ strtoupper($coupon->code) }}')"
+                                        class="action-btn @if(!$coupon->expires_at || $coupon->expires_at->isFuture()) 'btn-warning-action' @else 'btn-approve' @endif"
+                                        title="@if(!$coupon->expires_at || $coupon->expires_at->isFuture()) Expire @else Activate @endif">
+                                    <i class="fas fa-@if(!$coupon->expires_at || $coupon->expires_at->isFuture()) clock @else check @endif"></i>
+                                </button>
+                                <button onclick="deleteCoupon({{ $coupon->id }}, '{{ strtoupper($coupon->code) }}')" class="action-btn btn-delete" title="Delete">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
                     @empty
-                        <tr>
-                            <td colspan="8" class="text-center py-5">
-                                <div class="text-muted">
-                                    <i class="fas fa-ticket-alt fs-1 mb-3 d-block"></i>
-                                    <p class="text-white">No coupons found / কোন কুপন পাওয়া যায়নি</p>
-                                    <a href="{{ route('admin.ecommerce.coupons.create') }}" class="btn btn-gradient mt-3">
-                                        Create First Coupon
-                                    </a>
-                                </div>
-                            </td>
-                        </tr>
+                    <tr>
+                        <td colspan="8" class="text-center py-5">
+                            <i class="fas fa-ticket-alt" style="font-size: 48px; opacity: 0.3; margin-bottom: 1rem;"></i>
+                            <div class="text-white" style="opacity: 0.5;">No coupons found</div>
+                            <a href="{{ route('admin.ecommerce.coupons.create') }}" class="btn-gradient" style="display: inline-block; margin-top: 1rem; padding: 0.75rem 2rem; border-radius: 100px; text-decoration: none;">
+                                <i class="fas fa-plus me-2"></i>Create First Coupon
+                            </a>
+                        </td>
+                    </tr>
                     @endforelse
                 </tbody>
             </table>
         </div>
+
+        <!-- Pagination -->
+        @if($coupons->hasPages())
+        <div class="d-flex justify-content-between align-items-center mt-4 pt-4" style="border-top: 1px solid rgba(255,255,255,0.05);">
+            <div class="text-white" style="font-size: 0.85rem; opacity: 0.7;">
+                Showing {{ ($coupons->currentPage() - 1) * $coupons->perPage() + 1 }}
+                to {{ min($coupons->currentPage() * $coupons->perPage(), $coupons->total()) }}
+                of {{ $coupons->total() }} coupons
+            </div>
+            {{ $coupons->appends(['q' => $query ?? null])->links('vendor.pagination.bootstrap-5') }}
+        </div>
+        @endif
     </div>
 </div>
-
-<!-- Pagination -->
-@if($coupons->hasPages())
-    <div class="d-flex justify-content-center mt-4">
-        {{ $coupons->appends(['q' => $query ?? null])->links() }}
-    </div>
-@endif
-
-@endsection
 
 @push('scripts')
 <script>
 function toggleCouponStatus(couponId, couponCode) {
-    event.preventDefault();
-
     Swal.fire({
-        title: 'Toggle Coupon Status?',
-        text: `Are you sure you want to toggle the status of "${couponCode}"? আপনি কি নিশ্চিত?`,
+        title: 'Toggle Status?',
+        text: `Toggle status for "${couponCode}"?`,
         icon: 'question',
         showCancelButton: true,
-        confirmButtonColor: '#6c757d',
-        cancelButtonColor: '#dc3545',
+        confirmButtonColor: '#fbbf24',
+        cancelButtonColor: '#6b7280',
         confirmButtonText: 'Yes, toggle it!',
-        cancelButtonText: 'Cancel'
+        cancelButtonText: 'Cancel',
+        background: '#0f172a',
+        color: '#fff'
     }).then((result) => {
         if (result.isConfirmed) {
-            fetch(`{{ route('admin.ecommerce.coupons.toggle-status', ':id') }}`.replace(':id', couponId), {
-                method: 'POST',
-                headers: {
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    Swal.fire({
-                        title: 'Success!',
-                        text: 'Coupon status updated successfully.',
-                        icon: 'success'
-                    }).then(() => {
-                        location.reload();
-                    });
-                } else {
-                    Swal.fire({
-                        title: 'Error!',
-                        text: data.message || 'Failed to update coupon status.',
-                        icon: 'error'
-                    });
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                Swal.fire({
-                    title: 'Error!',
-                    text: 'Something went wrong.',
-                    icon: 'error'
-                });
-            });
+            window.location.href = `/admin/ecommerce/coupons/${couponId}/toggle-status`;
         }
     });
 }
 
 function deleteCoupon(couponId, couponCode) {
-    event.preventDefault();
-
     Swal.fire({
         title: 'Delete Coupon?',
-        text: `Are you sure you want to delete "${couponCode}"? আপনি কি নিশ্চিত যে আপনি এই কুপনটি মুছে ফেলতে চান?`,
+        text: `Are you sure you want to delete "${couponCode}"? This action cannot be undone.`,
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonColor: '#dc3545',
-        cancelButtonColor: '#6c757d',
+        confirmButtonColor: '#ef4444',
+        cancelButtonColor: '#6b7280',
         confirmButtonText: 'Yes, delete it!',
-        cancelButtonText: 'Cancel'
+        cancelButtonText: 'No, cancel!',
+        background: '#0f172a',
+        color: '#fff'
     }).then((result) => {
         if (result.isConfirmed) {
-            fetch(`{{ route('admin.ecommerce.coupons.destroy', ':id') }}`.replace(':id', couponId), {
-                method: 'DELETE',
-                headers: {
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success || data.redirect) {
-                    Swal.fire({
-                        title: 'Deleted!',
-                        text: 'Coupon has been deleted.',
-                        icon: 'success'
-                    }).then(() => {
-                        window.location.href = '{{ route('admin.ecommerce.coupons.index') }}';
-                    });
-                } else {
-                    Swal.fire({
-                        title: 'Error!',
-                        text: data.message || 'Failed to delete coupon.',
-                        icon: 'error'
-                    });
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                Swal.fire({
-                    title: 'Error!',
-                    text: 'Something went wrong.',
-                    icon: 'error'
-                });
-            });
+            window.location.href = `/admin/ecommerce/coupons/${couponId}`;
         }
     });
 }
 </script>
 @endpush
+
+@push('styles')
+@include('admin.ecommerce.partials.common-styles')
+
+<style>
+    .btn-warning-action {
+        background: rgba(251, 191, 36, 0.2);
+        color: #fbbf24;
+    }
+
+    .btn-warning-action:hover {
+        background: #fbbf24;
+        color: #000;
+    }
+</style>
+@endpush
+@endsection
