@@ -177,6 +177,24 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
             ->name('orders.statistics');
         Route::get('/orders/search', [App\Http\Controllers\Admin\Ecommerce\OrderController::class, 'search'])
             ->name('orders.search');
+
+        // Tags
+        Route::get('/tags', [App\Http\Controllers\Admin\Ecommerce\TagController::class, 'index'])
+            ->name('tags.index');
+        Route::get('/tags/create', [App\Http\Controllers\Admin\Ecommerce\TagController::class, 'create'])
+            ->name('tags.create');
+        Route::post('/tags', [App\Http\Controllers\Admin\Ecommerce\TagController::class, 'store'])
+            ->name('tags.store');
+        Route::get('/tags/{tag}', [App\Http\Controllers\Admin\Ecommerce\TagController::class, 'show'])
+            ->name('tags.show');
+        Route::get('/tags/{tag}/edit', [App\Http\Controllers\Admin\Ecommerce\TagController::class, 'edit'])
+            ->name('tags.edit');
+        Route::put('/tags/{tag}', [App\Http\Controllers\Admin\Ecommerce\TagController::class, 'update'])
+            ->name('tags.update');
+        Route::delete('/tags/{tag}', [App\Http\Controllers\Admin\Ecommerce\TagController::class, 'destroy'])
+            ->name('tags.destroy');
+        Route::get('/tags/search', [App\Http\Controllers\Admin\Ecommerce\TagController::class, 'search'])
+            ->name('tags.search');
     });
 });
 

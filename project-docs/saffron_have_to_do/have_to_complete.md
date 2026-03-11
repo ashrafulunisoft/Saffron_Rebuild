@@ -26,5 +26,5 @@ Sales reports
 Inventory reports
 Popular products
 Revenue charts
-7. Inventory Management
-8. Stock Management
+
+

@@ -60,6 +60,7 @@
                     <th class="text-white" style="border-color: #495057 !important;">Price</th>
                     <th class="text-white" style="border-color: #495057 !important;">Stock</th>
                     <th class="text-white" style="border-color: #495057 !important;">Category</th>
+                    <th class="text-white" style="border-color: #495057 !important;">Tags</th>
                     <th class="text-white" style="border-color: #495057 !important;">Status</th>
                     <th class="text-white" style="border-color: #495057 !important;">Actions</th>
                 </tr>
@@ -118,6 +119,18 @@
                             @endif
                         </td>
                         <td>
+                            @if($product->tags->count() > 0)
+                                @foreach($product->tags->take(2) as $tag)
+                                    <span class="badge bg-info me-1">{{ $tag->name_en }}</span>
+                                @endforeach
+                                @if($product->tags->count() > 2)
+                                    <span class="badge bg-secondary">+{{ $product->tags->count() - 2 }}</span>
+                                @endif
+                            @else
+                                <span class="text-muted">-</span>
+                            @endif
+                        </td>
+                        <td>
                             @if($product->is_active)
                                 <span class="badge bg-success">Active / সক্রিয়</span>
                             @else
@@ -153,7 +166,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="8" class="text-center py-5">
+                        <td colspan="9" class="text-center py-5">
                             <div class="text-muted">
                                 <i class="fas fa-box-open fs-1 mb-3 d-block"></i>
                                 <p class="text-white">No products found / কোন পণ্য পাওয়া যায়নি</p>

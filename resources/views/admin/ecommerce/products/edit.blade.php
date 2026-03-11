@@ -91,6 +91,25 @@
                     @enderror
                 </div>
 
+                <!-- Tags -->
+                <div class="mb-3">
+                    <label class="form-label text-white">
+                        Tags <span class="text-info">(Optional)</span>
+                    </label>
+                    <select name="tags[]" class="form-select bg-dark text-white border-secondary" multiple>
+                        @foreach($tags as $tag)
+                            <option value="{{ $tag->id }}"
+                                    @if(in_array($tag->id, old('tags', $product->tags->pluck('id')->toArray()))) selected @endif>
+                                {{ $tag->name_en }} / {{ $tag->name_bn }}
+                            </option>
+                        @endforeach
+                    </select>
+                    <small class="text-muted">Hold Ctrl/Cmd to select multiple tags</small>
+                    @error('tags')
+                        <div class="text-danger mt-2">{{ $message }}</div>
+                    @enderror
+                </div>
+
                 <!-- English Description -->
                 <div class="mb-3">
                     <label class="form-label text-white">

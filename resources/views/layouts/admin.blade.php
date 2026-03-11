@@ -554,6 +554,9 @@
                         <a href="{{ route('admin.ecommerce.products.index') }}" class="submenu-item {{ request()->routeIs('admin.ecommerce.products.*') ? 'active' : '' }}">
                             <i class="fas fa-box"></i> Products
                         </a>
+                        <a href="{{ route('admin.ecommerce.tags.index') }}" class="submenu-item {{ request()->routeIs('admin.ecommerce.tags.*') ? 'active' : '' }}">
+                            <i class="fas fa-hashtag"></i> Tags
+                        </a>
                         <a href="{{ route('admin.ecommerce.orders.index') }}" class="submenu-item {{ request()->routeIs('admin.ecommerce.orders.*') ? 'active' : '' }}">
                             <i class="fas fa-shopping-bag"></i> Orders
                         </a>
@@ -620,10 +623,10 @@
             document.getElementById('sidebarOverlay').classList.toggle('show');
         }
 
-        // Automatically open Ecommerce submenu if on category, product, or orders pages
+        // Automatically open Ecommerce submenu if on category, product, tags, or orders pages
         document.addEventListener('DOMContentLoaded', function() {
             const currentPath = window.location.pathname;
-            if (currentPath.includes('/admin/ecommerce/categories') || currentPath.includes('/admin/ecommerce/products') || currentPath.includes('/admin/ecommerce/orders')) {
+            if (currentPath.includes('/admin/ecommerce/categories') || currentPath.includes('/admin/ecommerce/products') || currentPath.includes('/admin/ecommerce/tags') || currentPath.includes('/admin/ecommerce/orders')) {
                 const ecommerceSubmenu = document.getElementById('ecommerce-submenu');
                 if (ecommerceSubmenu) {
                     ecommerceSubmenu.classList.add('active');

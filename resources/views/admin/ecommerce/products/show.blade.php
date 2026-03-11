@@ -54,6 +54,18 @@
                         </div>
                     </div>
                     <div class="row mb-3">
+                        <div class="col-sm-4"><label class="text-muted">Tags:</label></div>
+                        <div class="col-sm-8">
+                            @if($product->tags->count() > 0)
+                                @foreach($product->tags as $tag)
+                                    <span class="badge bg-info me-1">{{ $tag->name_en }}</span>
+                                @endforeach
+                            @else
+                                <span class="text-muted">No tags</span>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="row mb-3">
                         <div class="col-sm-4"><label class="text-muted">Description (EN):</label></div>
                         <div class="col-sm-8"><span class="text-white">{{ $product->description_en ?? 'N/A' }}</span></div>
                     </div>

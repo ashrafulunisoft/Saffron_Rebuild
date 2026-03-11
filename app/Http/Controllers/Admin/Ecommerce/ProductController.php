@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Ecommerce;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
@@ -18,7 +19,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::with('category')
+        $products = Product::with('category', 'tags')
             ->withCount('orderItems')
             ->orderBy('created_at', 'desc')
             ->paginate(20);
@@ -36,8 +37,9 @@ class ProductController extends Controller
     public function create()
     {
         $categories = Category::active()->orderBy('name_en')->get();
+        $tags = Tag::orderBy('name_en')->get();
 
-        return view('admin.ecommerce.products.create', compact('categories'));
+        return view('admin.ecommerce.products.create', compact('categories', 'tags'));
     }
 
     /**
@@ -58,6 +60,8 @@ class ProductController extends Controller
             'sale_price' => 'nullable|numeric|min:0',
             'stock' => 'required|integer|min:0',
             'category_id' => 'required|exists:categories,id',
+            'tags' => 'nullable|array',
+            'tags.*' => 'exists:tags,id',
             'is_featured' => 'nullable|boolean',
             'is_active' => 'nullable|boolean',
         ], [
@@ -79,7 +83,7 @@ class ProductController extends Controller
             $slug = $originalSlug . '-' . $counter++;
         }
 
-        Product::create([
+        $product = Product::create([
             'sku' => $request->sku,
             'name_en' => $request->name_en,
             'name_bn' => $request->name_bn,
@@ -93,6 +97,11 @@ class ProductController extends Controller
             'is_featured' => $request->has('is_featured') ? true : false,
             'is_active' => $request->has('is_active') ? true : false,
         ]);
+
+        // Attach tags if provided
+        if ($request->has('tags')) {
+            $product->tags()->attach($request->tags);
+        }
 
         return redirect()
             ->route('admin.ecommerce.products.index')
@@ -123,8 +132,9 @@ class ProductController extends Controller
     public function edit(Product $product)
     {
         $categories = Category::active()->orderBy('name_en')->get();
+        $tags = Tag::orderBy('name_en')->get();
 
-        return view('admin.ecommerce.products.edit', compact('product', 'categories'));
+        return view('admin.ecommerce.products.edit', compact('product', 'categories', 'tags'));
     }
 
     /**
@@ -151,6 +161,8 @@ class ProductController extends Controller
             'sale_price' => 'nullable|numeric|min:0',
             'stock' => 'required|integer|min:0',
             'category_id' => 'required|exists:categories,id',
+            'tags' => 'nullable|array',
+            'tags.*' => 'exists:tags,id',
             'is_featured' => 'nullable|boolean',
             'is_active' => 'nullable|boolean',
         ], [
@@ -188,6 +200,13 @@ class ProductController extends Controller
             'is_featured' => $request->has('is_featured') ? true : false,
             'is_active' => $request->has('is_active') ? true : false,
         ]);
+
+        // Sync tags
+        if ($request->has('tags')) {
+            $product->tags()->sync($request->tags);
+        } else {
+            $product->tags()->detach();
+        }
 
         return redirect()
             ->route('admin.ecommerce.products.index')
