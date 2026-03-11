@@ -615,6 +615,17 @@
             document.getElementById('sidebar').classList.toggle('show');
             document.getElementById('sidebarOverlay').classList.toggle('show');
         }
+
+        // Automatically open Ecommerce submenu if on category pages
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentPath = window.location.pathname;
+            if (currentPath.includes('/admin/ecommerce/categories')) {
+                const ecommerceSubmenu = document.getElementById('ecommerce-submenu');
+                if (ecommerceSubmenu) {
+                    ecommerceSubmenu.classList.add('active');
+                }
+            }
+        });
     </script>
 
     @stack('scripts')
