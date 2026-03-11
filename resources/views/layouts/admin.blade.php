@@ -575,6 +575,9 @@
                         <a href="{{ route('admin.ecommerce.reports.index') }}" class="submenu-item {{ request()->routeIs('admin.ecommerce.reports.*') ? 'active' : '' }}">
                             <i class="fas fa-chart-bar"></i> Reports
                         </a>
+                        <a href="{{ route('admin.ecommerce.blog.index') }}" class="submenu-item {{ request()->routeIs('admin.ecommerce.blog.*') ? 'active' : '' }}">
+                            <i class="fas fa-newspaper"></i> Blog Management
+                        </a>
                     </div>
                 </div>
 
@@ -638,7 +641,7 @@
         // Automatically open Ecommerce submenu if on category, product, tags, reviews, coupons, orders, customers, b2b, or reports pages
         document.addEventListener('DOMContentLoaded', function() {
             const currentPath = window.location.pathname;
-            if (currentPath.includes('/admin/ecommerce/categories') || currentPath.includes('/admin/ecommerce/products') || currentPath.includes('/admin/ecommerce/tags') || currentPath.includes('/admin/ecommerce/reviews') || currentPath.includes('/admin/ecommerce/coupons') || currentPath.includes('/admin/ecommerce/orders') || currentPath.includes('/admin/ecommerce/customers') || currentPath.includes('/admin/ecommerce/b2b') || currentPath.includes('/admin/ecommerce/reports')) {
+            if (currentPath.includes('/admin/ecommerce/categories') || currentPath.includes('/admin/ecommerce/products') || currentPath.includes('/admin/ecommerce/tags') || currentPath.includes('/admin/ecommerce/reviews') || currentPath.includes('/admin/ecommerce/coupons') || currentPath.includes('/admin/ecommerce/orders') || currentPath.includes('/admin/ecommerce/customers') || currentPath.includes('/admin/ecommerce/b2b') || currentPath.includes('/admin/ecommerce/reports') || currentPath.includes('/admin/ecommerce/blog')) {
                 const ecommerceSubmenu = document.getElementById('ecommerce-submenu');
                 if (ecommerceSubmenu) {
                     ecommerceSubmenu.classList.add('active');

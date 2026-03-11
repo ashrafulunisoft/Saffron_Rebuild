@@ -293,6 +293,24 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
             ->name('reports.revenue');
         Route::get('/reports/dashboard-summary', [App\Http\Controllers\Admin\Ecommerce\ReportController::class, 'dashboardSummary'])
             ->name('reports.dashboard-summary');
+
+        // Blog Management
+        Route::get('/blog', [App\Http\Controllers\Admin\BlogController::class, 'index'])
+            ->name('blog.index');
+        Route::get('/blog/create', [App\Http\Controllers\Admin\BlogController::class, 'create'])
+            ->name('blog.create');
+        Route::post('/blog', [App\Http\Controllers\Admin\BlogController::class, 'store'])
+            ->name('blog.store');
+        Route::get('/blog/{blog}', [App\Http\Controllers\Admin\BlogController::class, 'show'])
+            ->name('blog.show');
+        Route::get('/blog/{blog}/edit', [App\Http\Controllers\Admin\BlogController::class, 'edit'])
+            ->name('blog.edit');
+        Route::put('/blog/{blog}', [App\Http\Controllers\Admin\BlogController::class, 'update'])
+            ->name('blog.update');
+        Route::delete('/blog/{blog}', [App\Http\Controllers\Admin\BlogController::class, 'destroy'])
+            ->name('blog.destroy');
+        Route::post('/blog/{blog}/toggle-status', [App\Http\Controllers\Admin\BlogController::class, 'toggleStatus'])
+            ->name('blog.toggle-status');
     });
 });
 
