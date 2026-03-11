@@ -17,7 +17,19 @@ class TagController extends Controller
             ->orderBy('name_en')
             ->paginate(20);
 
-        return view('admin.ecommerce.tags.index', compact('tags'));
+        // Statistics for the view
+        $totalTags = Tag::count();
+        $usedTags = Tag::has('products')->count();
+        $unusedTags = Tag::doesntHave('products')->count();
+        $totalProducts = Tag::withCount('products')->get()->sum('products_count');
+
+        return view('admin.ecommerce.tags.index', compact(
+            'tags',
+            'totalTags',
+            'usedTags',
+            'unusedTags',
+            'totalProducts'
+        ));
     }
 
     /**

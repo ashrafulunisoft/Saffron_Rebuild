@@ -3,199 +3,186 @@
 @section('title', 'Reviews - Saffron Admin')
 
 @section('content')
-<div class="header-section">
-    <div>
-        <h2 class="fw-bold text-white mb-1">Reviews <span class="text-white">রিভিউ</span></h2>
-        <p class="text-white mb-0">Manage customer reviews and ratings</p>
-    </div>
-</div>
+<div class="container-fluid">
+    <div class="glass-card glass-card-dark">
+        <!-- Header -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2.5rem; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 1.5rem;">
+            <div class="d-flex align-items-center gap-3">
+                <div class="logo-vms" style="width: 44px; height: 44px; font-size: 1.2rem; background: linear-gradient(135deg, var(--accent-blue), #8b5cf6);">S</div>
+                <div>
+                    <h6 class="fw-800 mb-0 text-white text-shadow-white" style="font-size: 1.1rem;">SAFFRON</h6>
+                    <span class="permission-title" style="font-size: 0.7rem; margin: 0; text-shadow-blue">REVIEW MANAGEMENT</span>
+                </div>
+            </div>
+            <h2 class="fw-800 mb-0 text-white letter-spacing-1 text-shadow-white" style="font-size: 2rem;">Reviews</h2>
+        </div>
 
-<!-- Statistics Cards -->
-<div class="row mb-4">
-    <div class="col-md-4">
-        <div class="card bg-dark border-secondary mb-3">
-            <div class="card-body">
-                <div class="d-flex align-items-center">
-                    <div class="flex-shrink-0">
-                        <div class="bg-primary rounded p-3">
-                            <i class="fas fa-star text-white fs-4"></i>
+        <!-- Statistics Cards -->
+        <div class="row g-4 mb-5">
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-white mb-2" style="font-size: 0.85rem; opacity: 0.7;">Total Reviews</h6>
+                            <h3 class="text-white fw-800 mb-0">{{ $totalReviews ?? $reviews->total() }}</h3>
+                        </div>
+                        <div class="stat-icon" style="background: rgba(59, 130, 246, 0.2);">
+                            <i class="fas fa-star" style="color: var(--accent-blue);"></i>
                         </div>
                     </div>
-                    <div class="flex-grow-1 ms-3">
-                        <h6 class="text-muted mb-1">Total Reviews</h6>
-                        <h3 class="fw-bold text-white mb-0">{{ $reviews->total() }}</h3>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-white mb-2" style="font-size: 0.85rem; opacity: 0.7;">Pending</h6>
+                            <h3 class="text-white fw-800 mb-0">{{ $pendingReviews }}</h3>
+                        </div>
+                        <div class="stat-icon" style="background: rgba(251, 191, 36, 0.2);">
+                            <i class="fas fa-clock" style="color: #fbbf24;"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-white mb-2" style="font-size: 0.85rem; opacity: 0.7;">Approved</h6>
+                            <h3 class="text-white fw-800 mb-0">{{ $approvedReviews }}</h3>
+                        </div>
+                        <div class="stat-icon" style="background: rgba(34, 197, 94, 0.2);">
+                            <i class="fas fa-check-circle" style="color: #22c55e;"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-white mb-2" style="font-size: 0.85rem; opacity: 0.7;">Avg Rating</h6>
+                            <h3 class="text-white fw-800 mb-0">{{ number_format($averageRating, 1) }}</h3>
+                        </div>
+                        <div class="stat-icon" style="background: rgba(168, 85, 247, 0.2);">
+                            <i class="fas fa-award" style="color: #a855f7;"></i>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="col-md-4">
-        <div class="card bg-dark border-secondary mb-3">
-            <div class="card-body">
-                <div class="d-flex align-items-center">
-                    <div class="flex-shrink-0">
-                        <div class="bg-warning rounded p-3">
-                            <i class="fas fa-clock text-white fs-4"></i>
-                        </div>
-                    </div>
-                    <div class="flex-grow-1 ms-3">
-                        <h6 class="text-muted mb-1">Pending Approval</h6>
-                        <h3 class="fw-bold text-white mb-0">{{ $pendingCount }}</h3>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="card bg-dark border-secondary mb-3">
-            <div class="card-body">
-                <div class="d-flex align-items-center">
-                    <div class="flex-shrink-0">
-                        <div class="bg-success rounded p-3">
-                            <i class="fas fa-check-circle text-white fs-4"></i>
-                        </div>
-                    </div>
-                    <div class="flex-grow-1 ms-3">
-                        <h6 class="text-muted mb-1">Approved</h6>
-                        <h3 class="fw-bold text-white mb-0">{{ $approvedCount }}</h3>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
-<!-- Filter & Search -->
-<div class="glass-card mb-4">
-    <div class="card-body bg-dark">
-        <div class="row g-3">
+        <!-- Filter & Search -->
+        <div class="row g-3 mb-4">
             <div class="col-md-6">
-                <form action="{{ route('admin.ecommerce.reviews.search') }}" method="GET" class="d-flex gap-2">
-                    <div class="input-group flex-grow-1">
-                        <span class="input-group-text bg-dark border-secondary text-white">
-                            <i class="fas fa-search"></i>
-                        </span>
+                <form action="{{ route('admin.ecommerce.reviews.search') }}" method="GET">
+                    <div class="position-relative">
                         <input type="text"
                                name="q"
-                               class="form-control bg-dark text-white border-secondary"
+                               class="input-dark input-custom"
                                placeholder="Search reviews... / রিভিউ খুঁজুন..."
                                value="{{ $query ?? '' }}">
-                        <button type="submit" class="btn btn-gradient">Search</button>
+                        <i class="fas fa-search input-icon"></i>
                     </div>
-                    @isset($query)
-                        <a href="{{ route('admin.ecommerce.reviews.index') }}" class="btn btn-outline-secondary">
-                            <i class="fas fa-times me-2"></i>Clear
-                        </a>
-                    @endisset
                 </form>
             </div>
             <div class="col-md-6">
                 <div class="d-flex gap-2">
                     <a href="{{ route('admin.ecommerce.reviews.index') }}"
-                       class="btn flex-grow-1 @if(!request()->routeIs('admin.ecommerce.reviews.pending') && !request()->routeIs('admin.ecommerce.reviews.approved')) btn-gradient @else btn-outline-secondary @endif">
-                        <i class="fas fa-list me-2"></i> All Reviews
+                       class="btn flex-grow-1 @if(request()->routeIs('admin.ecommerce.reviews.index')) btn-gradient @else btn-outline @endif"
+                       style="padding: 0.75rem 1.5rem; border-radius: 100px; text-decoration: none;">
+                        <i class="fas fa-list me-2"></i> All
                     </a>
                     <a href="{{ route('admin.ecommerce.reviews.pending') }}"
-                       class="btn flex-grow-1 @if(request()->routeIs('admin.ecommerce.reviews.pending')) btn-warning @else btn-outline-secondary @endif">
-                        <i class="fas fa-clock me-2"></i> Pending ({{ $pendingCount }})
+                       class="btn flex-grow-1 @if(request()->routeIs('admin.ecommerce.reviews.pending')) btn-gradient @else btn-outline @endif"
+                       style="padding: 0.75rem 1.5rem; border-radius: 100px; text-decoration: none;">
+                        <i class="fas fa-clock me-2"></i> Pending
                     </a>
                     <a href="{{ route('admin.ecommerce.reviews.approved') }}"
-                       class="btn flex-grow-1 @if(request()->routeIs('admin.ecommerce.reviews.approved')) btn-success @else btn-outline-secondary @endif">
+                       class="btn flex-grow-1 @if(request()->routeIs('admin.ecommerce.reviews.approved')) btn-gradient @else btn-outline @endif"
+                       style="padding: 0.75rem 1.5rem; border-radius: 100px; text-decoration: none;">
                         <i class="fas fa-check me-2"></i> Approved
                     </a>
                 </div>
             </div>
         </div>
-    </div>
-</div>
 
-<!-- Reviews Table -->
-<div class="glass-card">
-    <div class="card-body bg-dark p-0">
-        <div class="table-responsive">
-            <table class="table table-hover table-dark mb-0" style="background: transparent !important;">
-                <thead class="table-dark">
+        <!-- Reviews Table -->
+        <div class="table-responsive mb-4" style="background: rgba(15, 23, 42, 0.4); border-radius: 16px;">
+            <table class="table-custom">
+                <thead>
                     <tr>
-                        <th class="text-white" style="border-color: #495057 !important;">ID</th>
-                        <th class="text-white" style="border-color: #495057 !important;">Product</th>
-                        <th class="text-white" style="border-color: #495057 !important;">Customer</th>
-                        <th class="text-white" style="border-color: #495057 !important;">Rating</th>
-                        <th class="text-white" style="border-color: #495057 !important;">Comment</th>
-                        <th class="text-white" style="border-color: #495057 !important;">Status</th>
-                        <th class="text-white" style="border-color: #495057 !important;">Date</th>
-                        <th class="text-white" style="border-color: #495057 !important;">Actions</th>
+                        <th style="width: 60px;">#</th>
+                        <th>Product</th>
+                        <th>Customer</th>
+                        <th>Rating</th>
+                        <th>Comment</th>
+                        <th>Status</th>
+                        <th>Date</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse($reviews as $review)
-                        <tr style="border-color: #495057 !important;">
-                            <td><code class="text-warning">#{{ $review->id }}</code></td>
+                    @forelse($reviews as $index => $review)
+                        <tr>
+                            <td>{{ ($reviews->currentPage() - 1) * $reviews->perPage() + $index + 1 }}</td>
                             <td>
-                                <div class="fw-bold text-white">{{ $review->product->name_en ?? 'N/A' }}</div>
-                                <small class="text-info">{{ $review->product->name_bn ?? '' }}</small>
+                                <div class="fw-700 text-white">{{ $review->product->name_en ?? 'N/A' }}</div>
+                                <div style="font-size: 0.75rem; opacity: 0.6;">{{ $review->product->name_bn ?? '' }}</div>
                             </td>
                             <td>
-                                <div class="fw-bold text-white">{{ $review->user->name ?? 'Guest' }}</div>
-                                <small class="text-muted">{{ $review->user->email ?? 'N/A' }}</small>
+                                <div class="fw-700 text-white">{{ $review->user->name ?? 'Guest' }}</div>
+                                <div style="font-size: 0.75rem; opacity: 0.6;">{{ $review->user->email ?? 'N/A' }}</div>
                             </td>
                             <td>
-                                @for($i = 1; $i <= 5; $i++)
-                                    @if($i <= $review->rating)
-                                        <i class="fas fa-star text-warning"></i>
-                                    @else
-                                        <i class="far fa-star text-muted"></i>
-                                    @endif
-                                @endfor
-                                <span class="text-white ms-1">{{ $review->rating }}/5</span>
+                                <span style="color: #fbbf24; margin-right: 0.25rem;">
+                                    @for($i = 1; $i <= 5; $i++)
+                                        @if($i <= $review->rating)
+                                            <i class="fas fa-star" style="font-size: 0.85rem;"></i>
+                                        @else
+                                            <i class="far fa-star" style="font-size: 0.85rem; opacity: 0.4;"></i>
+                                        @endif
+                                    @endfor
+                                </span>
+                                <span class="text-white fw-700">{{ $review->rating }}</span>
                             </td>
                             <td>
-                                <div class="text-white" style="max-width: 250px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                                <div style="max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 0.85rem;">
                                     {{ $review->comment ?? 'No comment' }}
                                 </div>
                             </td>
                             <td>
                                 @if($review->is_approved)
-                                    <span class="badge bg-success">Approved / অনুমোদিত</span>
+                                    <span class="badge badge-approved">Approved</span>
                                 @else
-                                    <span class="badge bg-warning">Pending / মুলতুব্বর</span>
+                                    <span class="badge badge-pending">Pending</span>
                                 @endif
                             </td>
                             <td>
-                                <span class="text-white">{{ $review->created_at->format('M d, Y') }}</span>
+                                <div style="font-size: 0.85rem;">{{ $review->created_at->format('M d, Y') }}</div>
                             </td>
                             <td>
-                                <div class="d-flex gap-2">
-                                    <a href="{{ route('admin.ecommerce.reviews.show', $review) }}"
-                                       class="btn btn-sm btn-info" title="View">
+                                <div class="action-buttons">
+                                    <a href="{{ route('admin.ecommerce.reviews.show', $review) }}" class="action-btn btn-view" title="View">
                                         <i class="fas fa-eye"></i>
                                     </a>
                                     @if(!$review->is_approved)
-                                        <form action="{{ route('admin.ecommerce.reviews.approve', $review) }}"
-                                              method="POST"
-                                              style="display: inline;">
+                                        <form action="{{ route('admin.ecommerce.reviews.approve', $review) }}" method="POST" style="display: inline;">
                                             @csrf
-                                            <button type="submit"
-                                                    class="btn btn-sm btn-success"
-                                                    title="Approve"
-                                                    onclick="return confirm('Approve this review? এই রিভিউ অনুমোদন করবেন?')">
+                                            <button type="submit" class="action-btn btn-approve" title="Approve">
                                                 <i class="fas fa-check"></i>
                                             </button>
                                         </form>
                                     @else
-                                        <form action="{{ route('admin.ecommerce.reviews.reject', $review) }}"
-                                              method="POST"
-                                              style="display: inline;">
+                                        <form action="{{ route('admin.ecommerce.reviews.reject', $review) }}" method="POST" style="display: inline;">
                                             @csrf
-                                            <button type="submit"
-                                                    class="btn btn-sm btn-warning"
-                                                    title="Reject"
-                                                    onclick="return confirm('Reject this review? এই রিভিউ প্রত্যাখ্যান করবেন?')">
+                                            <button type="submit" class="action-btn btn-edit" title="Reject">
                                                 <i class="fas fa-times"></i>
                                             </button>
                                         </form>
                                     @endif
-                                    <button onclick="deleteReview({{ $review->id }}, '{{ $review->user->name ?? 'Guest' }}')"
-                                            class="btn btn-sm btn-danger" title="Delete">
+                                    <button onclick="deleteReview({{ $review->id }}, '{{ $review->user->name ?? 'Guest' }}')" class="action-btn btn-delete" title="Delete">
                                         <i class="fas fa-trash"></i>
                                     </button>
                                 </div>
@@ -204,27 +191,136 @@
                     @empty
                         <tr>
                             <td colspan="8" class="text-center py-5">
-                                <div class="text-muted">
-                                    <i class="fas fa-star fs-1 mb-3 d-block"></i>
-                                    <p class="text-white">No reviews found / কোন রিভিউ পাওয়া যায়নি</p>
-                                </div>
+                                <i class="fas fa-star" style="font-size: 48px; opacity: 0.3; margin-bottom: 1rem;"></i>
+                                <div class="text-white" style="opacity: 0.5;">No reviews found</div>
                             </td>
                         </tr>
                     @endforelse
                 </tbody>
             </table>
         </div>
+
+        <!-- Pagination Info -->
+        @if($reviews->hasPages())
+            <div class="d-flex justify-content-between align-items-center" style="background: rgba(15, 23, 42, 0.4); border-radius: 12px; padding: 1rem 1.5rem;">
+                <div class="text-white" style="font-size: 0.85rem; opacity: 0.7;">
+                    Showing <strong>{{ ($reviews->currentPage() - 1) * $reviews->perPage() + 1 }}</strong> to
+                    <strong>{{ min($reviews->currentPage() * $reviews->perPage(), $reviews->total()) }}</strong> of
+                    <strong>{{ $reviews->total() }}</strong> reviews
+                </div>
+                <div>
+                    {{ $reviews->appends(['q' => $query ?? null])->links('vendor.pagination.bootstrap-5') }}
+                </div>
+            </div>
+        @endif
     </div>
 </div>
 
-<!-- Pagination -->
-@if($reviews->hasPages())
-    <div class="d-flex justify-content-center mt-4">
-        {{ $reviews->appends(['q' => $query ?? null])->links() }}
-    </div>
-@endif
+@push('styles')
+@include('admin.ecommerce.partials.common-styles')
 
-@endsection
+<style>
+    .input-dark {
+        background: rgba(15, 23, 42, 0.6);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: #fff;
+        padding: 0.75rem 1rem 0.75rem 2.75rem;
+        border-radius: 12px;
+        transition: 0.3s;
+        width: 100%;
+    }
+
+    .input-dark:focus {
+        border-color: var(--accent-blue);
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+        outline: none;
+    }
+
+    .input-dark::placeholder {
+        color: rgba(255, 255, 255, 0.3);
+    }
+
+    .input-custom {
+        font-size: 0.9rem;
+    }
+
+    .input-icon {
+        position: absolute;
+        left: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: rgba(255, 255, 255, 0.4);
+        pointer-events: none;
+    }
+
+    .btn-gradient {
+        background: linear-gradient(135deg, var(--accent-blue), #8b5cf6);
+        color: #fff;
+        border: none;
+        transition: 0.3s;
+    }
+
+    .btn-gradient:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
+    }
+
+    .btn-outline {
+        background: transparent;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: #fff;
+        transition: 0.3s;
+    }
+
+    .btn-outline:hover {
+        border-color: var(--accent-blue);
+        background: rgba(59, 130, 246, 0.1);
+    }
+
+    .glass-card-dark {
+        background: rgba(15, 23, 42, 0.8);
+        backdrop-filter: blur(25px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 24px;
+        padding: 2.5rem;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 40px rgba(59, 130, 246, 0.1);
+    }
+
+    .logo-vms {
+        background: linear-gradient(135deg, var(--accent-blue), #8b5cf6);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 800;
+        color: #fff;
+        box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+    }
+
+    .letter-spacing-1 {
+        letter-spacing: 1px;
+    }
+
+    .permission-title {
+        color: var(--accent-blue);
+        font-size: 0.85rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        margin-bottom: 1.5rem;
+        padding-bottom: 0.75rem;
+        border-bottom: 2px solid rgba(59, 130, 246, 0.3);
+    }
+
+    .text-shadow-white {
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .text-shadow-blue {
+        text-shadow: 0 2px 4px rgba(59, 130, 246, 0.3);
+    }
+</style>
+@endpush
 
 @push('scripts')
 <script>
@@ -279,3 +375,4 @@ function deleteReview(reviewId, customerName) {
 }
 </script>
 @endpush
+@endsection

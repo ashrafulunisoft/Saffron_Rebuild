@@ -17,10 +17,19 @@ class ReviewController extends Controller
             ->orderBy('created_at', 'desc')
             ->paginate(20);
 
-        $pendingCount = Review::pending()->count();
-        $approvedCount = Review::approved()->count();
+        // Statistics for the view
+        $totalReviews = Review::count();
+        $pendingReviews = Review::pending()->count();
+        $approvedReviews = Review::approved()->count();
+        $averageRating = Review::approved()->avg('rating') ?? 0;
 
-        return view('admin.ecommerce.reviews.index', compact('reviews', 'pendingCount', 'approvedCount'));
+        return view('admin.ecommerce.reviews.index', compact(
+            'reviews',
+            'totalReviews',
+            'pendingReviews',
+            'approvedReviews',
+            'averageRating'
+        ));
     }
 
     /**
@@ -33,10 +42,19 @@ class ReviewController extends Controller
             ->orderBy('created_at', 'desc')
             ->paginate(20);
 
-        $pendingCount = Review::pending()->count();
-        $approvedCount = Review::approved()->count();
+        // Statistics for the view
+        $totalReviews = Review::count();
+        $pendingReviews = Review::pending()->count();
+        $approvedReviews = Review::approved()->count();
+        $averageRating = Review::approved()->avg('rating') ?? 0;
 
-        return view('admin.ecommerce.reviews.index', compact('reviews', 'pendingCount', 'approvedCount'));
+        return view('admin.ecommerce.reviews.index', compact(
+            'reviews',
+            'totalReviews',
+            'pendingReviews',
+            'approvedReviews',
+            'averageRating'
+        ));
     }
 
     /**
@@ -49,10 +67,19 @@ class ReviewController extends Controller
             ->orderBy('created_at', 'desc')
             ->paginate(20);
 
-        $pendingCount = Review::pending()->count();
-        $approvedCount = Review::approved()->count();
+        // Statistics for the view
+        $totalReviews = Review::count();
+        $pendingReviews = Review::pending()->count();
+        $approvedReviews = Review::approved()->count();
+        $averageRating = Review::approved()->avg('rating') ?? 0;
 
-        return view('admin.ecommerce.reviews.index', compact('reviews', 'pendingCount', 'approvedCount'));
+        return view('admin.ecommerce.reviews.index', compact(
+            'reviews',
+            'totalReviews',
+            'pendingReviews',
+            'approvedReviews',
+            'averageRating'
+        ));
     }
 
     /**
@@ -167,9 +194,19 @@ class ReviewController extends Controller
             ->orderBy('created_at', 'desc')
             ->paginate(20);
 
-        $pendingCount = Review::pending()->count();
-        $approvedCount = Review::approved()->count();
+        // Statistics for the view
+        $totalReviews = Review::count();
+        $pendingReviews = Review::pending()->count();
+        $approvedReviews = Review::approved()->count();
+        $averageRating = Review::approved()->avg('rating') ?? 0;
 
-        return view('admin.ecommerce.reviews.index', compact('reviews', 'pendingCount', 'approvedCount', 'query'));
+        return view('admin.ecommerce.reviews.index', compact(
+            'reviews',
+            'query',
+            'totalReviews',
+            'pendingReviews',
+            'approvedReviews',
+            'averageRating'
+        ));
     }
 }
