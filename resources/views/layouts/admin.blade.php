@@ -540,12 +540,24 @@
                 {{-- <a href="{{ route('admin.visitor.list') }}" class="sidebar-item {{ request()->routeIs('admin.visitor.list') ? 'active' : '' }}"><i class="fas fa-users"></i> Visitor List</a> --}}
 
                 {{-- ======================================== --}}
-                {{-- ECOMMERCE MENU (COMING SOON) --}}
+                {{-- ECOMMERCE MENU --}}
                 {{-- ======================================== --}}
-                {{-- <a href="#" class="sidebar-item"><i class="fas fa-shopping-cart"></i> Products</a> --}}
-                {{-- <a href="#" class="sidebar-item"><i class="fas fa-shopping-bag"></i> Orders</a> --}}
-                {{-- <a href="#" class="sidebar-item"><i class="fas fa-tags"></i> Categories</a> --}}
-                {{-- <a href="#" class="sidebar-item"><i class="fas fa-ticket-alt"></i> Coupons</a> --}}
+                <div class="sidebar-dropdown">
+                    <a href="#" class="sidebar-item d-flex align-items-center" onclick="toggleSubmenu(event)">
+                        <i class="fas fa-store"></i> Ecommerce
+                        <i class="fas fa-chevron-down ms-auto small opacity-50"></i>
+                    </a>
+                    <div class="sidebar-submenu" id="ecommerce-submenu">
+                        <a href="{{ route('admin.ecommerce.categories.index') }}" class="submenu-item {{ request()->routeIs('admin.ecommerce.categories.*') ? 'active' : '' }}">
+                            <i class="fas fa-tags"></i> Categories
+                        </a>
+                        {{-- <a href="#" class="submenu-item"><i class="fas fa-box"></i> Products</a> --}}
+                        {{-- <a href="#" class="submenu-item"><i class="fas fa-shopping-bag"></i> Orders</a> --}}
+                        {{-- <a href="#" class="submenu-item"><i class="fas fa-ticket-alt"></i> Coupons</a> --}}
+                        {{-- <a href="#" class="submenu-item"><i class="fas fa-star"></i> Reviews</a> --}}
+                        {{-- <a href="#" class="submenu-item"><i class="fas fa-chart-bar"></i> Reports</a> --}}
+                    </div>
+                </div>
 
                 <a href="{{ route('admin.profile') }}" class="sidebar-item {{ request()->routeIs('admin.profile') ? 'active' : '' }}"><i class="fas fa-user"></i> My Profile</a>
                 {{-- <a href="#" class="sidebar-item"><i class="fas fa-history"></i> View History</a> --}}
@@ -585,7 +597,17 @@
     <script>
         function toggleSubmenu(e) {
             e.preventDefault();
-            const submenu = document.getElementById('rbac-submenu');
+            const clickedItem = e.currentTarget;
+            const submenu = clickedItem.nextElementSibling;
+
+            // Close all other submenus
+            document.querySelectorAll('.sidebar-submenu').forEach(menu => {
+                if (menu !== submenu) {
+                    menu.classList.remove('active');
+                }
+            });
+
+            // Toggle clicked submenu
             submenu.classList.toggle('active');
         }
 

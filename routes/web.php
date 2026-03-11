@@ -103,6 +103,33 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/role/assign/create', [AdminController::class, 'createAssignRole'])->name('admin.role.assign.create');
     Route::post('/admin/role/assign/store', [AdminController::class, 'storeAssignRole'])->name('admin.role.assign.store');
     Route::post('/admin/role/assign/remove', [AdminController::class, 'removeUserRole'])->name('admin.role.assign.remove');
+
+    /*
+    |--------------------------------------------------------------------------
+    | Admin Ecommerce Routes
+    |--------------------------------------------------------------------------
+    */
+    Route::prefix('admin/ecommerce')->name('admin.ecommerce.')->group(function () {
+        // Categories
+        Route::get('/categories', [App\Http\Controllers\Admin\Ecommerce\CategoryController::class, 'index'])
+            ->name('categories.index');
+        Route::get('/categories/create', [App\Http\Controllers\Admin\Ecommerce\CategoryController::class, 'create'])
+            ->name('categories.create');
+        Route::post('/categories', [App\Http\Controllers\Admin\Ecommerce\CategoryController::class, 'store'])
+            ->name('categories.store');
+        Route::get('/categories/{category}', [App\Http\Controllers\Admin\Ecommerce\CategoryController::class, 'show'])
+            ->name('categories.show');
+        Route::get('/categories/{category}/edit', [App\Http\Controllers\Admin\Ecommerce\CategoryController::class, 'edit'])
+            ->name('categories.edit');
+        Route::put('/categories/{category}', [App\Http\Controllers\Admin\Ecommerce\CategoryController::class, 'update'])
+            ->name('categories.update');
+        Route::delete('/categories/{category}', [App\Http\Controllers\Admin\Ecommerce\CategoryController::class, 'destroy'])
+            ->name('categories.destroy');
+        Route::post('/categories/{category}/toggle', [App\Http\Controllers\Admin\Ecommerce\CategoryController::class, 'toggleStatus'])
+            ->name('categories.toggle');
+        Route::get('/categories/search', [App\Http\Controllers\Admin\Ecommerce\CategoryController::class, 'search'])
+            ->name('categories.search');
+    });
 });
 
 /*
