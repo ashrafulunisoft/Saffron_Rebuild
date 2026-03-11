@@ -404,21 +404,35 @@ function loadDashboardSummary() {
 
 function loadSalesReport() {
     fetch('{{ route('admin.ecommerce.reports.sales') }}')
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
         .then(data => {
-            // Update summary
-            document.getElementById('growthRate').textContent = data.forecast?.growth_rate + '%';
+            console.log('Sales data loaded:', data);
+            console.log('Top products:', data.top_products);
+            console.log('Top products length:', data.top_products?.length);
 
             // Sales by day chart
             const salesCtx = document.getElementById('salesChart').getContext('2d');
             if (salesChart) salesChart.destroy();
+
+            const salesLabels = data.sales_by_day && data.sales_by_day.length > 0
+                ? data.sales_by_day.map(item => item.date)
+                : ['No Data'];
+            const salesData = data.sales_by_day && data.sales_by_day.length > 0
+                ? data.sales_by_day.map(item => item.total)
+                : [0];
+
             salesChart = new Chart(salesCtx, {
                 type: 'line',
                 data: {
-                    labels: data.sales_by_day.map(item => item.date),
+                    labels: salesLabels,
                     datasets: [{
                         label: 'Revenue (৳)',
-                        data: data.sales_by_day.map(item => item.total),
+                        data: salesData,
                         borderColor: 'rgb(75, 192, 192)',
                         backgroundColor: 'rgba(75, 192, 192, 0.2)',
                         tension: 0.4
@@ -438,12 +452,20 @@ function loadSalesReport() {
             // Sales by status chart
             const statusCtx = document.getElementById('statusChart').getContext('2d');
             if (statusChart) statusChart.destroy();
+
+            const statusLabels = data.sales_by_status && data.sales_by_status.length > 0
+                ? data.sales_by_status.map(item => item.status)
+                : ['No Orders'];
+            const statusData = data.sales_by_status && data.sales_by_status.length > 0
+                ? data.sales_by_status.map(item => item.total)
+                : [1];
+
             statusChart = new Chart(statusCtx, {
                 type: 'doughnut',
                 data: {
-                    labels: data.sales_by_status.map(item => item.status),
+                    labels: statusLabels,
                     datasets: [{
-                        data: data.sales_by_status.map(item => item.total),
+                        data: statusData,
                         backgroundColor: ['#ffc107', '#17a2b8', '#28a745', '#dc3545', '#6c757d']
                     }]
                 },
@@ -456,17 +478,47 @@ function loadSalesReport() {
 
             // Top products table
             const tbody = document.getElementById('topProductsBody');
-            tbody.innerHTML = data.top_products.map(product => `
+            if (data.top_products && data.top_products.length > 0) {
+                tbody.innerHTML = data.top_products.map(product => `
+                    <tr>
+                        <td>
+                            <div class="fw-bold text-white">${product.product?.name_en || 'N/A'}</div>
+                            <small class="text-info">${product.product?.name_bn || ''}</small>
+                        </td>
+                        <td><span class="badge bg-secondary">${product.product?.category?.name_en || 'N/A'}</span></td>
+                        <td><span class="badge bg-primary">${product.total_sold}</span></td>
+                        <td><span class="text-success fw-bold">৳${product.revenue}</span></td>
+                    </tr>
+                `).join('');
+            } else {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="4" class="text-center py-4">
+                            <div class="text-muted">
+                                <i class="fas fa-box-open fs-1 mb-3 d-block"></i>
+                                <p class="text-white">No sales data yet / এখনও কোনো বিক্রয়র তথ্য নেই</p>
+                                <small>Sales will appear here once orders are placed</small>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }
+        })
+        .catch(error => {
+            console.error('Error loading sales report:', error);
+            // Show error in top products table
+            const tbody = document.getElementById('topProductsBody');
+            tbody.innerHTML = `
                 <tr>
-                    <td>
-                        <div class="fw-bold text-white">${product.product?.name_en || 'N/A'}</div>
-                        <small class="text-info">${product.product?.name_bn || ''}</small>
+                    <td colspan="4" class="text-center py-4">
+                        <div class="text-danger">
+                            <i class="fas fa-exclamation-circle fs-1 mb-3 d-block"></i>
+                            <p>Error loading sales data</p>
+                            <small>${error.message}</small>
+                        </div>
                     </td>
-                    <td><span class="badge bg-secondary">${product.product?.category?.name_en || 'N/A'}</span></td>
-                    <td><span class="badge bg-primary">${product.total_sold}</span></td>
-                    <td><span class="text-success fw-bold">৳${product.revenue}</span></td>
                 </tr>
-            `).join('');
+            `;
         });
 }
 
@@ -502,21 +554,35 @@ function loadInventoryReport() {
 
             // Low stock table
             const tbody = document.getElementById('lowStockTableBody');
-            tbody.innerHTML = data.low_stock_products.map(product => `
-                <tr>
-                    <td>
-                        <div class="fw-bold text-white">${product.name_en}</div>
-                        <small class="text-info">${product.name_bn}</small>
-                    </td>
-                    <td><code class="text-warning">${product.sku}</code></td>
-                    <td><span class="badge ${product.stock <= 5 ? 'bg-danger' : 'bg-warning'}">${product.stock}</span></td>
-                    <td>
-                        ${product.stock === 0 ? '<span class="badge bg-danger">Out of Stock</span>' :
-                          product.stock <= 5 ? '<span class="badge bg-danger">Critical</span>' :
-                          '<span class="badge bg-warning">Low</span>'}
-                    </td>
-                </tr>
-            `).join('');
+            if (data.low_stock_products && data.low_stock_products.length > 0) {
+                tbody.innerHTML = data.low_stock_products.map(product => `
+                    <tr>
+                        <td>
+                            <div class="fw-bold text-white">${product.name_en}</div>
+                            <small class="text-info">${product.name_bn}</small>
+                        </td>
+                        <td><code class="text-warning">${product.sku}</code></td>
+                        <td><span class="badge ${product.stock <= 5 ? 'bg-danger' : 'bg-warning'}">${product.stock}</span></td>
+                        <td>
+                            ${product.stock === 0 ? '<span class="badge bg-danger">Out of Stock</span>' :
+                              product.stock <= 5 ? '<span class="badge bg-danger">Critical</span>' :
+                              '<span class="badge bg-warning">Low</span>'}
+                        </td>
+                    </tr>
+                `).join('');
+            } else {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="4" class="text-center py-4">
+                            <div class="text-muted">
+                                <i class="fas fa-check-circle fs-1 mb-3 d-block"></i>
+                                <p class="text-white">All products are well stocked! / সব পণ্য ভালো মজুত!</p>
+                                <small>No low stock products to display</small>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }
         });
 }
 
@@ -526,64 +592,94 @@ function loadPopularProducts() {
         .then(data => {
             // Most sold
             const mostSold = document.getElementById('mostSoldList');
-            mostSold.innerHTML = data.most_sold.map((item, index) => `
-                <div class="d-flex align-items-center mb-3 p-2 bg-secondary rounded">
-                    <div class="flex-shrink-0">
-                        <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
-                            ${index + 1}
+            if (data.most_sold && data.most_sold.length > 0) {
+                mostSold.innerHTML = data.most_sold.map((item, index) => `
+                    <div class="d-flex align-items-center mb-3 p-2 bg-secondary rounded">
+                        <div class="flex-shrink-0">
+                            <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                                ${index + 1}
+                            </div>
+                        </div>
+                        <div class="flex-grow-1 ms-3">
+                            <div class="fw-bold text-white">${item.product?.name_en || 'N/A'}</div>
+                            <small class="text-info">${item.product?.category?.name_en || 'N/A'}</small>
+                        </div>
+                        <div class="text-end">
+                            <div class="text-white">${item.total_sold} sold</div>
+                            <small class="text-success">৳${item.revenue}</small>
                         </div>
                     </div>
-                    <div class="flex-grow-1 ms-3">
-                        <div class="fw-bold text-white">${item.product?.name_en || 'N/A'}</div>
-                        <small class="text-info">${item.product?.category?.name_en || 'N/A'}</small>
+                `).join('');
+            } else {
+                mostSold.innerHTML = `
+                    <div class="text-center py-4">
+                        <i class="fas fa-box-open text-muted fs-1 mb-3 d-block"></i>
+                        <p class="text-white">No sales yet / এখনও কোনো বিক্রয় নেই</p>
+                        <small class="text-muted">Sales will appear here once orders are placed</small>
                     </div>
-                    <div class="text-end">
-                        <div class="text-white">${item.total_sold} sold</div>
-                        <small class="text-success">৳${item.revenue}</small>
-                    </div>
-                </div>
-            `).join('');
+                `;
+            }
 
             // Most viewed
             const mostViewed = document.getElementById('mostViewedList');
-            mostViewed.innerHTML = data.most_viewed.map((product, index) => `
-                <div class="d-flex align-items-center mb-3 p-2 bg-secondary rounded">
-                    <div class="flex-shrink-0">
-                        <div class="bg-info text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
-                            ${index + 1}
+            if (data.most_viewed && data.most_viewed.length > 0) {
+                mostViewed.innerHTML = data.most_viewed.map((product, index) => `
+                    <div class="d-flex align-items-center mb-3 p-2 bg-secondary rounded">
+                        <div class="flex-shrink-0">
+                            <div class="bg-info text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                                ${index + 1}
+                            </div>
+                        </div>
+                        <div class="flex-grow-1 ms-3">
+                            <div class="fw-bold text-white">${product.name_en}</div>
+                            <small class="text-info">${product.category?.name_en || 'N/A'}</small>
+                        </div>
+                        <div class="text-end">
+                            <div class="text-white">${product.views} views</div>
                         </div>
                     </div>
-                    <div class="flex-grow-1 ms-3">
-                        <div class="fw-bold text-white">${product.name_en}</div>
-                        <small class="text-info">${product.category?.name_en || 'N/A'}</small>
+                `).join('');
+            } else {
+                mostViewed.innerHTML = `
+                    <div class="text-center py-4">
+                        <i class="fas fa-eye text-muted fs-1 mb-3 d-block"></i>
+                        <p class="text-white">No views yet / এখনও কোনো ভিউ নেই</p>
+                        <small class="text-muted">Product views will be tracked here</small>
                     </div>
-                    <div class="text-end">
-                        <div class="text-white">${product.views} views</div>
-                    </div>
-                </div>
-            `).join('');
+                `;
+            }
 
             // Top rated
             const topRated = document.getElementById('topRatedList');
-            topRated.innerHTML = data.top_rated.map((product, index) => `
-                <div class="d-flex align-items-center mb-3 p-2 bg-secondary rounded">
-                    <div class="flex-shrink-0">
-                        <div class="bg-success text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
-                            ${index + 1}
+            if (data.top_rated && data.top_rated.length > 0) {
+                topRated.innerHTML = data.top_rated.map((product, index) => `
+                    <div class="d-flex align-items-center mb-3 p-2 bg-secondary rounded">
+                        <div class="flex-shrink-0">
+                            <div class="bg-success text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                                ${index + 1}
+                            </div>
+                        </div>
+                        <div class="flex-grow-1 ms-3">
+                            <div class="fw-bold text-white">${product.name_en}</div>
+                            <div class="text-warning">
+                                ${'★'.repeat(Math.round(product.average_rating))}${'☆'.repeat(5 - Math.round(product.average_rating))}
+                            </div>
+                        </div>
+                        <div class="text-end">
+                            <div class="text-white">${product.average_rating.toFixed(1)}</div>
+                            <small class="text-muted">${product.reviews_count} reviews</small>
                         </div>
                     </div>
-                    <div class="flex-grow-1 ms-3">
-                        <div class="fw-bold text-white">${product.name_en}</div>
-                        <div class="text-warning">
-                            ${'★'.repeat(Math.round(product.average_rating))}${'☆'.repeat(5 - Math.round(product.average_rating))}
-                        </div>
+                `).join('');
+            } else {
+                topRated.innerHTML = `
+                    <div class="text-center py-4">
+                        <i class="fas fa-star text-muted fs-1 mb-3 d-block"></i>
+                        <p class="text-white">No reviews yet / এখনও কোনো রিভিউ নেই</p>
+                        <small class="text-muted">Approved reviews will appear here</small>
                     </div>
-                    <div class="text-end">
-                        <div class="text-white">${product.average_rating.toFixed(1)}</div>
-                        <small class="text-muted">${product.reviews_count} reviews</small>
-                    </div>
-                </div>
-            `).join('');
+                `;
+            }
         });
 }
 
@@ -592,21 +688,32 @@ function loadRevenueData(period) {
         .then(response => response.json())
         .then(data => {
             // Update forecast
-            document.getElementById('lastMonthRevenue').textContent = data.forecast.last_month_revenue;
-            document.getElementById('forecastRevenue').textContent = data.forecast.forecast;
-            document.getElementById('revenueGrowthRate').textContent = data.forecast.growth_rate + '%';
+            document.getElementById('lastMonthRevenue').textContent = data.forecast?.last_month_revenue || '0.00';
+            document.getElementById('forecastRevenue').textContent = data.forecast?.forecast || '0.00';
+            document.getElementById('revenueGrowthRate').textContent = (data.forecast?.growth_rate || 0) + '%';
 
             // Revenue chart
             const revenueCtx = document.getElementById('revenueChart').getContext('2d');
             if (revenueChart) revenueChart.destroy();
+
+            const revenueLabels = data.revenue_data && data.revenue_data.length > 0
+                ? data.revenue_data.map(item => item.date)
+                : ['No Data'];
+            const revenueData = data.revenue_data && data.revenue_data.length > 0
+                ? data.revenue_data.map(item => item.revenue)
+                : [0];
+            const cumulativeData = data.revenue_data && data.revenue_data.length > 0
+                ? data.revenue_data.map(item => item.cumulative)
+                : [0];
+
             revenueChart = new Chart(revenueCtx, {
                 type: 'line',
                 data: {
-                    labels: data.revenue_data.map(item => item.date),
+                    labels: revenueLabels,
                     datasets: [
                         {
                             label: 'Revenue',
-                            data: data.revenue_data.map(item => item.revenue),
+                            data: revenueData,
                             borderColor: 'rgb(75, 192, 192)',
                             backgroundColor: 'rgba(75, 192, 192, 0.2)',
                             fill: true,
@@ -614,7 +721,7 @@ function loadRevenueData(period) {
                         },
                         {
                             label: 'Cumulative',
-                            data: data.revenue_data.map(item => item.cumulative),
+                            data: cumulativeData,
                             borderColor: 'rgb(255, 99, 132)',
                             backgroundColor: 'rgba(255, 99, 132, 0.2)',
                             fill: true,
@@ -636,13 +743,21 @@ function loadRevenueData(period) {
             // Revenue by category chart
             const revCatCtx = document.getElementById('revenueByCategoryChart').getContext('2d');
             if (revenueByCategoryChart) revenueByCategoryChart.destroy();
+
+            const categoryLabels = data.revenue_by_category && data.revenue_by_category.length > 0
+                ? data.revenue_by_category.map(item => item.category)
+                : ['No Data'];
+            const categoryRevenue = data.revenue_by_category && data.revenue_by_category.length > 0
+                ? data.revenue_by_category.map(item => item.revenue)
+                : [0];
+
             revenueByCategoryChart = new Chart(revCatCtx, {
                 type: 'bar',
                 data: {
-                    labels: data.revenue_by_category.map(item => item.category),
+                    labels: categoryLabels,
                     datasets: [{
                         label: 'Revenue (৳)',
-                        data: data.revenue_by_category.map(item => item.revenue),
+                        data: categoryRevenue,
                         backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40']
                     }]
                 },

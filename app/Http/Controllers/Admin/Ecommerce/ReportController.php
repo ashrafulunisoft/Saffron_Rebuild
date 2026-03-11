@@ -54,12 +54,16 @@ class ReportController extends Controller
         $topProducts = OrderItem::whereHas('order', function ($query) use ($startDate, $endDate) {
             $query->whereBetween('created_at', [$startDate, $endDate]);
         })
-            ->select('product_id', DB::raw('SUM(quantity) as total_sold'), DB::raw('SUM(subtotal) as revenue'))
-            ->with('product')
+            ->select('product_id', DB::raw('SUM(quantity) as total_sold'), DB::raw('SUM(price * quantity) as revenue'))
+            ->with('product.category')
             ->groupBy('product_id')
             ->orderBy('total_sold', 'desc')
             ->limit(10)
-            ->get();
+            ->get()
+            ->filter(function ($item) {
+                return $item->product !== null;
+            })
+            ->values(); // Reset collection keys after filtering
 
         return response()->json([
             'summary' => [
