@@ -21,6 +21,7 @@ class Coupon extends Model
         'max_discount',
         'expires_at',
         'usage_limit',
+        'usage_count',
     ];
 
     /**
@@ -34,6 +35,8 @@ class Coupon extends Model
             'value' => 'decimal:2',
             'max_discount' => 'decimal:2',
             'expires_at' => 'datetime',
+            'usage_count' => 'integer',
+            'usage_limit' => 'integer',
         ];
     }
 
@@ -42,11 +45,33 @@ class Coupon extends Model
      */
     public function isValid()
     {
+        // Check expiration
         if ($this->expires_at && $this->expires_at->isPast()) {
             return false;
         }
 
+        // Check usage limit
+        if ($this->usage_limit && $this->usage_count >= $this->usage_limit) {
+            return false;
+        }
+
         return true;
+    }
+
+    /**
+     * Get the orders that use this coupon.
+     */
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
+
+    /**
+     * Increment usage count.
+     */
+    public function incrementUsage()
+    {
+        $this->increment('usage_count');
     }
 
     /**

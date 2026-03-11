@@ -217,6 +217,28 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
             ->name('reviews.statistics');
         Route::get('/reviews/search', [App\Http\Controllers\Admin\Ecommerce\ReviewController::class, 'search'])
             ->name('reviews.search');
+
+        // Coupons
+        Route::get('/coupons', [App\Http\Controllers\Admin\Ecommerce\CouponController::class, 'index'])
+            ->name('coupons.index');
+        Route::get('/coupons/create', [App\Http\Controllers\Admin\Ecommerce\CouponController::class, 'create'])
+            ->name('coupons.create');
+        Route::post('/coupons', [App\Http\Controllers\Admin\Ecommerce\CouponController::class, 'store'])
+            ->name('coupons.store');
+        Route::get('/coupons/{coupon}', [App\Http\Controllers\Admin\Ecommerce\CouponController::class, 'show'])
+            ->name('coupons.show');
+        Route::get('/coupons/{coupon}/edit', [App\Http\Controllers\Admin\Ecommerce\CouponController::class, 'edit'])
+            ->name('coupons.edit');
+        Route::put('/coupons/{coupon}', [App\Http\Controllers\Admin\Ecommerce\CouponController::class, 'update'])
+            ->name('coupons.update');
+        Route::delete('/coupons/{coupon}', [App\Http\Controllers\Admin\Ecommerce\CouponController::class, 'destroy'])
+            ->name('coupons.destroy');
+        Route::post('/coupons/{coupon}/toggle-status', [App\Http\Controllers\Admin\Ecommerce\CouponController::class, 'toggleStatus'])
+            ->name('coupons.toggle-status');
+        Route::get('/coupons/search', [App\Http\Controllers\Admin\Ecommerce\CouponController::class, 'search'])
+            ->name('coupons.search');
+        Route::get('/coupons/statistics', [App\Http\Controllers\Admin\Ecommerce\CouponController::class, 'statistics'])
+            ->name('coupons.statistics');
     });
 });
 

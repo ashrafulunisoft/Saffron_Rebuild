@@ -24,6 +24,7 @@ class Order extends Model
         'payment_method',
         'payment_status',
         'shipping_address',
+        'coupon_id',
     ];
 
     /**
@@ -46,6 +47,14 @@ class Order extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Get the coupon used for the order.
+     */
+    public function coupon()
+    {
+        return $this->belongsTo(Coupon::class);
     }
 
     /**

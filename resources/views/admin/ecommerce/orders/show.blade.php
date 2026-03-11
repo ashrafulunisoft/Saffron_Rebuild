@@ -82,6 +82,14 @@
                         <div class="col-sm-6"><label class="text-muted">Subtotal:</label></div>
                         <div class="col-sm-6"><span class="text-white">৳{{ number_format($order->total_amount, 2) }}</span></div>
                     </div>
+                    @if($order->coupon)
+                        <div class="row mb-3">
+                            <div class="col-sm-6"><label class="text-muted">Coupon Applied:</label></div>
+                            <div class="col-sm-6">
+                                <span class="badge bg-primary">{{ strtoupper($order->coupon->code) }}</span>
+                            </div>
+                        </div>
+                    @endif
                     <div class="row mb-3">
                         <div class="col-sm-6"><label class="text-muted">Discount:</label></div>
                         <div class="col-sm-6"><span class="text-danger">-৳{{ number_format($order->discount, 2) }}</span></div>
