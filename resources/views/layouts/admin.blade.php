@@ -551,7 +551,9 @@
                         <a href="{{ route('admin.ecommerce.categories.index') }}" class="submenu-item {{ request()->routeIs('admin.ecommerce.categories.*') ? 'active' : '' }}">
                             <i class="fas fa-tags"></i> Categories
                         </a>
-                        {{-- <a href="#" class="submenu-item"><i class="fas fa-box"></i> Products</a> --}}
+                        <a href="{{ route('admin.ecommerce.products.index') }}" class="submenu-item {{ request()->routeIs('admin.ecommerce.products.*') ? 'active' : '' }}">
+                            <i class="fas fa-box"></i> Products
+                        </a>
                         {{-- <a href="#" class="submenu-item"><i class="fas fa-shopping-bag"></i> Orders</a> --}}
                         {{-- <a href="#" class="submenu-item"><i class="fas fa-ticket-alt"></i> Coupons</a> --}}
                         {{-- <a href="#" class="submenu-item"><i class="fas fa-star"></i> Reviews</a> --}}
@@ -616,10 +618,10 @@
             document.getElementById('sidebarOverlay').classList.toggle('show');
         }
 
-        // Automatically open Ecommerce submenu if on category pages
+        // Automatically open Ecommerce submenu if on category or product pages
         document.addEventListener('DOMContentLoaded', function() {
             const currentPath = window.location.pathname;
-            if (currentPath.includes('/admin/ecommerce/categories')) {
+            if (currentPath.includes('/admin/ecommerce/categories') || currentPath.includes('/admin/ecommerce/products')) {
                 const ecommerceSubmenu = document.getElementById('ecommerce-submenu');
                 if (ecommerceSubmenu) {
                     ecommerceSubmenu.classList.add('active');

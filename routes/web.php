@@ -129,6 +129,28 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
             ->name('categories.toggle');
         Route::get('/categories/search', [App\Http\Controllers\Admin\Ecommerce\CategoryController::class, 'search'])
             ->name('categories.search');
+
+        // Products
+        Route::get('/products', [App\Http\Controllers\Admin\Ecommerce\ProductController::class, 'index'])
+            ->name('products.index');
+        Route::get('/products/create', [App\Http\Controllers\Admin\Ecommerce\ProductController::class, 'create'])
+            ->name('products.create');
+        Route::post('/products', [App\Http\Controllers\Admin\Ecommerce\ProductController::class, 'store'])
+            ->name('products.store');
+        Route::get('/products/{product}', [App\Http\Controllers\Admin\Ecommerce\ProductController::class, 'show'])
+            ->name('products.show');
+        Route::get('/products/{product}/edit', [App\Http\Controllers\Admin\Ecommerce\ProductController::class, 'edit'])
+            ->name('products.edit');
+        Route::put('/products/{product}', [App\Http\Controllers\Admin\Ecommerce\ProductController::class, 'update'])
+            ->name('products.update');
+        Route::delete('/products/{product}', [App\Http\Controllers\Admin\Ecommerce\ProductController::class, 'destroy'])
+            ->name('products.destroy');
+        Route::post('/products/{product}/toggle-featured', [App\Http\Controllers\Admin\Ecommerce\ProductController::class, 'toggleFeatured'])
+            ->name('products.toggle-featured');
+        Route::post('/products/{product}/toggle-status', [App\Http\Controllers\Admin\Ecommerce\ProductController::class, 'toggleStatus'])
+            ->name('products.toggle-status');
+        Route::get('/products/search', [App\Http\Controllers\Admin\Ecommerce\ProductController::class, 'search'])
+            ->name('products.search');
     });
 });
 
