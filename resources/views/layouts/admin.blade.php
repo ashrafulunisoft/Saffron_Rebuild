@@ -566,6 +566,9 @@
                         <a href="{{ route('admin.ecommerce.orders.index') }}" class="submenu-item {{ request()->routeIs('admin.ecommerce.orders.*') ? 'active' : '' }}">
                             <i class="fas fa-shopping-bag"></i> Orders
                         </a>
+                        <a href="{{ route('admin.ecommerce.customers.index') }}" class="submenu-item {{ request()->routeIs('admin.ecommerce.customers.*') ? 'active' : '' }}">
+                            <i class="fas fa-users"></i> Customers
+                        </a>
                         <a href="{{ route('admin.ecommerce.reports.index') }}" class="submenu-item {{ request()->routeIs('admin.ecommerce.reports.*') ? 'active' : '' }}">
                             <i class="fas fa-chart-bar"></i> Reports
                         </a>

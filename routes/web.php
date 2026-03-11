@@ -240,6 +240,22 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::get('/coupons/statistics', [App\Http\Controllers\Admin\Ecommerce\CouponController::class, 'statistics'])
             ->name('coupons.statistics');
 
+        // Customers
+        Route::get('/customers', [App\Http\Controllers\Admin\Ecommerce\CustomerController::class, 'index'])
+            ->name('customers.index');
+        Route::get('/customers/{customer}', [App\Http\Controllers\Admin\Ecommerce\CustomerController::class, 'show'])
+            ->name('customers.show');
+        Route::put('/customers/{customer}', [App\Http\Controllers\Admin\Ecommerce\CustomerController::class, 'update'])
+            ->name('customers.update');
+        Route::post('/customers/{customer}/toggle-ban', [App\Http\Controllers\Admin\Ecommerce\CustomerController::class, 'toggleBan'])
+            ->name('customers.toggle-ban');
+        Route::delete('/customers/{customer}', [App\Http\Controllers\Admin\Ecommerce\CustomerController::class, 'destroy'])
+            ->name('customers.destroy');
+        Route::get('/customers/statistics', [App\Http\Controllers\Admin\Ecommerce\CustomerController::class, 'statistics'])
+            ->name('customers.statistics');
+        Route::get('/customers/search', [App\Http\Controllers\Admin\Ecommerce\CustomerController::class, 'search'])
+            ->name('customers.search');
+
         // Reports
         Route::get('/reports', [App\Http\Controllers\Admin\Ecommerce\ReportController::class, 'index'])
             ->name('reports.index');
