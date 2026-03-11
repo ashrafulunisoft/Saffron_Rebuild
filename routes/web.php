@@ -151,6 +151,22 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
             ->name('products.toggle-status');
         Route::get('/products/search', [App\Http\Controllers\Admin\Ecommerce\ProductController::class, 'search'])
             ->name('products.search');
+
+        // Orders
+        Route::get('/orders', [App\Http\Controllers\Admin\Ecommerce\OrderController::class, 'index'])
+            ->name('orders.index');
+        Route::get('/orders/{order}', [App\Http\Controllers\Admin\Ecommerce\OrderController::class, 'show'])
+            ->name('orders.show');
+        Route::put('/orders/{order}', [App\Http\Controllers\Admin\Ecommerce\OrderController::class, 'update'])
+            ->name('orders.update');
+        Route::delete('/orders/{order}', [App\Http\Controllers\Admin\Ecommerce\OrderController::class, 'destroy'])
+            ->name('orders.destroy');
+        Route::post('/orders/{order}/status', [App\Http\Controllers\Admin\Ecommerce\OrderController::class, 'updateStatus'])
+            ->name('orders.status');
+        Route::get('/orders/statistics', [App\Http\Controllers\Admin\Ecommerce\OrderController::class, 'statistics'])
+            ->name('orders.statistics');
+        Route::get('/orders/search', [App\Http\Controllers\Admin\Ecommerce\OrderController::class, 'search'])
+            ->name('orders.search');
     });
 });
 
