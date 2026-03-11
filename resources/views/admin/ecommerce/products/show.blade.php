@@ -208,6 +208,62 @@
     </div>
 </div>
 
+<!-- Customer Reviews -->
+<div class="glass-card">
+    <div class="card-header bg-warning border-secondary">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h5 class="mb-0 text-white"><i class="fas fa-star me-2"></i>Customer Reviews ({{ $product->approvedReviews()->count() }})</h5>
+                @if($product->approvedReviews()->count() > 0)
+                    <small class="text-white-50">Average Rating: {{ number_format($product->average_rating, 1) }} / 5</small>
+                @endif
+            </div>
+            <a href="{{ route('admin.ecommerce.reviews.index') }}" class="btn btn-sm btn-light">Manage All Reviews</a>
+        </div>
+    </div>
+    <div class="card-body bg-dark">
+        @if($product->approvedReviews()->count() > 0)
+            <div class="row">
+                @foreach($product->approvedReviews()->latest()->take(6) as $review)
+                    <div class="col-md-6 mb-3">
+                        <div class="card bg-secondary border-0">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <div>
+                                        <div class="fw-bold text-white">{{ $review->user->name ?? 'Guest' }}</div>
+                                        <small class="text-white-50">{{ $review->created_at->format('M d, Y') }}</small>
+                                    </div>
+                                    <div>
+                                        @for($i = 1; $i <= 5; $i++)
+                                            @if($i <= $review->rating)
+                                                <i class="fas fa-star text-warning"></i>
+                                            @else
+                                                <i class="far fa-star text-muted"></i>
+                                            @endif
+                                        @endfor
+                                    </div>
+                                </div>
+                                @if($review->comment)
+                                    <p class="text-white mb-0" style="white-space: pre-wrap;">{{ Str::limit($review->comment, 150) }}</p>
+                                @endif
+                                <div class="mt-2">
+                                    <a href="{{ route('admin.ecommerce.reviews.show', $review) }}" class="btn btn-sm btn-outline-light">View Details</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        @else
+            <div class="text-center py-4">
+                <i class="fas fa-star text-muted fs-1 mb-3 d-block"></i>
+                <p class="text-white">No approved reviews yet.</p>
+                <small class="text-muted">Approved reviews will appear here.</small>
+            </div>
+        @endif
+    </div>
+</div>
+
 <!-- Recent Orders -->
 <div class="glass-card">
     <div class="card-header bg-info border-secondary">

@@ -78,6 +78,30 @@ class Product extends Model
     }
 
     /**
+     * Get approved reviews for the product.
+     */
+    public function approvedReviews()
+    {
+        return $this->reviews()->approved();
+    }
+
+    /**
+     * Get the average rating of approved reviews.
+     */
+    public function getAverageRatingAttribute()
+    {
+        return $this->approvedReviews()->avg('rating') ?? 0;
+    }
+
+    /**
+     * Get the count of approved reviews.
+     */
+    public function getApprovedReviewsCountAttribute()
+    {
+        return $this->approvedReviews()->count();
+    }
+
+    /**
      * Get the order items for the product.
      */
     public function orderItems()

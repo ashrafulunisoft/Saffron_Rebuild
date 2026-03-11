@@ -120,6 +120,9 @@ class ProductController extends Controller
             $query->latest()->take(10);
         }]);
 
+        // Load approved reviews for display
+        $product->load('approvedReviews');
+
         return view('admin.ecommerce.products.show', compact('product'));
     }
 

@@ -19,6 +19,7 @@ class Review extends Model
         'product_id',
         'rating',
         'comment',
+        'is_approved',
     ];
 
     /**
@@ -30,6 +31,7 @@ class Review extends Model
     {
         return [
             'rating' => 'integer',
+            'is_approved' => 'boolean',
         ];
     }
 
@@ -55,5 +57,21 @@ class Review extends Model
     public function scopeWithRating($query, $rating)
     {
         return $query->where('rating', $rating);
+    }
+
+    /**
+     * Scope to get approved reviews.
+     */
+    public function scopeApproved($query)
+    {
+        return $query->where('is_approved', true);
+    }
+
+    /**
+     * Scope to get pending reviews.
+     */
+    public function scopePending($query)
+    {
+        return $query->where('is_approved', false);
     }
 }

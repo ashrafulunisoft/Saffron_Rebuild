@@ -195,6 +195,28 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
             ->name('tags.destroy');
         Route::get('/tags/search', [App\Http\Controllers\Admin\Ecommerce\TagController::class, 'search'])
             ->name('tags.search');
+
+        // Reviews
+        Route::get('/reviews', [App\Http\Controllers\Admin\Ecommerce\ReviewController::class, 'index'])
+            ->name('reviews.index');
+        Route::get('/reviews/pending', [App\Http\Controllers\Admin\Ecommerce\ReviewController::class, 'pending'])
+            ->name('reviews.pending');
+        Route::get('/reviews/approved', [App\Http\Controllers\Admin\Ecommerce\ReviewController::class, 'approved'])
+            ->name('reviews.approved');
+        Route::get('/reviews/{review}', [App\Http\Controllers\Admin\Ecommerce\ReviewController::class, 'show'])
+            ->name('reviews.show');
+        Route::put('/reviews/{review}', [App\Http\Controllers\Admin\Ecommerce\ReviewController::class, 'update'])
+            ->name('reviews.update');
+        Route::post('/reviews/{review}/approve', [App\Http\Controllers\Admin\Ecommerce\ReviewController::class, 'approve'])
+            ->name('reviews.approve');
+        Route::post('/reviews/{review}/reject', [App\Http\Controllers\Admin\Ecommerce\ReviewController::class, 'reject'])
+            ->name('reviews.reject');
+        Route::delete('/reviews/{review}', [App\Http\Controllers\Admin\Ecommerce\ReviewController::class, 'destroy'])
+            ->name('reviews.destroy');
+        Route::get('/reviews/statistics', [App\Http\Controllers\Admin\Ecommerce\ReviewController::class, 'statistics'])
+            ->name('reviews.statistics');
+        Route::get('/reviews/search', [App\Http\Controllers\Admin\Ecommerce\ReviewController::class, 'search'])
+            ->name('reviews.search');
     });
 });
 
