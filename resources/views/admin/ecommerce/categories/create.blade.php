@@ -17,95 +17,99 @@
     <form action="{{ route('admin.ecommerce.categories.store') }}" method="POST">
         @csrf
 
-        <!-- English Name -->
-        <div class="mb-4">
-            <label class="form-label">
-                <i class="fas fa-language text-primary"></i>
-                Category Name (English) <span class="text-danger">*</span>
-            </label>
-            <input type="text"
-                   name="name_en"
-                   class="input-dark"
-                   placeholder="e.g., Cakes"
-                   value="{{ old('name_en') }}"
-                   required
-                   autofocus>
-            @error('name_en')
-                <div class="text-danger mt-2">{{ $message }}</div>
-            @enderror
-        </div>
+        <div class="card bg-dark border-secondary mb-4">
+            <div class="card-header bg-secondary border-secondary">
+                <h5 class="mb-0 text-white"><i class="fas fa-language text-primary me-2"></i>Category Information</h5>
+            </div>
+            <div class="card-body">
+                <!-- English Name -->
+                <div class="mb-3">
+                    <label class="form-label text-white">
+                        Category Name (English) <span class="text-danger">*</span>
+                    </label>
+                    <input type="text"
+                           name="name_en"
+                           class="form-control bg-dark text-white border-secondary"
+                           placeholder="e.g., Cakes"
+                           value="{{ old('name_en') }}"
+                           required
+                           autofocus>
+                    @error('name_en')
+                        <div class="text-danger mt-2">{{ $message }}</div>
+                    @enderror
+                </div>
 
-        <!-- Bengali Name -->
-        <div class="mb-4">
-            <label class="form-label">
-                <i class="fas fa-language text-success"></i>
-                Category Name (Bengali) <span class="text-danger">*</span>
-            </label>
-            <input type="text"
-                   name="name_bn"
-                   class="input-dark"
-                   placeholder="উদাহরণ: কেক"
-                   value="{{ old('name_bn') }}"
-                   required>
-            @error('name_bn')
-                <div class="text-danger mt-2">{{ $message }}</div>
-            @enderror
-        </div>
+                <!-- Bengali Name -->
+                <div class="mb-3">
+                    <label class="form-label text-white">
+                        Category Name (Bengali) <span class="text-danger">*</span>
+                    </label>
+                    <input type="text"
+                           name="name_bn"
+                           class="form-control bg-dark text-white border-secondary"
+                           placeholder="উদাহরণ: কেক"
+                           value="{{ old('name_bn') }}"
+                           required>
+                    @error('name_bn')
+                        <div class="text-danger mt-2">{{ $message }}</div>
+                    @enderror
+                </div>
 
-        <!-- Parent Category -->
-        <div class="mb-4">
-            <label class="form-label">
-                <i class="fas fa-sitemap text-info"></i>
-                Parent Category (Optional) / প্যারেন্ট ক্যাটাগরি (ঐচ্ছিক)
-            </label>
-            <select name="parent_id" class="input-dark">
-                <option value="">No Parent (Root Category)</option>
-                @foreach($parentCategories as $parent)
-                    <option value="{{ $parent->id }}"
-                            @if(old('parent_id') == $parent->id) selected @endif>
-                        {{ $parent->name_en }} / {{ $parent->name_bn }}
-                    </option>
-                @endforeach
-            </select>
-            @error('parent_id')
-                <div class="text-danger mt-2">{{ $message }}</div>
-            @enderror
-        </div>
+                <!-- Parent Category -->
+                <div class="mb-3">
+                    <label class="form-label text-white">
+                        Parent Category (Optional) / প্যারেন্ট ক্যাটাগরি (ঐচ্ছিক)
+                    </label>
+                    <select name="parent_id" class="form-select bg-dark text-white border-secondary">
+                        <option value="">No Parent (Root Category)</option>
+                        @foreach($parentCategories as $parent)
+                            <option value="{{ $parent->id }}"
+                                    @if(old('parent_id') == $parent->id) selected @endif>
+                                {{ $parent->name_en }} / {{ $parent->name_bn }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('parent_id')
+                        <div class="text-danger mt-2">{{ $message }}</div>
+                    @enderror
+                </div>
 
-        <!-- Status -->
-        <div class="mb-4">
-            <label class="checkbox-label">
-                <input type="checkbox" name="is_active" value="1" class="checkbox-custom" checked>
-                <span class="ms-2">
-                    <strong>Active / সক্রিয়</strong>
-                    <small class="d-block text-muted">Show this category on the website</small>
-                </span>
-            </label>
+                <!-- Status -->
+                <div class="mb-3">
+                    <div class="form-check">
+                        <input type="checkbox" name="is_active" value="1" class="form-check-input" id="isActive" checked>
+                        <label class="form-check-label text-white" for="isActive">
+                            <strong>Active / সক্রিয়</strong>
+                            <small class="d-block text-muted">Show this category on the website</small>
+                        </label>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- Preview Box -->
-        <div class="help-center-box p-3 mb-4" style="margin-top: 0;">
-            <h6 class="fw-bold text-white mb-2">
-                <i class="fas fa-info-circle"></i> Category Preview
-            </h6>
-            <div class="text-white-50" style="font-size: 12px;">
-                <div class="mb-2">
-                    <strong>Slug will be auto-generated:</strong><br>
-                    <code id="slugPreview" class="text-info">category-name</code>
+        <div class="card bg-dark border-secondary mb-4">
+            <div class="card-header bg-info border-secondary">
+                <h6 class="mb-0 text-white"><i class="fas fa-eye me-2"></i>Category Preview</h6>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <label class="text-muted small">Slug will be auto-generated:</label>
+                    <div><code id="slugPreview" class="text-warning fs-6">category-name</code></div>
                 </div>
                 <div>
-                    <strong>Display:</strong><br>
-                    <span id="namePreview">Category Name / ক্যাটাগরি নাম</span>
+                    <label class="text-muted small">Display:</label>
+                    <div id="namePreview" class="text-white">Category Name / ক্যাটাগরি নাম</div>
                 </div>
             </div>
         </div>
 
         <!-- Buttons -->
-        <div class="d-flex gap-3 mt-5">
+        <div class="d-flex gap-3">
             <button type="submit" class="btn btn-gradient flex-grow-1">
                 <i class="fas fa-save me-2"></i> Save Category / সংরক্ষণ করুন
             </button>
-            <a href="{{ route('admin.ecommerce.categories.index') }}" class="btn btn-outline">
+            <a href="{{ route('admin.ecommerce.categories.index') }}" class="btn btn-outline-secondary">
                 <i class="fas fa-times me-2"></i> Cancel
             </a>
         </div>

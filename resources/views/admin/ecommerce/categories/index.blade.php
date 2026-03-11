@@ -5,8 +5,8 @@
 @section('content')
 <div class="header-section">
     <div>
-        <h2 class="fw-bold text-white mb-1">Categories <span class="text-muted">ক্যাটাগরি</span></h2>
-        <p class="text-muted mb-0">Manage product categories with bilingual support</p>
+        <h2 class="fw-bold text-white mb-1">Categories <span class="text-white">ক্যাটাগরি</span></h2>
+        <p class="text-white mb-0">Manage product categories with bilingual support</p>
     </div>
     <div>
         <a href="{{ route('admin.ecommerce.categories.create') }}" class="btn btn-gradient">
@@ -17,12 +17,30 @@
 
 <div class="glass-card">
     <!-- Search and Filter -->
-    <div class="row mb-4">
+    <div class="row mb-4 p-4">
         <div class="col-md-6">
-            <input type="text" id="categorySearch" class="input-dark" placeholder="Search categories... / ক্যাটাগরি খুঁজুন...">
+            <div class="input-group">
+                <span class="input-group-text bg-dark text-white border-secondary">
+                    <i class="fas fa-search"></i>
+                </span>
+                <input type="text" id="categorySearch" class="form-control bg-dark text-white border-secondary" placeholder="Search categories... / ক্যাটাগরি খুঁজুন..." style="color: white;">
+            </div>
+            <style>
+                #categorySearch::placeholder {
+                    color: #adb5bd !important;
+                    opacity: 1 !important;
+                }
+                #categorySearch::-webkit-input-placeholder {
+                    color: #adb5bd !important;
+                }
+                #categorySearch::-moz-placeholder {
+                    color: #adb5bd !important;
+                    opacity: 1 !important;
+                }
+            </style>
         </div>
         <div class="col-md-6 text-end">
-            <select class="input-dark" id="parentFilter" style="width: auto; display: inline-block;">
+            <select class="form-select bg-dark text-white border-secondary d-inline-block" id="parentFilter" style="width: auto;">
                 <option value="">All Categories / সকল ক্যাটাগরি</option>
                 @foreach($parentCategories as $parent)
                     <option value="{{ $parent->id }}">{{ $parent->name_en }} / {{ $parent->name_bn }}</option>
@@ -32,27 +50,27 @@
     </div>
 
     <!-- Categories Table -->
-    <div class="table-responsive">
-        <table class="table" id="categoriesTable">
-            <thead>
+    <div class="table-responsive p-4">
+        <table class="table table-hover table-dark" id="categoriesTable" style="background: transparent !important;">
+            <thead class="table-dark">
                 <tr>
-                    <th>Name (EN) / নাম (বাংলা)</th>
-                    <th>Slug</th>
-                    <th>Parent</th>
-                    <th>Products</th>
-                    <th>Status</th>
-                    <th>Actions</th>
+                    <th class="text-white" style="border-color: #495057 !important;">Name (EN) / নাম (বাংলা)</th>
+                    <th class="text-white" style="border-color: #495057 !important;">Slug</th>
+                    <th class="text-white" style="border-color: #495057 !important;">Parent</th>
+                    <th class="text-white" style="border-color: #495057 !important;">Products</th>
+                    <th class="text-white" style="border-color: #495057 !important;">Status</th>
+                    <th class="text-white" style="border-color: #495057 !important;">Actions</th>
                 </tr>
             </thead>
             <tbody>
                 @forelse($categories as $category)
-                    <tr>
+                    <tr style="border-color: #495057 !important;">
                         <td>
-                            <div class="fw-bold">{{ $category->name_en }}</div>
-                            <small class="text-muted">{{ $category->name_bn }}</small>
+                            <div class="fw-bold text-white">{{ $category->name_en }}</div>
+                            <small class="text-info">{{ $category->name_bn }}</small>
                         </td>
                         <td>
-                            <code class="text-info">{{ $category->slug }}</code>
+                            <code class="text-warning">{{ $category->slug }}</code>
                         </td>
                         <td>
                             @if($category->parent)
@@ -74,20 +92,20 @@
                         <td>
                             <div class="d-flex gap-2">
                                 <a href="{{ route('admin.ecommerce.categories.show', $category) }}"
-                                   class="btn btn-circle btn-accept" title="View">
+                                   class="btn btn-sm btn-info" title="View">
                                     <i class="fas fa-eye"></i>
                                 </a>
                                 <a href="{{ route('admin.ecommerce.categories.edit', $category) }}"
-                                   class="btn btn-circle bg-warning text-dark" title="Edit">
+                                   class="btn btn-sm btn-warning" title="Edit">
                                     <i class="fas fa-edit"></i>
                                 </a>
                                 <button onclick="toggleCategoryStatus({{ $category->id }})"
-                                        class="btn btn-circle @if($category->is_active) btn-warning @else btn-success @endif"
+                                        class="btn btn-sm @if($category->is_active) btn-warning @else btn-success @endif"
                                         title="Toggle Status">
                                     <i class="fas fa-power-off"></i>
                                 </button>
                                 <button onclick="deleteCategory({{ $category->id }}, '{{ $category->name_en }}')"
-                                        class="btn btn-circle btn-reject" title="Delete">
+                                        class="btn btn-sm btn-danger" title="Delete">
                                     <i class="fas fa-trash"></i>
                                 </button>
                             </div>
@@ -98,7 +116,7 @@
                         <td colspan="6" class="text-center py-5">
                             <div class="text-muted">
                                 <i class="fas fa-folder-open fs-1 mb-3 d-block"></i>
-                                <p>No categories found / কোন ক্যাটাগরি পাওয়া যায়নি</p>
+                                <p class="text-white">No categories found / কোন ক্যাটাগরি পাওয়া যায়নি</p>
                                 <a href="{{ route('admin.ecommerce.categories.create') }}" class="btn btn-gradient mt-3">
                                     Create First Category
                                 </a>
