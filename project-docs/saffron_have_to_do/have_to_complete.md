@@ -26,5 +26,6 @@ Sales reports
 Inventory reports
 Popular products
 Revenue charts
-
+7. Customer Management
+8. B2B Management
 

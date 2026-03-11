@@ -239,6 +239,20 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
             ->name('coupons.search');
         Route::get('/coupons/statistics', [App\Http\Controllers\Admin\Ecommerce\CouponController::class, 'statistics'])
             ->name('coupons.statistics');
+
+        // Reports
+        Route::get('/reports', [App\Http\Controllers\Admin\Ecommerce\ReportController::class, 'index'])
+            ->name('reports.index');
+        Route::get('/reports/sales', [App\Http\Controllers\Admin\Ecommerce\ReportController::class, 'sales'])
+            ->name('reports.sales');
+        Route::get('/reports/inventory', [App\Http\Controllers\Admin\Ecommerce\ReportController::class, 'inventory'])
+            ->name('reports.inventory');
+        Route::get('/reports/popular-products', [App\Http\Controllers\Admin\Ecommerce\ReportController::class, 'popularProducts'])
+            ->name('reports.popular-products');
+        Route::get('/reports/revenue', [App\Http\Controllers\Admin\Ecommerce\ReportController::class, 'revenue'])
+            ->name('reports.revenue');
+        Route::get('/reports/dashboard-summary', [App\Http\Controllers\Admin\Ecommerce\ReportController::class, 'dashboardSummary'])
+            ->name('reports.dashboard-summary');
     });
 });
 
