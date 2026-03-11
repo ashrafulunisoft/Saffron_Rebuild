@@ -15,21 +15,27 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // Step 1: Drop foreign key constraint from order_items
-        Schema::table('order_items', function (Blueprint $table) {
-            $table->dropForeign(['order_id']);
-        });
+        // Check if product_orders table exists and orders table doesn't exist
+        if (Schema::hasTable('product_orders') && !Schema::hasTable('orders')) {
+            // Step 1: Drop foreign key constraint from order_items
+            Schema::table('order_items', function (Blueprint $table) {
+                $table->dropForeign(['order_id']);
+            });
 
-        // Step 2: Rename the table from product_orders to orders
-        Schema::rename('product_orders', 'orders');
+            // Step 2: Rename the table from product_orders to orders
+            Schema::rename('product_orders', 'orders');
 
-        // Step 3: Re-add foreign key constraint pointing to orders table
-        Schema::table('order_items', function (Blueprint $table) {
-            $table->foreign('order_id')
-                  ->references('id')
-                  ->on('orders')
-                  ->onDelete('cascade');
-        });
+            // Step 3: Re-add foreign key constraint pointing to orders table
+            Schema::table('order_items', function (Blueprint $table) {
+                $table->foreign('order_id')
+                      ->references('id')
+                      ->on('orders')
+                      ->onDelete('cascade');
+            });
+        } elseif (Schema::hasTable('orders') && !Schema::hasTable('product_orders')) {
+            // Migration already completed - table renamed successfully
+            // Nothing to do, foreign key should already be correct
+        }
     }
 
     /**
@@ -37,20 +43,26 @@ return new class extends Migration
      */
     public function down(): void
     {
-        // Step 1: Drop foreign key constraint from order_items
-        Schema::table('order_items', function (Blueprint $table) {
-            $table->dropForeign(['order_id']);
-        });
+        // Check if orders table exists and product_orders table doesn't exist
+        if (Schema::hasTable('orders') && !Schema::hasTable('product_orders')) {
+            // Step 1: Drop foreign key constraint from order_items
+            Schema::table('order_items', function (Blueprint $table) {
+                $table->dropForeign(['order_id']);
+            });
 
-        // Step 2: Rename the table back from orders to product_orders
-        Schema::rename('orders', 'product_orders');
+            // Step 2: Rename the table back from orders to product_orders
+            Schema::rename('orders', 'product_orders');
 
-        // Step 3: Re-add foreign key constraint pointing to product_orders table
-        Schema::table('order_items', function (Blueprint $table) {
-            $table->foreign('order_id')
-                  ->references('id')
-                  ->on('product_orders')
-                  ->onDelete('cascade');
-        });
+            // Step 3: Re-add foreign key constraint pointing to product_orders table
+            Schema::table('order_items', function (Blueprint $table) {
+                $table->foreign('order_id')
+                      ->references('id')
+                      ->on('product_orders')
+                      ->onDelete('cascade');
+            });
+        } elseif (Schema::hasTable('product_orders') && !Schema::hasTable('orders')) {
+            // Rollback already completed - table renamed back successfully
+            // Nothing to do, foreign key should already be correct
+        }
     }
 };
