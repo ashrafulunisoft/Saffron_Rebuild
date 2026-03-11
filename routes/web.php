@@ -152,6 +152,16 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::get('/products/search', [App\Http\Controllers\Admin\Ecommerce\ProductController::class, 'search'])
             ->name('products.search');
 
+        // Product Images
+        Route::post('/products/{product}/images', [App\Http\Controllers\Admin\Ecommerce\ProductImageController::class, 'store'])
+            ->name('products.images.store');
+        Route::post('/products/{product}/images/{image}/primary', [App\Http\Controllers\Admin\Ecommerce\ProductImageController::class, 'setPrimary'])
+            ->name('products.images.primary');
+        Route::delete('/products/{product}/images/{image}', [App\Http\Controllers\Admin\Ecommerce\ProductImageController::class, 'destroy'])
+            ->name('products.images.destroy');
+        Route::put('/products/{product}/images/{image}', [App\Http\Controllers\Admin\Ecommerce\ProductImageController::class, 'update'])
+            ->name('products.images.update');
+
         // Orders
         Route::get('/orders', [App\Http\Controllers\Admin\Ecommerce\OrderController::class, 'index'])
             ->name('orders.index');

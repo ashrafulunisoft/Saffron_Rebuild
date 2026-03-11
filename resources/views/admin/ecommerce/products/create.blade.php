@@ -210,6 +210,19 @@
             </div>
         </div>
 
+        <!-- Image Gallery - Note: Images will be uploaded after creating the product -->
+        <div class="card bg-dark border-secondary mb-4">
+            <div class="card-header bg-info border-secondary">
+                <h5 class="mb-0 text-white"><i class="fas fa-info-circle me-2"></i>Product Images</h5>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-info border-0">
+                    <i class="fas fa-info-circle me-2"></i>
+                    <strong>Important:</strong> Please save the product first, then you can upload images from the edit page.
+                </div>
+            </div>
+        </div>
+
         <!-- Buttons -->
         <div class="d-flex gap-3">
             <button type="submit" class="btn btn-gradient flex-grow-1">

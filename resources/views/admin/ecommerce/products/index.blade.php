@@ -54,6 +54,7 @@
         <table class="table table-hover table-dark" id="productsTable" style="background: transparent !important;">
             <thead class="table-dark">
                 <tr>
+                    <th class="text-white" style="border-color: #495057 !important;">Image</th>
                     <th class="text-white" style="border-color: #495057 !important;">Product (EN) / পণ্য (বাংলা)</th>
                     <th class="text-white" style="border-color: #495057 !important;">SKU</th>
                     <th class="text-white" style="border-color: #495057 !important;">Price</th>
@@ -66,6 +67,24 @@
             <tbody>
                 @forelse($products as $product)
                     <tr style="border-color: #495057 !important;">
+                        <td>
+                            @if($product->primaryImage)
+                                <img src="{{ asset('storage/' . $product->primaryImage->image) }}"
+                                     alt="{{ $product->name_en }}"
+                                     class="rounded"
+                                     style="width: 50px; height: 50px; object-fit: cover;">
+                            @elseif($product->images->count() > 0)
+                                <img src="{{ asset('storage/' . $product->images->first()->image) }}"
+                                     alt="{{ $product->name_en }}"
+                                     class="rounded"
+                                     style="width: 50px; height: 50px; object-fit: cover;">
+                            @else
+                                <div class="bg-secondary rounded d-flex align-items-center justify-content-center"
+                                     style="width: 50px; height: 50px;">
+                                    <i class="fas fa-image text-muted"></i>
+                                </div>
+                            @endif
+                        </td>
                         <td>
                             <div class="d-flex align-items-center">
                                 @if($product->is_featured)
@@ -134,7 +153,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="7" class="text-center py-5">
+                        <td colspan="8" class="text-center py-5">
                             <div class="text-muted">
                                 <i class="fas fa-box-open fs-1 mb-3 d-block"></i>
                                 <p class="text-white">No products found / কোন পণ্য পাওয়া যায়নি</p>

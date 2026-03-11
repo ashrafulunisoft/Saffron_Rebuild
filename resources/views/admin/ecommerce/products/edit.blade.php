@@ -238,6 +238,9 @@
             </div>
         </div>
 
+        <!-- Image Gallery -->
+        @include('admin.ecommerce.products.partials.image-gallery')
+
         <!-- Buttons -->
         <div class="d-flex gap-3">
             <button type="submit" class="btn btn-gradient flex-grow-1">

@@ -96,6 +96,35 @@
     </div>
 </div>
 
+<!-- Image Gallery -->
+@if($product->images->count() > 0)
+    <div class="glass-card mb-4">
+        <div class="card-header bg-info border-secondary">
+            <h5 class="mb-0 text-white"><i class="fas fa-images me-2"></i>Product Images ({{ $product->images->count() }})</h5>
+        </div>
+        <div class="card-body bg-dark">
+            <div class="row">
+                @foreach($product->images as $image)
+                    <div class="col-md-3 mb-3">
+                        <div class="card bg-secondary border-0">
+                            <div class="card-body p-2 text-center position-relative">
+                                @if($image->is_primary)
+                                    <span class="position-absolute top-0 start-0 m-2 badge bg-primary">Primary</span>
+                                @endif
+                                <img src="{{ asset('storage/' . $image->image) }}"
+                                     alt="{{ $product->name_en }}"
+                                     class="img-fluid rounded mb-2"
+                                     style="max-height: 200px; object-fit: cover; width: 100%;">
+                                <small class="text-white-50 d-block">{{ $image->created_at->format('M d, Y') }}</small>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </div>
+@endif
+
 <!-- Pricing & Stock -->
 <div class="glass-card mb-4">
     <div class="row">
