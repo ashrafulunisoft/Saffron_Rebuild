@@ -147,7 +147,7 @@ class ReportController extends Controller
         $mostSold = OrderItem::whereHas('order', function ($query) use ($startDate, $endDate) {
             $query->whereBetween('created_at', [$startDate, $endDate]);
         })
-            ->select('product_id', DB::raw('SUM(quantity) as total_sold'), DB::raw('SUM(subtotal) as revenue'), DB::raw('COUNT(DISTINCT order_id) as orders'))
+            ->select('product_id', DB::raw('SUM(quantity) as total_sold'), DB::raw('SUM(price * quantity) as revenue'), DB::raw('COUNT(DISTINCT order_id) as orders'))
             ->with('product.category')
             ->groupBy('product_id')
             ->orderBy('total_sold', 'desc')
@@ -233,14 +233,16 @@ class ReportController extends Controller
         $revenueByCategory = OrderItem::whereHas('order', function ($query) use ($startDate) {
             $query->where('created_at', '>=', $startDate)->where('status', '!=', 'cancelled');
         })
-            ->select(DB::raw('SUM(subtotal) as revenue'))
+            ->select('product_id', DB::raw('SUM(price * quantity) as revenue'))
             ->with('product.category')
+            ->groupBy('product_id')
             ->get()
             ->groupBy('product.category.id')
-            ->map(function ($item) {
+            ->map(function ($items, $categoryId) {
+                $firstItem = $items->first();
                 return [
-                    'category' => $item->product->category->name_en ?? 'Uncategorized',
-                    'revenue' => $item->revenue,
+                    'category' => $firstItem->product->category->name_en ?? 'Uncategorized',
+                    'revenue' => $items->sum('revenue'),
                 ];
             })
             ->sortByDesc('revenue')
