@@ -16,6 +16,7 @@ class Order extends Model
      */
     protected $fillable = [
         'user_id',
+        'b2b_customer_id',
         'order_number',
         'total_amount',
         'discount',
@@ -25,6 +26,8 @@ class Order extends Model
         'payment_status',
         'shipping_address',
         'coupon_id',
+        'is_b2b_order',
+        'order_type',
     ];
 
     /**
@@ -38,6 +41,7 @@ class Order extends Model
             'total_amount' => 'decimal:2',
             'discount' => 'decimal:2',
             'final_amount' => 'decimal:2',
+            'is_b2b_order' => 'boolean',
         ];
     }
 
@@ -55,6 +59,14 @@ class Order extends Model
     public function coupon()
     {
         return $this->belongsTo(Coupon::class);
+    }
+
+    /**
+     * Get the B2B customer for the order.
+     */
+    public function b2bCustomer()
+    {
+        return $this->belongsTo(B2BCustomer::class);
     }
 
     /**

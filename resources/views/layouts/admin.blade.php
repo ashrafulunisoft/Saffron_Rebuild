@@ -569,6 +569,9 @@
                         <a href="{{ route('admin.ecommerce.customers.index') }}" class="submenu-item {{ request()->routeIs('admin.ecommerce.customers.*') ? 'active' : '' }}">
                             <i class="fas fa-users"></i> Customers
                         </a>
+                        <a href="{{ route('admin.ecommerce.b2b.index') }}" class="submenu-item {{ request()->routeIs('admin.ecommerce.b2b.*') ? 'active' : '' }}">
+                            <i class="fas fa-building"></i> B2B / Wholesale
+                        </a>
                         <a href="{{ route('admin.ecommerce.reports.index') }}" class="submenu-item {{ request()->routeIs('admin.ecommerce.reports.*') ? 'active' : '' }}">
                             <i class="fas fa-chart-bar"></i> Reports
                         </a>

@@ -109,4 +109,12 @@ class User extends Authenticatable
         $redeemed = $this->pointTransactions()->where('type', 'redeem')->sum('points');
         return $earned - $redeemed;
     }
+
+    /**
+     * Get the B2B customer record for the user.
+     */
+    public function b2bCustomer()
+    {
+        return $this->hasOne(B2BCustomer::class);
+    }
 }

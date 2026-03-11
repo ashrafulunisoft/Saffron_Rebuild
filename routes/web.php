@@ -256,6 +256,30 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::get('/customers/search', [App\Http\Controllers\Admin\Ecommerce\CustomerController::class, 'search'])
             ->name('customers.search');
 
+        // B2B Management
+        Route::get('/b2b', [App\Http\Controllers\Admin\Ecommerce\B2BController::class, 'index'])
+            ->name('b2b.index');
+        Route::get('/b2b/create', [App\Http\Controllers\Admin\Ecommerce\B2BController::class, 'create'])
+            ->name('b2b.create');
+        Route::post('/b2b', [App\Http\Controllers\Admin\Ecommerce\B2BController::class, 'store'])
+            ->name('b2b.store');
+        Route::get('/b2b/{b2b}', [App\Http\Controllers\Admin\Ecommerce\B2BController::class, 'show'])
+            ->name('b2b.show');
+        Route::get('/b2b/{b2b}/edit', [App\Http\Controllers\Admin\Ecommerce\B2BController::class, 'edit'])
+            ->name('b2b.edit');
+        Route::put('/b2b/{b2b}', [App\Http\Controllers\Admin\Ecommerce\B2BController::class, 'update'])
+            ->name('b2b.update');
+        Route::post('/b2b/{b2b}/approve', [App\Http\Controllers\Admin\Ecommerce\B2BController::class, 'approve'])
+            ->name('b2b.approve');
+        Route::post('/b2b/{b2b}/reject', [App\Http\Controllers\Admin\Ecommerce\B2BController::class, 'reject'])
+            ->name('b2b.reject');
+        Route::post('/b2b/{b2b}/toggle-status', [App\Http\Controllers\Admin\Ecommerce\B2BController::class, 'toggleStatus'])
+            ->name('b2b.toggle-status');
+        Route::delete('/b2b/{b2b}', [App\Http\Controllers\Admin\Ecommerce\B2BController::class, 'destroy'])
+            ->name('b2b.destroy');
+        Route::get('/b2b/statistics', [App\Http\Controllers\Admin\Ecommerce\B2BController::class, 'statistics'])
+            ->name('b2b.statistics');
+
         // Reports
         Route::get('/reports', [App\Http\Controllers\Admin\Ecommerce\ReportController::class, 'index'])
             ->name('reports.index');
