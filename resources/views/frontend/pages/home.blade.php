@@ -202,211 +202,6 @@
   </div>
 </section>
 
-<!-- FEATURED PRODUCTS -->
-<section class="section-gap" id="products">
-  <div class="container">
-    <div class="text-center mb-5">
-      <span class="section-badge">Our Collection</span>
-      <h2 class="section-title mt-3">
-        Featured <span class="gradient-text">Products</span>
-      </h2>
-      <p style="color:rgba(245,230,204,0.7);">Handpicked favorites from our extensive collection</p>
-    </div>
-
-    <!-- Category Filters -->
-    <div class="d-flex justify-content-center gap-2 mb-4 flex-wrap">
-      <button class="filter-btn active" onclick="filterProd(this, 'all')">All Products</button>
-      <button class="filter-btn" onclick="filterProd(this, 'bengali-sweets')">Bengali Sweets</button>
-      <button class="filter-btn" onclick="filterProd(this, 'bakery')">Bakery</button>
-      <button class="filter-btn" onclick="filterProd(this, 'cakes')">Cakes</button>
-      <button class="filter-btn" onclick="filterProd(this, 'chocolates')">Chocolates</button>
-    </div>
-
-    <!-- Products Grid -->
-    <div class="row g-4">
-      @if(isset($featuredProducts) && $featuredProducts->count() > 0)
-        @foreach($featuredProducts as $product)
-        <div class="col-6 col-md-4 col-lg-3">
-          <div class="product-card glass-card prod-item" data-cat="{{ $product->category->slug ?? 'bengali-sweets' }}">
-            <div class="prod-badges">
-              @if($product->is_featured)
-                <span class="badge badge-sale">Featured</span>
-              @endif
-              @if($product->stock < 10 && $product->stock > 0)
-                <span class="badge badge-stock">Low Stock</span>
-              @endif
-            </div>
-            <div class="prod-img">
-              @if($product->image)
-                <img src="{{ asset('storage/products/' . $product->image) }}" alt="{{ $product->name }}">
-              @else
-                <div style="font-size: 4rem;">🍮</div>
-              @endif
-            </div>
-            <div class="prod-info">
-              <span class="prod-cat">{{ $product->category->name ?? 'Sweets' }}</span>
-              <h6 class="prod-name">{{ $product->name }}</h6>
-              <div class="prod-rating">
-                <span style="color:#fbbf24;">★★★★★</span>
-                <small style="color:rgba(245,230,204,0.5);">({{ $product->reviews_count ?? 0 }})</small>
-              </div>
-              <div class="prod-price">
-                <span class="current-price">৳{{ number_format($product->price) }}</span>
-                @if($product->compare_price)
-                  <span class="old-price">৳{{ number_format($product->compare_price) }}</span>
-                @endif
-              </div>
-              <div class="prod-actions">
-                <button class="btn-wishlist" title="Add to Wishlist">
-                  <i class="far fa-heart"></i>
-                </button>
-                <button class="btn-cart" onclick="addToCart(this)">
-                  <i class="fas fa-shopping-bag"></i>
-                </button>
-              </div>
-            </div>
-            <a href="{{ route('product.show', $product->slug) }}" class="prod-link"></a>
-          </div>
-        </div>
-        @endforeach
-      @else
-        <!-- Demo products if no products available -->
-        <div class="col-6 col-md-4 col-lg-3">
-          <div class="product-card glass-card prod-item" data-cat="bengali-sweets">
-            <div class="prod-badges">
-              <span class="badge badge-sale">Bestseller</span>
-            </div>
-            <div class="prod-img">
-              <div style="font-size: 4rem;">🍮</div>
-            </div>
-            <div class="prod-info">
-              <span class="prod-cat">Bengali Sweets</span>
-              <h6 class="prod-name">Premium Roshogolla</h6>
-              <div class="prod-rating">
-                <span style="color:#fbbf24;">★★★★★</span>
-                <small style="color:rgba(245,230,204,0.5);">(128)</small>
-              </div>
-              <div class="prod-price">
-                <span class="current-price">৳450</span>
-              </div>
-              <div class="prod-actions">
-                <button class="btn-wishlist"><i class="far fa-heart"></i></button>
-                <button class="btn-cart"><i class="fas fa-shopping-bag"></i></button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- More Demo Products -->
-        <div class="col-6 col-md-4 col-lg-3">
-          <div class="product-card glass-card prod-item" data-cat="bakery">
-            <div class="prod-badges">
-              <span class="badge badge-sale">New</span>
-            </div>
-            <div class="prod-img">
-              <div style="font-size: 4rem;">🥐</div>
-            </div>
-            <div class="prod-info">
-              <span class="prod-cat">Bakery</span>
-              <h6 class="prod-name">Fresh Croissant</h6>
-              <div class="prod-rating">
-                <span style="color:#fbbf24;">★★★★★</span>
-                <small style="color:rgba(245,230,204,0.5);">(89)</small>
-              </div>
-              <div class="prod-price">
-                <span class="current-price">৳180</span>
-              </div>
-              <div class="prod-actions">
-                <button class="btn-wishlist"><i class="far fa-heart"></i></button>
-                <button class="btn-cart"><i class="fas fa-shopping-bag"></i></button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-6 col-md-4 col-lg-3">
-          <div class="product-card glass-card prod-item" data-cat="cakes">
-            <div class="prod-img">
-              <div style="font-size: 4rem;">🎂</div>
-            </div>
-            <div class="prod-info">
-              <span class="prod-cat">Cakes</span>
-              <h6 class="prod-name">Chocolate Dream</h6>
-              <div class="prod-rating">
-                <span style="color:#fbbf24;">★★★★★</span>
-                <small style="color:rgba(245,230,204,0.5);">(215)</small>
-              </div>
-              <div class="prod-price">
-                <span class="current-price">৳1,200</span>
-                <span class="old-price">৳1,500</span>
-              </div>
-              <div class="prod-actions">
-                <button class="btn-wishlist"><i class="far fa-heart"></i></button>
-                <button class="btn-cart"><i class="fas fa-shopping-bag"></i></button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-6 col-md-4 col-lg-3">
-          <div class="product-card glass-card prod-item" data-cat="chocolates">
-            <div class="prod-badges">
-              <span class="badge badge-stock">Limited</span>
-            </div>
-            <div class="prod-img">
-              <div style="font-size: 4rem;">🍫</div>
-            </div>
-            <div class="prod-info">
-              <span class="prod-cat">Chocolates</span>
-              <h6 class="prod-name">Belgian Truffles</h6>
-              <div class="prod-rating">
-                <span style="color:#fbbf24;">★★★★★</span>
-                <small style="color:rgba(245,230,204,0.5);">(167)</small>
-              </div>
-              <div class="prod-price">
-                <span class="current-price">৳850</span>
-              </div>
-              <div class="prod-actions">
-                <button class="btn-wishlist"><i class="far fa-heart"></i></button>
-                <button class="btn-cart"><i class="fas fa-shopping-bag"></i></button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-6 col-md-4 col-lg-3">
-          <div class="product-card glass-card prod-item" data-cat="bengali-sweets">
-            <div class="prod-img">
-              <div style="font-size: 4rem;">🍧</div>
-            </div>
-            <div class="prod-info">
-              <span class="prod-cat">Bengali Sweets</span>
-              <h6 class="prod-name">Kheer Mohan</h6>
-              <div class="prod-rating">
-                <span style="color:#fbbf24;">★★★★★</span>
-                <small style="color:rgba(245,230,204,0.5);">(142)</small>
-              </div>
-              <div class="prod-price">
-                <span class="current-price">৳380</span>
-              </div>
-              <div class="prod-actions">
-                <button class="btn-wishlist"><i class="far fa-heart"></i></button>
-                <button class="btn-cart"><i class="fas fa-shopping-bag"></i></button>
-              </div>
-            </div>
-          </div>
-        </div>
-      @endif
-    </div>
-
-    <div class="text-center mt-5">
-      <a href="{{ route('shop') }}" class="btn btn-glow btn-lg">
-        View All Products <i class="fas fa-arrow-right ms-2"></i>
-      </a>
-    </div>
-  </div>
-</section>
-
 <!-- CHOCOLATE PARADISE -->
 <section class="specialty-section" style="background:linear-gradient(135deg, rgba(244,63,94,0.05), rgba(139,92,246,0.05));">
   <div class="container">
@@ -493,6 +288,195 @@
         <div class="cat-emoji">🥧</div>
         <div class="cat-name">Pastries</div>
         <div class="cat-count">12 items</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED PRODUCTS -->
+<section class="section-gap" id="products">
+  <div class="container">
+    <div class="text-center mb-5">
+      <span class="section-badge">Our Collection</span>
+      <h2 class="section-title mt-3">
+        Featured <span class="gradient-text">Products</span>
+      </h2>
+      <p style="color:rgba(245,230,204,0.7);">Handpicked favorites from our extensive collection</p>
+    </div>
+
+    <!-- Category Filters -->
+    <div class="d-flex justify-content-center gap-2 mb-4 flex-wrap">
+      <button class="filter-btn active" onclick="filterProd(this, 'all')">All Products</button>
+      <button class="filter-btn" onclick="filterProd(this, 'bengali-sweets')">Bengali Sweets</button>
+      <button class="filter-btn" onclick="filterProd(this, 'bakery')">Bakery</button>
+      <button class="filter-btn" onclick="filterProd(this, 'cakes')">Cakes</button>
+      <button class="filter-btn" onclick="filterProd(this, 'chocolates')">Chocolates</button>
+    </div>
+
+    <!-- Products Grid -->
+    <div class="row g-4">
+      @if(isset($featuredProducts) && $featuredProducts->count() > 0)
+        @foreach($featuredProducts as $product)
+        <div class="col-6 col-md-4 col-lg-3">
+          <div class="prod-card prod-item" data-cat="{{ $product->category->slug ?? 'bengali-sweets' }}">
+            <div class="prod-img">
+              @if($product->image)
+                <img src="{{ asset('storage/products/' . $product->image) }}" alt="{{ $product->name }}">
+              @else
+                <div class="prod-emoji">🍮</div>
+              @endif
+              @if($product->is_featured)
+                <span class="prod-badge badge-hot">FEATURED</span>
+              @endif
+              <div class="prod-actions">
+                <button class="act-btn"><i class="fas fa-heart"></i></button>
+                <button class="act-btn"><i class="fas fa-eye"></i></button>
+              </div>
+            </div>
+            <div class="prod-body">
+              <div class="prod-cat">{{ $product->category->name ?? 'Sweets' }}</div>
+              <h5 class="prod-name">{{ $product->name }}</h5>
+              <div class="prod-stars">★★★★★ <small>({{ $product->reviews_count ?? 0 }})</small></div>
+              <div class="prod-footer">
+                <div>
+                  <span class="price-new">৳{{ number_format($product->price) }}</span>
+                  @if($product->compare_price)
+                    <span class="price-old">৳{{ number_format($product->compare_price) }}</span>
+                  @endif
+                </div>
+                <button class="add-btn"><i class="fas fa-plus"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+        @endforeach
+      @else
+        <!-- Demo products if no products available -->
+        <div class="col-6 col-md-4 col-lg-3">
+          <div class="prod-card prod-item" data-cat="bengali-sweets">
+            <div class="prod-img">
+              <div class="prod-emoji">🍮</div>
+              <span class="prod-badge badge-hot">BESTSELLER</span>
+              <div class="prod-actions">
+                <button class="act-btn"><i class="fas fa-heart"></i></button>
+                <button class="act-btn"><i class="fas fa-eye"></i></button>
+              </div>
+            </div>
+            <div class="prod-body">
+              <div class="prod-cat">Bengali Sweets</div>
+              <h5 class="prod-name">Premium Roshogolla</h5>
+              <div class="prod-stars">★★★★★ <small>(128)</small></div>
+              <div class="prod-footer">
+                <div>
+                  <span class="price-new">৳450</span>
+                </div>
+                <button class="add-btn"><i class="fas fa-plus"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- More Demo Products -->
+        <div class="col-6 col-md-4 col-lg-3">
+          <div class="prod-card prod-item" data-cat="bakery">
+            <div class="prod-img">
+              <div class="prod-emoji">🥐</div>
+              <span class="prod-badge badge-new">NEW</span>
+              <div class="prod-actions">
+                <button class="act-btn"><i class="fas fa-heart"></i></button>
+                <button class="act-btn"><i class="fas fa-eye"></i></button>
+              </div>
+            </div>
+            <div class="prod-body">
+              <div class="prod-cat">Bakery</div>
+              <h5 class="prod-name">Fresh Croissant</h5>
+              <div class="prod-stars">★★★★★ <small>(89)</small></div>
+              <div class="prod-footer">
+                <div>
+                  <span class="price-new">৳180</span>
+                </div>
+                <button class="add-btn"><i class="fas fa-plus"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-6 col-md-4 col-lg-3">
+          <div class="prod-card prod-item" data-cat="cakes">
+            <div class="prod-img">
+              <div class="prod-emoji">🎂</div>
+              <div class="prod-actions">
+                <button class="act-btn"><i class="fas fa-heart"></i></button>
+                <button class="act-btn"><i class="fas fa-eye"></i></button>
+              </div>
+            </div>
+            <div class="prod-body">
+              <div class="prod-cat">Cakes</div>
+              <h5 class="prod-name">Chocolate Dream</h5>
+              <div class="prod-stars">★★★★★ <small>(215)</small></div>
+              <div class="prod-footer">
+                <div>
+                  <span class="price-new">৳1,200</span>
+                  <span class="price-old">৳1,500</span>
+                </div>
+                <button class="add-btn"><i class="fas fa-plus"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-6 col-md-4 col-lg-3">
+          <div class="prod-card prod-item" data-cat="chocolates">
+            <div class="prod-img">
+              <div class="prod-emoji">🍫</div>
+              <span class="prod-badge badge-sale">-20%</span>
+              <div class="prod-actions">
+                <button class="act-btn"><i class="fas fa-heart"></i></button>
+                <button class="act-btn"><i class="fas fa-eye"></i></button>
+              </div>
+            </div>
+            <div class="prod-body">
+              <div class="prod-cat">Chocolates</div>
+              <h5 class="prod-name">Belgian Truffles</h5>
+              <div class="prod-stars">★★★★★ <small>(167)</small></div>
+              <div class="prod-footer">
+                <div>
+                  <span class="price-new">৳850</span>
+                </div>
+                <button class="add-btn"><i class="fas fa-plus"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-6 col-md-4 col-lg-3">
+          <div class="prod-card prod-item" data-cat="bengali-sweets">
+            <div class="prod-img">
+              <div class="prod-emoji">🍧</div>
+              <div class="prod-actions">
+                <button class="act-btn"><i class="fas fa-heart"></i></button>
+                <button class="act-btn"><i class="fas fa-eye"></i></button>
+              </div>
+            </div>
+            <div class="prod-body">
+              <div class="prod-cat">Bengali Sweets</div>
+              <h5 class="prod-name">Kheer Mohan</h5>
+              <div class="prod-stars">★★★★★ <small>(142)</small></div>
+              <div class="prod-footer">
+                <div>
+                  <span class="price-new">৳380</span>
+                </div>
+                <button class="add-btn"><i class="fas fa-plus"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      @endif
+    </div>
+
+    <div class="text-center mt-5">
+      <a href="{{ route('shop') }}" class="btn btn-glow btn-lg">
+        View All Products <i class="fas fa-arrow-right ms-2"></i>
       </a>
     </div>
   </div>
@@ -797,6 +781,38 @@
           <p class="testimonial-text">"Their chocolate collection is amazing! Perfect for gifting. The packaging is beautiful and the quality is top-notch."</p>
           <h6 class="testimonial-name">Nusrat Jahan</h6>
           <small class="testimonial-role">Sylhet</small>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROMO CARDS -->
+<section class="section-gap">
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-md-6">
+        <div class="glass-card p-4 h-100 animate-on-scroll" style="background:linear-gradient(135deg, rgba(245,158,11,0.08), rgba(244,63,94,0.05));">
+          <div class="d-flex align-items-center gap-4">
+            <div style="font-size:4rem;">🎂</div>
+            <div>
+              <h4 style="color:#f5e6cc;font-family:'Playfair Display',serif;margin-bottom:0.5rem;">Custom Cakes</h4>
+              <p style="color:rgba(245,230,204,0.7);margin-bottom:1rem;">Personalize your celebration with our master bakers</p>
+              <a href="{{ route('shop') }}" class="btn btn-glow btn-sm">Order Custom Cake</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="glass-card p-4 h-100 animate-on-scroll" style="background:linear-gradient(135deg, rgba(244,63,94,0.08), rgba(139,92,246,0.05));">
+          <div class="d-flex align-items-center gap-4">
+            <div style="font-size:4rem;">🎁</div>
+            <div>
+              <h4 style="color:#f5e6cc;font-family:'Playfair Display',serif;margin-bottom:0.5rem;">Gift Hampers</h4>
+              <p style="color:rgba(245,230,204,0.7);margin-bottom:1rem;">Curated sweet boxes with premium packaging</p>
+              <a href="{{ route('shop') }}" class="btn btn-glow btn-sm" style="background:linear-gradient(135deg, #f43f5e, #a855f7);">Send a Gift</a>
+            </div>
+          </div>
         </div>
       </div>
     </div>

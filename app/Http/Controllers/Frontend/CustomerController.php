@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\User;
 use App\Models\Order;
 
 class CustomerController extends Controller
@@ -82,10 +81,45 @@ class CustomerController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255|unique:users,email,' . auth()->id(),
             'phone' => 'nullable|string|max:20',
+            'password' => 'nullable|min:8|confirmed',
         ]);
 
-        auth()->user()->update($request->only('name', 'email', 'phone'));
+        $data = $request->only('name', 'email', 'phone');
+
+        // Update password if provided
+        if ($request->filled('password')) {
+            $data['password'] = bcrypt($request->password);
+        }
+
+        auth()->user()->update($data);
 
         return redirect()->back()->with('success', 'Profile updated successfully!');
+    }
+
+    /**
+     * Store a new address.
+     */
+    public function storeAddress(Request $request)
+    {
+        $request->validate([
+            'label' => 'required|string|max:50',
+            'name' => 'required|string|max:255',
+            'phone' => 'required|string|max:20',
+            'address' => 'required|string',
+            'city' => 'required|string|max:100',
+            'state' => 'required|string|max:100',
+        ]);
+
+        auth()->user()->addresses()->create([
+            'label' => $request->label,
+            'name' => $request->name,
+            'phone' => $request->phone,
+            'address' => $request->address,
+            'city' => $request->city,
+            'state' => $request->state,
+            'is_default' => $request->has('is_default'),
+        ]);
+
+        return redirect()->back()->with('success', 'Address added successfully!');
     }
 }

@@ -149,6 +149,132 @@ body {
   transform:translateY(-1px) scale(0.98);
 }
 
+/* Search Input Field */
+.search-input {
+  width: 220px;
+  height: 44px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 14px;
+  padding: 0.6rem 2.5rem 0.6rem 1rem;
+  color: #f5e6cc;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.search-input:focus {
+  background: rgba(255,255,255,0.12);
+  border-color: rgba(245,158,11,0.4);
+  color: #f5e6cc;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(245,158,11,0.1);
+}
+
+.search-input::placeholder {
+  color: rgba(245,230,204,0.5);
+}
+
+.search-icon-btn {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: rgba(245,230,204,0.6);
+  padding: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.95rem;
+}
+
+.search-icon-btn:hover {
+  color: #fbbf24;
+}
+
+.search-icon-btn:active {
+  transform: translateY(-50%) scale(0.95);
+}
+
+/* Glassmorphism Input Fields */
+.input-dark,
+.form-control.input-dark,
+.input-dark.form-control {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  color: #f5e6cc !important;
+  border-radius: 12px !important;
+  padding: 0.75rem 1rem !important;
+  font-size: 0.95rem !important;
+  transition: all 0.3s ease !important;
+}
+
+.input-dark:focus,
+.form-control.input-dark:focus,
+.input-dark.form-control:focus {
+  background: rgba(255, 255, 255, 0.12) !important;
+  border-color: rgba(245, 158, 11, 0.4) !important;
+  color: #f5e6cc !important;
+  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1) !important;
+  outline: none !important;
+}
+
+.input-dark::placeholder,
+.form-control.input-dark::placeholder {
+  color: rgba(245, 230, 204, 0.5) !important;
+}
+
+.input-dark:-webkit-autofill,
+.input-dark:-webkit-autofill:hover,
+.input-dark:-webkit-autofill:focus {
+  -webkit-text-fill-color: #f5e6cc !important;
+  -webkit-box-shadow: 0 0 0 30px rgba(255, 255, 255, 0.08) inset !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+/* Form Labels */
+.form-label {
+  color: rgba(245, 230, 204, 0.85);
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+/* Select Dropdown Styling */
+.form-select.input-dark,
+select.input-dark {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  color: #f5e6cc !important;
+  border-radius: 12px !important;
+  padding: 0.75rem 1rem !important;
+  font-size: 0.95rem !important;
+  transition: all 0.3s ease !important;
+}
+
+.form-select.input-dark:focus,
+select.input-dark:focus {
+  background: rgba(255, 255, 255, 0.12) !important;
+  border-color: rgba(245, 158, 11, 0.4) !important;
+  color: #f5e6cc !important;
+  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1) !important;
+  outline: none !important;
+}
+
+.form-select.input-dark option,
+select.input-dark option {
+  background: #1a0f05;
+  color: #f5e6cc;
+}
+
+/* Textarea styling */
+textarea.input-dark,
+textarea.form-control.input-dark {
+  resize: vertical;
+  min-height: 100px;
+}
+
 /* ============================================
    TRANSPARENT GLASS MEGA MENU
    ============================================ */
@@ -2131,6 +2257,43 @@ section {
   .insta-grid { grid-template-columns:repeat(2, 1fr); }
   .newsletter-form { flex-direction:column; }
   .specialty-features { grid-template-columns:1fr; }
+}
+
+/* TESTIMONIALS */
+.testimonial-card {
+  padding: 2rem;
+  transition: all 0.3s ease;
+}
+.testimonial-card:hover {
+  transform: translateY(-5px);
+}
+.testimonial-avatar {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+.testimonial-stars {
+  color: #fbbf24;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  letter-spacing: 2px;
+}
+.testimonial-text {
+  color: rgba(245, 230, 204, 0.85);
+  font-style: italic;
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+.testimonial-name {
+  color: #f5e6cc;
+  font-family: 'Playfair Display', serif;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+.testimonial-role {
+  color: rgba(245, 230, 204, 0.6);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 /* ANIMATIONS */

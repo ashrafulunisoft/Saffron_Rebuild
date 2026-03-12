@@ -23,19 +23,19 @@
           <form>
             <div class="mb-3">
               <label class="form-label">Your Name</label>
-              <input type="text" class="form-control input-dark" style="color: white;">
+              <input type="text" name="name" class="form-control input-dark" placeholder="Enter your name" required>
             </div>
             <div class="mb-3">
               <label class="form-label">Email Address</label>
-              <input type="email" class="form-control input-dark" style="color: white;">
+              <input type="email" name="email" class="form-control input-dark" placeholder="Enter your email" required>
             </div>
             <div class="mb-3">
               <label class="form-label">Subject</label>
-              <input type="text" class="form-control input-dark" style="color: white;">
+              <input type="text" name="subject" class="form-control input-dark" placeholder="What is this about?">
             </div>
             <div class="mb-3">
               <label class="form-label">Message</label>
-              <textarea class="form-control input-dark" rows="5" style="color: white;"></textarea>
+              <textarea name="message" class="form-control input-dark" rows="5" placeholder="Type your message here..." required></textarea>
             </div>
             <button type="submit" class="btn btn-glow">
               <i class="fas fa-paper-plane me-2"></i>Send Message

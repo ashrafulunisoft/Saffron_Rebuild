@@ -120,8 +120,15 @@
       </ul>
 
       <div class="d-flex align-items-center gap-2">
-        <!-- Search Icon Only -->
-        <a href="{{ route('search') }}" class="nav-icon-btn" title="Search">
+        <!-- Search Bar with Icon -->
+        <form action="{{ route('search') }}" method="GET" class="d-none d-lg-flex position-relative">
+          <input type="text" name="q" class="form-control search-input" placeholder="Search treats..." value="{{ request('q') }}">
+          <button type="submit" class="search-icon-btn" title="Search">
+            <i class="fas fa-search"></i>
+          </button>
+        </form>
+
+        <a href="{{ route('search') }}" class="nav-icon-btn d-lg-none" title="Search">
           <i class="fas fa-search"></i>
         </a>
 

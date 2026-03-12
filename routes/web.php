@@ -393,6 +393,7 @@ Route::middleware(['auth'])->prefix('customer')->name('customer.')->group(functi
     Route::get('/orders/{order}', [App\Http\Controllers\Frontend\CustomerController::class, 'orderShow'])->name('orders.show');
     Route::get('/wishlist', [App\Http\Controllers\Frontend\CustomerController::class, 'wishlist'])->name('wishlist');
     Route::get('/addresses', [App\Http\Controllers\Frontend\CustomerController::class, 'addresses'])->name('addresses');
+    Route::post('/addresses', [App\Http\Controllers\Frontend\CustomerController::class, 'storeAddress'])->name('addresses.store');
     Route::get('/profile', [App\Http\Controllers\Frontend\CustomerController::class, 'profile'])->name('profile');
     Route::post('/profile', [App\Http\Controllers\Frontend\CustomerController::class, 'updateProfile'])->name('profile.update');
 });

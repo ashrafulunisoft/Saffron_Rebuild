@@ -27,27 +27,27 @@
             <div class="row g-3">
               <div class="col-md-6">
                 <label class="form-label">First Name *</label>
-                <input type="text" name="first_name" class="form-control input-dark" required style="color: white;">
+                <input type="text" name="first_name" class="form-control input-dark" placeholder="John" required>
               </div>
               <div class="col-md-6">
                 <label class="form-label">Last Name *</label>
-                <input type="text" name="last_name" class="form-control input-dark" required style="color: white;">
+                <input type="text" name="last_name" class="form-control input-dark" placeholder="Doe" required>
               </div>
               <div class="col-md-6">
                 <label class="form-label">Email Address *</label>
-                <input type="email" name="email" class="form-control input-dark" required style="color: white;">
+                <input type="email" name="email" class="form-control input-dark" placeholder="john@example.com" required>
               </div>
               <div class="col-md-6">
                 <label class="form-label">Phone Number *</label>
-                <input type="tel" name="phone" class="form-control input-dark" required style="color: white;" placeholder="+880 1XXXXXXXXX">
+                <input type="tel" name="phone" class="form-control input-dark" placeholder="+880 1XXXXXXXXX" required>
               </div>
               <div class="col-12">
                 <label class="form-label">Delivery Address *</label>
-                <textarea name="address" class="form-control input-dark" rows="2" required style="color: white;" placeholder="House/Road/Area"></textarea>
+                <textarea name="address" class="form-control input-dark" rows="2" placeholder="House/Road/Area" required></textarea>
               </div>
               <div class="col-md-6">
                 <label class="form-label">City *</label>
-                <select name="city" class="form-select input-dark" required style="color: white;">
+                <select name="city" class="form-select input-dark" required>
                   <option value="">Select City</option>
                   <option value="dhaka">Dhaka</option>
                   <option value="chittagong">Chittagong</option>

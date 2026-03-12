@@ -30,6 +30,10 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'phone',
+        'avatar',
+        'date_of_birth',
+        'gender',
         'banned',
     ];
 
@@ -85,6 +89,14 @@ class User extends Authenticatable
     }
 
     /**
+     * Get the addresses for the user.
+     */
+    public function addresses()
+    {
+        return $this->hasMany(Address::class);
+    }
+
+    /**
      * Get the reviews written by the user.
      */
     public function reviews()
@@ -108,6 +120,15 @@ class User extends Authenticatable
         $earned = $this->pointTransactions()->where('type', 'earn')->sum('points');
         $redeemed = $this->pointTransactions()->where('type', 'redeem')->sum('points');
         return $earned - $redeemed;
+    }
+
+    /**
+     * Get the wishlist count for the user.
+     */
+    public function getWishlistCountAttribute()
+    {
+        // Return 0 for now - implement actual wishlist later
+        return 0;
     }
 
     /**
