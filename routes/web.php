@@ -338,29 +338,7 @@ Route::middleware(['auth', 'role:receptionist|staff|visitor'])->group(function (
 
 
 Route::get('/', function(){
-
-
-// Role::create(['name' => 'admin']);
-// Role::create(['name' => 'staff']);
-// Role::create(['name' => 'receptionist']);
-// Role::create(['name' => 'visitor']);
-
-// dd(Role::all());
-//---------- add role to any user --------------------------
-    // $user = User::where('name','Staff')->first();
-    // // dd($user);
-    // $user->assignRole('staff');
-    // dd($user->getRoleNames());
-    // $user->removeRole('staff');
-
-    // dd($user->getRoleNames());
-
-//---------- add permission to any user ------------------------
-// use Spatie\Permission\Models\Permission;
-    // $user = User::latest()->first();
-    // $user->givePermissionTo('create users');
-
-    return view('home');
+    return view('frontend.pages.home');
 })->name('home');
 
 
@@ -380,6 +358,53 @@ Route::middleware('guest')->group(function () {
 
 
 });
+
+/*
+|--------------------------------------------------------------------------
+| Frontend E-commerce Routes
+|--------------------------------------------------------------------------
+*/
+
+// Shop routes
+Route::get('/shop', [App\Http\Controllers\Frontend\ShopController::class, 'index'])->name('shop');
+Route::prefix('shop')->name('shop.')->group(function () {
+    Route::get('/category/{slug}', [App\Http\Controllers\Frontend\ShopController::class, 'category'])->name('category');
+    Route::get('/product/{slug}', [App\Http\Controllers\Frontend\ProductController::class, 'show'])->name('product');
+});
+
+// Cart routes
+Route::get('/cart', [App\Http\Controllers\Frontend\CartController::class, 'index'])->name('cart');
+Route::prefix('cart')->name('cart.')->group(function () {
+    Route::post('/add', [App\Http\Controllers\Frontend\CartController::class, 'add'])->name('add');
+    Route::post('/update', [App\Http\Controllers\Frontend\CartController::class, 'update'])->name('update');
+    Route::post('/remove', [App\Http\Controllers\Frontend\CartController::class, 'remove'])->name('remove');
+});
+
+// Checkout routes
+Route::get('/checkout', [App\Http\Controllers\Frontend\CheckoutController::class, 'index'])->name('checkout');
+Route::prefix('checkout')->name('checkout.')->group(function () {
+    Route::post('/', [App\Http\Controllers\Frontend\CheckoutController::class, 'store'])->name('store');
+});
+
+// Customer routes (requires authentication)
+Route::middleware(['auth'])->prefix('customer')->name('customer.')->group(function () {
+    Route::get('/dashboard', [App\Http\Controllers\Frontend\CustomerController::class, 'dashboard'])->name('dashboard');
+    Route::get('/orders', [App\Http\Controllers\Frontend\CustomerController::class, 'orders'])->name('orders');
+    Route::get('/orders/{order}', [App\Http\Controllers\Frontend\CustomerController::class, 'orderShow'])->name('orders.show');
+    Route::get('/wishlist', [App\Http\Controllers\Frontend\CustomerController::class, 'wishlist'])->name('wishlist');
+    Route::get('/addresses', [App\Http\Controllers\Frontend\CustomerController::class, 'addresses'])->name('addresses');
+    Route::get('/profile', [App\Http\Controllers\Frontend\CustomerController::class, 'profile'])->name('profile');
+    Route::post('/profile', [App\Http\Controllers\Frontend\CustomerController::class, 'updateProfile'])->name('profile.update');
+});
+
+// Other frontend pages
+Route::get('/about', function() { return view('frontend.pages.about'); })->name('about');
+Route::get('/contact', function() { return view('frontend.pages.contact'); })->name('contact');
+Route::get('/terms', function() { return view('terms'); })->name('terms');
+Route::get('/policy', function() { return view('policy'); })->name('policy');
+
+// Search route
+Route::get('/search', [App\Http\Controllers\Frontend\SearchController::class, 'index'])->name('search');
 
 // Public Live Dashboard Routes (No authentication required)
 Route::get('/public/live-dashboard', [App\Http\Controllers\Visitor\VisitorController::class, 'liveDashboardPublic'])
