@@ -283,10 +283,62 @@ body {
 
 .input-dark:-webkit-autofill,
 .input-dark:-webkit-autofill:hover,
-.input-dark:-webkit-autofill:focus {
+.input-dark:-webkit-autofill:focus,
+.input-dark:-webkit-autofill:active {
   -webkit-text-fill-color: #f5e6cc !important;
-  -webkit-box-shadow: 0 0 0 30px rgba(255, 255, 255, 0.08) inset !important;
+  -webkit-box-shadow: 0 0 0 1000px rgba(15, 10, 0, 0.8) inset !important;
+  box-shadow: 0 0 0 1000px rgba(15, 10, 0, 0.8) inset !important;
   transition: background-color 5000s ease-in-out 0s;
+  caret-color: #f5e6cc !important;
+  background-color: rgba(15, 10, 0, 0.8) !important;
+  background-image: none !important;
+}
+.input-dark:-webkit-autofill::first-line {
+  color: #f5e6cc !important;
+  font-size: 0.95rem !important;
+}
+/* Fix for autofill in password/email fields */
+input[type="email"].input-dark:-webkit-autofill,
+input[type="password"].input-dark:-webkit-autofill,
+input[type="email"].input-dark:-webkit-autofill:hover,
+input[type="password"].input-dark:-webkit-autofill:hover,
+input[type="email"].input-dark:-webkit-autofill:focus,
+input[type="password"].input-dark:-webkit-autofill:focus,
+input[type="email"].input-dark:-webkit-autofill:active,
+input[type="password"].input-dark:-webkit-autofill:active {
+  -webkit-text-fill-color: #f5e6cc !important;
+  -webkit-box-shadow: 0 0 0 1000px rgba(15, 10, 0, 0.8) inset !important;
+  box-shadow: 0 0 0 1000px rgba(15, 10, 0, 0.8) inset !important;
+  transition: background-color 5000s ease-in-out 0s;
+  caret-color: #f5e6cc !important;
+  background-color: rgba(15, 10, 0, 0.8) !important;
+  background-image: none !important;
+  color: #f5e6cc !important;
+}
+input[type="email"].input-dark:-webkit-autofill::first-line,
+input[type="password"].input-dark:-webkit-autofill::first-line {
+  color: #f5e6cc !important;
+  font-size: 0.95rem !important;
+}
+/* Firefox autofill fix */
+input[type="email"].input-dark:-moz-autofill,
+input[type="password"].input-dark:-moz-autofill {
+  filter: none !important;
+  background-color: rgba(15, 10, 0, 0.8) !important;
+  color: #f5e6cc !important;
+}
+/* Enhanced autofill with animation delay trick */
+@keyframes autofillFix {
+  0%, 100% {
+    background-color: rgba(15, 10, 0, 0.8);
+    color: #f5e6cc;
+  }
+}
+input[type="email"].input-dark,
+input[type="password"].input-dark,
+input.input-dark {
+  animation: autofillFix 1s infinite;
+  animation-delay: 1s;
 }
 
 /* Form Labels */
@@ -330,6 +382,53 @@ textarea.input-dark,
 textarea.form-control.input-dark {
   resize: vertical;
   min-height: 100px;
+}
+
+/* Email and Password input fixes */
+input[type="email"].input-dark,
+input[type="password"].input-dark {
+  background: rgba(15, 10, 0, 0.6) !important;
+  background-color: rgba(15, 10, 0, 0.6) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  color: #f5e6cc !important;
+  border-radius: 12px !important;
+  padding: 0.75rem 1rem !important;
+  font-size: 0.95rem !important;
+  transition: all 0.3s ease !important;
+  -webkit-appearance: none !important;
+  appearance: none !important;
+}
+input[type="email"].input-dark:focus,
+input[type="password"].input-dark:focus {
+  background: rgba(255, 255, 255, 0.12) !important;
+  background-color: rgba(255, 255, 255, 0.12) !important;
+  border-color: rgba(245, 158, 11, 0.4) !important;
+  color: #f5e6cc !important;
+  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1) !important;
+  outline: none !important;
+}
+input[type="email"].input-dark::placeholder,
+input[type="password"].input-dark::placeholder {
+  color: rgba(245, 230, 204, 0.5) !important;
+}
+/* Strong autofill override for email and password */
+input[type="email"].input-dark:-webkit-autofill,
+input[type="password"].input-dark:-webkit-autofill,
+input[type="email"].input-dark:-webkit-autofill:hover,
+input[type="password"].input-dark:-webkit-autofill:hover,
+input[type="email"].input-dark:-webkit-autofill:focus,
+input[type="password"].input-dark:-webkit-autofill:focus {
+  -webkit-text-fill-color: #f5e6cc !important;
+  -webkit-box-shadow: 0 0 0 1000px rgba(15, 10, 0, 0.6) inset !important;
+  box-shadow: 0 0 0 1000px rgba(15, 10, 0, 0.6) inset !important;
+  background-color: rgba(15, 10, 0, 0.6) !important;
+  background-image: none !important;
+  color: #f5e6cc !important;
+  transition: background-color 5000s ease-in-out 0s !important;
+}
+input[type="email"].input-dark:-webkit-autofill::first-line,
+input[type="password"].input-dark:-webkit-autofill::first-line {
+  color: #f5e6cc !important;
 }
 
 /* ============================================
