@@ -21,12 +21,16 @@ class SearchController extends Controller
 
         $products = Product::where('is_active', true)
             ->where(function ($q) use ($query) {
-                $q->where('name', 'like', "%{$query}%")
-                    ->orWhere('description', 'like', "%{$query}%")
+                $q->where('name_en', 'like', "%{$query}%")
+                    ->orWhere('name_bn', 'like', "%{$query}%")
+                    ->orWhere('description_en', 'like', "%{$query}%")
+                    ->orWhere('description_bn', 'like', "%{$query}%")
                     ->orWhereHas('category', function ($catQuery) use ($query) {
-                        $catQuery->where('name', 'like', "%{$query}%");
+                        $catQuery->where('name_en', 'like', "%{$query}%")
+                            ->orWhere('name_bn', 'like', "%{$query}%");
                     });
             })
+            ->with(['category', 'primaryImage'])
             ->paginate(12);
 
         return view('frontend.pages.search', compact('products', 'query'));
