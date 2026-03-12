@@ -81,10 +81,12 @@ class CustomerController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255|unique:users,email,' . auth()->id(),
             'phone' => 'nullable|string|max:20',
+            'date_of_birth' => 'nullable|date',
+            'gender' => 'nullable|in:male,female,other',
             'password' => 'nullable|min:8|confirmed',
         ]);
 
-        $data = $request->only('name', 'email', 'phone');
+        $data = $request->only('name', 'email', 'phone', 'date_of_birth', 'gender');
 
         // Update password if provided
         if ($request->filled('password')) {

@@ -63,10 +63,64 @@
                 Manage your delivery addresses
               </p>
             </div>
-            <button class="btn btn-glow btn-sm" data-bs-toggle="modal" data-bs-target="#addAddressModal">
+            <button class="btn btn-glow btn-sm" onclick="showAddressForm()">
               <i class="fas fa-plus me-2"></i>Add New
             </button>
           </div>
+        </div>
+
+        <!-- Address Form (Hidden by default) -->
+        <div id="addressFormContainer" class="glass-card p-4 mb-4" style="display: none;">
+          <h5 style="color: #f5e6cc; margin-bottom: 1.5rem;">
+            <i class="fas fa-plus-circle me-2" style="color: #fbbf24;"></i>Add New Address
+          </h5>
+          <form method="POST" action="{{ route('customer.addresses.store') }}">
+            @csrf
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label">Label (Home, Office, etc.)</label>
+                <input type="text" name="label" class="form-control input-dark" placeholder="Home" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Full Name</label>
+                <input type="text" name="name" class="form-control input-dark" placeholder="Enter name" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Phone Number</label>
+                <input type="text" name="phone" class="form-control input-dark" placeholder="+880 1XXX-XXXXXX" required>
+              </div>
+              <div class="col-12">
+                <label class="form-label">Address</label>
+                <textarea name="address" class="form-control input-dark" rows="2" placeholder="House no, street, area" required></textarea>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">City</label>
+                <input type="text" name="city" class="form-control input-dark" placeholder="Dhaka" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Area/Thana</label>
+                <input type="text" name="state" class="form-control input-dark" placeholder="Gulshan" required>
+              </div>
+              <div class="col-12">
+                <div class="form-check">
+                  <input type="checkbox" name="is_default" class="form-check-input" id="defaultAddress" style="width: 1.2em; height: 1.2em; background-color: rgba(255,255,255,0.08); border: 2px solid rgba(245,158,11,0.4);">
+                  <label class="form-check-label ms-2" for="defaultAddress" style="color: rgba(245,230,204,0.8); cursor: pointer;">
+                    Set as default address
+                  </label>
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="d-flex gap-2">
+                  <button type="submit" class="btn btn-glow">
+                    <i class="fas fa-save me-2"></i>Save Address
+                  </button>
+                  <button type="button" class="btn btn-glass" onclick="hideAddressForm()">
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </div>
+          </form>
         </div>
 
         <!-- Addresses List -->
@@ -112,7 +166,7 @@
             <p style="color: rgba(245,230,204,0.6); margin-bottom: 1.5rem;">
               Add your delivery address for faster checkout
             </p>
-            <button class="btn btn-glow" data-bs-toggle="modal" data-bs-target="#addAddressModal">
+            <button class="btn btn-glow" onclick="showAddressForm()">
               <i class="fas fa-plus me-2"></i>Add Address
             </button>
           </div>
@@ -122,58 +176,16 @@
   </div>
 </div>
 
-<!-- Add Address Modal -->
-<div class="modal fade" id="addAddressModal" tabindex="-1">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content glass-modal">
-      <div class="modal-header" style="border-bottom: 1px solid rgba(255,255,255,0.1);">
-        <h5 class="modal-title" style="color: #f5e6cc;">Add New Address</h5>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-      </div>
-      <div class="modal-body">
-        <form method="POST" action="{{ route('customer.addresses.store') }}">
-          @csrf
-          <div class="mb-3">
-            <label class="form-label">Label (Home, Office, etc.)</label>
-            <input type="text" name="label" class="form-control input-dark" placeholder="Home" required>
-          </div>
-          <div class="mb-3">
-            <label class="form-label">Full Name</label>
-            <input type="text" name="name" class="form-control input-dark" placeholder="Enter name" required>
-          </div>
-          <div class="mb-3">
-            <label class="form-label">Phone Number</label>
-            <input type="text" name="phone" class="form-control input-dark" placeholder="+880 1XXX-XXXXXX" required>
-          </div>
-          <div class="mb-3">
-            <label class="form-label">Address</label>
-            <textarea name="address" class="form-control input-dark" rows="2" placeholder="House no, street, area" required></textarea>
-          </div>
-          <div class="row">
-            <div class="col-md-6 mb-3">
-              <label class="form-label">City</label>
-              <input type="text" name="city" class="form-control input-dark" placeholder="Dhaka" required>
-            </div>
-            <div class="col-md-6 mb-3">
-              <label class="form-label">Area/Thana</label>
-              <input type="text" name="state" class="form-control input-dark" placeholder="Gulshan" required>
-            </div>
-          </div>
-          <div class="form-check mb-3">
-            <input type="checkbox" name="is_default" class="form-check-input" id="defaultAddress">
-            <label class="form-check-label" for="defaultAddress" style="color: rgba(245,230,204,0.8);">
-              Set as default address
-            </label>
-          </div>
-          <div class="d-flex gap-2">
-            <button type="button" class="btn btn-glass" data-bs-dismiss="modal">Cancel</button>
-            <button type="submit" class="btn btn-glow flex-grow-1">Save Address</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
+<script>
+function showAddressForm() {
+  document.getElementById('addressFormContainer').style.display = 'block';
+  document.getElementById('addressFormContainer').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function hideAddressForm() {
+  document.getElementById('addressFormContainer').style.display = 'none';
+}
+</script>
 @endsection
 
 @push('styles')
@@ -234,51 +246,20 @@
     border-color: rgba(245,158,11,0.3);
     transform: translateY(-3px);
   }
-  .glass-modal {
-    background: rgba(15, 10, 0, 0.95);
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba(255,255,255,0.1);
+
+  /* Form container animation */
+  #addressFormContainer {
+    animation: slideDown 0.3s ease;
   }
-  .glass-modal .modal-header,
-  .glass-modal .modal-body,
-  .glass-modal .modal-footer {
-    background: transparent;
-  }
-  .glass-modal .modal-title {
-    color: #f5e6cc;
-  }
-  .glass-modal .form-control,
-  .glass-modal .form-select {
-    background: rgba(255,255,255,0.08);
-    border: 1px solid rgba(255,255,255,0.15);
-    color: #f5e6cc;
-  }
-  .glass-modal .form-control:focus,
-  .glass-modal .form-select:focus {
-    background: rgba(255,255,255,0.12);
-    border-color: rgba(245,158,11,0.4);
-    box-shadow: 0 0 0 3px rgba(245,158,11,0.1);
-    color: #f5e6cc;
-  }
-  .glass-modal .form-check-input {
-    background-color: rgba(255,255,255,0.08);
-    border-color: rgba(255,255,255,0.15);
-  }
-  .glass-modal .form-check-input:checked {
-    background-color: #f59e0b;
-    border-color: #f59e0b;
-  }
-  .glass-modal .dropdown-menu {
-    background: rgba(15, 10, 0, 0.95);
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba(255,255,255,0.1);
-  }
-  .glass-modal .dropdown-item {
-    color: rgba(245,230,204,0.8);
-  }
-  .glass-modal .dropdown-item:hover {
-    background: rgba(245,158,11,0.1);
-    color: #fbbf24;
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 </style>
 @endpush

@@ -135,6 +135,12 @@
                 <input type="password" name="password" class="form-control input-dark" placeholder="Leave blank to keep current">
               </div>
 
+              <!-- Confirm Password -->
+              <div class="col-md-6">
+                <label class="form-label">Confirm New Password</label>
+                <input type="password" name="password_confirmation" class="form-control input-dark" placeholder="Re-enter new password">
+              </div>
+
               <!-- Submit Button -->
               <div class="col-12">
                 <button type="submit" class="btn btn-glow">

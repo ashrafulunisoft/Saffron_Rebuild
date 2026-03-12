@@ -395,7 +395,7 @@ Route::middleware(['auth'])->prefix('customer')->name('customer.')->group(functi
     Route::get('/addresses', [App\Http\Controllers\Frontend\CustomerController::class, 'addresses'])->name('addresses');
     Route::post('/addresses', [App\Http\Controllers\Frontend\CustomerController::class, 'storeAddress'])->name('addresses.store');
     Route::get('/profile', [App\Http\Controllers\Frontend\CustomerController::class, 'profile'])->name('profile');
-    Route::post('/profile', [App\Http\Controllers\Frontend\CustomerController::class, 'updateProfile'])->name('profile.update');
+    Route::match(['put', 'patch'], '/profile', [App\Http\Controllers\Frontend\CustomerController::class, 'updateProfile'])->name('profile.update');
 });
 
 // Other frontend pages
