@@ -17,12 +17,52 @@ class ProductController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::with('category', 'tags')
-            ->withCount('orderItems')
-            ->orderBy('created_at', 'desc')
-            ->paginate(20);
+        $query = Product::with('category', 'tags')
+            ->withCount('orderItems');
+
+        // Search functionality
+        if ($request->has('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('name_en', 'like', "%{$search}%")
+                    ->orWhere('name_bn', 'like', "%{$search}%")
+                    ->orWhere('sku', 'like', "%{$search}%")
+                    ->orWhere('description_en', 'like', "%{$search}%")
+                    ->orWhere('description_bn', 'like', "%{$search}%");
+            });
+        }
+
+        // Filter by category
+        if ($request->has('category') && $request->category) {
+            $query->where('category_id', $request->category);
+        }
+
+        // Filter by status
+        if ($request->has('status')) {
+            if ($request->status === 'active') {
+                $query->where('is_active', true);
+            } elseif ($request->status === 'inactive') {
+                $query->where('is_active', false);
+            }
+        }
+
+        // Filter by featured
+        if ($request->has('featured') && $request->featured) {
+            $query->where('is_featured', true);
+        }
+
+        // Filter by stock
+        if ($request->has('stock')) {
+            if ($request->stock === 'low') {
+                $query->where('stock', '<=', 10)->where('stock', '>', 0);
+            } elseif ($request->stock === 'out') {
+                $query->where('stock', 0);
+            }
+        }
+
+        $products = $query->orderBy('created_at', 'desc')->paginate(20);
 
         $categories = Category::active()->orderBy('name_en')->get();
 
@@ -305,10 +345,16 @@ class ProductController extends Controller
     {
         $search = $request->get('q', '');
 
+        if (empty($search)) {
+            return response()->json([]);
+        }
+
         $products = Product::query()
-            ->where('name_en', 'like', "%{$search}%")
-            ->orWhere('name_bn', 'like', "%{$search}%")
-            ->orWhere('sku', 'like', "%{$search}%")
+            ->where(function ($q) use ($search) {
+                $q->where('name_en', 'like', "%{$search}%")
+                    ->orWhere('name_bn', 'like', "%{$search}%")
+                    ->orWhere('sku', 'like', "%{$search}%");
+            })
             ->active()
             ->orderBy('name_en')
             ->take(20)

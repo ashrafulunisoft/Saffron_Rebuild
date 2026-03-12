@@ -79,30 +79,34 @@
         </div>
 
         <!-- Filter Section -->
-        <div class="row g-3 mb-4" style="background: rgba(15, 23, 42, 0.6); padding: 1.5rem; border-radius: 16px; border: 1px solid rgba(255,255,255,0.05);">
-            <div class="col-md-4">
-                <div class="position-relative">
-                    <input type="text" id="productSearch" class="input-dark input-custom" placeholder="Search products..." style="color: white;">
-                    <i class="fas fa-search input-icon"></i>
+        <form id="filterForm" action="{{ route('admin.ecommerce.products.index') }}" method="GET">
+            <div class="row g-3 mb-4" style="background: rgba(15, 23, 42, 0.6); padding: 1.5rem; border-radius: 16px; border: 1px solid rgba(255,255,255,0.05);">
+                <div class="col-md-4">
+                    <div class="d-flex gap-2">
+                        <input type="text" name="search" id="productSearch" class="input-dark input-custom" placeholder="Search products..." style="color: white;" value="{{ request('search') }}">
+                        <button type="submit" class="btn-gradient" style="padding: 0.6rem 1.2rem; border-radius: 10px; white-space: nowrap;">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <select class="input-dark input-custom" name="category" id="categoryFilter">
+                        <option value="">All Categories</option>
+                        @foreach($categories as $category)
+                            <option value="{{ $category->id }}" {{ request('category') == $category->id ? 'selected' : '' }}>{{ $category->name_en }} / {{ $category->name_bn }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <select class="input-dark input-custom" name="status" id="statusFilter">
+                        <option value="">All Status</option>
+                        <option value="active" {{ request('status') === 'active' ? 'selected' : '' }}>Active</option>
+                        <option value="inactive" {{ request('status') === 'inactive' ? 'selected' : '' }}>Inactive</option>
+                        <option value="featured" {{ request('featured') ? 'selected' : '' }}>Featured Only</option>
+                    </select>
                 </div>
             </div>
-            <div class="col-md-4">
-                <select class="input-dark input-custom" id="categoryFilter">
-                    <option value="">All Categories</option>
-                    @foreach($categories as $category)
-                        <option value="{{ $category->id }}">{{ $category->name_en }} / {{ $category->name_bn }}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="col-md-4">
-                <select class="input-dark input-custom" id="statusFilter">
-                    <option value="">All Status</option>
-                    <option value="active">Active</option>
-                    <option value="inactive">Inactive</option>
-                    <option value="featured">Featured Only</option>
-                </select>
-            </div>
-        </div>
+        </form>
 
         <!-- Products Table -->
         <div class="table-responsive">
@@ -240,7 +244,7 @@
                 to {{ min($products->currentPage() * $products->perPage(), $products->total()) }}
                 of {{ $products->total() }} products
             </div>
-            {{ $products->links('vendor.pagination.bootstrap-5') }}
+            {{ $products->appends(request()->except('page'))->links('vendor.pagination.bootstrap-5') }}
         </div>
         @endif
     </div>
@@ -248,6 +252,32 @@
 
 @push('scripts')
 <script>
+// Handle filter form submission
+document.addEventListener('DOMContentLoaded', function() {
+    const filterForm = document.getElementById('filterForm');
+    const productSearch = document.getElementById('productSearch');
+    const categoryFilter = document.getElementById('categoryFilter');
+    const statusFilter = document.getElementById('statusFilter');
+
+    // Submit on Enter key in search
+    productSearch.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            filterForm.submit();
+        }
+    });
+
+    // Auto-submit on category change
+    categoryFilter.addEventListener('change', function() {
+        filterForm.submit();
+    });
+
+    // Auto-submit on status change
+    statusFilter.addEventListener('change', function() {
+        filterForm.submit();
+    });
+});
+
 function toggleFeaturedStatus(productId) {
     Swal.fire({
         title: 'Toggle Featured?',
