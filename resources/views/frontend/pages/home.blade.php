@@ -296,6 +296,106 @@
             </div>
           </div>
         </div>
+
+        <!-- More Demo Products -->
+        <div class="col-6 col-md-4 col-lg-3">
+          <div class="product-card glass-card prod-item" data-cat="bakery">
+            <div class="prod-badges">
+              <span class="badge badge-sale">New</span>
+            </div>
+            <div class="prod-img">
+              <div style="font-size: 4rem;">🥐</div>
+            </div>
+            <div class="prod-info">
+              <span class="prod-cat">Bakery</span>
+              <h6 class="prod-name">Fresh Croissant</h6>
+              <div class="prod-rating">
+                <span style="color:#fbbf24;">★★★★★</span>
+                <small style="color:rgba(245,230,204,0.5);">(89)</small>
+              </div>
+              <div class="prod-price">
+                <span class="current-price">৳180</span>
+              </div>
+              <div class="prod-actions">
+                <button class="btn-wishlist"><i class="far fa-heart"></i></button>
+                <button class="btn-cart"><i class="fas fa-shopping-bag"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-6 col-md-4 col-lg-3">
+          <div class="product-card glass-card prod-item" data-cat="cakes">
+            <div class="prod-img">
+              <div style="font-size: 4rem;">🎂</div>
+            </div>
+            <div class="prod-info">
+              <span class="prod-cat">Cakes</span>
+              <h6 class="prod-name">Chocolate Dream</h6>
+              <div class="prod-rating">
+                <span style="color:#fbbf24;">★★★★★</span>
+                <small style="color:rgba(245,230,204,0.5);">(215)</small>
+              </div>
+              <div class="prod-price">
+                <span class="current-price">৳1,200</span>
+                <span class="old-price">৳1,500</span>
+              </div>
+              <div class="prod-actions">
+                <button class="btn-wishlist"><i class="far fa-heart"></i></button>
+                <button class="btn-cart"><i class="fas fa-shopping-bag"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-6 col-md-4 col-lg-3">
+          <div class="product-card glass-card prod-item" data-cat="chocolates">
+            <div class="prod-badges">
+              <span class="badge badge-stock">Limited</span>
+            </div>
+            <div class="prod-img">
+              <div style="font-size: 4rem;">🍫</div>
+            </div>
+            <div class="prod-info">
+              <span class="prod-cat">Chocolates</span>
+              <h6 class="prod-name">Belgian Truffles</h6>
+              <div class="prod-rating">
+                <span style="color:#fbbf24;">★★★★★</span>
+                <small style="color:rgba(245,230,204,0.5);">(167)</small>
+              </div>
+              <div class="prod-price">
+                <span class="current-price">৳850</span>
+              </div>
+              <div class="prod-actions">
+                <button class="btn-wishlist"><i class="far fa-heart"></i></button>
+                <button class="btn-cart"><i class="fas fa-shopping-bag"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-6 col-md-4 col-lg-3">
+          <div class="product-card glass-card prod-item" data-cat="bengali-sweets">
+            <div class="prod-img">
+              <div style="font-size: 4rem;">🍧</div>
+            </div>
+            <div class="prod-info">
+              <span class="prod-cat">Bengali Sweets</span>
+              <h6 class="prod-name">Kheer Mohan</h6>
+              <div class="prod-rating">
+                <span style="color:#fbbf24;">★★★★★</span>
+                <small style="color:rgba(245,230,204,0.5);">(142)</small>
+              </div>
+              <div class="prod-price">
+                <span class="current-price">৳380</span>
+              </div>
+              <div class="prod-actions">
+                <button class="btn-wishlist"><i class="far fa-heart"></i></button>
+                <button class="btn-cart"><i class="fas fa-shopping-bag"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
       @endif
     </div>
 
@@ -303,6 +403,361 @@
       <a href="{{ route('shop') }}" class="btn btn-glow btn-lg">
         View All Products <i class="fas fa-arrow-right ms-2"></i>
       </a>
+    </div>
+  </div>
+</section>
+
+<!-- CHOCOLATE PARADISE -->
+<section class="specialty-section" style="background:linear-gradient(135deg, rgba(244,63,94,0.05), rgba(139,92,246,0.05));">
+  <div class="container">
+    <div class="row g-5 align-items-center">
+      <div class="col-lg-6">
+        <div class="specialty-card animate-on-scroll" style="background:linear-gradient(135deg, rgba(244,63,94,0.1), rgba(168,85,247,0.1));">
+          <div style="font-size:8rem;text-align:center;margin-bottom:1rem;">🍫</div>
+          <h3 class="text-center" style="font-family:'Playfair Display',serif;color:#fbbf24;">Premium Chocolates</h3>
+          <p class="text-center" style="color:rgba(245,230,204,0.7);">Experience chocolate paradise</p>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <span class="section-badge animate-on-scroll" style="background:linear-gradient(135deg, rgba(244,63,94,0.2), rgba(168,85,247,0.2));border-color:rgba(244,63,94,0.3);">Chocolate Paradise</span>
+        <h2 class="section-title mt-3 animate-on-scroll">
+          Premium Chocolate &<br/>
+          <span class="gradient-text">Cocoa Delights</span>
+        </h2>
+        <p class="mt-4 animate-on-scroll" style="color:rgba(245,230,204,0.75);line-height:1.9;">
+          Experience the ultimate indulgence with our exquisite collection of handcrafted chocolates, made from the finest cocoa beans sourced from around the world.
+        </p>
+        <p class="animate-on-scroll" style="color:rgba(245,230,204,0.7);line-height:1.9;">
+          From silky smooth dark chocolate to creamy milk chocolate truffles, our master chocolatiers create artisanal pieces that will delight your senses. Each chocolate is carefully crafted to deliver an unforgettable taste experience.
+        </p>
+        <div class="specialty-features animate-on-scroll">
+          <div class="sf-item">
+            <div class="sf-icon">🍫</div>
+            <div><div class="sf-title">Premium Cocoa</div><div class="sf-desc">Finest quality beans</div></div>
+          </div>
+          <div class="sf-item">
+            <div class="sf-icon">👨‍🍳</div>
+            <div><div class="sf-title">Expert Makers</div><div class="sf-desc">Master chocolatiers</div></div>
+          </div>
+          <div class="sf-item">
+            <div class="sf-icon">🎁</div>
+            <div><div class="sf-title">Gift Ready</div><div class="sf-desc">Beautiful packaging</div></div>
+          </div>
+          <div class="sf-item">
+            <div class="sf-icon">💝</div>
+            <div><div class="sf-title">Artisan Crafted</div><div class="sf-desc">Made with love</div></div>
+          </div>
+        </div>
+        <a href="{{ route('shop.category', 'chocolates') }}" class="btn btn-glow mt-4 animate-on-scroll" style="background:linear-gradient(135deg, #f43f5e, #a855f7);">
+          Discover Chocolates <i class="fas fa-arrow-right ms-2"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CATEGORIES - EXPLORE OUR DELICIOUS COLLECTION -->
+<section class="section-gap">
+  <div class="container">
+    <div class="text-center mb-5">
+      <span class="section-badge animate-on-scroll">Browse Categories</span>
+      <h2 class="section-title mt-3 animate-on-scroll">Explore Our <span class="gradient-text">Delicious</span> Collection</h2>
+    </div>
+    <div class="category-grid animate-on-scroll">
+      <a href="{{ route('shop.category', 'bengali-sweets') }}" class="cat-card">
+        <div class="cat-emoji">🍬</div>
+        <div class="cat-name">Bengali Sweets</div>
+        <div class="cat-count">32 items</div>
+      </a>
+      <a href="{{ route('shop.category', 'bakery') }}" class="cat-card">
+        <div class="cat-emoji">🥐</div>
+        <div class="cat-name">Bakery</div>
+        <div class="cat-count">24 items</div>
+      </a>
+      <a href="{{ route('shop.category', 'chocolates') }}" class="cat-card">
+        <div class="cat-emoji">🍫</div>
+        <div class="cat-name">Chocolates</div>
+        <div class="cat-count">18 items</div>
+      </a>
+      <a href="{{ route('shop.category', 'cakes') }}" class="cat-card">
+        <div class="cat-emoji">🎂</div>
+        <div class="cat-name">Cakes</div>
+        <div class="cat-count">20 items</div>
+      </a>
+      <a href="{{ route('shop.category', 'cookies') }}" class="cat-card">
+        <div class="cat-emoji">🍪</div>
+        <div class="cat-name">Cookies</div>
+        <div class="cat-count">15 items</div>
+      </a>
+      <a href="{{ route('shop.category', 'pastries') }}" class="cat-card">
+        <div class="cat-emoji">🥧</div>
+        <div class="cat-name">Pastries</div>
+        <div class="cat-count">12 items</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- NEW ARRIVALS -->
+<section class="section-gap" id="new-arrivals">
+  <div class="container">
+    <div class="text-center mb-5">
+      <span class="section-badge animate-on-scroll"><i class="fas fa-sparkles me-2"></i>Just Launched</span>
+      <h2 class="section-title mt-3 animate-on-scroll">New <span class="gradient-text">Arrivals</span></h2>
+      <p class="mt-3 animate-on-scroll" style="color:rgba(245,230,204,0.6);max-width:600px;margin:0 auto;">Discover our latest creations - fresh from the oven and ready to delight your taste buds</p>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-lg-3 col-md-6">
+        <div class="prod-card prod-item animate-on-scroll">
+          <div class="prod-img">
+            <div class="prod-emoji">🥐</div>
+            <span class="prod-badge badge-new">NEW</span>
+            <div class="prod-actions">
+              <button class="act-btn"><i class="fas fa-heart"></i></button>
+              <button class="act-btn"><i class="fas fa-eye"></i></button>
+            </div>
+          </div>
+          <div class="prod-body">
+            <div class="prod-cat">Pastries</div>
+            <h5 class="prod-name">Saffron Croissant</h5>
+            <div class="prod-stars">★★★★★ <small>(24)</small></div>
+            <div class="prod-footer">
+              <div>
+                <span class="price-new">৳350</span>
+              </div>
+              <button class="add-btn"><i class="fas fa-plus"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-6">
+        <div class="prod-card prod-item animate-on-scroll">
+          <div class="prod-img">
+            <div class="prod-emoji">🍩</div>
+            <span class="prod-badge badge-new">NEW</span>
+            <div class="prod-actions">
+              <button class="act-btn"><i class="fas fa-heart"></i></button>
+              <button class="act-btn"><i class="fas fa-eye"></i></button>
+            </div>
+          </div>
+          <div class="prod-body">
+            <div class="prod-cat">Donuts</div>
+            <h5 class="prod-name">Saffron Glazed</h5>
+            <div class="prod-stars">★★★★½ <small>(18)</small></div>
+            <div class="prod-footer">
+              <div>
+                <span class="price-new">৳220</span>
+                <span class="price-old">৳300</span>
+              </div>
+              <button class="add-btn"><i class="fas fa-plus"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-6">
+        <div class="prod-card prod-item animate-on-scroll">
+          <div class="prod-img">
+            <div class="prod-emoji">🧁</div>
+            <span class="prod-badge badge-new">NEW</span>
+            <div class="prod-actions">
+              <button class="act-btn"><i class="fas fa-heart"></i></button>
+              <button class="act-btn"><i class="fas fa-eye"></i></button>
+            </div>
+          </div>
+          <div class="prod-body">
+            <div class="prod-cat">Cupcakes</div>
+            <h5 class="prod-name">Rose Cupcake</h5>
+            <div class="prod-stars">★★★★★ <small>(31)</small></div>
+            <div class="prod-footer">
+              <div>
+                <span class="price-new">৳180</span>
+              </div>
+              <button class="add-btn"><i class="fas fa-plus"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-6">
+        <div class="prod-card prod-item animate-on-scroll">
+          <div class="prod-img">
+            <div class="prod-emoji">🍪</div>
+            <span class="prod-badge badge-new">NEW</span>
+            <div class="prod-actions">
+              <button class="act-btn"><i class="fas fa-heart"></i></button>
+              <button class="act-btn"><i class="fas fa-eye"></i></button>
+            </div>
+          </div>
+          <div class="prod-body">
+            <div class="prod-cat">Cookies</div>
+            <h5 class="prod-name">Pistachio Cookies</h5>
+            <div class="prod-stars">★★★★★ <small>(42)</small></div>
+            <div class="prod-footer">
+              <div>
+                <span class="price-new">৳480</span>
+              </div>
+              <button class="add-btn"><i class="fas fa-plus"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-center mt-5">
+      <a href="{{ route('shop') }}" class="btn btn-glow">
+        <i class="fas fa-arrow-right me-2"></i>View All New Arrivals
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- BEST SELLERS -->
+<section class="section-gap" style="background:linear-gradient(180deg, rgba(244,63,94,0.03), transparent);">
+  <div class="container">
+    <div class="text-center mb-5">
+      <span class="section-badge animate-on-scroll" style="background:linear-gradient(135deg,rgba(244,63,94,0.2),rgba(245,158,11,0.2));border-color:rgba(244,63,94,0.3);"><i class="fas fa-fire me-2"></i>Top Rated</span>
+      <h2 class="section-title mt-3 animate-on-scroll">Best <span style="background:linear-gradient(135deg,#f43f5e,#f59e0b);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Sellers</span></h2>
+      <p class="mt-3 animate-on-scroll" style="color:rgba(245,230,204,0.6);max-width:600px;margin:0 auto;">Our most loved products that customers keep coming back for</p>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-lg-4 col-md-6">
+        <div class="prod-card prod-item animate-on-scroll" style="border:1px solid rgba(245,158,11,0.3);">
+          <div class="prod-img">
+            <div class="prod-emoji">🧁</div>
+            <span class="prod-badge badge-hot" style="background:linear-gradient(135deg,#f43f5e,#e11d48);">#1 BESTSELLER</span>
+            <div class="prod-actions">
+              <button class="act-btn"><i class="fas fa-heart"></i></button>
+              <button class="act-btn"><i class="fas fa-eye"></i></button>
+            </div>
+          </div>
+          <div class="prod-body">
+            <div class="prod-cat">Cookies</div>
+            <h5 class="prod-name">Saffron Butter Cookies</h5>
+            <div class="prod-stars">★★★★★ <small>(2,847)</small></div>
+            <div class="prod-footer">
+              <div>
+                <span class="price-new">৳450</span>
+                <span class="price-old">৳650</span>
+              </div>
+              <button class="add-btn"><i class="fas fa-plus"></i></button>
+            </div>
+          </div>
+          <div class="bestseller-stats">
+            <div class="stat-item">
+              <i class="fas fa-shopping-bag"></i>
+              <span>12.5K sold</span>
+            </div>
+            <div class="stat-item">
+              <i class="fas fa-heart"></i>
+              <span>98% liked</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-6">
+        <div class="prod-card prod-item animate-on-scroll" style="border:1px solid rgba(245,158,11,0.2);">
+          <div class="prod-img">
+            <div class="prod-emoji">🍫</div>
+            <span class="prod-badge badge-hot" style="background:linear-gradient(135deg,#f59e0b,#d97706);">#2 TOP RATED</span>
+            <div class="prod-actions">
+              <button class="act-btn"><i class="fas fa-heart"></i></button>
+              <button class="act-btn"><i class="fas fa-eye"></i></button>
+            </div>
+          </div>
+          <div class="prod-body">
+            <div class="prod-cat">Chocolates</div>
+            <h5 class="prod-name">Dark Saffron Truffles</h5>
+            <div class="prod-stars">★★★★★ <small>(1,923)</small></div>
+            <div class="prod-footer">
+              <div>
+                <span class="price-new">৳1,200</span>
+              </div>
+              <button class="add-btn"><i class="fas fa-plus"></i></button>
+            </div>
+          </div>
+          <div class="bestseller-stats">
+            <div class="stat-item">
+              <i class="fas fa-shopping-bag"></i>
+              <span>8.2K sold</span>
+            </div>
+            <div class="stat-item">
+              <i class="fas fa-heart"></i>
+              <span>96% liked</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-6">
+        <div class="prod-card prod-item animate-on-scroll" style="border:1px solid rgba(245,158,11,0.2);">
+          <div class="prod-img">
+            <div class="prod-emoji">🍰</div>
+            <span class="prod-badge badge-hot" style="background:linear-gradient(135deg,#8b5cf6,#7c3aed);">#3 POPULAR</span>
+            <div class="prod-actions">
+              <button class="act-btn"><i class="fas fa-heart"></i></button>
+              <button class="act-btn"><i class="fas fa-eye"></i></button>
+            </div>
+          </div>
+          <div class="prod-body">
+            <div class="prod-cat">Cakes</div>
+            <h5 class="prod-name">Royal Saffron Cake</h5>
+            <div class="prod-stars">★★★★★ <small>(1,456)</small></div>
+            <div class="prod-footer">
+              <div>
+                <span class="price-new">৳2,500</span>
+                <span class="price-old">৳3,000</span>
+              </div>
+              <button class="add-btn"><i class="fas fa-plus"></i></button>
+            </div>
+          </div>
+          <div class="bestseller-stats">
+            <div class="stat-item">
+              <i class="fas fa-shopping-bag"></i>
+              <span>5.8K sold</span>
+            </div>
+            <div class="stat-item">
+              <i class="fas fa-heart"></i>
+              <span>94% liked</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Customer Choice Award Banner -->
+    <div class="bestseller-banner mt-5 animate-on-scroll">
+      <div class="row align-items-center">
+        <div class="col-lg-6">
+          <div class="d-flex align-items-center gap-4">
+            <div style="font-size:5rem;">🏆</div>
+            <div>
+              <h4 style="color:#f5e6cc;margin-bottom:0.5rem;font-family:'Playfair Display',serif;">Customer's Choice Award 2026</h4>
+              <p style="color:rgba(245,230,204,0.7);margin:0;">Our Saffron Butter Cookies have been voted the best traditional sweet by over 15,000 customers!</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 text-lg-end mt-4 mt-lg-0">
+          <div class="d-flex gap-4 justify-content-lg-end justify-content-center">
+            <div class="text-center">
+              <div style="font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:#fbbf24;">15K+</div>
+              <div style="font-size:0.85rem;color:rgba(245,230,204,0.6);">Reviews</div>
+            </div>
+            <div class="text-center">
+              <div style="font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:#fbbf24;">4.9★</div>
+              <div style="font-size:0.85rem;color:rgba(245,230,204,0.6);">Rating</div>
+            </div>
+            <div class="text-center">
+              <div style="font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:#fbbf24;">#1</div>
+              <div style="font-size:0.85rem;color:rgba(245,230,204,0.6);">Best Seller</div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
