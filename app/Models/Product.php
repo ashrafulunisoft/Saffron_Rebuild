@@ -148,4 +148,28 @@ class Product extends Model
     {
         return $this->sale_price ?? $this->price;
     }
+
+    /**
+     * Get the primary image path for the product.
+     */
+    public function getImageAttribute()
+    {
+        return $this->primaryImage?->image ?? null;
+    }
+
+    /**
+     * Get the display name (English name by default).
+     */
+    public function getNameAttribute()
+    {
+        return $this->name_en;
+    }
+
+    /**
+     * Get the display description (English description by default).
+     */
+    public function getDescriptionAttribute()
+    {
+        return $this->description_en;
+    }
 }

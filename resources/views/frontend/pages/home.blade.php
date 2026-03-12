@@ -334,7 +334,7 @@
               </div>
             </div>
             <div class="prod-body">
-              <div class="prod-cat">{{ $product->category->name ?? 'Sweets' }}</div>
+              <div class="prod-cat">{{ $product->category->name_en ?? 'Sweets' }}</div>
               <h5 class="prod-name">{{ $product->name }}</h5>
               <div class="prod-stars">★★★★★ <small>({{ $product->reviews_count ?? 0 }})</small></div>
               <div class="prod-footer">

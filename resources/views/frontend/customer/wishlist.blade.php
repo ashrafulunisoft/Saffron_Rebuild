@@ -87,7 +87,7 @@
                   </div>
                   <div class="prod-details">
                     <h5 class="prod-title">{{ $item->product->name ?? 'N/A' }}</h5>
-                    <p class="prod-cat">{{ $item->product->category->name ?? 'General' }}</p>
+                    <p class="prod-cat">{{ $item->product->category->name_en ?? 'General' }}</p>
                     <div class="d-flex justify-content-between align-items-center">
                       <span class="prod-price">৳{{ number_format($item->product->price ?? 0) }}</span>
                       <button class="prod-cart-btn">

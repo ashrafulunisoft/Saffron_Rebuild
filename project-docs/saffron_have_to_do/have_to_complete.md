@@ -47,14 +47,9 @@ Saffron Next Task List :
 3. add the sslcommerz 
 4. fix the order, payment, invoice 
 5. update the login and registration page and role . 
-6. fix the bilangual for the frontend theme and connect with the admin panel 
-7. update the category and product. 
-
-
-
-
-
-
+6. update the category and product. 
+7. fix the search option for the product and category 
+8. fix the bilangual for the frontend theme and connect with the admin panel 
 
 
 ------------------------------------------------

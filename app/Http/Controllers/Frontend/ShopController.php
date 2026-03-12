@@ -16,7 +16,7 @@ class ShopController extends Controller
     {
         $query = Product::query()
             ->where('is_active', true)
-            ->with('category')
+            ->with(['category', 'primaryImage'])
             ->orderBy('created_at', 'desc');
 
         // Filter by category
@@ -58,8 +58,11 @@ class ShopController extends Controller
         $category = Category::where('slug', $slug)->firstOrFail();
         $products = Product::where('category_id', $category->id)
             ->where('is_active', true)
+            ->with('primaryImage')
             ->paginate(12);
 
-        return view('frontend.pages.shop', compact('products', 'category'));
+        $categories = Category::withCount('products')->get();
+
+        return view('frontend.pages.shop', compact('products', 'category', 'categories'));
     }
 }

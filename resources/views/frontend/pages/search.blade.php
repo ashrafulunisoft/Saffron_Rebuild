@@ -26,7 +26,7 @@
               @endif
             </div>
             <div class="prod-info" style="padding: 1rem 0;">
-              <span class="prod-cat">{{ $product->category->name ?? 'Sweets' }}</span>
+              <span class="prod-cat">{{ $product->category->name_en ?? 'Sweets' }}</span>
               <h6 class="prod-name">{{ $product->name }}</h6>
               <div class="prod-price">
                 <span class="current-price">৳{{ number_format($product->price) }}</span>

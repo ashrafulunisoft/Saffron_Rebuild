@@ -14,7 +14,7 @@ class ProductController extends Controller
     public function show($slug)
     {
         $product = Product::where('slug', $slug)
-            ->with(['category', 'reviews' => function($query) {
+            ->with(['category', 'primaryImage', 'reviews' => function($query) {
                 $query->where('is_approved', true)->latest();
             }])
             ->firstOrFail();
@@ -23,6 +23,7 @@ class ProductController extends Controller
         $relatedProducts = Product::where('category_id', $product->category_id)
             ->where('id', '!=', $product->id)
             ->where('is_active', true)
+            ->with('primaryImage')
             ->take(8)
             ->get();
 

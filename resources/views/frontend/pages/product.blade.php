@@ -8,125 +8,297 @@
     <!-- Breadcrumb -->
     <nav aria-label="breadcrumb" class="mb-4">
       <ol class="breadcrumb-glass">
-        <li class="breadcrumb-item"><a href="{{ route('home') }}" style="color: #f59e0b; text-decoration: none;">Home</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('shop') }}" style="color: #f59e0b; text-decoration: none;">Shop</a></li>
-        <li class="breadcrumb-item active" style="color: #f5e6cc;">{{ $product->name }}</li>
+        <li class="breadcrumb-item">
+          <a href="{{ route('home') }}">Home</a>
+        </li>
+        <li class="breadcrumb-item">
+          <a href="{{ route('shop') }}">Shop</a>
+        </li>
+        <li class="breadcrumb-item active">{{ Str::limit($product->name ?? 'Product', 40) }}</li>
       </ol>
     </nav>
 
     <!-- Product Detail -->
-    <div class="row g-5">
+    <div class="row g-5 mb-5">
       <!-- Product Images -->
-      <div class="col-lg-5">
-        <div class="glass-card p-4 text-center">
-          @if($product->image)
-            <img src="{{ asset('storage/products/' . $product->image) }}" alt="{{ $product->name }}" style="max-width: 100%; max-height: 400px;">
-          @else
-            <div style="font-size: 10rem;">🍮</div>
-          @endif
-        </div>
-        <div class="d-flex gap-2 justify-content-center mt-3">
-          <button class="thumb-btn active">
+      <div class="col-lg-6">
+        <div class="glass-card p-4 mb-3">
+          <div class="product-main-image">
             @if($product->image)
-              <img src="{{ asset('storage/products/' . $product->image) }}" alt="" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+              <img src="{{ asset("storage/products/{$product->image}") }}" alt="{{ $product->name }}">
             @else
-              <span style="font-size: 2rem;">🍮</span>
+              <div class="product-image-placeholder">
+                <i class="fas fa-cookie-bite"></i>
+              </div>
             @endif
-          </button>
+          </div>
         </div>
+        <div class="d-flex gap-2 justify-content-center">
+          <div class="product-thumb active">
+            @if($product->image)
+              <img src="{{ asset("storage/products/{$product->image}") }}" alt="{{ $product->name }}">
+            @else
+              <i class="fas fa-cookie-bite"></i>
+            @endif
+          </div>
+        </div>
+
         <!-- Product Features -->
-        <div class="row g-2 mt-3">
+        <div class="row g-3 mt-4">
           <div class="col-6">
-            <div class="glass-card p-2 text-center small">
-              <i class="fas fa-shield-alt" style="color: #fbbf24;"></i>
-              <span style="color: rgba(245,230,204,0.7);">100% Natural</span>
+            <div class="feature-card">
+              <i class="fas fa-leaf"></i>
+              <span>100% Natural</span>
             </div>
           </div>
           <div class="col-6">
-            <div class="glass-card p-2 text-center small">
-              <i class="fas fa-truck" style="color: #fbbf24;"></i>
-              <span style="color: rgba(245,230,204,0.7);">Free Delivery</span>
+            <div class="feature-card">
+              <i class="fas fa-truck"></i>
+              <span>Fast Delivery</span>
             </div>
           </div>
           <div class="col-6">
-            <div class="glass-card p-2 text-center small">
-              <i class="fas fa-undo" style="color: #fbbf24;"></i>
-              <span style="color: rgba(245,230,204,0.7);">Easy Returns</span>
+            <div class="feature-card">
+              <i class="fas fa-certificate"></i>
+              <span>Premium Quality</span>
             </div>
           </div>
           <div class="col-6">
-            <div class="glass-card p-2 text-center small">
-              <i class="fas fa-lock" style="color: #fbbf24;"></i>
-              <span style="color: rgba(245,230,204,0.7);">Secure Payment</span>
+            <div class="feature-card">
+              <i class="fas fa-headset"></i>
+              <span>24/7 Support</span>
             </div>
           </div>
         </div>
       </div>
 
       <!-- Product Info -->
-      <div class="col-lg-7">
-        <span class="section-badge">{{ $product->category->name ?? 'Sweets' }}</span>
-        <h1 class="hero-title mt-2" style="font-size: 2.5rem;">
-          {{ $product->name }}
-        </h1>
+      <div class="col-lg-6">
+        <div class="product-badge-category">{{ $product->category->name_en ?? 'Sweets' }}</div>
+        <h1 class="product-detail-title">{{ $product->name }}</h1>
 
-        <div class="d-flex align-items-center gap-3 mt-3 mb-3 flex-wrap">
-          <div style="color: #fbbf24; font-size: 1.3rem;">★★★★★</div>
-          <span style="color: rgba(245,230,204,0.6);">({{ $product->reviews_count ?? 0 }} reviews)</span>
-          @if($product->stock > 0)
-            <span class="badge" style="background: rgba(34, 197, 94, 0.2); color: #22c55e;">In Stock</span>
+        <div class="product-rating-row">
+          <div class="stars">★★★★★</div>
+          <span class="review-count">({{ $product->reviews_count ?? 0 }} reviews)</span>
+          @if($product->stock > 0 && $product->stock < 10)
+            <span class="stock-badge low-stock">Only {{ $product->stock }} left</span>
+          @elseif($product->stock > 0)
+            <span class="stock-badge in-stock">In Stock</span>
           @else
-            <span class="badge" style="background: rgba(239, 68, 68, 0.2); color: #ef4444;">Out of Stock</span>
+            <span class="stock-badge out-stock">Out of Stock</span>
           @endif
         </div>
 
-        <div class="d-flex align-items-center gap-3 mb-4">
-          <span style="font-family: 'Playfair Display', serif; font-size: 2.5rem; font-weight: 700; color: #fbbf24;">
-            ৳{{ number_format($product->price) }}
-          </span>
+        <div class="product-price-section">
+          <span class="product-current-price">৳{{ number_format($product->price) }}</span>
           @if($product->compare_price)
-            <span style="font-size: 1.2rem; color: rgba(245,230,204,0.4); text-decoration: line-through;">
-              ৳{{ number_format($product->compare_price) }}
-            </span>
-            <span style="background: linear-gradient(135deg, #10b981, #059669); color: white; padding: 0.3rem 0.8rem; border-radius: 8px; font-size: 0.8rem; font-weight: 700;">
+            <span class="product-old-price">৳{{ number_format($product->compare_price) }}</span>
+            <span class="discount-badge">
               {{ round((1 - $product->price / $product->compare_price) * 100) }}% OFF
             </span>
           @endif
         </div>
 
-        <p style="color: rgba(245,230,204,0.75); line-height: 1.8; margin-bottom: 2rem;">
-          {{ $product->description }}
-        </p>
+        <div class="product-description">
+          <p>{{ $product->description ?? 'Experience the rich taste of our premium ' . $product->name . '. Made with the finest ingredients and traditional recipes, this delight is perfect for any occasion.' }}</p>
+        </div>
 
         <!-- Quantity & Add to Cart -->
-        <div class="d-flex gap-3 mb-4">
-          <div class="qty-selector">
-            <button class="qty-btn" onclick="decreaseQty()">
+        <div class="product-actions">
+          <div class="qty-selector-modern">
+            <button class="qty-btn-modern" onclick="decreaseQty()">
               <i class="fas fa-minus"></i>
             </button>
-            <span id="qtyValue">1</span>
-            <button class="qty-btn" onclick="increaseQty()">
+            <span id="qtyValue" class="qty-value-modern">1</span>
+            <button class="qty-btn-modern" onclick="increaseQty()">
               <i class="fas fa-plus"></i>
             </button>
           </div>
-          <button class="btn btn-glow btn-lg flex-grow-1" onclick="addToCart(this)">
+          <button class="btn btn-glow btn-lg add-cart-btn">
             <i class="fas fa-shopping-bag me-2"></i>Add to Cart
           </button>
-          <button class="btn btn-glass btn-lg" onclick="toggleWishlist(this)">
+          <button class="btn btn-glass btn-lg wishlist-btn-modern" onclick="toggleWishlist(this)">
             <i class="far fa-heart"></i>
           </button>
         </div>
 
         <!-- Product Meta -->
-        <div class="glass-card p-3">
+        <div class="glass-card product-meta-card">
           <div class="row g-3">
             <div class="col-sm-6">
-              <small style="color: rgba(245,230,204,0.6);">SKU:</small>
-              <div style="color: #f5e6cc;">{{ $product->sku ?? 'N/A' }}</div>
+              <div class="meta-item">
+                <small class="meta-label">SKU:</small>
+                <div class="meta-value">{{ $product->sku ?? 'N/A' }}</div>
+              </div>
             </div>
             <div class="col-sm-6">
-              <small style="color: rgba(245,230,204,0.6);">Category:</small>
-              <div style="color: #f5e6cc;">{{ $product->category->name ?? 'N/A' }}</div>
+              <div class="meta-item">
+                <small class="meta-label">Category:</small>
+                <div class="meta-value">{{ $product->category->name_en ?? 'N/A' }}</div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="meta-item">
+                <small class="meta-label">Availability:</small>
+                <div class="meta-value">{{ $product->stock > 0 ? 'Available' : 'Out of Stock' }}</div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="meta-item">
+                <small class="meta-label">Weight:</small>
+                <div class="meta-value">{{ $product->weight ?? '250g' }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Product Details Tabs -->
+    <div class="glass-card product-tabs-card mb-5">
+      <ul class="nav product-tabs-nav" id="productTabs" role="tablist">
+        <li class="nav-item">
+          <button class="nav-link active" id="description-tab" data-bs-toggle="tab" data-bs-target="#description" type="button">
+            <i class="fas fa-align-left me-2"></i>Description
+          </button>
+        </li>
+        <li class="nav-item">
+          <button class="nav-link" id="ingredients-tab" data-bs-toggle="tab" data-bs-target="#ingredients" type="button">
+            <i class="fas fa-list me-2"></i>Ingredients
+          </button>
+        </li>
+        <li class="nav-item">
+          <button class="nav-link" id="nutrition-tab" data-bs-toggle="tab" data-bs-target="#nutrition" type="button">
+            <i class="fas fa-chart-pie me-2"></i>Nutrition
+          </button>
+        </li>
+        <li class="nav-item">
+          <button class="nav-link" id="reviews-tab" data-bs-toggle="tab" data-bs-target="#reviews" type="button">
+            <i class="fas fa-star me-2"></i>Reviews ({{ $product->reviews_count ?? 0 }})
+          </button>
+        </li>
+      </ul>
+      <div class="tab-content product-tab-content" id="productTabsContent">
+        <div class="tab-pane fade show active" id="description" role="tabpanel">
+          <div class="product-tab-body">
+            <h4>About this Product</h4>
+            <p>{{ $product->description ?? 'Indulge in the exquisite taste of our ' . $product->name . '. Crafted with love and the finest ingredients, this delicious treat brings together traditional recipes and modern perfection. Each bite offers a perfect balance of flavors that will delight your taste buds.' }}</p>
+            <p>Perfect for celebrations, gifts, or simply treating yourself to something special. Our commitment to quality ensures that every product meets the highest standards of taste and freshness.</p>
+          </div>
+        </div>
+        <div class="tab-pane fade" id="ingredients" role="tabpanel">
+          <div class="product-tab-body">
+            <h4>Ingredients</h4>
+            <ul class="ingredients-list">
+              <li><i class="fas fa-check text-success me-2"></i>Premium Flour</li>
+              <li><i class="fas fa-check text-success me-2"></i>Fresh Dairy Products</li>
+              <li><i class="fas fa-check text-success me-2"></i>Natural Sweeteners</li>
+              <li><i class="fas fa-check text-success me-2"></i>Pure Ghee</li>
+              <li><i class="fas fa-check text-success me-2"></i>Dried Fruits & Nuts</li>
+              <li><i class="fas fa-check text-success me-2"></i>Natural Flavorings</li>
+              <li><small class="text-muted">* May contain traces of nuts and dairy products</small></li>
+            </ul>
+          </div>
+        </div>
+        <div class="tab-pane fade" id="nutrition" role="tabpanel">
+          <div class="product-tab-body">
+            <h4>Nutritional Information</h4>
+            <div class="row g-4">
+              <div class="col-md-6">
+                <div class="nutrition-item">
+                  <span class="nutrition-label">Calories</span>
+                  <span class="nutrition-value">280 kcal</span>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="nutrition-item">
+                  <span class="nutrition-label">Protein</span>
+                  <span class="nutrition-value">5g</span>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="nutrition-item">
+                  <span class="nutrition-label">Carbohydrates</span>
+                  <span class="nutrition-value">35g</span>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="nutrition-item">
+                  <span class="nutrition-label">Fat</span>
+                  <span class="nutrition-value">12g</span>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="nutrition-item">
+                  <span class="nutrition-label">Fiber</span>
+                  <span class="nutrition-value">2g</span>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="nutrition-item">
+                  <span class="nutrition-label">Sugar</span>
+                  <span class="nutrition-value">18g</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="tab-pane fade" id="reviews" role="tabpanel">
+          <div class="product-tab-body">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+              <h4>Customer Reviews</h4>
+              <button class="btn btn-glow btn-sm">
+                <i class="fas fa-plus me-2"></i>Write Review
+              </button>
+            </div>
+            <div class="row mb-4">
+              <div class="col-md-4 text-center">
+                <div class="review-average">4.8</div>
+                <div class="review-stars">★★★★★</div>
+                <small class="text-muted">Based on {{ $product->reviews_count ?? 0 }} reviews</small>
+              </div>
+              <div class="col-md-8">
+                <div class="review-bars">
+                  <div class="review-bar">
+                    <span>5 ★</span>
+                    <div class="bar-bg"><div class="bar-fill" style="width: 75%;"></div></div>
+                    <span>75%</span>
+                  </div>
+                  <div class="review-bar">
+                    <span>4 ★</span>
+                    <div class="bar-bg"><div class="bar-fill" style="width: 18%;"></div></div>
+                    <span>18%</span>
+                  </div>
+                  <div class="review-bar">
+                    <span>3 ★</span>
+                    <div class="bar-bg"><div class="bar-fill" style="width: 5%;"></div></div>
+                    <span>5%</span>
+                  </div>
+                  <div class="review-bar">
+                    <span>2 ★</span>
+                    <div class="bar-bg"><div class="bar-fill" style="width: 2%;"></div></div>
+                    <span>2%</span>
+                  </div>
+                  <div class="review-bar">
+                    <span>1 ★</span>
+                    <div class="bar-bg"><div class="bar-fill" style="width: 0%;"></div></div>
+                    <span>0%</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="review-item">
+              <div class="d-flex justify-content-between">
+                <div class="d-flex align-items-center">
+                  <div class="review-avatar">A</div>
+                  <div>
+                    <h6 class="mb-0">Ahmed Khan</h6>
+                    <small class="text-muted">2 days ago</small>
+                  </div>
+                </div>
+                <div class="review-stars">★★★★★</div>
+              </div>
+              <p class="mt-3 mb-0" style="color: rgba(245,230,204,0.8);">Absolutely delicious! The quality is amazing and it arrived fresh. Will definitely order again.</p>
             </div>
           </div>
         </div>
@@ -134,29 +306,38 @@
     </div>
 
     <!-- Related Products -->
-    @if($relatedProducts->count() > 0)
-    <div class="mt-5">
+    @if(isset($relatedProducts) && $relatedProducts->count() > 0)
+    <div class="related-products-section">
       <h3 class="section-title text-center mb-4">
-        Related <span class="gradient-text">Products</span>
+        You May Also <span class="gradient-text">Like</span>
       </h3>
       <div class="row g-4">
         @foreach($relatedProducts->take(4) as $related)
         <div class="col-6 col-md-3">
-          <div class="product-card glass-card">
-            <div class="prod-img">
+          <div class="prod-card">
+            <div class="prod-img-wrapper">
               @if($related->image)
-                <img src="{{ asset('storage/products/' . $related->image) }}" alt="{{ $related->name }}">
+                <img src="{{ asset("storage/products/{$related->image}") }}" alt="{{ $related->name }}">
               @else
-                <div style="font-size: 3rem;">🍮</div>
+                <div class="prod-img-placeholder">
+                  <i class="fas fa-cookie-bite"></i>
+                </div>
               @endif
+              <button class="prod-wishlist" title="Add to Wishlist">
+                <i class="far fa-heart"></i>
+              </button>
             </div>
-            <div class="prod-info" style="padding: 0.75rem 0;">
-              <h6 class="prod-name" style="font-size: 0.9rem;">{{ $related->name }}</h6>
-              <div class="prod-price">
-                <span class="current-price" style="font-size: 1rem;">৳{{ number_format($related->price) }}</span>
+            <div class="prod-details">
+              <span class="prod-cat">{{ $related->category->name_en ?? 'Sweets' }}</span>
+              <h6 class="prod-title">{{ $related->name }}</h6>
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="prod-price">৳{{ number_format($related->price) }}</span>
+                <button class="prod-cart-btn">
+                  <i class="fas fa-plus"></i>
+                </button>
               </div>
             </div>
-            <a href="{{ route('shop.product', $related->slug) }}" class="prod-link"></a>
+            <a href="{{ route('shop.product', $related->slug) }}" class="prod-link-overlay"></a>
           </div>
         </div>
         @endforeach
@@ -166,6 +347,551 @@
   </div>
 </div>
 @endsection
+
+@push('styles')
+<style>
+  /* Product Image Styles */
+  .product-main-image {
+    position: relative;
+    width: 100%;
+    padding-top: 100%;
+    overflow: hidden;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.03);
+  }
+
+  .product-main-image img,
+  .product-image-placeholder {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .product-image-placeholder {
+    font-size: 5rem;
+    color: rgba(245,230,204,0.3);
+    background: linear-gradient(135deg, rgba(245,158,11,0.1), rgba(244,63,94,0.05));
+  }
+
+  .product-thumb {
+    width: 80px;
+    height: 80px;
+    border-radius: 10px;
+    overflow: hidden;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+    background: rgba(255,255,255,0.05);
+  }
+
+  .product-thumb.active {
+    border-color: #fbbf24;
+    transform: scale(1.05);
+  }
+
+  .product-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .product-thumb i {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    font-size: 2rem;
+    color: rgba(245,230,204,0.5);
+  }
+
+  /* Feature Cards */
+  .feature-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+  }
+
+  .feature-card:hover {
+    background: rgba(245,158,11,0.15);
+    border-color: rgba(245,158,11,0.3);
+    transform: translateY(-3px);
+  }
+
+  .feature-card i {
+    font-size: 1.5rem;
+    color: #fbbf24;
+    margin-bottom: 0.5rem;
+  }
+
+  .feature-card span {
+    font-size: 0.8rem;
+    color: rgba(245,230,204,0.8);
+    text-align: center;
+  }
+
+  /* Product Info Styles */
+  .product-badge-category {
+    display: inline-block;
+    padding: 0.4rem 1rem;
+    background: rgba(245,158,11,0.15);
+    border: 1px solid rgba(245,158,11,0.3);
+    border-radius: 20px;
+    color: #fbbf24;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+  }
+
+  .product-detail-title {
+    color: #f5e6cc;
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+  }
+
+  .product-rating-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .product-rating-row .stars {
+    color: #fbbf24;
+    font-size: 1.2rem;
+  }
+
+  .review-count {
+    color: rgba(245,230,204,0.6);
+    font-size: 0.9rem;
+  }
+
+  .stock-badge {
+    padding: 0.3rem 0.8rem;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+
+  .stock-badge.in-stock {
+    background: rgba(34, 197, 94, 0.2);
+    color: #22c55e;
+  }
+
+  .stock-badge.low-stock {
+    background: rgba(245,158,11,0.2);
+    color: #fbbf24;
+    animation: pulse 2s infinite;
+  }
+
+  .stock-badge.out-stock {
+    background: rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+  }
+
+  /* Product Price Section */
+  .product-price-section {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .product-current-price {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    font-weight: 700;
+    color: #fbbf24;
+  }
+
+  .product-old-price {
+    font-size: 1.5rem;
+    color: rgba(245,230,204,0.4);
+    text-decoration: line-through;
+  }
+
+  .discount-badge {
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: white;
+    padding: 0.4rem 0.8rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 700;
+  }
+
+  /* Product Description */
+  .product-description {
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+  }
+
+  .product-description p {
+    color: rgba(245,230,204,0.8);
+    line-height: 1.8;
+    margin: 0;
+  }
+
+  /* Product Actions */
+  .product-actions {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    align-items: center;
+  }
+
+  .qty-selector-modern {
+    display: flex;
+    align-items: center;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .qty-btn-modern {
+    width: 45px;
+    height: 50px;
+    background: transparent;
+    border: none;
+    color: rgba(245,230,204,0.8);
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .qty-btn-modern:hover {
+    background: rgba(245,158,11,0.15);
+    color: #fbbf24;
+  }
+
+  .qty-value-modern {
+    width: 60px;
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #f5e6cc;
+  }
+
+  .add-cart-btn {
+    flex: 1;
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+  }
+
+  .wishlist-btn-modern {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .wishlist-btn-modern i {
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+  }
+
+  .wishlist-btn-modern:hover i {
+    color: #f43f5e;
+    transform: scale(1.2);
+  }
+
+  /* Product Meta Card */
+  .product-meta-card {
+    padding: 1.5rem;
+  }
+
+  .meta-item {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .meta-item:last-child {
+    border-bottom: none;
+  }
+
+  .meta-label {
+    color: rgba(245,230,204,0.6);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .meta-value {
+    color: #f5e6cc;
+    font-size: 1rem;
+    font-weight: 500;
+    margin-top: 0.25rem;
+  }
+
+  /* Product Tabs */
+  .product-tabs-card {
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .product-tabs-nav {
+    display: flex;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.03);
+    padding: 0 1rem;
+    overflow-x: auto;
+  }
+
+  .product-tabs-nav .nav-item {
+    flex: 0 0 auto;
+  }
+
+  .product-tabs-nav .nav-link {
+    padding: 1.2rem 1.5rem;
+    color: rgba(245,230,204,0.7);
+    background: transparent;
+    border: none;
+    border-bottom: 3px solid transparent;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+  }
+
+  .product-tabs-nav .nav-link:hover {
+    color: #fbbf24;
+    background: rgba(245,158,11,0.1);
+  }
+
+  .product-tabs-nav .nav-link.active {
+    color: #fbbf24;
+    background: transparent;
+    border-bottom-color: #fbbf24;
+  }
+
+  .product-tab-content {
+    padding: 2rem;
+  }
+
+  .product-tab-body h4 {
+    color: #f5e6cc;
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+  }
+
+  .product-tab-body p {
+    color: rgba(245,230,204,0.8);
+    line-height: 1.8;
+    margin-bottom: 1rem;
+  }
+
+  /* Ingredients List */
+  .ingredients-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .ingredients-list li {
+    padding: 0.75rem 0;
+    color: rgba(245,230,204,0.8);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    display: flex;
+    align-items: center;
+  }
+
+  .ingredients-list li:last-child {
+    border-bottom: none;
+  }
+
+  /* Nutrition Items */
+  .nutrition-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px;
+    transition: all 0.3s ease;
+  }
+
+  .nutrition-item:hover {
+    background: rgba(245,158,11,0.1);
+    border-color: rgba(245,158,11,0.2);
+  }
+
+  .nutrition-label {
+    color: rgba(245,230,204,0.8);
+    font-size: 0.95rem;
+  }
+
+  .nutrition-value {
+    color: #fbbf24;
+    font-size: 1.1rem;
+    font-weight: 700;
+  }
+
+  /* Reviews Section */
+  .review-average {
+    font-size: 4rem;
+    font-weight: 700;
+    color: #fbbf24;
+    line-height: 1;
+  }
+
+  .review-stars {
+    color: #fbbf24;
+    font-size: 1.5rem;
+    margin: 0.5rem 0;
+  }
+
+  .review-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .review-bar {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.85rem;
+    color: rgba(245,230,204,0.7);
+  }
+
+  .review-bar .bar-bg {
+    flex: 1;
+    height: 8px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .review-bar .bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #fbbf24, #f59e0b);
+    border-radius: 4px;
+  }
+
+  .review-item {
+    padding: 1.5rem;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    margin-top: 1rem;
+  }
+
+  .review-avatar {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #f59e0b, #f43f5e);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 700;
+    font-size: 1.2rem;
+    margin-right: 1rem;
+  }
+
+  /* Related Products */
+  .related-products-section {
+    margin-top: 4rem;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .product-detail-title {
+      font-size: 1.8rem;
+    }
+
+    .product-current-price {
+      font-size: 2rem;
+    }
+
+    .product-actions {
+      flex-direction: column;
+    }
+
+    .qty-selector-modern {
+      width: 100%;
+      justify-content: center;
+    }
+
+    .add-cart-btn {
+      width: 100%;
+    }
+
+    .product-tabs-nav {
+      flex-wrap: nowrap;
+    }
+
+    .product-tabs-nav .nav-link {
+      padding: 1rem;
+      font-size: 0.9rem;
+    }
+  }
+
+  /* Breadcrumb Styles */
+  .breadcrumb-glass {
+    background: rgba(255,255,255,0.05);
+    padding: 0.8rem 1.5rem;
+    border-radius: 12px;
+    display: inline-flex;
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .breadcrumb-glass .breadcrumb-item {
+    display: flex;
+    align-items: center;
+  }
+
+  .breadcrumb-glass .breadcrumb-item + .breadcrumb-item::before {
+    content: "›";
+    color: rgba(245,230,204,0.4);
+    font-size: 0.8rem;
+    margin: 0 0.75rem;
+  }
+
+  .breadcrumb-glass .breadcrumb-item a {
+    color: #f59e0b;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  .breadcrumb-glass .breadcrumb-item a:hover {
+    color: #fbbf24;
+    text-decoration: underline;
+  }
+
+  .breadcrumb-glass .breadcrumb-item.active {
+    color: #f5e6cc;
+  }
+</style>
+@endpush
 
 @push('scripts')
 <script>

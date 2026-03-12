@@ -5,13 +5,33 @@
 @section('content')
 <div style="padding-top: 120px; padding-bottom: 60px;">
   <div class="container">
-    <!-- Breadcrumb -->
-    <nav aria-label="breadcrumb" class="mb-4">
-      <ol class="breadcrumb" style="background: rgba(255,255,255,0.05); padding: 0.8rem 1.5rem; border-radius: 12px; display: inline-flex;">
-        <li class="breadcrumb-item"><a href="{{ route('home') }}" style="color: #f59e0b; text-decoration: none;">Home</a></li>
-        <li class="breadcrumb-item active" style="color: #f5e6cc;">Shop</li>
-      </ol>
-    </nav>
+    <!-- Header Row: Breadcrumb, Product Count, Sort -->
+    <div class="shop-header-row mb-4">
+      <!-- Breadcrumb -->
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb-glass mb-0">
+          <li class="breadcrumb-item">
+            <a href="{{ route('home') }}">Home</a>
+          </li>
+          <li class="breadcrumb-item active">Shop</li>
+        </ol>
+      </nav>
+
+      <!-- Product Count & Sort -->
+      <div class="shop-header-actions">
+        <div class="product-count">
+          <span class="count-label">Showing</span>
+          <span class="count-number">{{ $products->total() }}</span>
+          <span class="count-label">products</span>
+        </div>
+        <select class="form-select input-dark sort-select" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
+          <option value="">Sort by: Default</option>
+          <option value="{{ route('shop', ['sort' => 'newest']) }}" {{ request('sort') == 'newest' ? 'selected' : '' }}>Newest First</option>
+          <option value="{{ route('shop', ['sort' => 'price_low']) }}" {{ request('sort') == 'price_low' ? 'selected' : '' }}>Price: Low to High</option>
+          <option value="{{ route('shop', ['sort' => 'price_high']) }}" {{ request('sort') == 'price_high' ? 'selected' : '' }}>Price: High to Low</option>
+        </select>
+      </div>
+    </div>
 
     <div class="row g-4">
       <!-- Sidebar Filters -->
@@ -27,8 +47,8 @@
             <div class="category-list">
               @foreach($categories as $cat)
               <a href="{{ route('shop.category', $cat->slug) }}" class="category-link">
-                <span>{{ $cat->name }}</span>
-                <span class="badge" style="background: rgba(245,158,11,0.2); color: #fbbf24;">{{ $cat->products_count }}</span>
+                <span>{{ $cat->name_en }}</span>
+                <span class="badge" style="background: rgba(245,158,11,0.2); color: #fbbf24;">{{ $cat->products_count ?? 0 }}</span>
               </a>
               @endforeach
             </div>
@@ -40,13 +60,15 @@
             <form action="{{ route('shop') }}" method="GET">
               <div class="row g-2">
                 <div class="col-6">
-                  <input type="number" name="min_price" class="form-control input-dark" placeholder="Min" value="{{ request('min_price') }}" style="color: white;">
+                  <input type="number" name="min_price" class="form-control input-dark" placeholder="Min" value="{{ request('min_price') }}">
                 </div>
                 <div class="col-6">
-                  <input type="number" name="max_price" class="form-control input-dark" placeholder="Max" value="{{ request('max_price') }}" style="color: white;">
+                  <input type="number" name="max_price" class="form-control input-dark" placeholder="Max" value="{{ request('max_price') }}">
                 </div>
               </div>
-              <button type="submit" class="btn btn-glow w-100 mt-2">Filter</button>
+              <button type="submit" class="btn btn-glow w-100 mt-2">
+                <i class="fas fa-search me-2"></i>Filter
+              </button>
             </form>
           </div>
         </div>
@@ -54,59 +76,40 @@
 
       <!-- Products Grid -->
       <div class="col-lg-9">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-          <h5 style="color: #f5e6cc;">All Products <span class="text-muted">({{ $products->total() }})</span></h5>
-          <select class="form-select input-dark" style="width: auto; color: white;" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
-            <option value="">Sort by: Default</option>
-            <option value="{{ route('shop', ['sort' => 'newest']) }}" {{ request('sort') == 'newest' ? 'selected' : '' }}>Newest First</option>
-            <option value="{{ route('shop', ['sort' => 'price_low']) }}" {{ request('sort') == 'price_low' ? 'selected' : '' }}>Price: Low to High</option>
-            <option value="{{ route('shop', ['sort' => 'price_high']) }}" {{ request('sort') == 'price_high' ? 'selected' : '' }}>Price: High to Low</option>
-          </select>
-        </div>
 
         @if($products->count() > 0)
           <div class="row g-4">
             @foreach($products as $product)
             <div class="col-6 col-md-4 col-lg-4">
-              <div class="product-card glass-card">
-                <div class="prod-badges">
-                  @if($product->is_featured)
-                    <span class="badge badge-sale">Featured</span>
-                  @endif
-                  @if($product->stock < 10 && $product->stock > 0)
-                    <span class="badge badge-stock">Low Stock</span>
-                  @endif
-                </div>
-                <div class="prod-img">
+              <div class="prod-card">
+                <div class="prod-img-wrapper">
                   @if($product->image)
-                    <img src="{{ asset('storage/products/' . $product->image) }}" alt="{{ $product->name }}">
+                    <img src="{{ asset("storage/products/{$product->image}") }}" alt="{{ $product->name }}">
                   @else
-                    <div style="font-size: 4rem;">🍮</div>
+                    <div class="prod-img-placeholder">
+                      <i class="fas fa-cookie-bite"></i>
+                    </div>
+                  @endif
+                  <button class="prod-wishlist" title="Add to Wishlist">
+                    <i class="far fa-heart"></i>
+                  </button>
+                  @if($product->stock < 10 && $product->stock > 0)
+                    <span class="prod-badge-low">Low Stock</span>
+                  @elseif($product->is_new)
+                    <span class="prod-badge-new">New</span>
                   @endif
                 </div>
-                <div class="prod-info">
-                  <span class="prod-cat">{{ $product->category->name ?? 'Sweets' }}</span>
-                  <h6 class="prod-name">{{ $product->name }}</h6>
-                  <div class="prod-rating">
-                    <span style="color: #fbbf24;">★★★★★</span>
-                    <small style="color: rgba(245,230,204,0.5);">({{ $product->reviews_count ?? 0 }})</small>
-                  </div>
-                  <div class="prod-price">
-                    <span class="current-price">৳{{ number_format($product->price) }}</span>
-                    @if($product->compare_price)
-                      <span class="old-price">৳{{ number_format($product->compare_price) }}</span>
-                    @endif
-                  </div>
-                  <div class="prod-actions">
-                    <button class="btn-wishlist" title="Add to Wishlist">
-                      <i class="far fa-heart"></i>
-                    </button>
-                    <button class="btn-cart" onclick="addToCart(this)">
-                      <i class="fas fa-shopping-bag"></i>
+                <div class="prod-details">
+                  <span class="prod-cat">{{ $product->category->name_en ?? 'Sweets' }}</span>
+                  <h6 class="prod-title">{{ $product->name }}</h6>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <span class="prod-price">৳{{ number_format($product->price) }}</span>
+                    <button class="prod-cart-btn">
+                      <i class="fas fa-plus"></i>
                     </button>
                   </div>
                 </div>
-                <a href="{{ route('shop.product', $product->slug) }}" class="prod-link"></a>
+                <a href="{{ route('shop.product', $product->slug) }}" class="prod-link-overlay"></a>
               </div>
             </div>
             @endforeach
@@ -119,11 +122,11 @@
           </div>
           @endif
         @else
-          <div class="text-center py-5 glass-card">
+          <div class="glass-card p-5 text-center">
             <i class="fas fa-search" style="font-size: 4rem; opacity: 0.3; margin-bottom: 1rem;"></i>
-            <h5 style="color: #f5e6cc;">No products found</h5>
-            <p style="color: rgba(245,230,204,0.6);">Try adjusting your filters or browse our categories</p>
-            <a href="{{ route('shop') }}" class="btn btn-glow mt-3">
+            <h5 style="color: #f5e6cc; margin-bottom: 0.5rem;">No products found</h5>
+            <p style="color: rgba(245,230,204,0.6); margin-bottom: 1.5rem;">Try adjusting your filters or browse our categories</p>
+            <a href="{{ route('shop') }}" class="btn btn-glow">
               <i class="fas fa-redo me-2"></i>Clear Filters
             </a>
           </div>
@@ -136,140 +139,325 @@
 
 @push('styles')
 <style>
+  .breadcrumb-glass {
+    background: rgba(255,255,255,0.05);
+    padding: 0.8rem 1.5rem;
+    border-radius: 12px;
+    display: inline-flex;
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .breadcrumb-glass .breadcrumb-item {
+    display: flex;
+    align-items: center;
+  }
+
+  .breadcrumb-glass .breadcrumb-item + .breadcrumb-item::before {
+    content: "›";
+    color: rgba(245,230,204,0.4);
+    font-size: 0.8rem;
+    margin: 0 0.75rem;
+  }
+
+  .breadcrumb-glass .breadcrumb-item a {
+    color: #f59e0b;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  .breadcrumb-glass .breadcrumb-item a:hover {
+    color: #fbbf24;
+    text-decoration: underline;
+  }
+
+  .breadcrumb-glass .breadcrumb-item.active {
+    color: #f5e6cc;
+  }
+
+  /* Shop Header Row */
+  .shop-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .shop-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .product-count {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: rgba(245,230,204,0.8);
+    font-size: 0.9rem;
+  }
+
+  .product-count .count-label {
+    color: rgba(245,230,204,0.6);
+  }
+
+  .product-count .count-number {
+    color: #fbbf24;
+    font-weight: 700;
+    font-size: 1.1rem;
+  }
+
+  .sort-select {
+    width: auto !important;
+    min-width: 200px;
+    cursor: pointer;
+  }
+
   .category-list {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
   }
+
   .category-link {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0.5rem 0.75rem;
+    padding: 0.6rem 0.75rem;
     border-radius: 8px;
     color: rgba(245,230,204,0.8);
     text-decoration: none;
     transition: all 0.3s ease;
+    border: 1px solid transparent;
   }
+
   .category-link:hover {
-    background: rgba(245,158,11,0.1);
+    background: rgba(245,158,11,0.15);
     color: #fbbf24;
+    border-color: rgba(245,158,11,0.2);
+    transform: translateX(3px);
   }
-  .product-card {
-    position: relative;
+
+  /* Product Card Styles */
+  .prod-card {
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px;
     overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
   }
-  .prod-badges {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    z-index: 10;
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
+
+  .prod-card:hover {
+    transform: translateY(-8px);
+    border-color: rgba(245,158,11,0.3);
+    box-shadow: 0 20px 40px rgba(245,158,11,0.15);
   }
-  .badge-sale {
-    background: linear-gradient(135deg, rgba(244,63,94,0.9), rgba(225,29,72,0.9));
-    color: white;
-    padding: 0.25rem 0.6rem;
-    border-radius: 6px;
-    font-size: 0.7rem;
-    font-weight: 600;
-  }
-  .badge-stock {
-    background: linear-gradient(135deg, rgba(245,158,11,0.9), rgba(217,119,6,0.9));
-    color: white;
-    padding: 0.25rem 0.6rem;
-    border-radius: 6px;
-    font-size: 0.7rem;
-    font-weight: 600;
-  }
-  .prod-img {
+
+  .prod-img-wrapper {
     position: relative;
     padding-top: 100%;
     overflow: hidden;
-    background: rgba(255,255,255,0.05);
-    border-radius: 12px;
+    background: rgba(255,255,255,0.03);
   }
-  .prod-img img, .prod-img > div {
+
+  .prod-img-wrapper img,
+  .prod-img-placeholder {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
+    object-fit: cover;
     display: flex;
     align-items: center;
     justify-content: center;
-    object-fit: cover;
   }
-  .prod-info {
-    padding: 1rem 0;
+
+  .prod-img-placeholder {
+    font-size: 3rem;
+    color: rgba(245,230,204,0.3);
+    background: linear-gradient(135deg, rgba(245,158,11,0.1), rgba(244,63,94,0.05));
   }
-  .prod-cat {
-    font-size: 0.75rem;
-    color: rgba(245,230,204,0.6);
+
+  .prod-wishlist {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background: rgba(15, 23, 42, 0.8);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: rgba(245,230,204,0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 10;
+  }
+
+  .prod-wishlist:hover {
+    background: rgba(244,63,94,0.2);
+    border-color: rgba(244,63,94,0.4);
+    color: #f43f5e;
+    transform: scale(1.1);
+  }
+
+  .prod-badge-low,
+  .prod-badge-new {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    padding: 0.25rem 0.6rem;
+    border-radius: 6px;
+    font-size: 0.7rem;
+    font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    z-index: 10;
   }
-  .prod-name {
+
+  .prod-badge-low {
+    background: linear-gradient(135deg, rgba(245,158,11,0.9), rgba(217,119,6,0.9));
+    color: white;
+  }
+
+  .prod-badge-new {
+    background: linear-gradient(135deg, rgba(34,197,94,0.9), rgba(22,163,74,0.9));
+    color: white;
+  }
+
+  .prod-details {
+    padding: 1rem;
+  }
+
+  .prod-cat {
+    font-size: 0.7rem;
+    color: rgba(245,230,204,0.5);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.25rem;
+    display: block;
+  }
+
+  .prod-title {
     color: #f5e6cc;
-    font-size: 1rem;
+    font-size: 0.95rem;
     font-weight: 600;
-    margin: 0.5rem 0;
+    margin: 0;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
+    line-height: 1.4;
+    margin-bottom: 0.5rem;
   }
+
   .prod-price {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    margin-top: 0.5rem;
-  }
-  .current-price {
     font-family: 'Playfair Display', serif;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     font-weight: 700;
     color: #fbbf24;
   }
-  .old-price {
-    font-size: 0.9rem;
-    color: rgba(245,230,204,0.4);
-    text-decoration: line-through;
-  }
-  .prod-actions {
+
+  .prod-cart-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #f59e0b, #f43f5e);
+    border: none;
+    color: white;
     display: flex;
-    gap: 0.5rem;
-    margin-top: 1rem;
-  }
-  .btn-wishlist, .btn-cart {
-    flex: 1;
-    padding: 0.6rem;
-    border-radius: 8px;
-    border: 1px solid rgba(255,255,255,0.15);
-    background: rgba(255,255,255,0.05);
-    color: rgba(245,230,204,0.8);
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
     transition: all 0.3s ease;
   }
-  .btn-wishlist:hover {
-    background: rgba(244,63,94,0.2);
-    border-color: rgba(244,63,94,0.4);
-    color: #f43f5e;
+
+  .prod-cart-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 15px rgba(245,158,11,0.4);
   }
-  .btn-cart:hover {
-    background: linear-gradient(135deg, #f59e0b, #f43f5e);
-    border-color: transparent;
-    color: white;
-  }
-  .prod-link {
+
+  .prod-link-overlay {
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
     z-index: 5;
+  }
+
+  /* Pagination Styling */
+  .pagination {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .pagination .page-link {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: rgba(245,230,204,0.8);
+    border-radius: 10px;
+    padding: 0.5rem 1rem;
+    transition: all 0.3s ease;
+  }
+
+  .pagination .page-link:hover {
+    background: rgba(245,158,11,0.15);
+    border-color: rgba(245,158,11,0.3);
+    color: #fbbf24;
+  }
+
+  .pagination .page-item.active .page-link {
+    background: linear-gradient(135deg, #f59e0b, #f43f5e);
+    border-color: transparent;
+    color: white;
+  }
+
+  .pagination .disabled .page-link {
+    color: rgba(245,230,204,0.3);
+    pointer-events: none;
+  }
+
+  /* Responsive Styles */
+  @media (max-width: 991px) {
+    .shop-header-row {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    .shop-header-actions {
+      width: 100%;
+      justify-content: space-between;
+    }
+
+    .sort-select {
+      flex: 1;
+      max-width: 200px;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .shop-header-actions {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 1rem;
+    }
+
+    .product-count {
+      justify-content: center;
+    }
+
+    .sort-select {
+      max-width: 100%;
+    }
   }
 </style>
 @endpush
