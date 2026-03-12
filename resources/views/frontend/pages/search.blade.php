@@ -5,61 +5,318 @@
 @section('content')
 <div style="padding-top: 120px; padding-bottom: 60px;">
   <div class="container">
+    <!-- Search Header -->
     <div class="glass-card p-4 mb-4">
-      <h4 style="color: #f5e6cc;">
-        <i class="fas fa-search me-2" style="color: #fbbf24;"></i>
-        Search Results for "{{ $query }}"
-      </h4>
-      <p style="color: rgba(245,230,204,0.6);">Found {{ $products->total() }} products</p>
+      <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+        <div>
+          <h4 style="color: #f5e6cc; margin-bottom: 0.5rem;">
+            <i class="fas fa-search me-2" style="color: #fbbf24;"></i>
+            Search Results for "{{ $query }}"
+          </h4>
+          <p style="color: rgba(245,230,204,0.6); margin: 0;">Found {{ $products->total() }} products</p>
+        </div>
+        <a href="{{ route('shop') }}" class="btn btn-glass">
+          <i class="fas fa-arrow-left me-2"></i>Back to Shop
+        </a>
+      </div>
     </div>
 
     @if($products->count() > 0)
       <div class="row g-4">
         @foreach($products as $product)
         <div class="col-6 col-md-4 col-lg-3">
-          <div class="product-card glass-card">
-            <div class="prod-img">
+          <div class="prod-card">
+            <div class="prod-img-wrapper">
               @if($product->image)
                 <img src="{{ asset('storage/products/' . $product->image) }}" alt="{{ $product->name }}">
               @else
-                <div style="font-size: 4rem;">🍮</div>
+                <div class="prod-img-placeholder">
+                  <i class="fas fa-cookie-bite"></i>
+                </div>
               @endif
+              <button class="prod-wishlist" title="Add to Wishlist">
+                <i class="far fa-heart"></i>
+              </button>
             </div>
-            <div class="prod-info" style="padding: 1rem 0;">
+            <div class="prod-details">
               <span class="prod-cat">{{ $product->category->name_en ?? 'Sweets' }}</span>
-              <h6 class="prod-name">{{ $product->name }}</h6>
-              <div class="prod-price">
-                <span class="current-price">৳{{ number_format($product->price) }}</span>
-              </div>
-              <div class="prod-actions">
-                <button class="btn-wishlist">
-                  <i class="far fa-heart"></i>
-                </button>
-                <button class="btn-cart">
-                  <i class="fas fa-shopping-bag"></i>
+              <h6 class="prod-title">{{ $product->name }}</h6>
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="prod-price">৳{{ number_format($product->price) }}</span>
+                <button class="prod-cart-btn">
+                  <i class="fas fa-plus"></i>
                 </button>
               </div>
             </div>
-            <a href="{{ route('shop.product', $product->slug) }}" class="prod-link"></a>
+            <a href="{{ route('shop.product', $product->slug) }}" class="prod-link-overlay"></a>
           </div>
         </div>
         @endforeach
       </div>
 
       @if($products->hasPages())
-      <div class="d-flex justify-content-center mt-5">
+      <div class="pagination-wrapper d-flex justify-content-center mt-5">
         {{ $products->appends(request()->query())->links('pagination::bootstrap-5') }}
       </div>
       @endif
     @else
       <div class="text-center py-5 glass-card">
-        <i class="fas fa-search" style="font-size: 4rem; opacity: 0.3; margin-bottom: 1rem;"></i>
-        <h5 style="color: #f5e6cc;">No products found</h5>
-        <p style="color: rgba(245,230,204,0.6);">Try searching for something else or browse our shop</p>
-        <a href="{{ route('shop') }}" class="btn btn-glow mt-3">
+        <div style="font-size: 5rem; margin-bottom: 1.5rem; opacity: 0.4;">🔍</div>
+        <h4 style="color: #f5e6cc; margin-bottom: 0.5rem;">No products found</h4>
+        <p style="color: rgba(245,230,204,0.6); margin-bottom: 1.5rem;">Try searching for something else or browse our shop</p>
+        <a href="{{ route('shop') }}" class="btn btn-glow">
           <i class="fas fa-store me-2"></i>Browse Shop
         </a>
       </div>
     @endif
   </div>
 </div>
+
+@push('styles')
+<style>
+  /* Product Card Styles - Matching Shop Page */
+  .prod-card {
+    position: relative;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    height: 100%;
+  }
+
+  .prod-card:hover {
+    transform: translateY(-8px);
+    border-color: rgba(245,158,11,0.3);
+    box-shadow: 0 20px 40px rgba(245,158,11,0.15);
+  }
+
+  .prod-img-wrapper {
+    position: relative;
+    width: 100%;
+    height: 220px;
+    overflow: hidden;
+    background: linear-gradient(135deg, rgba(245,158,11,0.08), rgba(244,63,94,0.05));
+    border-radius: 16px 16px 0 0;
+  }
+
+  .prod-img-wrapper img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .prod-card:hover .prod-img-wrapper img {
+    transform: scale(1.15);
+  }
+
+  .prod-img-placeholder {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4rem;
+    color: rgba(245,230,204,0.5);
+    background: linear-gradient(135deg, rgba(245,158,11,0.15), rgba(244,63,94,0.1));
+    position: relative;
+    overflow: hidden;
+  }
+
+  .prod-img-placeholder::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(245,158,11,0.1), rgba(244,63,94,0.05));
+    animation: shimmer 3s ease-in-out infinite;
+  }
+
+  .prod-img-placeholder i {
+    position: relative;
+    z-index: 1;
+    filter: drop-shadow(0 4px 12px rgba(245,158,11,0.4));
+    animation: float 3s ease-in-out infinite;
+  }
+
+  @keyframes shimmer {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-5px); }
+  }
+
+  .prod-wishlist {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(15, 23, 42, 0.9);
+    backdrop-filter: blur(12px);
+    border: 1.5px solid rgba(255,255,255,0.15);
+    color: rgba(245,230,204,0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 10;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  }
+
+  .prod-wishlist:hover {
+    background: rgba(244,63,94,0.9);
+    border-color: rgba(244,63,94,0.5);
+    color: #fff;
+    transform: scale(1.15);
+    box-shadow: 0 6px 20px rgba(244,63,94,0.5);
+  }
+
+  .prod-wishlist.active {
+    background: rgba(244,63,94,0.9);
+    border-color: rgba(244,63,94,0.5);
+    color: #fff;
+  }
+
+  .prod-wishlist.active i {
+    font-weight: 900;
+  }
+
+  .prod-details {
+    padding: 1rem;
+  }
+
+  .prod-cat {
+    display: block;
+    font-size: 0.7rem;
+    color: rgba(245,230,204,0.5);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.5rem;
+  }
+
+  .prod-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #f5e6cc;
+    margin-bottom: 0.75rem;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    transition: color 0.3s ease;
+  }
+
+  .prod-card:hover .prod-title {
+    color: #fbbf24;
+  }
+
+  .prod-price {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #fbbf24;
+  }
+
+  .prod-cart-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, rgba(245,158,11,0.2), rgba(244,63,94,0.15));
+    border: 1px solid rgba(245,158,11,0.3);
+    color: #fbbf24;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .prod-cart-btn:hover {
+    background: linear-gradient(135deg, #f59e0b, #f43f5e);
+    border-color: transparent;
+    color: #fff;
+    transform: scale(1.1);
+  }
+
+  .prod-link-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+  }
+
+  /* Pagination Styles */
+  .pagination-wrapper .pagination {
+    gap: 0.5rem;
+  }
+
+  .pagination-wrapper .page-link {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: rgba(245,230,204,0.8);
+    padding: 0.6rem 1rem;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+  }
+
+  .pagination-wrapper .page-link:hover {
+    background: rgba(245,158,11,0.2);
+    border-color: rgba(245,158,11,0.3);
+    color: #fbbf24;
+    transform: translateY(-2px);
+  }
+
+  .pagination-wrapper .page-item.active .page-link {
+    background: linear-gradient(135deg, #f59e0b, #f43f5e);
+    border-color: transparent;
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(245,158,11,0.4);
+  }
+
+  .pagination-wrapper .page-item.disabled .page-link {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+</style>
+@endpush
+
+@push('scripts')
+<script>
+// Toggle wishlist functionality
+document.querySelectorAll('.prod-wishlist').forEach(btn => {
+  btn.addEventListener('click', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    this.classList.toggle('active');
+    const icon = this.querySelector('i');
+
+    if (this.classList.contains('active')) {
+      icon.classList.remove('far');
+      icon.classList.add('fas');
+
+      // Heart animation
+      icon.style.transform = 'scale(1.3)';
+      setTimeout(() => {
+        icon.style.transform = 'scale(1)';
+      }, 200);
+    } else {
+      icon.classList.remove('fas');
+      icon.classList.add('far');
+    }
+  });
+});
+</script>
+@endpush
+
