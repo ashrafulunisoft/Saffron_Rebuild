@@ -1,4 +1,4 @@
-Priority Order:
+ Already Done Those:
 1. Orders Management ⭐ (Most Important)
 View customer orders
 Update order status (Pending → Processing → Shipped → Delivered)
@@ -28,4 +28,17 @@ Popular products
 Revenue charts
 7. Customer Management
 8. B2B Management
+9. Blog management 
+-------------------------------------------------
+Have to Complete Priority Order: 
+
+Saffron Next Task List : 
+-------------------------
+1. Impletement the Frontend theme 
+2. fix the cart section with backend 
+3. add the sslcommerz 
+4. fix the order, payment, invoice 
+5. update the login and registration page and role . 
+6. fix the bilangual for the frontend theme and connect with the admin panel 
+7. update the category and product. 
 

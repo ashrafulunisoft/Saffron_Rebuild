@@ -23,42 +23,51 @@ class AdminController extends Controller
 {
     public function dashboard()
     {
-        // Get statistics for dashboard
-        $stats = [
-            'total_visitors' => \App\Models\Visitor::count(),
-            'total_visits' => \App\Models\Visit::count(),
-            'pending_visits' => \App\Models\Visit::where('status', 'pending_host')->count(),
-            'approved_visits' => \App\Models\Visit::where('status', 'approved')->count(),
-            'completed_visits' => \App\Models\Visit::where('status', 'completed')->count(),
-            'rejected_visits' => \App\Models\Visit::where('status', 'rejected')->count(),
-            'checked_in_visits' => \App\Models\Visit::where('status', 'checked_in')->count(),
-            'visits_today' => \App\Models\Visit::whereDate('schedule_time', today())->count(),
-            'visits_this_month' => \App\Models\Visit::whereMonth('schedule_time', now()->month)
-                ->whereYear('schedule_time', now()->year)
-                ->count(),
+        // Get ecommerce statistics
+        $ecommerceStats = [
+            'total_products' => \App\Models\Product::count(),
+            'active_products' => \App\Models\Product::where('is_active', true)->count(),
+            'total_categories' => \App\Models\Category::count(),
+            'total_orders' => \App\Models\Order::count(),
+            'pending_orders' => \App\Models\Order::where('status', 'pending')->count(),
+            'completed_orders' => \App\Models\Order::where('status', 'completed')->count(),
+            'total_customers' => \App\Models\User::whereHas('orders')->count(),
+            'total_reviews' => \App\Models\Review::count(),
+            'pending_reviews' => \App\Models\Review::where('is_approved', false)->count(),
+            'today_revenue' => \App\Models\Order::whereDate('created_at', today())
+                ->where('status', '!=', 'cancelled')
+                ->sum('final_amount') ?? 0,
+            'month_revenue' => \App\Models\Order::whereMonth('created_at', now()->month)
+                ->whereYear('created_at', now()->year)
+                ->where('status', '!=', 'cancelled')
+                ->sum('final_amount') ?? 0,
         ];
 
-        // Get today's visits
-        $todayVisits = \App\Models\Visit::with(['visitor', 'meetingUser', 'type'])
-            ->whereDate('schedule_time', today())
-            ->orderBy('schedule_time', 'desc')
-            ->limit(10)
-            ->get();
-
-        // Get pending visits
-        $pendingVisits = \App\Models\Visit::with(['visitor', 'meetingUser', 'type'])
-            ->where('status', 'pending_host')
+        // Get recent orders
+        $recentOrders = \App\Models\Order::with('user')
             ->orderBy('created_at', 'desc')
-            ->limit(10)
+            ->limit(5)
             ->get();
 
-        // Get recent visits
-        $recentVisits = \App\Models\Visit::with(['visitor', 'meetingUser', 'type'])
-            ->orderBy('created_at', 'desc')
-            ->limit(10)
+        // Get low stock products
+        $lowStockProducts = \App\Models\Product::where('stock', '<=', 10)
+            ->where('is_active', true)
+            ->orderBy('stock', 'asc')
+            ->limit(5)
             ->get();
 
-        return view('vms.backend.admin.admin_dashboard', compact('stats', 'todayVisits', 'pendingVisits', 'recentVisits'));
+        // Get top selling products
+        $topProducts = \App\Models\Product::withCount('orderItems')
+            ->orderBy('order_items_count', 'desc')
+            ->limit(5)
+            ->get();
+
+        return view('admin.dashboard', compact(
+            'ecommerceStats',
+            'recentOrders',
+            'lowStockProducts',
+            'topProducts'
+        ));
     }
 
     /**
