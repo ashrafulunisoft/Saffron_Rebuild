@@ -14,6 +14,7 @@ class CustomerController extends Controller
     public function index(Request $request)
     {
         $query = User::query()
+            ->with('roles', 'permissions')
             ->withCount('orders', 'reviews')
             ->orderBy('created_at', 'desc');
 
@@ -35,6 +36,13 @@ class CustomerController extends Controller
             }
         }
 
+        // Filter by role
+        if ($request->has('role') && $request->get('role') !== 'all') {
+            $query->whereHas('roles', function ($q) use ($request) {
+                $q->where('name', $request->get('role'));
+            });
+        }
+
         $customers = $query->paginate(20);
 
         // Get statistics
@@ -43,13 +51,65 @@ class CustomerController extends Controller
         $bannedCustomers = User::where('banned', true)->count();
         $newCustomersThisMonth = User::where('created_at', '>=', now()->startOfMonth())->count();
 
+        // Get all roles for filter dropdown
+        $roles = \Spatie\Permission\Models\Role::all();
+
         return view('admin.ecommerce.customers.index', compact(
             'customers',
             'totalCustomers',
             'activeCustomers',
             'bannedCustomers',
-            'newCustomersThisMonth'
+            'newCustomersThisMonth',
+            'roles'
         ));
+    }
+
+    /**
+     * Show the form for creating a new customer.
+     */
+    public function create()
+    {
+        $roles = \Spatie\Permission\Models\Role::all();
+        return view('admin.ecommerce.customers.create', compact('roles'));
+    }
+
+    /**
+     * Store a newly created customer in storage.
+     */
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'phone' => 'nullable|string|max:20',
+            'password' => 'required|string|min:8|confirmed',
+            'role' => 'nullable|exists:roles,name',
+            'send_email' => 'nullable|boolean',
+        ]);
+
+        // Create user
+        $user = User::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'phone' => $validated['phone'] ?? null,
+            'password' => bcrypt($validated['password']),
+            'email_verified_at' => now(), // Auto-verify for admin-created users
+        ]);
+
+        // Assign role if selected
+        if (!empty($validated['role'])) {
+            $user->assignRole($validated['role']);
+        } else {
+            // Assign default customer role if exists
+            $customerRole = \Spatie\Permission\Models\Role::where('name', 'customer')->first();
+            if ($customerRole) {
+                $user->assignRole('customer');
+            }
+        }
+
+        return redirect()
+            ->route('admin.ecommerce.customers.index')
+            ->with('success', 'Customer created successfully!');
     }
 
     /**

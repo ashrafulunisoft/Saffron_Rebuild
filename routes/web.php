@@ -243,6 +243,10 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         // Customers
         Route::get('/customers', [App\Http\Controllers\Admin\Ecommerce\CustomerController::class, 'index'])
             ->name('customers.index');
+        Route::get('/customers/create', [App\Http\Controllers\Admin\Ecommerce\CustomerController::class, 'create'])
+            ->name('customers.create');
+        Route::post('/customers', [App\Http\Controllers\Admin\Ecommerce\CustomerController::class, 'store'])
+            ->name('customers.store');
         Route::get('/customers/{customer}', [App\Http\Controllers\Admin\Ecommerce\CustomerController::class, 'show'])
             ->name('customers.show');
         Route::put('/customers/{customer}', [App\Http\Controllers\Admin\Ecommerce\CustomerController::class, 'update'])
