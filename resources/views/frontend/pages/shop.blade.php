@@ -258,54 +258,108 @@
 
   .prod-img-wrapper {
     position: relative;
-    padding-top: 100%;
+    width: 100%;
+    height: 220px;
     overflow: hidden;
-    background: rgba(255,255,255,0.03);
+    background: linear-gradient(135deg, rgba(245,158,11,0.08), rgba(244,63,94,0.05));
+    border-radius: 16px 16px 0 0;
   }
 
-  .prod-img-wrapper img,
-  .prod-img-placeholder {
+  .prod-img-wrapper img {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .prod-card:hover .prod-img-wrapper img {
+    transform: scale(1.15);
   }
 
   .prod-img-placeholder {
-    font-size: 3rem;
-    color: rgba(245,230,204,0.3);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4rem;
+    color: rgba(245,230,204,0.5);
+    background: linear-gradient(135deg, rgba(245,158,11,0.15), rgba(244,63,94,0.1));
+    position: relative;
+    overflow: hidden;
+  }
+
+  .prod-img-placeholder::before {
+    content: '';
+    position: absolute;
+    inset: 0;
     background: linear-gradient(135deg, rgba(245,158,11,0.1), rgba(244,63,94,0.05));
+    animation: shimmer 3s ease-in-out infinite;
+  }
+
+  .prod-img-placeholder i {
+    position: relative;
+    z-index: 1;
+    filter: drop-shadow(0 4px 12px rgba(245,158,11,0.4));
+    animation: float 3s ease-in-out infinite;
+  }
+
+  @keyframes shimmer {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-5px); }
   }
 
   .prod-wishlist {
     position: absolute;
     top: 12px;
     right: 12px;
-    width: 40px;
-    height: 40px;
-    border-radius: 12px;
-    background: rgba(15, 23, 42, 0.8);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255,255,255,0.1);
-    color: rgba(245,230,204,0.7);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(15, 23, 42, 0.9);
+    backdrop-filter: blur(12px);
+    border: 1.5px solid rgba(255,255,255,0.15);
+    color: rgba(245,230,204,0.8);
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     z-index: 10;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
   }
 
   .prod-wishlist:hover {
-    background: rgba(244,63,94,0.2);
-    border-color: rgba(244,63,94,0.4);
-    color: #f43f5e;
-    transform: scale(1.1);
+    background: rgba(244,63,94,0.9);
+    border-color: rgba(244,63,94,0.5);
+    color: #fff;
+    transform: scale(1.15);
+    box-shadow: 0 6px 20px rgba(244,63,94,0.5);
+  }
+
+  .prod-wishlist:active {
+    transform: scale(1.05);
+  }
+
+  .prod-wishlist.active {
+    background: rgba(244,63,94,0.9);
+    border-color: rgba(244,63,94,0.5);
+    color: #fff;
+  }
+
+  .prod-wishlist.active i {
+    font-weight: 900;
   }
 
   .prod-badge-low,
@@ -460,4 +514,39 @@
     }
   }
 </style>
+@endpush
+
+@push('scripts')
+<script>
+// Toggle wishlist
+document.querySelectorAll('.prod-wishlist').forEach(btn => {
+  btn.addEventListener('click', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    this.classList.toggle('active');
+    const icon = this.querySelector('i');
+
+    if (this.classList.contains('active')) {
+      icon.classList.remove('far');
+      icon.classList.add('fas');
+
+      // Heart animation
+      icon.style.transform = 'scale(1.3)';
+      setTimeout(() => {
+        icon.style.transform = 'scale(1)';
+      }, 200);
+
+      // You can add AJAX call here to add to wishlist
+      // Example: fetch('/wishlist/add/' + productId, { method: 'POST' })
+    } else {
+      icon.classList.remove('fas');
+      icon.classList.add('far');
+
+      // You can add AJAX call here to remove from wishlist
+      // Example: fetch('/wishlist/remove/' + productId, { method: 'POST' })
+    }
+  });
+});
+</script>
 @endpush
