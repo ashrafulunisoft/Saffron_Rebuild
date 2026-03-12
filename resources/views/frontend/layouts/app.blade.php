@@ -2134,9 +2134,9 @@ section {
 .sf-desc { font-size:.8rem; color:rgba(245,230,204,0.6); }
 
 /* CATEGORIES */
-.category-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(160px, 1fr)); gap:1.5rem; }
+.category-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(130px, 1fr)); gap:1rem; }
 .cat-card {
-  text-decoration:none!important; padding:2rem 1rem; border-radius:24px;
+  text-decoration:none!important; padding:1.2rem 0.8rem; border-radius:16px;
   background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1);
   text-align:center; transition:all .4s ease; position:relative; overflow:hidden;
 }
@@ -2147,14 +2147,14 @@ section {
 }
 .cat-card:hover::before { opacity:1; }
 .cat-card:hover {
-  transform:translateY(-10px) scale(1.02);
+  transform:translateY(-5px) scale(1.02);
   border-color:rgba(245,158,11,0.4);
-  box-shadow:0 20px 60px rgba(245,158,11,0.2);
+  box-shadow:0 15px 40px rgba(245,158,11,0.2);
 }
-.cat-emoji { font-size:3.5rem; margin-bottom:1rem; position:relative; z-index:1; transition:transform .4s ease; }
-.cat-card:hover .cat-emoji { transform:scale(1.2) rotate(5deg); }
-.cat-name { font-size:1.1rem; font-weight:600; color:#f5e6cc; position:relative; z-index:1; }
-.cat-count { font-size:.8rem; color:rgba(245,230,204,0.5); position:relative; z-index:1; }
+.cat-emoji { font-size:2.5rem; margin-bottom:0.6rem; position:relative; z-index:1; transition:transform .4s ease; }
+.cat-card:hover .cat-emoji { transform:scale(1.15) rotate(5deg); }
+.cat-name { font-size:0.95rem; font-weight:600; color:#f5e6cc; position:relative; z-index:1; }
+.cat-count { font-size:.75rem; color:rgba(245,230,204,0.5); position:relative; z-index:1; }
 
 /* PRODUCTS */
 .filter-bar { display:flex; gap:.8rem; flex-wrap:wrap; justify-content:center; margin-bottom:3rem; }

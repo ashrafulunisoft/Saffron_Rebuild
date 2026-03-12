@@ -259,36 +259,34 @@
       <h2 class="section-title mt-3 animate-on-scroll">Explore Our <span class="gradient-text">Delicious</span> Collection</h2>
     </div>
     <div class="category-grid animate-on-scroll">
-      <a href="{{ route('shop.category', 'bengali-sweets') }}" class="cat-card">
-        <div class="cat-emoji">🍬</div>
-        <div class="cat-name">Bengali Sweets</div>
-        <div class="cat-count">32 items</div>
-      </a>
-      <a href="{{ route('shop.category', 'bakery') }}" class="cat-card">
-        <div class="cat-emoji">🥐</div>
-        <div class="cat-name">Bakery</div>
-        <div class="cat-count">24 items</div>
-      </a>
-      <a href="{{ route('shop.category', 'chocolates') }}" class="cat-card">
-        <div class="cat-emoji">🍫</div>
-        <div class="cat-name">Chocolates</div>
-        <div class="cat-count">18 items</div>
-      </a>
-      <a href="{{ route('shop.category', 'cakes') }}" class="cat-card">
-        <div class="cat-emoji">🎂</div>
-        <div class="cat-name">Cakes</div>
-        <div class="cat-count">20 items</div>
-      </a>
-      <a href="{{ route('shop.category', 'cookies') }}" class="cat-card">
-        <div class="cat-emoji">🍪</div>
-        <div class="cat-name">Cookies</div>
-        <div class="cat-count">15 items</div>
-      </a>
-      <a href="{{ route('shop.category', 'pastries') }}" class="cat-card">
-        <div class="cat-emoji">🥧</div>
-        <div class="cat-name">Pastries</div>
-        <div class="cat-count">12 items</div>
-      </a>
+      @foreach($categories as $category)
+        @php
+          // Emoji mapping for categories
+          $emojis = [
+            'breads' => '🍞',
+            'cakes' => '🎂',
+            'cake' => '🎂',
+            'cookies-biscuits' => '🍪',
+            'traditional-sweets' => '🍬',
+            'sweet' => '🍮',
+            'dairy-products' => '🥛',
+            'buns-rolls' => '🥯',
+            'pastries-savories' => '🥧',
+            'bengali-sweets' => '🍬',
+            'bakery' => '🥐',
+            'chocolates' => '🍫',
+            'cookies' => '🍪',
+            'pastries' => '🥧',
+          ];
+
+          $emoji = $emojis[$category->slug] ?? '🍰';
+        @endphp
+        <a href="{{ route('shop.category', $category->slug) }}" class="cat-card">
+          <div class="cat-emoji">{{ $emoji }}</div>
+          <div class="cat-name">{{ $category->name_en }}</div>
+          <div class="cat-count">{{ $category->products_count }} items</div>
+        </a>
+      @endforeach
     </div>
   </div>
 </section>
