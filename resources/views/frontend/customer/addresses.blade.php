@@ -71,11 +71,15 @@
 
         <!-- Address Form (Hidden by default) -->
         <div id="addressFormContainer" class="glass-card p-4 mb-4" style="display: none;">
-          <h5 style="color: #f5e6cc; margin-bottom: 1.5rem;">
+          <h5 id="formTitle" style="color: #f5e6cc; margin-bottom: 1.5rem;">
             <i class="fas fa-plus-circle me-2" style="color: #fbbf24;"></i>Add New Address
           </h5>
-          <form method="POST" action="{{ route('customer.addresses.store') }}">
+          <form id="addressForm" method="POST" action="{{ route('customer.addresses.store') }}">
             @csrf
+            <input type="hidden" name="address_id" id="address_id" value="">
+            @if(request()->old('address_id'))
+              @method('PUT')
+            @endif
             <div class="row g-3">
               <div class="col-md-6">
                 <label class="form-label">Label (Home, Office, etc.)</label>
@@ -140,12 +144,31 @@
                         <i class="fas fa-ellipsis-v"></i>
                       </button>
                       <ul class="dropdown-menu dropdown-menu-end">
-                        <li><a class="dropdown-item" href="#" style="color: #f5e6cc;"><i class="fas fa-edit me-2"></i>Edit</a></li>
+                        <li>
+                          <a class="dropdown-item" href="#" onclick="editAddress({{ $address->id }}, '{{ $address->label ?? '' }}', '{{ $address->name }}', '{{ $address->phone }}', '{{ $address->address }}', '{{ $address->city }}', '{{ $address->state }}')" style="color: #f5e6cc;">
+                            <i class="fas fa-edit me-2"></i>Edit
+                          </a>
+                        </li>
                         @if(!$address->is_default)
-                          <li><a class="dropdown-item" href="#" style="color: #fbbf24;"><i class="fas fa-star me-2"></i>Set Default</a></li>
+                        <li>
+                          <form method="POST" action="{{ route('customer.addresses.set-default', $address) }}" id="setDefaultForm{{ $address->id }}" style="display: none;">
+                            @csrf
+                          </form>
+                          <a class="dropdown-item" href="#" onclick="document.getElementById('setDefaultForm{{ $address->id }}').submit(); return false;" style="color: #fbbf24;">
+                            <i class="fas fa-star me-2"></i>Set Default
+                          </a>
+                        </li>
                         @endif
                         <li><hr class="dropdown-divider" style="border-color: rgba(255,255,255,0.1);"></li>
-                        <li><a class="dropdown-item" href="#" style="color: #f43f5e;"><i class="fas fa-trash me-2"></i>Delete</a></li>
+                        <li>
+                          <form method="POST" action="{{ route('customer.addresses.delete', $address) }}" id="deleteForm{{ $address->id }}" onsubmit="return confirm('Are you sure you want to delete this address?');" style="display: none;">
+                            @csrf
+                            @method('DELETE')
+                          </form>
+                          <a class="dropdown-item" href="#" onclick="document.getElementById('deleteForm{{ $address->id }}').submit(); return false;" style="color: #f43f5e;">
+                            <i class="fas fa-trash me-2"></i>Delete
+                          </a>
+                        </li>
                       </ul>
                     </div>
                   </div>
@@ -184,7 +207,55 @@ function showAddressForm() {
 
 function hideAddressForm() {
   document.getElementById('addressFormContainer').style.display = 'none';
+  resetAddressForm();
 }
+
+function resetAddressForm() {
+  document.getElementById('addressForm').reset();
+  document.getElementById('address_id').value = '';
+  document.getElementById('formTitle').innerHTML = '<i class="fas fa-plus-circle me-2" style="color: #fbbf24;"></i>Add New Address';
+  document.getElementById('addressForm').action = '{{ route('customer.addresses.store') }}';
+  document.getElementById('addressForm').method = 'POST';
+}
+
+function editAddress(id, label, name, phone, address, city, state) {
+  showAddressForm();
+  document.getElementById('address_id').value = id;
+  document.getElementById('formTitle').innerHTML = '<i class="fas fa-edit me-2" style="color: #fbbf24;"></i>Edit Address';
+  document.getElementById('addressForm').action = '{{ route('customer.addresses.update', '__id__') }}'.replace('__id__', id);
+  document.getElementById('addressForm').method = 'POST';
+
+  // Create method field for PUT
+  let methodField = document.getElementById('_method');
+  if (!methodField) {
+    methodField = document.createElement('input');
+    methodField.type = 'hidden';
+    methodField.name = '_method';
+    methodField.id = '_method';
+    methodField.value = 'PUT';
+    document.getElementById('addressForm').appendChild(methodField);
+  }
+
+  // Fill form fields
+  document.querySelector('input[name="label"]').value = label;
+  document.querySelector('input[name="name"]').value = name;
+  document.querySelector('input[name="phone"]').value = phone;
+  document.querySelector('textarea[name="address"]').value = address;
+  document.querySelector('input[name="city"]').value = city;
+  document.querySelector('input[name="state"]').value = state;
+}
+
+function deleteAddress(element) {
+  if (confirm('Are you sure you want to delete this address?')) {
+    element.parentElement.previousElementSibling.submit();
+  }
+}
+
+function setDefaultAddress(element) {
+  element.parentElement.previousElementSibling.submit();
+}
+
+// Note: Delete and Set Default now use direct form submission via unique IDs
 </script>
 @endsection
 

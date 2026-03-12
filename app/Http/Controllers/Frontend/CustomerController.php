@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Order;
+use App\Models\Address;
 
 class CustomerController extends Controller
 {
@@ -123,5 +124,71 @@ class CustomerController extends Controller
         ]);
 
         return redirect()->back()->with('success', 'Address added successfully!');
+    }
+
+    /**
+     * Update an existing address.
+     */
+    public function updateAddress(Request $request, Address $address)
+    {
+        // Check if address belongs to authenticated user
+        if ($address->user_id !== auth()->id()) {
+            abort(403);
+        }
+
+        $request->validate([
+            'label' => 'required|string|max:50',
+            'name' => 'required|string|max:255',
+            'phone' => 'required|string|max:20',
+            'address' => 'required|string',
+            'city' => 'required|string|max:100',
+            'state' => 'required|string|max:100',
+        ]);
+
+        $address->update([
+            'label' => $request->label,
+            'name' => $request->name,
+            'phone' => $request->phone,
+            'address' => $request->address,
+            'city' => $request->city,
+            'state' => $request->state,
+            'is_default' => $request->has('is_default'),
+        ]);
+
+        return redirect()->back()->with('success', 'Address updated successfully!');
+    }
+
+    /**
+     * Delete an address.
+     */
+    public function deleteAddress(Address $address)
+    {
+        // Check if address belongs to authenticated user
+        if ($address->user_id !== auth()->id()) {
+            abort(403);
+        }
+
+        $address->delete();
+
+        return redirect()->back()->with('success', 'Address deleted successfully!');
+    }
+
+    /**
+     * Set address as default.
+     */
+    public function setDefaultAddress(Address $address)
+    {
+        // Check if address belongs to authenticated user
+        if ($address->user_id !== auth()->id()) {
+            abort(403);
+        }
+
+        // Remove default from all user's addresses
+        auth()->user()->addresses()->update(['is_default' => false]);
+
+        // Set this address as default
+        $address->update(['is_default' => true]);
+
+        return redirect()->back()->with('success', 'Default address updated successfully!');
     }
 }

@@ -394,6 +394,9 @@ Route::middleware(['auth'])->prefix('customer')->name('customer.')->group(functi
     Route::get('/wishlist', [App\Http\Controllers\Frontend\CustomerController::class, 'wishlist'])->name('wishlist');
     Route::get('/addresses', [App\Http\Controllers\Frontend\CustomerController::class, 'addresses'])->name('addresses');
     Route::post('/addresses', [App\Http\Controllers\Frontend\CustomerController::class, 'storeAddress'])->name('addresses.store');
+    Route::put('/addresses/{address}', [App\Http\Controllers\Frontend\CustomerController::class, 'updateAddress'])->name('addresses.update');
+    Route::delete('/addresses/{address}', [App\Http\Controllers\Frontend\CustomerController::class, 'deleteAddress'])->name('addresses.delete');
+    Route::post('/addresses/{address}/default', [App\Http\Controllers\Frontend\CustomerController::class, 'setDefaultAddress'])->name('addresses.set-default');
     Route::get('/profile', [App\Http\Controllers\Frontend\CustomerController::class, 'profile'])->name('profile');
     Route::match(['put', 'patch'], '/profile', [App\Http\Controllers\Frontend\CustomerController::class, 'updateProfile'])->name('profile.update');
 });
