@@ -149,6 +149,63 @@ body {
   transform:translateY(-1px) scale(0.98);
 }
 
+/* Dropdown Menu Styles */
+.dropdown-menu {
+  background: rgba(15, 10, 0, 0.95);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 12px;
+  padding: 0.5rem;
+  min-width: 200px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+}
+.dropdown-item {
+  color: rgba(245,230,204,0.8);
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  background: transparent;
+  border: none;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+.dropdown-item:hover {
+  background: rgba(245,158,11,0.15);
+  color: #fbbf24;
+  transform: translateX(5px);
+}
+.dropdown-item:focus {
+  background: rgba(245,158,11,0.15);
+  color: #fbbf24;
+  outline: none;
+}
+.dropdown-item i {
+  width: 20px;
+  text-align: center;
+}
+.dropdown-divider {
+  border-color: rgba(255,255,255,0.1);
+  margin: 0.5rem 0;
+}
+.dropdown-menu.show {
+  animation: dropdownFadeIn 0.3s ease;
+}
+@keyframes dropdownFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /* Search Input Field */
 .search-input {
   width: 220px;

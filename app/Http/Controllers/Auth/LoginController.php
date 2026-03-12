@@ -32,7 +32,8 @@ class LoginController extends Controller
                 return redirect()->intended(route('admin.dashboard'));
             }
 
-            return redirect()->intended(route('dashboard'));
+            // Redirect customers to profile page
+            return redirect()->intended(route('customer.profile'));
         }
 
         return back()->withErrors(['email' => 'Invalid credentials']);
@@ -44,6 +45,6 @@ class LoginController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/login');
+        return redirect('/');
     }
 }

@@ -482,7 +482,7 @@ Route::get('/visitors/export/send', [VisitorExportController::class, 'sendVisito
 
 Route::get('/logout', function () {
     Auth::logout();
-    return redirect('/login');
+    return redirect('/');
 });
 
 
