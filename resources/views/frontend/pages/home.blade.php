@@ -305,10 +305,9 @@
     <!-- Category Filters -->
     <div class="d-flex justify-content-center gap-2 mb-4 flex-wrap">
       <button class="filter-btn active" onclick="filterProd(this, 'all')">All Products</button>
-      <button class="filter-btn" onclick="filterProd(this, 'bengali-sweets')">Bengali Sweets</button>
-      <button class="filter-btn" onclick="filterProd(this, 'bakery')">Bakery</button>
-      <button class="filter-btn" onclick="filterProd(this, 'cakes')">Cakes</button>
-      <button class="filter-btn" onclick="filterProd(this, 'chocolates')">Chocolates</button>
+      @foreach($categories as $category)
+        <button class="filter-btn" onclick="filterProd(this, '{{ $category->slug }}')">{{ $category->name_en }}</button>
+      @endforeach
     </div>
 
     <!-- Products Grid -->
@@ -316,7 +315,7 @@
       @if(isset($featuredProducts) && $featuredProducts->count() > 0)
         @foreach($featuredProducts as $product)
         <div class="col-6 col-md-4 col-lg-3">
-          <div class="prod-card prod-item" data-cat="{{ $product->category->slug ?? 'bengali-sweets' }}">
+          <div class="prod-card prod-item" data-cat="{{ $product->category->slug ?? 'breads' }}">
             <div class="prod-img">
               @if($product->image)
                 <img src="{{ asset('storage/products/' . $product->image) }}" alt="{{ $product->name }}">
@@ -349,125 +348,8 @@
         </div>
         @endforeach
       @else
-        <!-- Demo products if no products available -->
-        <div class="col-6 col-md-4 col-lg-3">
-          <div class="prod-card prod-item" data-cat="bengali-sweets">
-            <div class="prod-img">
-              <div class="prod-emoji">🍮</div>
-              <span class="prod-badge badge-hot">BESTSELLER</span>
-              <div class="prod-actions">
-                <button class="act-btn"><i class="fas fa-heart"></i></button>
-                <button class="act-btn"><i class="fas fa-eye"></i></button>
-              </div>
-            </div>
-            <div class="prod-body">
-              <div class="prod-cat">Bengali Sweets</div>
-              <h5 class="prod-name">Premium Roshogolla</h5>
-              <div class="prod-stars">★★★★★ <small>(128)</small></div>
-              <div class="prod-footer">
-                <div>
-                  <span class="price-new">৳450</span>
-                </div>
-                <button class="add-btn"><i class="fas fa-plus"></i></button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- More Demo Products -->
-        <div class="col-6 col-md-4 col-lg-3">
-          <div class="prod-card prod-item" data-cat="bakery">
-            <div class="prod-img">
-              <div class="prod-emoji">🥐</div>
-              <span class="prod-badge badge-new">NEW</span>
-              <div class="prod-actions">
-                <button class="act-btn"><i class="fas fa-heart"></i></button>
-                <button class="act-btn"><i class="fas fa-eye"></i></button>
-              </div>
-            </div>
-            <div class="prod-body">
-              <div class="prod-cat">Bakery</div>
-              <h5 class="prod-name">Fresh Croissant</h5>
-              <div class="prod-stars">★★★★★ <small>(89)</small></div>
-              <div class="prod-footer">
-                <div>
-                  <span class="price-new">৳180</span>
-                </div>
-                <button class="add-btn"><i class="fas fa-plus"></i></button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-6 col-md-4 col-lg-3">
-          <div class="prod-card prod-item" data-cat="cakes">
-            <div class="prod-img">
-              <div class="prod-emoji">🎂</div>
-              <div class="prod-actions">
-                <button class="act-btn"><i class="fas fa-heart"></i></button>
-                <button class="act-btn"><i class="fas fa-eye"></i></button>
-              </div>
-            </div>
-            <div class="prod-body">
-              <div class="prod-cat">Cakes</div>
-              <h5 class="prod-name">Chocolate Dream</h5>
-              <div class="prod-stars">★★★★★ <small>(215)</small></div>
-              <div class="prod-footer">
-                <div>
-                  <span class="price-new">৳1,200</span>
-                  <span class="price-old">৳1,500</span>
-                </div>
-                <button class="add-btn"><i class="fas fa-plus"></i></button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-6 col-md-4 col-lg-3">
-          <div class="prod-card prod-item" data-cat="chocolates">
-            <div class="prod-img">
-              <div class="prod-emoji">🍫</div>
-              <span class="prod-badge badge-sale">-20%</span>
-              <div class="prod-actions">
-                <button class="act-btn"><i class="fas fa-heart"></i></button>
-                <button class="act-btn"><i class="fas fa-eye"></i></button>
-              </div>
-            </div>
-            <div class="prod-body">
-              <div class="prod-cat">Chocolates</div>
-              <h5 class="prod-name">Belgian Truffles</h5>
-              <div class="prod-stars">★★★★★ <small>(167)</small></div>
-              <div class="prod-footer">
-                <div>
-                  <span class="price-new">৳850</span>
-                </div>
-                <button class="add-btn"><i class="fas fa-plus"></i></button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-6 col-md-4 col-lg-3">
-          <div class="prod-card prod-item" data-cat="bengali-sweets">
-            <div class="prod-img">
-              <div class="prod-emoji">🍧</div>
-              <div class="prod-actions">
-                <button class="act-btn"><i class="fas fa-heart"></i></button>
-                <button class="act-btn"><i class="fas fa-eye"></i></button>
-              </div>
-            </div>
-            <div class="prod-body">
-              <div class="prod-cat">Bengali Sweets</div>
-              <h5 class="prod-name">Kheer Mohan</h5>
-              <div class="prod-stars">★★★★★ <small>(142)</small></div>
-              <div class="prod-footer">
-                <div>
-                  <span class="price-new">৳380</span>
-                </div>
-                <button class="add-btn"><i class="fas fa-plus"></i></button>
-              </div>
-            </div>
-          </div>
+        <div class="col-12 text-center py-5">
+          <p style="color:rgba(245,230,204,0.6);">No products available at the moment.</p>
         </div>
       @endif
     </div>
@@ -842,9 +724,14 @@ function filterProd(btn, cat) {
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     document.querySelectorAll('.prod-item').forEach(item => {
-        item.style.display = (cat === 'all' || item.dataset.cat === cat) ? 'block' : 'none';
-        if (item.style.display === 'block') {
+        const column = item.closest('.col-6, .col-md-4, .col-lg-3');
+        if (cat === 'all' || item.dataset.cat === cat) {
+            item.style.display = 'block';
+            if (column) column.style.display = 'block';
             item.style.animation = 'fadeIn .5s ease';
+        } else {
+            item.style.display = 'none';
+            if (column) column.style.display = 'none';
         }
     });
 }

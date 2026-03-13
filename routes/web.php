@@ -339,7 +339,27 @@ Route::middleware(['auth', 'role:receptionist|staff|visitor'])->group(function (
 
 Route::get('/', function(){
     $categories = \App\Models\Category::withCount('products')->where('is_active', true)->get();
-    $featuredProducts = \App\Models\Product::where('is_active', true)->where('is_featured', true)->with(['category', 'primaryImage'])->take(8)->get();
+
+    // Get featured products first
+    $featuredProducts = \App\Models\Product::where('is_active', true)
+        ->where('is_featured', true)
+        ->with(['category', 'primaryImage'])
+        ->get();
+
+    // If we have less than 8 featured products, add regular products from other categories
+    if ($featuredProducts->count() < 8) {
+        $existingCategoryIds = $featuredProducts->pluck('category_id')->unique()->filter()->toArray();
+
+        // Get products from other categories
+        $additionalProducts = \App\Models\Product::where('is_active', true)
+            ->whereNotIn('category_id', $existingCategoryIds)
+            ->with(['category', 'primaryImage'])
+            ->take(8 - $featuredProducts->count())
+            ->get();
+
+        $featuredProducts = $featuredProducts->concat($additionalProducts);
+    }
+
     return view('frontend.pages.home', compact('categories', 'featuredProducts'));
 })->name('home');
 
