@@ -340,13 +340,12 @@ Route::middleware(['auth', 'role:receptionist|staff|visitor'])->group(function (
 Route::get('/', function(){
     $categories = \App\Models\Category::withCount('products')->where('is_active', true)->get();
 
-    // Get featured products, ensuring we get products from different categories
+    // Get ALL featured products to ensure all categories are represented
     $featuredProducts = \App\Models\Product::where('is_active', true)
         ->where('is_featured', true)
         ->with(['category', 'primaryImage'])
-        ->orderBy('is_featured', 'desc')
-        ->take(24)  // Load more to allow category filtering
-        ->get();
+        ->orderBy('id', 'desc')
+        ->get();  // Load all featured products
 
     return view('frontend.pages.home', compact('categories', 'featuredProducts'));
 })->name('home');

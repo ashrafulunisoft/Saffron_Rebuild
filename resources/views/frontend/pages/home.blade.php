@@ -315,36 +315,38 @@
       @if(isset($featuredProducts) && $featuredProducts->count() > 0)
         @foreach($featuredProducts as $product)
         <div class="col-6 col-md-4 col-lg-3">
-          <div class="prod-card prod-item" data-cat="{{ $product->category->slug ?? 'breads' }}">
-            <div class="prod-img">
-              @if($product->image)
-                <img src="{{ asset('storage/products/' . $product->image) }}" alt="{{ $product->name }}">
-              @else
-                <div class="prod-emoji">🍮</div>
-              @endif
-              @if($product->is_featured)
-                <span class="prod-badge badge-hot">FEATURED</span>
-              @endif
-              <div class="prod-actions">
-                <button class="act-btn"><i class="fas fa-heart"></i></button>
-                <button class="act-btn"><i class="fas fa-eye"></i></button>
-              </div>
-            </div>
-            <div class="prod-body">
-              <div class="prod-cat">{{ $product->category->name_en ?? 'Sweets' }}</div>
-              <h5 class="prod-name">{{ $product->name }}</h5>
-              <div class="prod-stars">★★★★★ <small>({{ $product->reviews_count ?? 0 }})</small></div>
-              <div class="prod-footer">
-                <div>
-                  <span class="price-new">৳{{ number_format($product->price) }}</span>
-                  @if($product->compare_price)
-                    <span class="price-old">৳{{ number_format($product->compare_price) }}</span>
-                  @endif
+          <a href="{{ route('shop.product', $product->slug) }}" class="text-decoration-none">
+            <div class="prod-card prod-item" data-cat="{{ $product->category->slug ?? 'breads' }}">
+              <div class="prod-img">
+                @if($product->image)
+                  <img src="{{ asset('storage/products/' . $product->image) }}" alt="{{ $product->name }}">
+                @else
+                  <div class="prod-emoji">🍮</div>
+                @endif
+                @if($product->is_featured)
+                  <span class="prod-badge badge-hot">FEATURED</span>
+                @endif
+                <div class="prod-actions">
+                  <button class="act-btn" onclick="event.preventDefault()"><i class="fas fa-heart"></i></button>
+                  <button class="act-btn" onclick="event.preventDefault()"><i class="fas fa-eye"></i></button>
                 </div>
-                <button class="add-btn"><i class="fas fa-plus"></i></button>
+              </div>
+              <div class="prod-body">
+                <div class="prod-cat">{{ $product->category->name_en ?? 'Sweets' }}</div>
+                <h5 class="prod-name">{{ $product->name }}</h5>
+                <div class="prod-stars">★★★★★ <small>({{ $product->reviews_count ?? 0 }})</small></div>
+                <div class="prod-footer">
+                  <div>
+                    <span class="price-new">৳{{ number_format($product->price) }}</span>
+                    @if($product->compare_price)
+                      <span class="price-old">৳{{ number_format($product->compare_price) }}</span>
+                    @endif
+                  </div>
+                  <button class="add-btn" onclick="event.preventDefault()"><i class="fas fa-plus"></i></button>
+                </div>
               </div>
             </div>
-          </div>
+          </a>
         </div>
         @endforeach
       @else
