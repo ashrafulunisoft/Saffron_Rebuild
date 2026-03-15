@@ -114,7 +114,7 @@
               <i class="fas fa-plus"></i>
             </button>
           </div>
-          <button class="btn btn-glow btn-lg add-cart-btn">
+          <button class="btn btn-glow btn-lg add-cart-btn" onclick="addToCartFromProduct({{ $product->id }}, '{{ $product->name }}', {{ $product->sale_price ?? $product->price }}, '{{ $product->image ?? '' }}')">
             <i class="fas fa-shopping-bag me-2"></i>Add to Cart
           </button>
           <button class="btn btn-glass btn-lg wishlist-btn-modern" onclick="toggleWishlist(this)">
@@ -332,7 +332,7 @@
               <h6 class="prod-title">{{ $related->name }}</h6>
               <div class="d-flex justify-content-between align-items-center">
                 <span class="prod-price">৳{{ number_format($related->price) }}</span>
-                <button class="prod-cart-btn">
+                <button class="prod-cart-btn" onclick="addToCart({{ $related->id }}, '{{ $related->name }}', {{ $related->sale_price ?? $related->price }}, '{{ $related->image ?? '' }}', event)">
                   <i class="fas fa-plus"></i>
                 </button>
               </div>
@@ -1091,5 +1091,231 @@ function toggleWishlist(btn) {
     btn.style.background = '';
   }
 }
+
+// Get CSRF token from meta tag
+function getCsrfToken() {
+  return document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '{{ csrf_token() }}';
+}
+
+// Add to Cart from product page (with quantity selector)
+function addToCartFromProduct(productId, productName, price, image) {
+  const qty = document.getElementById('qtyValue');
+  const quantity = parseInt(qty.textContent);
+  const button = document.querySelector('.add-cart-btn');
+  const originalHTML = button.innerHTML;
+
+  // Show loading state
+  button.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Adding...';
+  button.disabled = true;
+
+  fetch('/cart/add', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-CSRF-TOKEN': getCsrfToken(),
+      'Accept': 'application/json',
+      'X-Requested-With': 'XMLHttpRequest'
+    },
+    body: JSON.stringify({
+      product_id: productId,
+      quantity: quantity
+    })
+  })
+  .then(async response => {
+    const contentType = response.headers.get('content-type');
+    if (contentType && contentType.includes('application/json')) {
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.message || 'Failed to add to cart');
+      }
+      return data;
+    } else {
+      const text = await response.text();
+      throw new Error('Server error. Please try again.');
+    }
+  })
+  .then(data => {
+    if (data.success) {
+      // Update cart count in header
+      updateCartCountBadge(data.cart_count);
+
+      // Show success state
+      button.innerHTML = '<i class="fas fa-check me-2"></i>Added!';
+      button.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+
+      // Show toast notification
+      showToast(`${quantity} item(s) added to cart successfully!`);
+
+      setTimeout(() => {
+        button.innerHTML = originalHTML;
+        button.style.background = '';
+        button.disabled = false;
+        // Reset quantity to 1
+        qty.textContent = '1';
+      }, 2000);
+    } else {
+      alert(data.message || 'Failed to add to cart');
+      button.innerHTML = originalHTML;
+      button.disabled = false;
+    }
+  })
+  .catch(error => {
+    console.error('Error:', error);
+    alert(error.message || 'Failed to add to cart. Please try again.');
+    button.innerHTML = originalHTML;
+    button.disabled = false;
+  });
+}
+
+// Add to Cart for related products
+function addToCart(productId, productName, price, image, event) {
+  event.preventDefault();
+  event.stopPropagation();
+
+  const button = event.target.closest('.prod-cart-btn');
+  const originalHTML = button.innerHTML;
+
+  // Show loading state
+  button.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+  button.disabled = true;
+
+  fetch('/cart/add', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-CSRF-TOKEN': getCsrfToken(),
+      'Accept': 'application/json',
+      'X-Requested-With': 'XMLHttpRequest'
+    },
+    body: JSON.stringify({
+      product_id: productId,
+      quantity: 1
+    })
+  })
+  .then(async response => {
+    const contentType = response.headers.get('content-type');
+    if (contentType && contentType.includes('application/json')) {
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.message || 'Failed to add to cart');
+      }
+      return data;
+    } else {
+      const text = await response.text();
+      throw new Error('Server error. Please try again.');
+    }
+  })
+  .then(data => {
+    if (data.success) {
+      // Update cart count in header
+      updateCartCountBadge(data.cart_count);
+
+      // Show success state
+      button.innerHTML = '<i class="fas fa-check"></i>';
+      button.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+
+      // Show toast notification
+      showToast('Item added to cart successfully!');
+
+      setTimeout(() => {
+        button.innerHTML = originalHTML;
+        button.style.background = '';
+        button.disabled = false;
+      }, 2000);
+    } else {
+      alert(data.message || 'Failed to add to cart');
+      button.innerHTML = originalHTML;
+      button.disabled = false;
+    }
+  })
+  .catch(error => {
+    console.error('Error:', error);
+    alert(error.message || 'Failed to add to cart. Please try again.');
+    button.innerHTML = originalHTML;
+    button.disabled = false;
+  });
+}
+
+// Update cart count badge (shared function)
+function updateCartCountBadge(count) {
+  const cartBadges = document.querySelectorAll('.cart-count');
+  cartBadges.forEach(badge => {
+    if (count > 0) {
+      badge.textContent = count > 9 ? '9+' : count;
+      badge.classList.remove('d-none');
+      badge.classList.add('d-flex');
+    } else {
+      badge.classList.add('d-none');
+      badge.classList.remove('d-flex');
+    }
+  });
+}
+
+// Show toast notification
+function showToast(message) {
+  // Create toast element if it doesn't exist
+  let toast = document.querySelector('.cart-toast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.className = 'cart-toast';
+    toast.style.cssText = `
+      position: fixed;
+      top: 100px;
+      right: 20px;
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: white;
+      padding: 1rem 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(16, 185, 129, 0.3);
+      z-index: 9999;
+      animation: slideIn 0.3s ease;
+    `;
+    document.body.appendChild(toast);
+  }
+
+  toast.innerHTML = `<i class="fas fa-check-circle me-2"></i>${message}`;
+
+  // Add animation keyframes if not exists
+  if (!document.querySelector('#toast-animation')) {
+    const style = document.createElement('style');
+    style.id = 'toast-animation';
+    style.textContent = `
+      @keyframes slideIn {
+        from {
+          transform: translateX(400px);
+          opacity: 0;
+        }
+        to {
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+  }
+
+  setTimeout(() => {
+    toast.remove();
+  }, 3000);
+}
+
+// Toggle wishlist buttons
+document.querySelectorAll('.prod-wishlist').forEach(btn => {
+  btn.addEventListener('click', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    this.classList.toggle('active');
+    const icon = this.querySelector('i');
+    if (this.classList.contains('active')) {
+      icon.classList.remove('far');
+      icon.classList.add('fas');
+      icon.style.transform = 'scale(1.3)';
+      setTimeout(() => icon.style.transform = 'scale(1)', 200);
+    } else {
+      icon.classList.remove('fas');
+      icon.classList.add('far');
+    }
+  });
+});
 </script>
 @endpush
