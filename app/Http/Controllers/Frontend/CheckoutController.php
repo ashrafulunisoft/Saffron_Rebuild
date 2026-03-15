@@ -3,10 +3,11 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Gloudemans\Shoppingcart\Facades\Cart;
+use App\Models\Cart;
 use App\Models\Order;
 use App\Models\OrderItem;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class CheckoutController extends Controller
@@ -16,11 +17,22 @@ class CheckoutController extends Controller
      */
     public function index()
     {
-        if (Cart::count() == 0) {
+        $cartItems = $this->getCartItems();
+
+        if ($cartItems->isEmpty()) {
             return redirect()->route('shop')->with('error', 'Your cart is empty!');
         }
 
-        return view('frontend.pages.checkout');
+        // Calculate totals
+        $subtotal = $cartItems->sum(function($item) {
+            return ($item->product->sale_price ?? $item->product->price) * $item->quantity;
+        });
+
+        // Shipping calculation (free shipping over 1000)
+        $shipping = $subtotal >= 1000 ? 0 : 60;
+        $total = $subtotal + $shipping;
+
+        return view('frontend.pages.checkout', compact('cartItems', 'subtotal', 'shipping', 'total'));
     }
 
     /**
@@ -38,8 +50,24 @@ class CheckoutController extends Controller
             'payment_method' => 'required|in:cod,card,bkash',
         ]);
 
+        $cartItems = $this->getCartItems();
+
+        if ($cartItems->isEmpty()) {
+            return redirect()->route('shop')->with('error', 'Your cart is empty!');
+        }
+
         try {
             DB::beginTransaction();
+
+            // Calculate totals
+            $subtotal = $cartItems->sum(function($item) {
+                return ($item->product->sale_price ?? $item->product->price) * $item->quantity;
+            });
+
+            // Shipping calculation (free shipping over 1000)
+            $shipping = $subtotal >= 1000 ? 0 : 60;
+            $tax = 0; // You can add tax calculation if needed
+            $total = $subtotal + $shipping + $tax;
 
             $order = Order::create([
                 'user_id' => auth()->id(),
@@ -51,23 +79,36 @@ class CheckoutController extends Controller
                 'address' => $request->address,
                 'city' => $request->city,
                 'payment_method' => $request->payment_method,
-                'subtotal' => Cart::subtotal(),
-                'tax' => Cart::tax(),
-                'total' => Cart::total(),
+                'subtotal' => $subtotal,
+                'tax' => $tax,
+                'shipping' => $shipping,
+                'total' => $total,
                 'status' => 'pending',
             ]);
 
-            foreach (Cart::content() as $item) {
+            foreach ($cartItems as $item) {
+                $price = $item->product->sale_price ?? $item->product->price;
                 OrderItem::create([
                     'order_id' => $order->id,
-                    'product_id' => $item->id,
-                    'quantity' => $item->qty,
-                    'price' => $item->price,
-                    'subtotal' => $item->subtotal,
+                    'product_id' => $item->product_id,
+                    'quantity' => $item->quantity,
+                    'price' => $price,
+                    'subtotal' => $price * $item->quantity,
                 ]);
             }
 
-            Cart::destroy();
+            // Clear the cart
+            $userId = Auth::check() ? Auth::id() : null;
+            $sessionId = session()->getId();
+
+            Cart::where(function($query) use ($userId, $sessionId) {
+                if ($userId) {
+                    $query->where('user_id', $userId)
+                          ->orWhere('session_id', $sessionId);
+                } else {
+                    $query->where('session_id', $sessionId);
+                }
+            })->delete();
 
             DB::commit();
 
@@ -75,7 +116,27 @@ class CheckoutController extends Controller
 
         } catch (\Exception $e) {
             DB::rollback();
-            return redirect()->back()->with('error', 'Something went wrong. Please try again.');
+            return redirect()->back()->with('error', 'Something went wrong. Please try again.')->withInput();
         }
+    }
+
+    /**
+     * Get cart items for current user/session.
+     */
+    protected function getCartItems()
+    {
+        $userId = Auth::check() ? Auth::id() : null;
+        $sessionId = session()->getId();
+
+        return Cart::with('product')
+            ->where(function($query) use ($userId, $sessionId) {
+                if ($userId) {
+                    $query->where('user_id', $userId)
+                          ->orWhere('session_id', $sessionId);
+                } else {
+                    $query->where('session_id', $sessionId);
+                }
+            })
+            ->get();
     }
 }
