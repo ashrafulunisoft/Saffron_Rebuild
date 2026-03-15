@@ -434,111 +434,59 @@
     </div>
 
     <div class="row g-4">
-      <div class="col-lg-4 col-md-6">
-        <div class="prod-card prod-item animate-on-scroll" style="border:1px solid rgba(245,158,11,0.3);">
-          <div class="prod-img">
-            <div class="prod-emoji">🧁</div>
-            <span class="prod-badge badge-hot" style="background:linear-gradient(135deg,#f43f5e,#e11d48);">#1 BESTSELLER</span>
-            <div class="prod-actions">
-              <button class="act-btn"><i class="fas fa-heart"></i></button>
-              <button class="act-btn"><i class="fas fa-eye"></i></button>
-            </div>
-          </div>
-          <div class="prod-body">
-            <div class="prod-cat">Cookies</div>
-            <h5 class="prod-name">Saffron Butter Cookies</h5>
-            <div class="prod-stars">★★★★★ <small>(2,847)</small></div>
-            <div class="prod-footer">
-              <div>
-                <span class="price-new">৳450</span>
-                <span class="price-old">৳650</span>
+      @if(isset($bestSellers) && $bestSellers->count() > 0)
+        @foreach($bestSellers as $index => $product)
+          <div class="col-lg-4 col-md-6">
+            <a href="{{ route('shop.product', $product->slug) }}" class="text-decoration-none">
+              <div class="prod-card prod-item animate-on-scroll" style="border:1px solid rgba(245,158,11,{{ $index === 0 ? '0.3' : '0.2' }});">
+                <div class="prod-img">
+                  @if($product->image)
+                    <img src="{{ asset('storage/products/' . $product->image) }}" alt="{{ $product->name }}">
+                  @else
+                    <div class="prod-emoji">🍮</div>
+                  @endif
+                  <span class="prod-badge badge-hot" style="background:linear-gradient(135deg,{{ $index === 0 ? '#f43f5e,#e11d48' : ($index === 1 ? '#f59e0b,#d97706' : '#8b5cf6,#7c3aed') }});">#{{ $index + 1 }} {{ $index === 0 ? 'BESTSELLER' : ($index === 1 ? 'TOP RATED' : 'POPULAR') }}</span>
+                  <div class="prod-actions">
+                    <button class="act-btn" onclick="event.preventDefault()"><i class="fas fa-heart"></i></button>
+                    <button class="act-btn" onclick="event.preventDefault()"><i class="fas fa-eye"></i></button>
+                  </div>
+                </div>
+                <div class="prod-body">
+                  <div class="prod-cat">{{ $product->category->name_en ?? 'Sweets' }}</div>
+                  <h5 class="prod-name">{{ $product->name }}</h5>
+                  <div class="prod-stars">★★★★★ <small>({{ $product->approved_reviews_count ?? 0 }})</small></div>
+                  <div class="prod-footer">
+                    <div>
+                      <span class="price-new">৳{{ number_format($product->price) }}</span>
+                      @if($product->sale_price)
+                        <span class="price-old">৳{{ number_format($product->sale_price) }}</span>
+                      @endif
+                    </div>
+                    <button class="add-btn" onclick="event.preventDefault()"><i class="fas fa-plus"></i></button>
+                  </div>
+                </div>
+                <div class="bestseller-stats">
+                  <div class="stat-item">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span>{{ $product->order_items_count ?? 0 }} sold</span>
+                  </div>
+                  <div class="stat-item">
+                    <i class="fas fa-heart"></i>
+                    <span>{{ $product->approved_reviews_count ?? 0 }} reviews</span>
+                  </div>
+                </div>
               </div>
-              <button class="add-btn"><i class="fas fa-plus"></i></button>
-            </div>
+            </a>
           </div>
-          <div class="bestseller-stats">
-            <div class="stat-item">
-              <i class="fas fa-shopping-bag"></i>
-              <span>12.5K sold</span>
-            </div>
-            <div class="stat-item">
-              <i class="fas fa-heart"></i>
-              <span>98% liked</span>
-            </div>
-          </div>
+        @endforeach
+      @else
+        <div class="col-12 text-center py-5">
+          <p style="color:rgba(245,230,204,0.6);">No best-selling products available at the moment.</p>
         </div>
-      </div>
-
-      <div class="col-lg-4 col-md-6">
-        <div class="prod-card prod-item animate-on-scroll" style="border:1px solid rgba(245,158,11,0.2);">
-          <div class="prod-img">
-            <div class="prod-emoji">🍫</div>
-            <span class="prod-badge badge-hot" style="background:linear-gradient(135deg,#f59e0b,#d97706);">#2 TOP RATED</span>
-            <div class="prod-actions">
-              <button class="act-btn"><i class="fas fa-heart"></i></button>
-              <button class="act-btn"><i class="fas fa-eye"></i></button>
-            </div>
-          </div>
-          <div class="prod-body">
-            <div class="prod-cat">Chocolates</div>
-            <h5 class="prod-name">Dark Saffron Truffles</h5>
-            <div class="prod-stars">★★★★★ <small>(1,923)</small></div>
-            <div class="prod-footer">
-              <div>
-                <span class="price-new">৳1,200</span>
-              </div>
-              <button class="add-btn"><i class="fas fa-plus"></i></button>
-            </div>
-          </div>
-          <div class="bestseller-stats">
-            <div class="stat-item">
-              <i class="fas fa-shopping-bag"></i>
-              <span>8.2K sold</span>
-            </div>
-            <div class="stat-item">
-              <i class="fas fa-heart"></i>
-              <span>96% liked</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-4 col-md-6">
-        <div class="prod-card prod-item animate-on-scroll" style="border:1px solid rgba(245,158,11,0.2);">
-          <div class="prod-img">
-            <div class="prod-emoji">🍰</div>
-            <span class="prod-badge badge-hot" style="background:linear-gradient(135deg,#8b5cf6,#7c3aed);">#3 POPULAR</span>
-            <div class="prod-actions">
-              <button class="act-btn"><i class="fas fa-heart"></i></button>
-              <button class="act-btn"><i class="fas fa-eye"></i></button>
-            </div>
-          </div>
-          <div class="prod-body">
-            <div class="prod-cat">Cakes</div>
-            <h5 class="prod-name">Royal Saffron Cake</h5>
-            <div class="prod-stars">★★★★★ <small>(1,456)</small></div>
-            <div class="prod-footer">
-              <div>
-                <span class="price-new">৳2,500</span>
-                <span class="price-old">৳3,000</span>
-              </div>
-              <button class="add-btn"><i class="fas fa-plus"></i></button>
-            </div>
-          </div>
-          <div class="bestseller-stats">
-            <div class="stat-item">
-              <i class="fas fa-shopping-bag"></i>
-              <span>5.8K sold</span>
-            </div>
-            <div class="stat-item">
-              <i class="fas fa-heart"></i>
-              <span>94% liked</span>
-            </div>
-          </div>
-        </div>
-      </div>
+      @endif
     </div>
 
+    @if(isset($bestSellers) && $bestSellers->count() > 0)
     <!-- Customer Choice Award Banner -->
     <div class="bestseller-banner mt-5 animate-on-scroll">
       <div class="row align-items-center">
@@ -547,28 +495,29 @@
             <div style="font-size:5rem;">🏆</div>
             <div>
               <h4 style="color:#f5e6cc;margin-bottom:0.5rem;font-family:'Playfair Display',serif;">Customer's Choice Award 2026</h4>
-              <p style="color:rgba(245,230,204,0.7);margin:0;">Our Saffron Butter Cookies have been voted the best traditional sweet by over 15,000 customers!</p>
+              <p style="color:rgba(245,230,204,0.7);margin:0;">Our {{ $bestSellers->first()->name }} has been voted the best by our customers!</p>
             </div>
           </div>
         </div>
         <div class="col-lg-6 text-lg-end mt-4 mt-lg-0">
           <div class="d-flex gap-4 justify-content-lg-end justify-content-center">
             <div class="text-center">
-              <div style="font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:#fbbf24;">15K+</div>
-              <div style="font-size:0.85rem;color:rgba(245,230,204,0.6);">Reviews</div>
+              <div style="font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:#fbbf24;">{{ $bestSellers->sum('order_items_count') }}+</div>
+              <div style="font-size:0.85rem;color:rgba(245,230,204,0.6);">Total Orders</div>
             </div>
             <div class="text-center">
-              <div style="font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:#fbbf24;">4.9★</div>
-              <div style="font-size:0.85rem;color:rgba(245,230,204,0.6);">Rating</div>
+              <div style="font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:#fbbf24;">{{ $bestSellers->first()->order_items_count ?? 0 }}</div>
+              <div style="font-size:0.85rem;color:rgba(245,230,204,0.6);">Best Seller</div>
             </div>
             <div class="text-center">
               <div style="font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:#fbbf24;">#1</div>
-              <div style="font-size:0.85rem;color:rgba(245,230,204,0.6);">Best Seller</div>
+              <div style="font-size:0.85rem;color:rgba(245,230,204,0.6);">Top Rated</div>
             </div>
           </div>
         </div>
       </div>
     </div>
+    @endif
   </div>
 </section>
 

@@ -354,7 +354,30 @@ Route::get('/', function(){
         ->take(8)
         ->get();
 
-    return view('frontend.pages.home', compact('categories', 'featuredProducts', 'newArrivals'));
+    // Get best-selling products (based on order items count)
+    // Fallback to featured products if no orders exist yet
+    $hasOrders = \App\Models\OrderItem::count() > 0;
+
+    if ($hasOrders) {
+        // Get actual best-sellers from order data
+        $bestSellers = \App\Models\Product::where('is_active', true)
+            ->withCount('orderItems')
+            ->having('order_items_count', '>', 0)
+            ->with(['category', 'primaryImage'])
+            ->orderBy('order_items_count', 'desc')
+            ->take(3)
+            ->get();
+    } else {
+        // Fallback: Show featured products or most viewed if no orders yet
+        $bestSellers = \App\Models\Product::where('is_active', true)
+            ->where('is_featured', true)
+            ->with(['category', 'primaryImage'])
+            ->orderBy('views', 'desc')
+            ->take(3)
+            ->get();
+    }
+
+    return view('frontend.pages.home', compact('categories', 'featuredProducts', 'newArrivals', 'bestSellers'));
 })->name('home');
 
 
