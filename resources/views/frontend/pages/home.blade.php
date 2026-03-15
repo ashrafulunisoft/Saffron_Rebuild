@@ -846,6 +846,21 @@ function updateCartCountBadge(count) {
     });
 }
 
+// Update wishlist count badge
+function updateWishlistCountBadge(count) {
+    const wishlistBadges = document.querySelectorAll('.wishlist-count');
+    wishlistBadges.forEach(badge => {
+        if (count > 0) {
+            badge.textContent = count > 9 ? '9+' : count;
+            badge.classList.remove('d-none');
+            badge.classList.add('d-flex');
+        } else {
+            badge.classList.add('d-none');
+            badge.classList.remove('d-flex');
+        }
+    });
+}
+
 // Show toast notification
 function showToast(message) {
     // Remove existing toast if any
@@ -963,6 +978,11 @@ function toggleWishlist(productId, button) {
   .then(data => {
     if (data.success) {
       showToast(data.message);
+
+      // Update wishlist count in header
+      if (data.wishlist_count !== undefined) {
+        updateWishlistCountBadge(data.wishlist_count);
+      }
     } else {
       // Revert visual state on error
       const icon = button.querySelector('i');

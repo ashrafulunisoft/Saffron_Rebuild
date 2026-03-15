@@ -1079,17 +1079,85 @@ function decreaseQty() {
   if (val > 1) qty.textContent = val - 1;
 }
 
-function toggleWishlist(btn) {
-  const icon = btn.querySelector('i');
-  if (icon.classList.contains('far')) {
-    icon.classList.remove('far');
-    icon.classList.add('fas');
-    btn.style.background = 'rgba(244,63,94,0.2)';
-  } else {
+function toggleWishlist(productId, button) {
+  fetch('/wishlist/toggle', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-CSRF-TOKEN': getCsrfToken(),
+      'Accept': 'application/json',
+      'X-Requested-With': 'XMLHttpRequest'
+    },
+    body: JSON.stringify({ product_id: productId })
+  })
+  .then(async response => {
+    const contentType = response.headers.get('content-type');
+    if (contentType && contentType.includes('application/json')) {
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.message || 'Failed to update wishlist');
+      }
+      return data;
+    } else {
+      const text = await response.text();
+      throw new Error('Server error. Please try again.');
+    }
+  })
+  .then(data => {
+    if (data.success) {
+      showToast(data.message);
+
+      // Update wishlist count in header
+      if (data.wishlist_count !== undefined) {
+        updateWishlistCountBadge(data.wishlist_count);
+      }
+    } else {
+      // Revert visual state on error
+      const icon = button.querySelector('i');
+      button.classList.toggle('active');
+      if (button.classList.contains('active')) {
+        icon.classList.remove('far');
+        icon.classList.add('fas');
+      } else {
+        icon.classList.remove('fas');
+        icon.classList.add('far');
+      }
+
+      // Handle auth required
+      if (data.requires_auth) {
+        alert('Please login to add items to wishlist.');
+        window.location.href = '/login';
+      } else {
+        alert(data.message || 'Failed to update wishlist');
+      }
+    }
+  })
+  .catch(error => {
+    console.error('Error:', error);
+    alert(error.message || 'Failed to update wishlist. Please try again.');
+  });
+}
+
+// Toggle wishlist for main product button
+function toggleProductWishlist(productId, button) {
+  const icon = button.querySelector('i');
+  const isActive = button.classList.contains('active');
+
+  // Toggle visual state immediately for better UX
+  if (isActive) {
+    button.classList.remove('active');
     icon.classList.remove('fas');
     icon.classList.add('far');
-    btn.style.background = '';
+    button.style.background = '';
+  } else {
+    button.classList.add('active');
+    icon.classList.remove('far');
+    icon.classList.add('fas');
+    button.style.background = 'rgba(244,63,94,0.2)';
   }
+
+  // Make API call to toggle wishlist
+  toggleWishlist(productId, button);
 }
 
 // Get CSRF token from meta tag
@@ -1240,6 +1308,21 @@ function addToCart(productId, productName, price, image, event) {
 function updateCartCountBadge(count) {
   const cartBadges = document.querySelectorAll('.cart-count');
   cartBadges.forEach(badge => {
+    if (count > 0) {
+      badge.textContent = count > 9 ? '9+' : count;
+      badge.classList.remove('d-none');
+      badge.classList.add('d-flex');
+    } else {
+      badge.classList.add('d-none');
+      badge.classList.remove('d-flex');
+    }
+  });
+}
+
+// Update wishlist count badge
+function updateWishlistCountBadge(count) {
+  const wishlistBadges = document.querySelectorAll('.wishlist-count');
+  wishlistBadges.forEach(badge => {
     if (count > 0) {
       badge.textContent = count > 9 ? '9+' : count;
       badge.classList.remove('d-none');
