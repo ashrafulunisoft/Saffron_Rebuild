@@ -2393,6 +2393,9 @@ section {
   display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;
 }
 .footer-copy { color:rgba(245,230,204,0.4); font-size:.9rem; }
+.footer-legal-links { display:flex; align-items:center; gap:0.5rem; color:rgba(245,230,204,0.5); font-size:.85rem; }
+.footer-legal-links a { color:rgba(245,230,204,0.6); text-decoration:none; transition:all 0.3s ease; }
+.footer-legal-links a:hover { color:#f59e0b; }
 .payment-icons { display:flex; gap:1.5rem; font-size:2rem; }
 
 /* RESPONSIVE */
