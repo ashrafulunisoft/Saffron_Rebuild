@@ -443,6 +443,7 @@ Route::middleware(['auth'])->prefix('customer')->name('customer.')->group(functi
 // Other frontend pages
 Route::get('/about', function() { return view('frontend.pages.about'); })->name('about');
 Route::get('/contact', function() { return view('frontend.pages.contact'); })->name('contact');
+Route::post('/contact', [App\Http\Controllers\Frontend\ContactController::class, 'submit'])->name('contact.submit');
 Route::get('/terms', function() { return view('terms'); })->name('terms');
 Route::get('/policy', function() { return view('policy'); })->name('policy');
 
