@@ -384,7 +384,14 @@ Route::get('/', function(){
         ->take(3)
         ->get();
 
-    return view('frontend.pages.home', compact('categories', 'featuredProducts', 'newArrivals', 'bestSellers', 'reviews'));
+    // Get latest blog posts
+    $blogPosts = \App\Models\BlogPost::published()
+        ->with('user')
+        ->orderBy('published_at', 'desc')
+        ->take(3)
+        ->get();
+
+    return view('frontend.pages.home', compact('categories', 'featuredProducts', 'newArrivals', 'bestSellers', 'reviews', 'blogPosts'));
 })->name('home');
 
 
@@ -455,6 +462,13 @@ Route::get('/policy', function() { return view('policy'); })->name('policy');
 
 // Search route
 Route::get('/search', [App\Http\Controllers\Frontend\SearchController::class, 'index'])->name('search');
+
+// Blog routes
+Route::prefix('blog')->name('blog.')->group(function () {
+    Route::get('/', [App\Http\Controllers\Frontend\BlogController::class, 'index'])->name('index');
+    Route::get('/category/{category}', [App\Http\Controllers\Frontend\BlogController::class, 'category'])->name('category');
+    Route::get('/{slug}', [App\Http\Controllers\Frontend\BlogController::class, 'show'])->name('show');
+});
 
 // Public Live Dashboard Routes (No authentication required)
 Route::get('/public/live-dashboard', [App\Http\Controllers\Visitor\VisitorController::class, 'liveDashboardPublic'])

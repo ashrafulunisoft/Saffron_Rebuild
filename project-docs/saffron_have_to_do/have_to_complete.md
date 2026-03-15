@@ -43,7 +43,7 @@ Have to Complete Priority Order:
 Saffron Next Task List : 
 -------------------------
 1. Impletement the Frontend theme (done)
-2. Have to connect  Hompage Best Selling Product Section with backend
+2. Have to connect  Hompage Best Selling Product Section with backend (done)
 3. Have to Connect the Megamenu with backend for dynamically showing 
 4. have to completet the wishlist connect with the backend 
 5. fix the cart section with backend 
@@ -51,7 +51,7 @@ Saffron Next Task List :
 7. fix the order, payment, 
 8. invoice design have to connect with the backend logic .   9.  fix the bilangual for the frontend theme and connect with the admin panel 
 10. Add the Blog Section on the Home page . 
-11. connect review section with backend logic
+11. connect review section with backend logic(done).
 
 
 ------------------------------------------------

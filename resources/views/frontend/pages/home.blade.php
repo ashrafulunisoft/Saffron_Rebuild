@@ -604,6 +604,65 @@
   </div>
 </section>
 
+<!-- BLOG SECTION -->
+@if(isset($blogPosts) && $blogPosts->count() > 0)
+<section class="section-gap">
+  <div class="container">
+    <div class="text-center mb-5">
+      <span class="section-badge animate-on-scroll">Latest News</span>
+      <h2 class="section-title mt-3 animate-on-scroll">From Our <span class="gradient-text">Blog</span></h2>
+      <p class="mt-3 animate-on-scroll" style="color:rgba(245,230,204,0.7);">Discover recipes, stories, and sweet updates from our kitchen</p>
+    </div>
+
+    <div class="row g-4">
+      @foreach($blogPosts as $post)
+        <div class="col-lg-4 col-md-6">
+          <a href="{{ route('blog.show', $post->slug) }}" class="text-decoration-none">
+            <div class="blog-card glass-card animate-on-scroll h-100">
+              @if($post->featured_image)
+                <div class="blog-img">
+                  <img src="{{ asset('storage/' . $post->featured_image) }}" alt="{{ $post->title }}">
+                  @if($post->is_featured)
+                    <span class="blog-badge badge-featured">⭐ Featured</span>
+                  @endif
+                </div>
+              @else
+                <div class="blog-img blog-img-placeholder">
+                  <div style="font-size:4rem;">📝</div>
+                  @if($post->is_featured)
+                    <span class="blog-badge badge-featured">⭐ Featured</span>
+                  @endif
+                </div>
+              @endif
+              <div class="blog-body">
+                @if($post->category)
+                  <span class="blog-category">{{ $post->category }}</span>
+                @endif
+                <h5 class="blog-title">{{ Str::limit($post->title, 60) }}</h5>
+                <p class="blog-excerpt">{{ Str::limit(strip_tags($post->excerpt ?? $post->content), 100) }}</p>
+                <div class="blog-meta">
+                  <span><i class="far fa-calendar"></i> {{ $post->published_at ? $post->published_at->format('M d, Y') : 'Unpublished' }}</span>
+                  <span><i class="far fa-eye"></i> {{ $post->views ?? 0 }}</span>
+                  @if($post->user)
+                    <span><i class="far fa-user"></i> {{ $post->user->name }}</span>
+                  @endif
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+      @endforeach
+    </div>
+
+    <div class="text-center mt-5">
+      <a href="{{ route('blog.index') }}" class="btn btn-glow">
+        View All Posts <i class="fas fa-arrow-right ms-2"></i>
+      </a>
+    </div>
+  </div>
+</section>
+@endif
+
 <!-- PROMO CARDS -->
 <section class="section-gap">
   <div class="container">
@@ -684,4 +743,107 @@ const observer = new IntersectionObserver((entries) => {
 
 document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
 </script>
+@endpush
+
+@push('styles')
+<style>
+/* Blog Card Styles */
+.blog-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;
+}
+
+.blog-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(245,158,11,0.2);
+}
+
+.blog-img {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  position: relative;
+}
+
+.blog-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.blog-card:hover .blog-img img {
+  transform: scale(1.05);
+}
+
+.blog-img-placeholder {
+  background: linear-gradient(135deg, rgba(245,158,11,0.1), rgba(244,63,94,0.1));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.blog-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.badge-featured {
+  background: linear-gradient(135deg, #f59e0b, #f43f5e);
+  color: white;
+}
+
+.blog-body {
+  padding: 1.5rem;
+}
+
+.blog-category {
+  display: inline-block;
+  padding: 4px 12px;
+  background: linear-gradient(135deg, rgba(245,158,11,0.2), rgba(244,63,94,0.2));
+  border-radius: 20px;
+  font-size: 0.75rem;
+  color: #fbbf24;
+  margin-bottom: 0.75rem;
+}
+
+.blog-title {
+  color: #f5e6cc;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.blog-excerpt {
+  color: rgba(245,230,204,0.7);
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.blog-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  font-size: 0.8rem;
+  color: rgba(245,230,204,0.6);
+  padding-top: 1rem;
+  border-top: 1px solid rgba(245,230,204,0.1);
+}
+
+.blog-meta i {
+  margin-right: 4px;
+}
+</style>
 @endpush
