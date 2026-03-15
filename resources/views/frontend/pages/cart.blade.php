@@ -70,7 +70,7 @@
                       <div class="d-flex align-items-center justify-content-between">
                         <!-- Quantity Control -->
                         <div class="quantity-control" style="display: flex; align-items: center; gap: 0.5rem; background: rgba(245,230,204,0.05); border-radius: 8px; padding: 0.25rem;">
-                          <button class="qty-btn" onclick="updateCartQty({{ $item->id }}, {{ $item->quantity - 1 }})"
+                          <button class="qty-btn qty-minus" data-cart-id="{{ $item->id }}"
                                   style="width: 32px; height: 32px; border: none; background: rgba(245,158,11,0.2); color: #fbbf24; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center;"
                                   {{ $item->quantity <= 1 ? 'disabled' : '' }}>
                             <i class="fas fa-minus" style="font-size: 0.75rem;"></i>
@@ -80,7 +80,7 @@
                                  data-cart-id="{{ $item->id }}"
                                  style="width: 50px; text-align: center; border: none; background: transparent; color: #f5e6cc; font-weight: 600;"
                                  readonly>
-                          <button class="qty-btn" onclick="updateCartQty({{ $item->id }}, {{ $item->quantity + 1 }})"
+                          <button class="qty-btn qty-plus" data-cart-id="{{ $item->id }}"
                                   style="width: 32px; height: 32px; border: none; background: rgba(245,158,11,0.2); color: #fbbf24; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center;"
                                   {{ $item->quantity >= 10 ? 'disabled' : '' }}>
                             <i class="fas fa-plus" style="font-size: 0.75rem;"></i>
@@ -88,7 +88,7 @@
                         </div>
 
                         <!-- Remove Button -->
-                        <button onclick="removeFromCart({{ $item->id }})"
+                        <button class="remove-item-btn" data-cart-id="{{ $item->id }}"
                                 style="border: none; background: rgba(244,63,94,0.1); color: #f43f5e; padding: 0.5rem; border-radius: 8px; cursor: pointer; transition: all 0.3s ease;"
                                 onmouseover="this.style.background='rgba(244,63,94,0.2)'"
                                 onmouseout="this.style.background='rgba(244,63,94,0.1)'">
@@ -182,84 +182,217 @@
 
 @push('scripts')
 <script>
-function updateCartQty(cartId, quantity) {
-  if (quantity < 1 || quantity > 10) return;
+// Get CSRF token from meta tag
+function getCsrfToken() {
+  return document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '{{ csrf_token() }}';
+}
 
-  const cartItem = document.querySelector(`[data-cart-id="${cartId}"]`);
-  if (cartItem) {
-    const qtyInput = cartItem.querySelector('.qty-input');
-    qtyInput.value = quantity;
-  }
+function updateCartQty(cartId, newQuantity) {
+  if (newQuantity < 1 || newQuantity > 10) return;
+
+  const cartItem = document.querySelector(`.cart-item[data-cart-id="${cartId}"]`);
+  if (!cartItem) return;
+
+  const qtyInput = cartItem.querySelector('.qty-input');
+  const minusBtn = cartItem.querySelector('.qty-minus');
+  const plusBtn = cartItem.querySelector('.qty-plus');
+
+  // Store original value for revert
+  const originalQty = parseInt(qtyInput.value);
+
+  // Show loading state
+  qtyInput.value = newQuantity;
+  minusBtn.disabled = true;
+  plusBtn.disabled = true;
 
   fetch('/cart/update', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'X-CSRF-TOKEN': '{{ csrf_token() }}'
+      'X-CSRF-TOKEN': getCsrfToken(),
+      'Accept': 'application/json',
+      'X-Requested-With': 'XMLHttpRequest'
     },
-    body: JSON.stringify({ cart_id: cartId, quantity: quantity })
+    body: JSON.stringify({ cart_id: cartId, quantity: newQuantity })
   })
-  .then(response => response.json())
+  .then(async response => {
+    const contentType = response.headers.get('content-type');
+
+    if (contentType && contentType.includes('application/json')) {
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || 'Failed to update cart');
+      }
+      return data;
+    } else {
+      const text = await response.text();
+      throw new Error('Server error. Please try again.');
+    }
+  })
   .then(data => {
     if (data.success) {
       // Update cart count in header
-      updateCartCount(data.cart_count);
+      updateCartCountBadge(data.cart_count);
 
-      // Reload to update all calculations
-      location.reload();
+      // Update item subtotal
+      const itemSubtotal = cartItem.querySelector('.item-subtotal');
+      if (itemSubtotal && data.item_subtotal) {
+        itemSubtotal.textContent = '৳' + data.item_subtotal;
+      }
+
+      // Update cart totals
+      const cartTotal = document.querySelector('.cart-total');
+      if (cartTotal && data.total) {
+        cartTotal.textContent = '৳' + data.total;
+      }
+
+      // Update button states based on NEW quantity
+      minusBtn.disabled = newQuantity <= 1;
+      plusBtn.disabled = newQuantity >= 10;
+
+      // Show brief success feedback
+      qtyInput.style.color = '#10b981';
+      setTimeout(() => {
+        qtyInput.style.color = '#f5e6cc';
+      }, 500);
     } else {
       alert(data.message || 'Failed to update cart');
+      // Revert to original quantity
+      qtyInput.value = originalQty;
+      minusBtn.disabled = originalQty <= 1;
+      plusBtn.disabled = originalQty >= 10;
     }
   })
   .catch(error => {
     console.error('Error:', error);
-    alert('Failed to update cart. Please try again.');
+    alert(error.message || 'Failed to update cart. Please try again.');
+    // Revert to original quantity
+    qtyInput.value = originalQty;
+    minusBtn.disabled = originalQty <= 1;
+    plusBtn.disabled = originalQty >= 10;
   });
 }
 
 function removeFromCart(cartId) {
-  if (confirm('Remove this item from cart?')) {
-    fetch('/cart/remove', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-CSRF-TOKEN': '{{ csrf_token() }}'
-      },
-      body: JSON.stringify({ cart_id: cartId })
-    })
-    .then(response => response.json())
-    .then(data => {
-      if (data.success) {
-        // Update cart count in header
-        updateCartCount(data.cart_count);
+  if (!confirm('Remove this item from cart?')) return;
 
-        // Remove item from DOM
-        const cartItem = document.querySelector(`[data-cart-id="${cartId}"]`);
-        if (cartItem) {
-          cartItem.remove();
+  const cartItem = document.querySelector(`.cart-item[data-cart-id="${cartId}"]`);
+  if (!cartItem) return;
 
-          // Check if cart is empty
-          const remainingItems = document.querySelectorAll('.cart-item');
-          if (remainingItems.length === 0) {
-            location.reload();
-          }
-        }
-      } else {
-        alert(data.message || 'Failed to remove item');
+  // Show loading state
+  cartItem.style.opacity = '0.5';
+  cartItem.style.pointerEvents = 'none';
+
+  fetch('/cart/remove', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-CSRF-TOKEN': getCsrfToken(),
+      'Accept': 'application/json',
+      'X-Requested-With': 'XMLHttpRequest'
+    },
+    body: JSON.stringify({ cart_id: cartId })
+  })
+  .then(async response => {
+    const contentType = response.headers.get('content-type');
+
+    if (contentType && contentType.includes('application/json')) {
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || 'Failed to remove item');
       }
-    })
-    .catch(error => {
-      console.error('Error:', error);
-      alert('Failed to remove item. Please try again.');
-    });
-  }
-}
+      return data;
+    } else {
+      const text = await response.text();
+      throw new Error('Server error. Please try again.');
+    }
+  })
+  .then(data => {
+    if (data.success) {
+      // Update cart count in header
+      updateCartCountBadge(data.cart_count);
 
-function updateCartCount(count) {
-  const cartCountElements = document.querySelectorAll('.cart-count');
-  cartCountElements.forEach(element => {
-    element.textContent = count;
+      // Animate and remove item from DOM
+      cartItem.style.transition = 'all 0.3s ease';
+      cartItem.style.transform = 'translateX(100%)';
+      cartItem.style.opacity = '0';
+
+      setTimeout(() => {
+        cartItem.remove();
+
+        // Check if cart is empty
+        const remainingItems = document.querySelectorAll('.cart-item');
+        if (remainingItems.length === 0) {
+          location.reload();
+        }
+      }, 300);
+    } else {
+      alert(data.message || 'Failed to remove item');
+      cartItem.style.opacity = '1';
+      cartItem.style.pointerEvents = 'auto';
+    }
+  })
+  .catch(error => {
+    console.error('Error:', error);
+    alert(error.message || 'Failed to remove item. Please try again.');
+    cartItem.style.opacity = '1';
+    cartItem.style.pointerEvents = 'auto';
   });
 }
+
+// Update cart count badge (shared function)
+function updateCartCountBadge(count) {
+  const cartBadges = document.querySelectorAll('.cart-count');
+  cartBadges.forEach(badge => {
+    if (count > 0) {
+      badge.textContent = count > 9 ? '9+' : count;
+      badge.classList.remove('d-none');
+      badge.classList.add('d-flex');
+    } else {
+      badge.classList.add('d-none');
+      badge.classList.remove('d-flex');
+    }
+  });
+}
+
+// Event listeners for quantity buttons
+document.addEventListener('DOMContentLoaded', function() {
+  // Handle increment button clicks
+  document.querySelectorAll('.qty-plus').forEach(button => {
+    button.addEventListener('click', function(e) {
+      e.preventDefault();
+      const cartId = this.getAttribute('data-cart-id');
+      const cartItem = this.closest('.cart-item');
+      const qtyInput = cartItem.querySelector('.qty-input');
+      const currentQty = parseInt(qtyInput.value);
+      const newQty = currentQty + 1;
+      updateCartQty(cartId, newQty);
+    });
+  });
+
+  // Handle decrement button clicks
+  document.querySelectorAll('.qty-minus').forEach(button => {
+    button.addEventListener('click', function(e) {
+      e.preventDefault();
+      const cartId = this.getAttribute('data-cart-id');
+      const cartItem = this.closest('.cart-item');
+      const qtyInput = cartItem.querySelector('.qty-input');
+      const currentQty = parseInt(qtyInput.value);
+      const newQty = currentQty - 1;
+      updateCartQty(cartId, newQty);
+    });
+  });
+
+  // Handle remove button clicks
+  document.querySelectorAll('.remove-item-btn').forEach(button => {
+    button.addEventListener('click', function(e) {
+      e.preventDefault();
+      const cartId = this.getAttribute('data-cart-id');
+      removeFromCart(cartId);
+    });
+  });
+});
 </script>
 @endpush

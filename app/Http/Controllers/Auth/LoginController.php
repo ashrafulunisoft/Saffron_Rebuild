@@ -26,6 +26,9 @@ class LoginController extends Controller
         if (Auth::attempt($request->only('email', 'password'), $request->boolean('remember'))) {
             $request->session()->regenerate();
 
+            // Merge session cart to user cart
+            \App\Http\Controllers\Frontend\CartController::mergeSessionCart(Auth::id());
+
             // Check user role and redirect accordingly
             $user = Auth::user();
             if ($user->hasRole('admin')) {

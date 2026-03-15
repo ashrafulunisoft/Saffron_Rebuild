@@ -150,7 +150,7 @@
           </a>
           <a href="{{ route('cart') }}" class="nav-icon-btn position-relative" title="Cart">
             <i class="fas fa-shopping-bag"></i>
-            <span class="cart-badge d-none">0</span>
+            <span class="cart-badge cart-count d-none">0</span>
           </a>
         </div>
 
@@ -182,3 +182,33 @@
     </div>
   </div>
 </nav>
+
+<script>
+// Fetch and update cart count on page load
+document.addEventListener('DOMContentLoaded', function() {
+  fetchCartCount();
+});
+
+function fetchCartCount() {
+  fetch('/cart/count')
+    .then(response => response.json())
+    .then(data => {
+      updateCartCountBadge(data.count);
+    })
+    .catch(error => console.error('Error fetching cart count:', error));
+}
+
+function updateCartCountBadge(count) {
+  const cartBadges = document.querySelectorAll('.cart-count');
+  cartBadges.forEach(badge => {
+    if (count > 0) {
+      badge.textContent = count > 9 ? '9+' : count;
+      badge.classList.remove('d-none');
+      badge.classList.add('d-flex');
+    } else {
+      badge.classList.add('d-none');
+      badge.classList.remove('d-flex');
+    }
+  });
+}
+</script>

@@ -26,7 +26,16 @@ class ViewServiceProvider extends ServiceProvider
                 ->orderBy('name_en')
                 ->get();
 
-            $view->with('navCategories', $categories);
+            // Get cart count
+            $cartCount = 0;
+            if (auth()->check()) {
+                $cartCount = \App\Models\Cart::where('user_id', auth()->id())->sum('quantity');
+            } else {
+                $cartCount = \App\Models\Cart::where('session_id', session()->getId())->sum('quantity');
+            }
+
+            $view->with('navCategories', $categories)
+                 ->with('cartCount', $cartCount);
         });
     }
 }

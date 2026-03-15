@@ -342,7 +342,7 @@
                       <span class="price-old">৳{{ number_format($product->compare_price) }}</span>
                     @endif
                   </div>
-                  <button class="add-btn" onclick="event.preventDefault()"><i class="fas fa-plus"></i></button>
+                  <button class="add-btn" onclick="addToCart({{ $product->id }}, '{{ $product->name }}', {{ $product->sale_price ?? $product->price }}, '{{ $product->image ?? '' }}', event)"><i class="fas fa-plus"></i></button>
                 </div>
               </div>
             </div>
@@ -402,7 +402,7 @@
                       <span class="price-old">৳{{ number_format($product->sale_price) }}</span>
                     @endif
                   </div>
-                  <button class="add-btn" onclick="event.preventDefault()"><i class="fas fa-plus"></i></button>
+                  <button class="add-btn" onclick="addToCart({{ $product->id }}, '{{ $product->name }}', {{ $product->sale_price ?? $product->price }}, '{{ $product->image ?? '' }}', event)"><i class="fas fa-plus"></i></button>
                 </div>
               </div>
             </div>
@@ -462,7 +462,7 @@
                         <span class="price-old">৳{{ number_format($product->sale_price) }}</span>
                       @endif
                     </div>
-                    <button class="add-btn" onclick="event.preventDefault()"><i class="fas fa-plus"></i></button>
+                    <button class="add-btn" onclick="addToCart({{ $product->id }}, '{{ $product->name }}', {{ $product->sale_price ?? $product->price }}, '{{ $product->image ?? '' }}', event)"><i class="fas fa-plus"></i></button>
                   </div>
                 </div>
                 <div class="bestseller-stats">
@@ -742,6 +742,162 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.1 });
 
 document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+
+// Add to Cart function
+function addToCart(productId, productName, price, image, event) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    const button = event.target.closest('.add-btn');
+    const originalHTML = button.innerHTML;
+
+    // Show loading state
+    button.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+    button.disabled = true;
+
+    fetch('/cart/add', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '{{ csrf_token() }}',
+            'Accept': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest'
+        },
+        body: JSON.stringify({
+            product_id: productId,
+            quantity: 1
+        })
+    })
+    .then(async response => {
+        console.log('Response status:', response.status);
+        console.log('Response headers:', response.headers.get('content-type'));
+
+        // Get response text first
+        const text = await response.text();
+        console.log('Response text:', text);
+
+        // Check if response is JSON
+        const contentType = response.headers.get('content-type');
+        if (contentType && contentType.includes('application/json')) {
+            const data = JSON.parse(text);
+            console.log('Response data:', data);
+
+            if (!response.ok) {
+                throw new Error(data.message || 'Failed to add to cart');
+            }
+            return data;
+        } else {
+            // Response is not JSON - probably an error page
+            console.error('Non-JSON response:', text);
+            throw new Error('Server error. Please try again.');
+        }
+    })
+    .then(data => {
+        console.log('Processing data:', data);
+
+        if (data.success) {
+            // Update cart count in header
+            updateCartCountBadge(data.cart_count);
+
+            // Show success state
+            button.innerHTML = '<i class="fas fa-check"></i>';
+            button.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+
+            // Show toast notification
+            showToast('Item added to cart successfully!');
+
+            setTimeout(() => {
+                button.innerHTML = originalHTML;
+                button.style.background = '';
+                button.disabled = false;
+            }, 2000);
+        } else {
+            alert(data.message || 'Failed to add to cart');
+            button.innerHTML = originalHTML;
+            button.disabled = false;
+        }
+    })
+    .catch(error => {
+        console.error('Full error:', error);
+        alert(error.message || 'Failed to add to cart. Please try again.');
+        button.innerHTML = originalHTML;
+        button.disabled = false;
+    });
+}
+
+// Update cart count badge (shared function)
+function updateCartCountBadge(count) {
+    const cartBadges = document.querySelectorAll('.cart-count');
+    cartBadges.forEach(badge => {
+        if (count > 0) {
+            badge.textContent = count > 9 ? '9+' : count;
+            badge.classList.remove('d-none');
+            badge.classList.add('d-flex');
+        } else {
+            badge.classList.add('d-none');
+            badge.classList.remove('d-flex');
+        }
+    });
+}
+
+// Show toast notification
+function showToast(message) {
+    // Remove existing toast if any
+    const existingToast = document.querySelector('.cart-toast');
+    if (existingToast) {
+        existingToast.remove();
+    }
+
+    // Create toast element
+    const toast = document.createElement('div');
+    toast.className = 'cart-toast';
+    toast.textContent = message;
+    toast.style.cssText = `
+        position: fixed;
+        top: 100px;
+        right: 20px;
+        background: linear-gradient(135deg, #10b981, #059669);
+        color: white;
+        padding: 1rem 1.5rem;
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        z-index: 9999;
+        animation: slideIn 0.3s ease;
+    `;
+
+    document.body.appendChild(toast);
+
+    setTimeout(() => {
+        toast.style.animation = 'slideOut 0.3s ease';
+        setTimeout(() => toast.remove(), 300);
+    }, 3000);
+}
+
+// Add CSS for toast animations
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes slideIn {
+        from {
+            transform: translateX(400px);
+            opacity: 0;
+        }
+        to {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+    @keyframes slideOut {
+        from {
+            transform: translateX(0);
+            opacity: 1;
+        }
+        to {
+            transform: translateX(400px);
+            opacity: 0;
+        }
+    }
+`;
+document.head.appendChild(style);
 </script>
 @endpush
 

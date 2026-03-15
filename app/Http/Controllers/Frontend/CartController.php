@@ -7,6 +7,7 @@ use App\Models\Cart;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class CartController extends Controller
 {
@@ -33,57 +34,66 @@ class CartController extends Controller
      */
     public function add(Request $request)
     {
-        $request->validate([
-            'product_id' => 'required|exists:products,id',
-            'quantity' => 'required|integer|min:1|max:10',
-        ]);
-
-        $product = Product::findOrFail($request->product_id);
-
-        if (!$product->is_active) {
-            return response()->json([
-                'success' => false,
-                'message' => 'This product is not available.'
-            ], 400);
-        }
-
-        $userId = Auth::check() ? Auth::id() : null;
-        $sessionId = session()->getId();
-
-        // Check if item already exists in cart
-        $existingItem = Cart::where('product_id', $request->product_id)
-            ->where(function($query) use ($userId, $sessionId) {
-                if ($userId) {
-                    $query->where('user_id', $userId);
-                } else {
-                    $query->where('session_id', $sessionId);
-                }
-            })
-            ->first();
-
-        if ($existingItem) {
-            $existingItem->increment('quantity', $request->quantity);
-            $cartItem = $existingItem;
-        } else {
-            $cartItem = Cart::create([
-                'user_id' => $userId,
-                'session_id' => $userId ? null : $sessionId,
-                'product_id' => $request->product_id,
-                'quantity' => $request->quantity,
+        try {
+            $request->validate([
+                'product_id' => 'required|exists:products,id',
+                'quantity' => 'required|integer|min:1|max:10',
             ]);
-        }
 
-        $cartCount = $this->getCartCount();
+            $product = Product::findOrFail($request->product_id);
 
-        if ($request->ajax() || $request->wantsJson()) {
+            if (!$product->is_active) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'This product is not available.'
+                ], 400);
+            }
+
+            $userId = Auth::check() ? Auth::id() : null;
+            $sessionId = session()->getId();
+
+            // Check if item already exists in cart
+            $existingItem = Cart::where('product_id', $request->product_id)
+                ->where(function($query) use ($userId, $sessionId) {
+                    if ($userId) {
+                        $query->where('user_id', $userId);
+                    } else {
+                        $query->where('session_id', $sessionId);
+                    }
+                })
+                ->first();
+
+            if ($existingItem) {
+                $existingItem->increment('quantity', $request->quantity);
+                $cartItem = $existingItem;
+            } else {
+                $cartItem = Cart::create([
+                    'user_id' => $userId,
+                    'session_id' => $userId ? null : $sessionId,
+                    'product_id' => $request->product_id,
+                    'quantity' => $request->quantity,
+                ]);
+            }
+
+            $cartCount = $this->getCartCount();
+
+            // Always return JSON for API requests
             return response()->json([
                 'success' => true,
                 'message' => 'Item added to cart successfully!',
-                'cart_count' => $cartCount,
+                'cart_count' => (int)$cartCount,
             ]);
-        }
+        } catch (\Exception $e) {
+            \Log::error('Cart add error: ' . $e->getMessage(), [
+                'trace' => $e->getTraceAsString(),
+                'request' => $request->all(),
+            ]);
 
-        return redirect()->back()->with('success', 'Item added to cart!');
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
+            ], 500);
+        }
     }
 
     /**
@@ -116,7 +126,7 @@ class CartController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'Cart updated successfully!',
-                'cart_count' => $cartCount,
+                'cart_count' => (int)$cartCount,
                 'subtotal' => number_format($subtotal, 2),
                 'shipping' => $shipping,
                 'total' => number_format($subtotal + $shipping, 2),
@@ -149,7 +159,7 @@ class CartController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'Item removed from cart!',
-                'cart_count' => $cartCount,
+                'cart_count' => (int)$cartCount,
             ]);
         }
 
@@ -164,7 +174,7 @@ class CartController extends Controller
         $count = $this->getCartCount();
 
         return response()->json([
-            'count' => $count,
+            'count' => (int)$count,
         ]);
     }
 
