@@ -117,7 +117,7 @@
           <button class="btn btn-glow btn-lg add-cart-btn" onclick="addToCartFromProduct({{ $product->id }}, '{{ $product->name }}', {{ $product->sale_price ?? $product->price }}, '{{ $product->image ?? '' }}')">
             <i class="fas fa-shopping-bag me-2"></i>Add to Cart
           </button>
-          <button class="btn btn-glass btn-lg wishlist-btn-modern" onclick="toggleWishlist(this)">
+          <button class="btn btn-glass btn-lg wishlist-btn-modern" data-product-id="{{ $product->id }}" onclick="toggleProductWishlist({{ $product->id }}, this)">
             <i class="far fa-heart"></i>
           </button>
         </div>
@@ -323,7 +323,7 @@
                   <i class="fas fa-cookie-bite"></i>
                 </div>
               @endif
-              <button class="prod-wishlist" title="Add to Wishlist">
+              <button class="prod-wishlist" data-product-id="{{ $related->id }}" title="Add to Wishlist">
                 <i class="far fa-heart"></i>
               </button>
             </div>
@@ -1299,22 +1299,55 @@ function showToast(message) {
   }, 3000);
 }
 
-// Toggle wishlist buttons
+// Toggle wishlist for main product button
+function toggleProductWishlist(productId, button) {
+  const icon = button.querySelector('i');
+  const isActive = button.classList.contains('active');
+
+  // Toggle visual state immediately for better UX
+  if (isActive) {
+    button.classList.remove('active');
+    icon.classList.remove('fas');
+    icon.classList.add('far');
+    button.style.background = '';
+  } else {
+    button.classList.add('active');
+    icon.classList.remove('far');
+    icon.classList.add('fas');
+    button.style.background = 'rgba(244,63,94,0.2)';
+  }
+
+  // Make API call to toggle wishlist
+  toggleWishlist(productId, button);
+}
+
+// Toggle wishlist for related products
 document.querySelectorAll('.prod-wishlist').forEach(btn => {
   btn.addEventListener('click', function(e) {
     e.preventDefault();
     e.stopPropagation();
-    this.classList.toggle('active');
+
+    const productId = this.getAttribute('data-product-id');
     const icon = this.querySelector('i');
-    if (this.classList.contains('active')) {
+    const isActive = this.classList.contains('active');
+
+    // Toggle visual state immediately for better UX
+    if (isActive) {
+      this.classList.remove('active');
+      icon.classList.remove('fas');
+      icon.classList.add('far');
+    } else {
+      this.classList.add('active');
       icon.classList.remove('far');
       icon.classList.add('fas');
       icon.style.transform = 'scale(1.3)';
-      setTimeout(() => icon.style.transform = 'scale(1)', 200);
-    } else {
-      icon.classList.remove('fas');
-      icon.classList.add('far');
+      setTimeout(() => {
+        icon.style.transform = 'scale(1)';
+      }, 200);
     }
+
+    // Make API call to toggle wishlist
+    toggleWishlist(productId, this);
   });
 });
 </script>

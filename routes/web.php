@@ -434,6 +434,14 @@ Route::prefix('cart')->name('cart.')->group(function () {
     Route::get('/count', [App\Http\Controllers\Frontend\CartController::class, 'count'])->name('count');
 });
 
+// Wishlist routes
+Route::prefix('wishlist')->name('wishlist.')->group(function () {
+    Route::post('/add', [App\Http\Controllers\Frontend\WishlistController::class, 'add'])->name('add');
+    Route::post('/remove', [App\Http\Controllers\Frontend\WishlistController::class, 'remove'])->name('remove');
+    Route::post('/toggle', [App\Http\Controllers\Frontend\WishlistController::class, 'toggle'])->name('toggle');
+    Route::get('/check', [App\Http\Controllers\Frontend\WishlistController::class, 'check'])->name('check');
+});
+
 // Checkout routes
 Route::get('/checkout', [App\Http\Controllers\Frontend\CheckoutController::class, 'index'])->name('checkout');
 Route::prefix('checkout')->name('checkout.')->group(function () {

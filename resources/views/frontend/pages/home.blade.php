@@ -327,7 +327,9 @@
                   <span class="prod-badge badge-hot">FEATURED</span>
                 @endif
                 <div class="prod-actions">
-                  <button class="act-btn" onclick="event.preventDefault()"><i class="fas fa-heart"></i></button>
+                  <button class="act-btn wishlist-btn" data-product-id="{{ $product->id }}" onclick="event.preventDefault(); event.stopPropagation();">
+                    <i class="far fa-heart"></i>
+                  </button>
                   <button class="act-btn" onclick="event.preventDefault()"><i class="fas fa-eye"></i></button>
                 </div>
               </div>
@@ -387,7 +389,9 @@
                 @endif
                 <span class="prod-badge badge-new">NEW</span>
                 <div class="prod-actions">
-                  <button class="act-btn" onclick="event.preventDefault()"><i class="fas fa-heart"></i></button>
+                  <button class="act-btn wishlist-btn" data-product-id="{{ $product->id }}" onclick="event.preventDefault(); event.stopPropagation();">
+                    <i class="far fa-heart"></i>
+                  </button>
                   <button class="act-btn" onclick="event.preventDefault()"><i class="fas fa-eye"></i></button>
                 </div>
               </div>
@@ -447,7 +451,9 @@
                   @endif
                   <span class="prod-badge badge-hot" style="background:linear-gradient(135deg,{{ $index === 0 ? '#f43f5e,#e11d48' : ($index === 1 ? '#f59e0b,#d97706' : '#8b5cf6,#7c3aed') }});">#{{ $index + 1 }} {{ $index === 0 ? 'BESTSELLER' : ($index === 1 ? 'TOP RATED' : 'POPULAR') }}</span>
                   <div class="prod-actions">
-                    <button class="act-btn" onclick="event.preventDefault()"><i class="fas fa-heart"></i></button>
+                    <button class="act-btn wishlist-btn" data-product-id="{{ $product->id }}" onclick="event.preventDefault(); event.stopPropagation();">
+                      <i class="far fa-heart"></i>
+                    </button>
                     <button class="act-btn" onclick="event.preventDefault()"><i class="fas fa-eye"></i></button>
                   </div>
                 </div>
@@ -898,6 +904,85 @@ style.textContent = `
     }
 `;
 document.head.appendChild(style);
+
+// Wishlist functionality
+document.querySelectorAll('.wishlist-btn').forEach(btn => {
+  btn.addEventListener('click', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    const productId = this.getAttribute('data-product-id');
+    const icon = this.querySelector('i');
+    const isActive = icon.classList.contains('fas');
+
+    // Toggle visual state immediately for better UX
+    if (isActive) {
+      icon.classList.remove('fas');
+      icon.classList.add('far');
+    } else {
+      icon.classList.remove('far');
+      icon.classList.add('fas');
+
+      // Heart animation
+      icon.style.transform = 'scale(1.3)';
+      setTimeout(() => {
+        icon.style.transform = 'scale(1)';
+      }, 200);
+    }
+
+    // Make API call to toggle wishlist
+    toggleWishlist(productId, this);
+  });
+});
+
+// Toggle wishlist function
+function toggleWishlist(productId, button) {
+  fetch('/wishlist/toggle', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '{{ csrf_token() }}',
+      'Accept': 'application/json',
+      'X-Requested-With': 'XMLHttpRequest'
+    },
+    body: JSON.stringify({ product_id: productId })
+  })
+  .then(async response => {
+    const contentType = response.headers.get('content-type');
+    if (contentType && contentType.includes('application/json')) {
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.message || 'Failed to update wishlist');
+      }
+      return data;
+    } else {
+      const text = await response.text();
+      throw new Error('Server error. Please try again.');
+    }
+  })
+  .then(data => {
+    if (data.success) {
+      showToast(data.message);
+    } else {
+      // Revert visual state on error
+      const icon = button.querySelector('i');
+      icon.classList.toggle('fas');
+      icon.classList.toggle('far');
+
+      // Handle auth required
+      if (data.requires_auth) {
+        alert('Please login to add items to wishlist.');
+        window.location.href = '/login';
+      } else {
+        alert(data.message || 'Failed to update wishlist');
+      }
+    }
+  })
+  .catch(error => {
+    console.error('Error:', error);
+    alert(error.message || 'Failed to update wishlist. Please try again.');
+  });
+}
 </script>
 @endpush
 

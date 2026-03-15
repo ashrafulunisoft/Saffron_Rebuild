@@ -52,7 +52,7 @@ class CustomerController extends Controller
      */
     public function wishlist()
     {
-        $wishlist = auth()->user()->wishlist ?? collect();
+        $wishlist = auth()->user()->wishlist()->with('product.category')->get() ?? collect();
         return view('frontend.customer.wishlist', compact('wishlist'));
     }
 

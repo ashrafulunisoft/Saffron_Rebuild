@@ -145,8 +145,9 @@
             </a>
           @endguest
 
-          <a href="#" class="nav-icon-btn" title="Wishlist">
+          <a href="{{ route('customer.wishlist') }}" class="nav-icon-btn position-relative" title="Wishlist">
             <i class="fas fa-heart"></i>
+            <span class="cart-badge wishlist-count d-none">0</span>
           </a>
           <a href="{{ route('cart') }}" class="nav-icon-btn position-relative" title="Cart">
             <i class="fas fa-shopping-bag"></i>
@@ -187,6 +188,7 @@
 // Fetch and update cart count on page load
 document.addEventListener('DOMContentLoaded', function() {
   fetchCartCount();
+  fetchWishlistCount();
 });
 
 function fetchCartCount() {
@@ -198,9 +200,35 @@ function fetchCartCount() {
     .catch(error => console.error('Error fetching cart count:', error));
 }
 
+function fetchWishlistCount() {
+  fetch('/wishlist/check')
+    .then(response => response.json())
+    .then(data => {
+      // For now just fetch count - you can enhance this
+      if (data.count !== undefined) {
+        updateWishlistCountBadge(data.count);
+      }
+    })
+    .catch(error => console.error('Error fetching wishlist count:', error));
+}
+
 function updateCartCountBadge(count) {
   const cartBadges = document.querySelectorAll('.cart-count');
   cartBadges.forEach(badge => {
+    if (count > 0) {
+      badge.textContent = count > 9 ? '9+' : count;
+      badge.classList.remove('d-none');
+      badge.classList.add('d-flex');
+    } else {
+      badge.classList.add('d-none');
+      badge.classList.remove('d-flex');
+    }
+  });
+}
+
+function updateWishlistCountBadge(count) {
+  const wishlistBadges = document.querySelectorAll('.wishlist-count');
+  wishlistBadges.forEach(badge => {
     if (count > 0) {
       badge.textContent = count > 9 ? '9+' : count;
       badge.classList.remove('d-none');

@@ -57,6 +57,9 @@ Saffron Next Task List :
 13. connect the image for all kinds of the products . 
 14. connect the contact page with the backend . 
 15. complete the FAQ , return and policy page .  
+16. single product page deatils shwo according to the database.
+17. add the delivery fee from the admin page inside / out side dhaka; 
+18. add pathoa integration ;   
 
 
 
