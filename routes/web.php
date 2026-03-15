@@ -448,14 +448,23 @@ Route::prefix('checkout')->name('checkout.')->group(function () {
     Route::post('/', [App\Http\Controllers\Frontend\CheckoutController::class, 'store'])->name('store');
 });
 
-// Payment routes (requires authentication)
-Route::middleware(['auth'])->prefix('payment')->name('payment.')->group(function () {
-    Route::get('/pay', [App\Http\Controllers\Frontend\PaymentController::class, 'pay'])->name('pay');
-    Route::match(['get', 'post'], '/success', [App\Http\Controllers\Frontend\PaymentController::class, 'success'])->name('success');
-    Route::match(['get', 'post'], '/fail', [App\Http\Controllers\Frontend\PaymentController::class, 'fail'])->name('fail');
-    Route::match(['get', 'post'], '/cancel', [App\Http\Controllers\Frontend\PaymentController::class, 'cancel'])->name('cancel');
-    Route::post('/ipn', [App\Http\Controllers\Frontend\PaymentController::class, 'ipn'])->name('ipn');
-});
+// Payment initiation route (requires authentication)
+Route::middleware(['auth'])->get('/payment/pay', [App\Http\Controllers\Frontend\PaymentController::class, 'pay'])->name('payment.pay');
+
+// Payment callback routes (session middleware, no auth - validated by transaction ID)
+Route::middleware(['web', \App\Http\Middleware\EnsureSessionForPayment::class])
+    ->match(['get', 'post'], '/payment/success', [App\Http\Controllers\Frontend\PaymentController::class, 'success'])
+    ->name('payment.success');
+
+Route::middleware(['web', \App\Http\Middleware\EnsureSessionForPayment::class])
+    ->match(['get', 'post'], '/payment/fail', [App\Http\Controllers\Frontend\PaymentController::class, 'fail'])
+    ->name('payment.fail');
+
+Route::middleware(['web', \App\Http\Middleware\EnsureSessionForPayment::class])
+    ->match(['get', 'post'], '/payment/cancel', [App\Http\Controllers\Frontend\PaymentController::class, 'cancel'])
+    ->name('payment.cancel');
+
+Route::middleware(['web'])->post('/payment/ipn', [App\Http\Controllers\Frontend\PaymentController::class, 'ipn'])->name('payment.ipn');
 
 // Customer routes (requires authentication)
 Route::middleware(['auth'])->prefix('customer')->name('customer.')->group(function () {
