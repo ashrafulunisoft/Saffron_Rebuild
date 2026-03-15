@@ -374,102 +374,46 @@
     </div>
 
     <div class="row g-4">
-      <div class="col-lg-3 col-md-6">
-        <div class="prod-card prod-item animate-on-scroll">
-          <div class="prod-img">
-            <div class="prod-emoji">🥐</div>
-            <span class="prod-badge badge-new">NEW</span>
-            <div class="prod-actions">
-              <button class="act-btn"><i class="fas fa-heart"></i></button>
-              <button class="act-btn"><i class="fas fa-eye"></i></button>
-            </div>
-          </div>
-          <div class="prod-body">
-            <div class="prod-cat">Pastries</div>
-            <h5 class="prod-name">Saffron Croissant</h5>
-            <div class="prod-stars">★★★★★ <small>(24)</small></div>
-            <div class="prod-footer">
-              <div>
-                <span class="price-new">৳350</span>
+      @if(isset($newArrivals) && $newArrivals->count() > 0)
+        @foreach($newArrivals as $product)
+        <div class="col-lg-3 col-md-6">
+          <a href="{{ route('shop.product', $product->slug) }}" class="text-decoration-none">
+            <div class="prod-card prod-item animate-on-scroll">
+              <div class="prod-img">
+                @if($product->image)
+                  <img src="{{ asset('storage/products/' . $product->image) }}" alt="{{ $product->name_en }}">
+                @else
+                  <div class="prod-emoji">🥐</div>
+                @endif
+                <span class="prod-badge badge-new">NEW</span>
+                <div class="prod-actions">
+                  <button class="act-btn" onclick="event.preventDefault()"><i class="fas fa-heart"></i></button>
+                  <button class="act-btn" onclick="event.preventDefault()"><i class="fas fa-eye"></i></button>
+                </div>
               </div>
-              <button class="add-btn"><i class="fas fa-plus"></i></button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-3 col-md-6">
-        <div class="prod-card prod-item animate-on-scroll">
-          <div class="prod-img">
-            <div class="prod-emoji">🍩</div>
-            <span class="prod-badge badge-new">NEW</span>
-            <div class="prod-actions">
-              <button class="act-btn"><i class="fas fa-heart"></i></button>
-              <button class="act-btn"><i class="fas fa-eye"></i></button>
-            </div>
-          </div>
-          <div class="prod-body">
-            <div class="prod-cat">Donuts</div>
-            <h5 class="prod-name">Saffron Glazed</h5>
-            <div class="prod-stars">★★★★½ <small>(18)</small></div>
-            <div class="prod-footer">
-              <div>
-                <span class="price-new">৳220</span>
-                <span class="price-old">৳300</span>
+              <div class="prod-body">
+                <div class="prod-cat">{{ $product->category->name_en ?? 'Sweets' }}</div>
+                <h5 class="prod-name">{{ $product->name_en }}</h5>
+                <div class="prod-stars">★★★★★ <small>({{ $product->reviews_count ?? 0 }})</small></div>
+                <div class="prod-footer">
+                  <div>
+                    <span class="price-new">৳{{ number_format($product->price) }}</span>
+                    @if($product->sale_price)
+                      <span class="price-old">৳{{ number_format($product->sale_price) }}</span>
+                    @endif
+                  </div>
+                  <button class="add-btn" onclick="event.preventDefault()"><i class="fas fa-plus"></i></button>
+                </div>
               </div>
-              <button class="add-btn"><i class="fas fa-plus"></i></button>
             </div>
-          </div>
+          </a>
         </div>
-      </div>
-
-      <div class="col-lg-3 col-md-6">
-        <div class="prod-card prod-item animate-on-scroll">
-          <div class="prod-img">
-            <div class="prod-emoji">🧁</div>
-            <span class="prod-badge badge-new">NEW</span>
-            <div class="prod-actions">
-              <button class="act-btn"><i class="fas fa-heart"></i></button>
-              <button class="act-btn"><i class="fas fa-eye"></i></button>
-            </div>
-          </div>
-          <div class="prod-body">
-            <div class="prod-cat">Cupcakes</div>
-            <h5 class="prod-name">Rose Cupcake</h5>
-            <div class="prod-stars">★★★★★ <small>(31)</small></div>
-            <div class="prod-footer">
-              <div>
-                <span class="price-new">৳180</span>
-              </div>
-              <button class="add-btn"><i class="fas fa-plus"></i></button>
-            </div>
-          </div>
+        @endforeach
+      @else
+        <div class="col-12 text-center py-5">
+          <p style="color:rgba(245,230,204,0.6);">No new arrivals available at the moment.</p>
         </div>
-      </div>
-
-      <div class="col-lg-3 col-md-6">
-        <div class="prod-card prod-item animate-on-scroll">
-          <div class="prod-img">
-            <div class="prod-emoji">🍪</div>
-            <span class="prod-badge badge-new">NEW</span>
-            <div class="prod-actions">
-              <button class="act-btn"><i class="fas fa-heart"></i></button>
-              <button class="act-btn"><i class="fas fa-eye"></i></button>
-            </div>
-          </div>
-          <div class="prod-body">
-            <div class="prod-cat">Cookies</div>
-            <h5 class="prod-name">Pistachio Cookies</h5>
-            <div class="prod-stars">★★★★★ <small>(42)</small></div>
-            <div class="prod-footer">
-              <div>
-                <span class="price-new">৳480</span>
-              </div>
-              <button class="add-btn"><i class="fas fa-plus"></i></button>
-            </div>
-          </div>
-        </div>
-      </div>
+      @endif
     </div>
 
     <div class="text-center mt-5">

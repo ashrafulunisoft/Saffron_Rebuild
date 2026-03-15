@@ -347,7 +347,14 @@ Route::get('/', function(){
         ->orderBy('id', 'desc')
         ->get();  // Load all featured products
 
-    return view('frontend.pages.home', compact('categories', 'featuredProducts'));
+    // Get new arrivals (latest 8 products)
+    $newArrivals = \App\Models\Product::where('is_active', true)
+        ->with(['category', 'primaryImage'])
+        ->orderBy('created_at', 'desc')
+        ->take(8)
+        ->get();
+
+    return view('frontend.pages.home', compact('categories', 'featuredProducts', 'newArrivals'));
 })->name('home');
 
 
