@@ -17,6 +17,12 @@ class CheckoutController extends Controller
      */
     public function index()
     {
+        // Require authentication for checkout
+        if (!Auth::check()) {
+            return redirect()->route('login')
+                ->with('error', 'Please login to proceed with checkout.');
+        }
+
         $cartItems = $this->getCartItems();
 
         if ($cartItems->isEmpty()) {
@@ -24,15 +30,15 @@ class CheckoutController extends Controller
         }
 
         // Calculate totals
-        $subtotal = $cartItems->sum(function($item) {
+        $totalAmount = $cartItems->sum(function($item) {
             return ($item->product->sale_price ?? $item->product->price) * $item->quantity;
         });
 
         // Shipping calculation (free shipping over 1000)
-        $shipping = $subtotal >= 1000 ? 0 : 60;
-        $total = $subtotal + $shipping;
+        $shipping = $totalAmount >= 1000 ? 0 : 60;
+        $total = $totalAmount + $shipping;
 
-        return view('frontend.pages.checkout', compact('cartItems', 'subtotal', 'shipping', 'total'));
+        return view('frontend.pages.checkout', compact('cartItems', 'totalAmount', 'shipping', 'total'));
     }
 
     /**
@@ -40,6 +46,12 @@ class CheckoutController extends Controller
      */
     public function store(Request $request)
     {
+        // Require authentication for checkout
+        if (!Auth::check()) {
+            return redirect()->route('login')
+                ->with('error', 'Please login to proceed with checkout.');
+        }
+
         $request->validate([
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
@@ -60,29 +72,34 @@ class CheckoutController extends Controller
             DB::beginTransaction();
 
             // Calculate totals
-            $subtotal = $cartItems->sum(function($item) {
+            $totalAmount = $cartItems->sum(function($item) {
                 return ($item->product->sale_price ?? $item->product->price) * $item->quantity;
             });
 
             // Shipping calculation (free shipping over 1000)
-            $shipping = $subtotal >= 1000 ? 0 : 60;
-            $tax = 0; // You can add tax calculation if needed
-            $total = $subtotal + $shipping + $tax;
+            $shipping = $totalAmount >= 1000 ? 0 : 60;
+            $discount = 0;
+            $finalAmount = $totalAmount + $shipping - $discount;
 
-            $order = Order::create([
-                'user_id' => auth()->id(),
-                'order_number' => 'ORD-' . strtoupper(uniqid()),
+            // Build shipping address string
+            $shippingAddress = json_encode([
                 'first_name' => $request->first_name,
                 'last_name' => $request->last_name,
                 'email' => $request->email,
                 'phone' => $request->phone,
                 'address' => $request->address,
                 'city' => $request->city,
+            ]);
+
+            $order = Order::create([
+                'user_id' => Auth::id(),
+                'order_number' => 'ORD-' . strtoupper(uniqid()),
+                'total_amount' => $totalAmount,
+                'discount' => $discount,
+                'final_amount' => $finalAmount,
                 'payment_method' => $request->payment_method,
-                'subtotal' => $subtotal,
-                'tax' => $tax,
-                'shipping' => $shipping,
-                'total' => $total,
+                'payment_status' => 'unpaid',
+                'shipping_address' => $shippingAddress,
                 'status' => 'pending',
             ]);
 
@@ -91,24 +108,13 @@ class CheckoutController extends Controller
                 OrderItem::create([
                     'order_id' => $order->id,
                     'product_id' => $item->product_id,
-                    'quantity' => $item->quantity,
                     'price' => $price,
-                    'subtotal' => $price * $item->quantity,
+                    'quantity' => $item->quantity,
                 ]);
             }
 
-            // Clear the cart
-            $userId = Auth::check() ? Auth::id() : null;
-            $sessionId = session()->getId();
-
-            Cart::where(function($query) use ($userId, $sessionId) {
-                if ($userId) {
-                    $query->where('user_id', $userId)
-                          ->orWhere('session_id', $sessionId);
-                } else {
-                    $query->where('session_id', $sessionId);
-                }
-            })->delete();
+            // Clear the cart for authenticated user
+            Cart::where('user_id', Auth::id())->delete();
 
             DB::commit();
 
@@ -116,6 +122,7 @@ class CheckoutController extends Controller
 
         } catch (\Exception $e) {
             DB::rollback();
+            \Log::error('Checkout error: ' . $e->getMessage());
             return redirect()->back()->with('error', 'Something went wrong. Please try again.')->withInput();
         }
     }

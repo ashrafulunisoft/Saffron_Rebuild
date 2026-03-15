@@ -59,7 +59,9 @@ Saffron Next Task List :
 15. complete the FAQ , return and policy page .  
 16. single product page deatils shwo according to the database.
 17. add the delivery fee from the admin page inside / out side dhaka; 
-18. add pathoa integration ;   
+18. add pathoa integration ; 
+19. User sidebar need to live update wishlist number; 
+20. 
 
 
 

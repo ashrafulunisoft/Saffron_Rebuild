@@ -41,7 +41,7 @@
 
                     <!-- Product Info -->
                     <div class="col-6 col-md-5">
-                      <h6 style="color: #f5e6cc; margin-bottom: 0.5rem;">
+                      <h6 class="cart-item-name" style="color: #f5e6cc; margin-bottom: 0.5rem;">
                         <a href="{{ route('shop.product', $item->product->slug) }}" style="color: inherit; text-decoration: none;">
                           {{ $item->product->name }}
                         </a>
@@ -51,14 +51,14 @@
                       </p>
                       <div style="margin-top: 0.5rem;">
                         @if($item->product->sale_price)
-                          <span style="color: #fbbf24; font-weight: 600; font-size: 1.1rem;">
+                          <span class="cart-item-price" style="color: #fbbf24; font-weight: 600; font-size: 1.1rem;">
                             ৳{{ number_format($item->product->sale_price) }}
                           </span>
                           <span style="color: rgba(245,230,204,0.4); text-decoration: line-through; margin-left: 0.5rem; font-size: 0.9rem;">
                             ৳{{ number_format($item->product->price) }}
                           </span>
                         @else
-                          <span style="color: #fbbf24; font-weight: 600; font-size: 1.1rem;">
+                          <span class="cart-item-price" style="color: #fbbf24; font-weight: 600; font-size: 1.1rem;">
                             ৳{{ number_format($item->product->price) }}
                           </span>
                         @endif
@@ -118,7 +118,7 @@
               <i class="fas fa-receipt me-2"></i>Order Summary
             </h4>
 
-            <div style="margin-bottom: 1.5rem;">
+            <div class="cart-totals" style="margin-bottom: 1.5rem;" data-subtotal="{{ number_format($subtotal) }}" data-shipping="{{ number_format($shipping) }}" data-total="{{ number_format($total) }}">
               <div class="d-flex justify-content-between mb-2">
                 <span style="color: rgba(245,230,204,0.7);">Subtotal</span>
                 <span style="color: #f5e6cc; font-weight: 600;">৳{{ number_format($subtotal) }}</span>

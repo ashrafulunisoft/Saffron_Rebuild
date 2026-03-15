@@ -69,7 +69,7 @@
             <i class="fas fa-boxes me-2" style="color: #fbbf24;"></i>Order Items
           </h5>
           <div class="order-detail-items">
-            @foreach($order->items as $item)
+            @foreach($order->orderItems as $item)
               <div class="order-detail-item">
                 <div style="width: 80px; height: 80px; border-radius: 12px; overflow: hidden; flex-shrink: 0;">
                   @if($item->product && $item->product->image)
@@ -102,12 +102,13 @@
               <h5 style="color: #f5e6cc; margin-bottom: 1rem;">
                 <i class="fas fa-map-marker-alt me-2" style="color: #fbbf24;"></i>Shipping Address
               </h5>
-              @if($order->shippingAddress)
+              @if($order->shipping_address)
+                @php $address = json_decode($order->shipping_address, true); @endphp
                 <div style="color: rgba(245,230,204,0.8);">
-                  <p style="margin-bottom: 0.5rem; font-weight: 600; color: #f5e6cc;">{{ $order->shippingAddress->name }}</p>
-                  <p style="margin-bottom: 0.25rem;">{{ $order->shippingAddress->phone }}</p>
-                  <p style="margin: 0;">{{ $order->shippingAddress->address }}, {{ $order->shippingAddress->city }}</p>
-                  <p style="margin: 0;">{{ $order->shippingAddress->state }}</p>
+                  <p style="margin-bottom: 0.5rem; font-weight: 600; color: #f5e6cc;">{{ $address['first_name'] ?? '' }} {{ $address['last_name'] ?? '' }}</p>
+                  <p style="margin-bottom: 0.25rem;">{{ $address['email'] ?? '' }}</p>
+                  <p style="margin-bottom: 0.25rem;">{{ $address['phone'] ?? '' }}</p>
+                  <p style="margin: 0;">{{ $address['address'] ?? '' }}, {{ $address['city'] ?? '' }}</p>
                 </div>
               @else
                 <p style="color: rgba(245,230,204,0.6);">No shipping address available</p>

@@ -43,7 +43,7 @@ class CustomerController extends Controller
             abort(403);
         }
 
-        $order->load(['items.product', 'shippingAddress']);
+        $order->load(['orderItems.product']);
         return view('frontend.customer.order-show', compact('order'));
     }
 

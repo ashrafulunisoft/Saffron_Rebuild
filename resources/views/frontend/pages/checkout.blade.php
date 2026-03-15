@@ -132,7 +132,7 @@
               </div>
             </div>
 
-            <button type="submit" class="btn btn-glow w-100 py-3" disabled>
+            <button type="submit" id="placeOrderBtn" class="btn btn-glow w-100 py-3" disabled>
               <i class="fas fa-lock me-2"></i>Place Order
             </button>
 
@@ -146,6 +146,139 @@
   </div>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+// Fetch cart data on page load
+document.addEventListener('DOMContentLoaded', function() {
+  fetchCartData();
+  setupFormValidation();
+});
+
+// Fetch cart data from backend
+async function fetchCartData() {
+  try {
+    const response = await fetch('/cart');
+    if (!response.ok) throw new Error('Failed to fetch cart data');
+
+    const html = await response.text();
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, 'text/html');
+
+    // Extract cart items from the cart page
+    const cartItems = doc.querySelectorAll('.cart-item');
+
+    if (cartItems.length === 0) {
+      window.location.href = '/cart';
+      return;
+    }
+
+    // Display cart items
+    displayCartItems(doc);
+
+    // Enable place order button
+    document.getElementById('placeOrderBtn').disabled = false;
+
+  } catch (error) {
+    console.error('Error fetching cart:', error);
+    window.location.href = '/cart';
+  }
+}
+
+// Display cart items in checkout summary
+function displayCartItems(doc) {
+  const cartItemsContainer = document.querySelector('.cart-items');
+  const cartItems = doc.querySelectorAll('.cart-item');
+
+  let itemsHTML = '';
+
+  cartItems.forEach(item => {
+    const name = item.querySelector('.cart-item-name')?.textContent || 'Product';
+    const qty = item.querySelector('.qty-input')?.value || '1';
+    const price = item.querySelector('.cart-item-price')?.textContent || '৳0';
+
+    itemsHTML += `
+      <div class="d-flex justify-content-between align-items-center mb-3 pb-3" style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+        <div>
+          <h6 class="mb-1" style="color: #f5e6cc; font-size: 0.9rem;">${name}</h6>
+          <small style="color: rgba(245,230,204,0.6);">Qty: ${qty}</small>
+        </div>
+        <span style="color: #fbbf24; font-weight: 600;">${price}</span>
+      </div>
+    `;
+  });
+
+  cartItemsContainer.innerHTML = itemsHTML;
+
+  // Extract totals
+  const subtotal = doc.querySelector('[data-subtotal]')?.getAttribute('data-subtotal') || '0';
+  const shipping = doc.querySelector('[data-shipping]')?.getAttribute('data-shipping') || '0';
+  const total = doc.querySelector('[data-total]')?.getAttribute('data-total') || '0';
+
+  // Update totals
+  const totalsHTML = `
+    <div class="d-flex justify-content-between mb-2">
+      <span style="color: rgba(245,230,204,0.7);">Subtotal:</span>
+      <span style="color: #f5e6cc;">৳${subtotal}</span>
+    </div>
+    <div class="d-flex justify-content-between mb-2">
+      <span style="color: rgba(245,230,204,0.7);">Shipping:</span>
+      <span style="color: #f5e6cc;">৳${shipping}</span>
+    </div>
+    <div class="d-flex justify-content-between mb-2">
+      <span style="color: rgba(245,230,204,0.7);">Tax:</span>
+      <span style="color: #f5e6cc;">৳0</span>
+    </div>
+    <div class="d-flex justify-content-between mb-3 pt-3" style="border-top: 1px solid rgba(255,255,255,0.1);">
+      <span style="color: #f5e6cc; font-weight: 600;">Total:</span>
+      <span style="color: #fbbf24; font-weight: 700; font-size: 1.2rem;">৳${total}</span>
+    </div>
+  `;
+
+  document.querySelector('.order-totals').innerHTML = totalsHTML;
+}
+
+// Setup form validation
+function setupFormValidation() {
+  const form = document.querySelector('form');
+  const submitBtn = document.getElementById('placeOrderBtn');
+  const requiredFields = form.querySelectorAll('[required]');
+
+  // Check if all required fields are filled
+  function checkFormValidity() {
+    let isValid = true;
+
+    requiredFields.forEach(field => {
+      if (field.type === 'radio') {
+        const radioGroup = form.querySelectorAll(`[name="${field.name}"]`);
+        const isChecked = Array.from(radioGroup).some(radio => radio.checked);
+        if (!isChecked) isValid = false;
+      } else {
+        if (!field.value.trim()) isValid = false;
+      }
+    });
+
+    submitBtn.disabled = !isValid;
+  }
+
+  // Add event listeners to all required fields
+  requiredFields.forEach(field => {
+    field.addEventListener('change', checkFormValidity);
+    field.addEventListener('input', checkFormValidity);
+  });
+
+  // Initial check
+  checkFormValidity();
+
+  // Handle form submission
+  form.addEventListener('submit', function(e) {
+    // Show loading state
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Processing...';
+  });
+}
+</script>
+@endpush
 
 @push('styles')
 <style>
