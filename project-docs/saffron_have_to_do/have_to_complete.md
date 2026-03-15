@@ -47,7 +47,7 @@ Saffron Next Task List :
 3. Have to Connect the Megamenu with backend for dynamically showing (done)
 4. have to completet the wishlist connect with the backend (done)
 5. fix the cart section with backend (done)
-6. add the sslcommerz 
+6. add the sslcommerz ()
 7. fix the order, 
 8. fix the payment, 
 9. invoice design have to connect with the backend logic .  

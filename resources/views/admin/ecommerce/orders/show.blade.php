@@ -177,34 +177,140 @@
         </div>
 
         <!-- Update Status Form -->
-        <div class="permission-title" style="margin-top: 2.5rem;">Update Order Status</div>
-        <form action="{{ route('admin.ecommerce.orders.update', $order) }}" method="POST" style="background: rgba(15, 23, 42, 0.6); border-radius: 16px; border: 1px solid rgba(255,255,255,0.05); padding: 1.5rem;">
+        <div class="permission-title" style="margin-top: 2.5rem;">
+            <i class="fas fa-edit me-2" style="color: var(--accent-blue);"></i>Update Order Status
+        </div>
+
+        <form action="{{ route('admin.ecommerce.orders.update', $order) }}" method="POST" class="status-update-form">
             @csrf
             @method('PUT')
 
             <div class="row g-4">
+                <!-- Order Status Selection -->
                 <div class="col-md-6">
-                    <label class="form-label">Order Status</label>
-                    <select name="status" class="input-dark input-custom">
-                        <option value="pending" @if($order->status === 'pending') selected @endif>Pending</option>
-                        <option value="processing" @if($order->status === 'processing') selected @endif>Processing</option>
-                        <option value="shipped" @if($order->status === 'shipped') selected @endif>Shipped</option>
-                        <option value="delivered" @if($order->status === 'delivered') selected @endif>Delivered</option>
-                        <option value="cancelled" @if($order->status === 'cancelled') selected @endif>Cancelled</option>
-                    </select>
+                    <label class="status-form-label">
+                        <i class="fas fa-box me-2"></i>Order Status
+                    </label>
+                    <div class="status-options-grid">
+                        <label class="status-option @if($order->status === 'pending') active @endif" data-status="pending">
+                            <input type="radio" name="status" value="pending" @if($order->status === 'pending') checked @endif>
+                            <div class="status-option-content">
+                                <div class="status-icon pending">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div class="status-info">
+                                    <span class="status-name">Pending</span>
+                                    <span class="status-desc">Awaiting processing</span>
+                                </div>
+                            </div>
+                        </label>
+
+                        <label class="status-option @if($order->status === 'processing') active @endif" data-status="processing">
+                            <input type="radio" name="status" value="processing" @if($order->status === 'processing') checked @endif>
+                            <div class="status-option-content">
+                                <div class="status-icon processing">
+                                    <i class="fas fa-cog fa-spin"></i>
+                                </div>
+                                <div class="status-info">
+                                    <span class="status-name">Processing</span>
+                                    <span class="status-desc">Preparing order</span>
+                                </div>
+                            </div>
+                        </label>
+
+                        <label class="status-option @if($order->status === 'shipped') active @endif" data-status="shipped">
+                            <input type="radio" name="status" value="shipped" @if($order->status === 'shipped') checked @endif>
+                            <div class="status-option-content">
+                                <div class="status-icon shipped">
+                                    <i class="fas fa-truck"></i>
+                                </div>
+                                <div class="status-info">
+                                    <span class="status-name">Shipped</span>
+                                    <span class="status-desc">On the way</span>
+                                </div>
+                            </div>
+                        </label>
+
+                        <label class="status-option @if($order->status === 'delivered') active @endif" data-status="delivered">
+                            <input type="radio" name="status" value="delivered" @if($order->status === 'delivered') checked @endif>
+                            <div class="status-option-content">
+                                <div class="status-icon delivered">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <div class="status-info">
+                                    <span class="status-name">Delivered</span>
+                                    <span class="status-desc">Order completed</span>
+                                </div>
+                            </div>
+                        </label>
+
+                        <label class="status-option @if($order->status === 'cancelled') active @endif" data-status="cancelled">
+                            <input type="radio" name="status" value="cancelled" @if($order->status === 'cancelled') checked @endif>
+                            <div class="status-option-content">
+                                <div class="status-icon cancelled">
+                                    <i class="fas fa-times-circle"></i>
+                                </div>
+                                <div class="status-info">
+                                    <span class="status-name">Cancelled</span>
+                                    <span class="status-desc">Order cancelled</span>
+                                </div>
+                            </div>
+                        </label>
+                    </div>
                 </div>
+
+                <!-- Payment Status Selection -->
                 <div class="col-md-6">
-                    <label class="form-label">Payment Status</label>
-                    <select name="payment_status" class="input-dark input-custom">
-                        <option value="pending" @if($order->payment_status === 'pending') selected @endif>Pending</option>
-                        <option value="paid" @if($order->payment_status === 'paid') selected @endif>Paid</option>
-                        <option value="failed" @if($order->payment_status === 'failed') selected @endif>Failed</option>
-                        <option value="refunded" @if($order->payment_status === 'refunded') selected @endif>Refunded</option>
-                    </select>
+                    <label class="status-form-label">
+                        <i class="fas fa-credit-card me-2"></i>Payment Status
+                    </label>
+                    <div class="status-options-grid">
+                        <label class="payment-option @if($order->payment_status === 'pending') active @endif">
+                            <input type="radio" name="payment_status" value="pending" @if($order->payment_status === 'pending') checked @endif>
+                            <div class="payment-option-content">
+                                <div class="payment-badge payment-pending">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <span>Pending</span>
+                            </div>
+                        </label>
+
+                        <label class="payment-option @if($order->payment_status === 'paid') active @endif">
+                            <input type="radio" name="payment_status" value="paid" @if($order->payment_status === 'paid') checked @endif>
+                            <div class="payment-option-content">
+                                <div class="payment-badge payment-paid">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <span>Paid</span>
+                            </div>
+                        </label>
+
+                        <label class="payment-option @if($order->payment_status === 'failed') active @endif">
+                            <input type="radio" name="payment_status" value="failed" @if($order->payment_status === 'failed') checked @endif>
+                            <div class="payment-option-content">
+                                <div class="payment-badge payment-failed">
+                                    <i class="fas fa-exclamation-circle"></i>
+                                </div>
+                                <span>Failed</span>
+                            </div>
+                        </label>
+
+                        <label class="payment-option @if($order->payment_status === 'refunded') active @endif">
+                            <input type="radio" name="payment_status" value="refunded" @if($order->payment_status === 'refunded') checked @endif>
+                            <div class="payment-option-content">
+                                <div class="payment-badge payment-refunded">
+                                    <i class="fas fa-undo"></i>
+                                </div>
+                                <span>Refunded</span>
+                            </div>
+                        </label>
+                    </div>
                 </div>
+
+                <!-- Submit Button -->
                 <div class="col-12">
-                    <button type="submit" class="btn-gradient" style="width: 100%; padding: 0.75rem 2rem; border-radius: 100px;">
-                        <i class="fas fa-save me-2"></i>Update Status
+                    <button type="submit" class="status-submit-btn">
+                        <i class="fas fa-save me-2"></i>Update Order Status
                     </button>
                 </div>
             </div>
@@ -214,5 +320,347 @@
 
 @push('styles')
 @include('admin.ecommerce.partials.common-styles')
+
+<style>
+/* Status Update Form */
+.status-update-form {
+    background: rgba(15, 23, 42, 0.6);
+    border-radius: 16px;
+    border: 1px solid rgba(255,255,255,0.05);
+    padding: 2rem;
+    backdrop-filter: blur(10px);
+}
+
+.status-form-label {
+    display: flex;
+    align-items: center;
+    color: rgba(255,255,255,0.7);
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+}
+
+/* Order Status Options Grid */
+.status-options-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.status-option {
+    display: flex;
+    cursor: pointer;
+    background: rgba(15, 23, 42, 0.4);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    padding: 1rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.status-option::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.status-option:hover::before {
+    opacity: 1;
+}
+
+.status-option:hover {
+    border-color: rgba(59, 130, 246, 0.3);
+    transform: translateX(5px);
+    box-shadow: 0 4px 20px rgba(59, 130, 246, 0.1);
+}
+
+.status-option input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.status-option.active {
+    border-color: rgba(59, 130, 246, 0.4);
+    background: rgba(59, 130, 246, 0.08);
+}
+
+.status-option.active::before {
+    opacity: 1;
+}
+
+/* Status Option Content */
+.status-option-content {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+    position: relative;
+    z-index: 1;
+}
+
+.status-icon {
+    width: 45px;
+    height: 45px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+}
+
+.status-icon.pending {
+    background: rgba(251, 191, 36, 0.15);
+    color: #fbbf24;
+    border: 1px solid rgba(251, 191, 36, 0.3);
+}
+
+.status-icon.processing {
+    background: rgba(59, 130, 246, 0.15);
+    color: var(--accent-blue);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.status-icon.shipped {
+    background: rgba(168, 85, 247, 0.15);
+    color: #a855f7;
+    border: 1px solid rgba(168, 85, 247, 0.3);
+}
+
+.status-icon.delivered {
+    background: rgba(34, 197, 94, 0.15);
+    color: #22c55e;
+    border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.status-icon.cancelled {
+    background: rgba(239, 68, 68, 0.15);
+    color: #ef4444;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.status-option:hover .status-icon {
+    transform: scale(1.1);
+}
+
+.status-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.status-name {
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.status-desc {
+    color: rgba(255,255,255,0.5);
+    font-size: 0.8rem;
+}
+
+/* Payment Status Options */
+.payment-option {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: rgba(15, 23, 42, 0.4);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 10px;
+    padding: 0.85rem 1rem;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.payment-option:hover {
+    border-color: rgba(59, 130, 246, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.1);
+}
+
+.payment-option input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.payment-option.active {
+    border-color: rgba(59, 130, 246, 0.4);
+    background: rgba(59, 130, 246, 0.08);
+}
+
+.payment-option-content {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    width: 100%;
+}
+
+.payment-badge {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+}
+
+.payment-badge.payment-pending {
+    background: rgba(251, 191, 36, 0.15);
+    color: #fbbf24;
+}
+
+.payment-badge.payment-paid {
+    background: rgba(34, 197, 94, 0.15);
+    color: #22c55e;
+}
+
+.payment-badge.payment-failed {
+    background: rgba(239, 68, 68, 0.15);
+    color: #ef4444;
+}
+
+.payment-badge.payment-refunded {
+    background: rgba(168, 85, 247, 0.15);
+    color: #a855f7;
+}
+
+.payment-option:hover .payment-badge {
+    transform: scale(1.1);
+}
+
+.payment-option span {
+    color: rgba(255,255,255,0.8);
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+/* Submit Button */
+.status-submit-btn {
+    width: 100%;
+    padding: 1rem 2rem;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--accent-blue), #8b5cf6);
+    border: none;
+    color: #fff;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.status-submit-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s ease, height 0.6s ease;
+}
+
+.status-submit-btn:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+.status-submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 25px rgba(59, 130, 246, 0.4);
+}
+
+.status-submit-btn:active {
+    transform: translateY(0);
+}
+
+.status-submit-btn i {
+    position: relative;
+    z-index: 1;
+}
+
+/* Spin animation for processing icon */
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.fa-spin {
+    animation: spin 2s linear infinite;
+}
+
+/* Pulse animation for active status */
+@keyframes status-pulse {
+    0%, 100% {
+        box-shadow: 0 0 5px rgba(59, 130, 246, 0.3),
+                    0 0 10px rgba(59, 130, 246, 0.2);
+    }
+    50% {
+        box-shadow: 0 0 15px rgba(59, 130, 246, 0.4),
+                    0 0 25px rgba(59, 130, 246, 0.3);
+    }
+}
+
+.status-option.active {
+    animation: status-pulse 2s ease-in-out infinite;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .status-update-form {
+        padding: 1.5rem;
+    }
+
+    .status-icon {
+        width: 38px;
+        height: 38px;
+        font-size: 1rem;
+    }
+
+    .status-name {
+        font-size: 0.9rem;
+    }
+
+    .status-desc {
+        font-size: 0.75rem;
+    }
+
+    .payment-badge {
+        width: 28px;
+        height: 28px;
+        font-size: 0.85rem;
+    }
+
+    .payment-option span {
+        font-size: 0.85rem;
+    }
+}
+</style>
 @endpush
 @endsection

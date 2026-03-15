@@ -171,15 +171,25 @@
                         </td>
                         <td>
                             @if($order->status === 'pending')
-                                <span class="badge badge-pending">Pending</span>
+                                <span class="order-status-badge status-pending-badge">
+                                    <i class="fas fa-clock me-1"></i>Pending
+                                </span>
                             @elseif($order->status === 'processing')
-                                <span class="badge badge-visit-type">Processing</span>
+                                <span class="order-status-badge status-processing-badge">
+                                    <i class="fas fa-cog fa-spin me-1"></i>Processing
+                                </span>
                             @elseif($order->status === 'shipped')
-                                <span class="badge badge-completed">Shipped</span>
+                                <span class="order-status-badge status-shipped-badge">
+                                    <i class="fas fa-truck me-1"></i>Shipped
+                                </span>
                             @elseif($order->status === 'delivered')
-                                <span class="badge badge-approved">Delivered</span>
+                                <span class="order-status-badge status-delivered-badge">
+                                    <i class="fas fa-check-circle me-1"></i>Delivered
+                                </span>
                             @elseif($order->status === 'cancelled')
-                                <span class="badge badge-cancelled">Cancelled</span>
+                                <span class="order-status-badge status-cancelled-badge">
+                                    <i class="fas fa-times-circle me-1"></i>Cancelled
+                                </span>
                             @endif
                         </td>
                         <td>
@@ -319,5 +329,201 @@ function deleteOrder(orderId, orderNumber) {
 
 @push('styles')
 @include('admin.ecommerce.partials.common-styles')
+
+<style>
+/* Order Status Badges */
+.order-status-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    border-radius: 10px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: capitalize;
+    letter-spacing: 0.3px;
+    backdrop-filter: blur(10px);
+    border: 1px solid;
+    transition: all 0.3s ease;
+}
+
+.status-pending-badge {
+    background: rgba(251, 191, 36, 0.15);
+    color: #fbbf24;
+    border-color: rgba(251, 191, 36, 0.3);
+}
+
+.status-processing-badge {
+    background: rgba(59, 130, 246, 0.15);
+    color: var(--accent-blue);
+    border-color: rgba(59, 130, 246, 0.3);
+    animation: processing-pulse 2s ease-in-out infinite;
+}
+
+.status-shipped-badge {
+    background: rgba(168, 85, 247, 0.15);
+    color: #a855f7;
+    border-color: rgba(168, 85, 247, 0.3);
+}
+
+.status-delivered-badge {
+    background: rgba(34, 197, 94, 0.15);
+    color: #22c55e;
+    border-color: rgba(34, 197, 94, 0.3);
+}
+
+.status-cancelled-badge {
+    background: rgba(239, 68, 68, 0.15);
+    color: #ef4444;
+    border-color: rgba(239, 68, 68, 0.3);
+}
+
+/* Processing Pulse Animation */
+@keyframes processing-pulse {
+    0%, 100% {
+        box-shadow: 0 0 5px rgba(59, 130, 246, 0.3);
+    }
+    50% {
+        box-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
+    }
+}
+
+/* Enhanced Quick Action Buttons */
+.action-buttons {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.action-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(15, 23, 42, 0.6);
+    color: rgba(255,255,255,0.7);
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(10px);
+    position: relative;
+    overflow: hidden;
+}
+
+.action-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+    transform: translate(-50%, -50%);
+    transition: width 0.4s ease, height 0.4s ease;
+}
+
+.action-btn:hover::before {
+    width: 100px;
+    height: 100px;
+}
+
+.action-btn:hover {
+    transform: translateY(-2px);
+    color: #fff;
+    border-color: rgba(59, 130, 246, 0.4);
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.2);
+}
+
+.action-btn i {
+    position: relative;
+    z-index: 1;
+}
+
+/* Specific Button Colors */
+.btn-view:hover {
+    background: rgba(59, 130, 246, 0.2);
+    border-color: rgba(59, 130, 246, 0.4);
+}
+
+.btn-visit-type:hover {
+    background: rgba(59, 130, 246, 0.2);
+    border-color: var(--accent-blue);
+}
+
+.btn-approve:hover {
+    background: rgba(34, 197, 94, 0.2);
+    border-color: rgba(34, 197, 94, 0.4);
+}
+
+.btn-delete:hover {
+    background: rgba(239, 68, 68, 0.2);
+    border-color: rgba(239, 68, 68, 0.4);
+}
+
+/* Enhanced Payment Status Badges in Table */
+tbody .badge {
+    padding: 0.4rem 0.8rem;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    backdrop-filter: blur(10px);
+    border: 1px solid;
+}
+
+.badge-approved {
+    background: rgba(34, 197, 94, 0.15);
+    color: #22c55e;
+    border-color: rgba(34, 197, 94, 0.3);
+}
+
+.badge-pending {
+    background: rgba(251, 191, 36, 0.15);
+    color: #fbbf24;
+    border-color: rgba(251, 191, 36, 0.3);
+}
+
+.badge-cancelled {
+    background: rgba(239, 68, 68, 0.15);
+    color: #ef4444;
+    border-color: rgba(239, 68, 68, 0.3);
+}
+
+.badge-completed {
+    background: rgba(168, 85, 247, 0.15);
+    color: #a855f7;
+    border-color: rgba(168, 85, 247, 0.3);
+}
+
+/* Enhanced Filter Dropdown */
+.input-dark {
+    background: rgba(15, 23, 42, 0.6) !important;
+    border: 1px solid rgba(255,255,255,0.08) !important;
+    color: #fff !important;
+    border-radius: 10px !important;
+    padding: 0.75rem 1rem !important;
+    transition: all 0.3s ease !important;
+}
+
+.input-dark:focus {
+    border-color: rgba(59, 130, 246, 0.4) !important;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
+    background: rgba(15, 23, 42, 0.8) !important;
+}
+
+.input-dark option {
+    background: #0f172a;
+    color: #fff;
+    padding: 0.5rem;
+}
+
+/* Spin Animation */
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.fa-spin {
+    animation: spin 2s linear infinite;
+}
+</style>
 @endpush
 @endsection
