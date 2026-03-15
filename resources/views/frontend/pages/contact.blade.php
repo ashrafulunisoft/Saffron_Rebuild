@@ -2,14 +2,54 @@
 
 @section('title', 'Contact - Saffron Sweets & Bakery')
 
+@push('styles')
+<style>
+  /* Breadcrumb Styles */
+  .breadcrumb-glass {
+    background: rgba(255,255,255,0.05);
+    padding: 0.8rem 1.5rem;
+    border-radius: 12px;
+    display: inline-flex;
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .breadcrumb-glass .breadcrumb-item {
+    display: flex;
+    align-items: center;
+  }
+
+  .breadcrumb-glass .breadcrumb-item + .breadcrumb-item::before {
+    content: "›";
+    color: rgba(245,230,204,0.4);
+    font-size: 0.8rem;
+    margin: 0 0.75rem;
+  }
+
+  .breadcrumb-glass .breadcrumb-item a {
+    color: #f59e0b;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  .breadcrumb-glass .breadcrumb-item a:hover {
+    color: #fbbf24;
+    text-decoration: underline;
+  }
+
+  .breadcrumb-glass .breadcrumb-item.active {
+    color: #f5e6cc;
+  }
+</style>
+@endpush
+
 @section('content')
 <div style="padding-top: 120px; padding-bottom: 60px;">
   <div class="container">
     <!-- Breadcrumb -->
     <nav aria-label="breadcrumb" class="mb-4">
       <ol class="breadcrumb-glass">
-        <li class="breadcrumb-item"><a href="{{ route('home') }}" style="color: #f59e0b; text-decoration: none;">Home</a></li>
-        <li class="breadcrumb-item active" style="color: #f5e6cc;">Contact</li>
+        <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
+        <li class="breadcrumb-item active">Contact</li>
       </ol>
     </nav>
 
