@@ -25,77 +25,79 @@
           <div class="dropdown-menu glass-mega-menu" aria-labelledby="glassMegaMenu">
             <div class="container">
               <div class="row g-4">
-                <!-- 4 Column Menu Structure -->
+                <!-- Dynamic Categories from Database -->
                 <div class="col-12">
-                  <div class="row g-3">
-                    <!-- Column 1: Bengali Sweets -->
-                    <div class="col-6 col-lg-3">
-                      <div class="glass-mega-col">
-                        <h6 class="glass-mega-title">
-                          <span class="mega-icon">🍬</span> Bengali Sweets
-                        </h6>
-                        <ul class="glass-mega-list">
-                          <li><a href="{{ route('shop.category', 'bengali-sweets') }}" class="mega-link"><span class="link-dot"></span>Roshogolla</a></li>
-                          <li><a href="{{ route('shop.category', 'bengali-sweets') }}" class="mega-link"><span class="link-dot"></span>Sandesh</a></li>
-                          <li><a href="{{ route('shop.category', 'bengali-sweets') }}" class="mega-link"><span class="link-dot"></span>Rasmalai</a></li>
-                          <li><a href="{{ route('shop.category', 'bengali-sweets') }}" class="mega-link"><span class="link-dot"></span>Gulab Jamun</a></li>
-                          <li><a href="{{ route('shop.category', 'bengali-sweets') }}" class="mega-link"><span class="link-dot"></span>Kheer</a></li>
-                        </ul>
-                      </div>
+                  @if(isset($navCategories) && $navCategories->count() > 0)
+                    <div class="row g-3">
+                      @php
+                        // Emoji mapping for categories
+                        $categoryEmojis = [
+                          'breads' => '🍞',
+                          'cakes' => '🎂',
+                          'cake' => '🎂',
+                          'cookies-biscuits' => '🍪',
+                          'traditional-sweets' => '🍬',
+                          'sweet' => '🍮',
+                          'sweets' => '🍬',
+                          'dairy-products' => '🥛',
+                          'buns-rolls' => '🥯',
+                          'pastries-savories' => '🥧',
+                          'bengali-sweets' => '🍬',
+                          'bakery' => '🥐',
+                          'chocolates' => '🍫',
+                          'cookies' => '🍪',
+                          'pastries' => '🥧',
+                        ];
+
+                        // Group categories by chunks for 4 columns (3 categories per column)
+                        $categoriesChunked = $navCategories->chunk(3);
+                      @endphp
+
+                      @foreach($categoriesChunked as $categoryChunk)
+                        <div class="col-6 col-lg-3">
+                          <div class="glass-mega-col">
+                            @foreach($categoryChunk as $category)
+                              @php
+                                $emoji = $categoryEmojis[$category->slug] ?? '🍰';
+                              @endphp
+
+                              @if($loop->first)
+                                <h6 class="glass-mega-title">
+                                  <span class="mega-icon">{{ $emoji }}</span> {{ $category->name_en }}
+                                </h6>
+                                <ul class="glass-mega-list">
+                              @endif
+
+                              <li>
+                                <a href="{{ route('shop.category', $category->slug) }}" class="mega-link">
+                                  <span class="link-dot"></span>{{ $category->name_en }}
+                                  @if($category->products_count > 0)
+                                    <small class="text-muted opacity-75">({{ $category->products_count }})</small>
+                                  @endif
+                                </a>
+                              </li>
+
+                              @if($loop->last)
+                                </ul>
+                              @endif
+                            @endforeach
+                          </div>
+                        </div>
+                      @endforeach
                     </div>
-                    <!-- Column 2: Bakery Essentials -->
-                    <div class="col-6 col-lg-3">
-                      <div class="glass-mega-col">
-                        <h6 class="glass-mega-title">
-                          <span class="mega-icon">🍞</span> Bakery Essentials
-                        </h6>
-                        <ul class="glass-mega-list">
-                          <li><a href="{{ route('shop.category', 'bakery') }}" class="mega-link"><span class="link-dot"></span>Fresh Bread</a></li>
-                          <li><a href="{{ route('shop.category', 'bakery') }}" class="mega-link"><span class="link-dot"></span>Artisan Sourdough</a></li>
-                          <li><a href="{{ route('shop.category', 'bakery') }}" class="mega-link"><span class="link-dot"></span>Baguettes</a></li>
-                          <li><a href="{{ route('shop.category', 'bakery') }}" class="mega-link"><span class="link-dot"></span>Whole Wheat</a></li>
-                          <li><a href="{{ route('shop.category', 'bakery') }}" class="mega-link"><span class="link-dot"></span>Gluten Free</a></li>
-                        </ul>
-                      </div>
+                  @else
+                    <div class="text-center py-4">
+                      <p class="text-muted">No categories available</p>
                     </div>
-                    <!-- Column 3: Sweet Treats -->
-                    <div class="col-6 col-lg-3">
-                      <div class="glass-mega-col">
-                        <h6 class="glass-mega-title">
-                          <span class="mega-icon">🧁</span> Sweet Treats
-                        </h6>
-                        <ul class="glass-mega-list">
-                          <li><a href="{{ route('shop.category', 'cakes') }}" class="mega-link"><span class="link-dot"></span>Cakes</a></li>
-                          <li><a href="{{ route('shop.category', 'cakes') }}" class="mega-link"><span class="link-dot"></span>Cupcakes</a></li>
-                          <li><a href="{{ route('shop.category', 'pastries') }}" class="mega-link"><span class="link-dot"></span>Pastries</a></li>
-                          <li><a href="{{ route('shop.category', 'cookies') }}" class="mega-link"><span class="link-dot"></span> Cookies</a></li>
-                          <li><a href="{{ route('shop.category', 'macarons') }}" class="mega-link"><span class="link-dot"></span>Macarons</a></li>
-                        </ul>
-                      </div>
-                    </div>
-                    <!-- Column 4: Chocolates -->
-                    <div class="col-6 col-lg-3">
-                      <div class="glass-mega-col">
-                        <h6 class="glass-mega-title">
-                          <span class="mega-icon">🍫</span> Chocolates
-                        </h6>
-                        <ul class="glass-mega-list">
-                          <li><a href="{{ route('shop.category', 'chocolates') }}" class="mega-link"><span class="link-dot"></span>Chocolates</a></li>
-                          <li><a href="{{ route('shop.category', 'chocolates') }}" class="mega-link"><span class="link-dot"></span>Truffles</a></li>
-                          <li><a href="{{ route('shop.category', 'chocolates') }}" class="mega-link"><span class="link-dot"></span>Gummies</a></li>
-                          <li><a href="{{ route('shop.category', 'chocolates') }}" class="mega-link"><span class="link-dot"></span>Hard Candy</a></li>
-                          <li><a href="{{ route('shop.category', 'chocolates') }}" class="mega-link"><span class="link-dot"></span>Fudge</a></li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                  <!-- Quick Tags -->
+                  @endif
+
+                  <!-- Quick Links -->
                   <div class="glass-mega-tags mt-3">
-                    <span class="mega-tag-label">Popular:</span>
-                    <a href="#" class="mega-tag">Premium Box</a>
-                    <a href="#" class="mega-tag">Sugar Free</a>
-                    <a href="#" class="mega-tag">Same Day</a>
-                    <a href="#" class="mega-tag">Gift Wrap</a>
+                    <span class="mega-tag-label">Quick Links:</span>
+                    <a href="{{ route('shop') }}" class="mega-tag">All Products</a>
+                    <a href="{{ route('shop') }}?featured=1" class="mega-tag">Featured</a>
+                    <a href="{{ route('shop') }}?sort=newest" class="mega-tag">New Arrivals</a>
+                    <a href="{{ route('shop') }}?sort=popular" class="mega-tag">Popular</a>
                   </div>
                 </div>
               </div>
