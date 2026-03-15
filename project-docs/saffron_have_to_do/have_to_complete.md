@@ -50,7 +50,7 @@ Saffron Next Task List :
 6. add the sslcommerz (done)
 7. fix the order, (done)
 8. fix the payment, (done)
-9. invoice design have to connect with the backend logic .  
+9. invoice design have to connect with the backend logic . (done)
 10. fix the bilangual for the frontend theme and connect with the admin panel 
 11. Add the Blog Section on the Home page . (Done)
 12. connect review section with backend logic(done). 

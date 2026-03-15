@@ -21,7 +21,7 @@
             <h5 class="mt-3" style="color: #f5e6cc;">{{ auth()->user()->name }}</h5>
             <p style="color: rgba(245,230,204,0.6); font-size: 0.9rem;">{{ auth()->user()->email }}</p>
             <span class="badge" style="background: rgba(245,158,11,0.2); color: #fbbf24; border: 1px solid rgba(245,158,11,0.3);">
-              {{ ucfirst(auth()->user()->roles->first()->name ?? 'Customer') }}
+              {{ ucfirst(auth()->user()->roles->first()?->name ?? 'Customer') }}
             </span>
           </div>
 
@@ -151,7 +151,7 @@
                         <span style="color: #fbbf24; font-weight: 600;">#{{ $order->order_number }}</span>
                       </td>
                       <td>{{ $order->created_at->format('M d, Y') }}</td>
-                      <td>{{ $order->items_count ?? $order->items->count() }} items</td>
+                      <td>{{ $order->orderItems->count() }} items</td>
                       <td>৳{{ number_format($order->final_amount) }}</td>
                       <td>
                         <span class="status-badge status-{{ $order->status }}">
