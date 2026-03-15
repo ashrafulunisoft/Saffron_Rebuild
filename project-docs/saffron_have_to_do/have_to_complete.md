@@ -61,6 +61,7 @@ Saffron Next Task List :
 17. add pathoa integration ; 
 18. User sidebar need to live update wishlist number; 
 19. connect the image for all kinds of the products .
+20. have to fix the mobile design 
 
 
 

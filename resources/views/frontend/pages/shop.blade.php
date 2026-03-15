@@ -9,11 +9,15 @@
     <div class="shop-header-row mb-4">
       <!-- Breadcrumb -->
       <nav aria-label="breadcrumb">
-        <ol class="breadcrumb-glass mb-0">
+        <ol class="breadcrumb-modern mb-0">
           <li class="breadcrumb-item">
-            <a href="{{ route('home') }}">Home</a>
+            <a href="{{ route('home') }}">
+              <i class="fas fa-home me-1"></i>Home
+            </a>
           </li>
-          <li class="breadcrumb-item active">Shop</li>
+          <li class="breadcrumb-item active">
+            <i class="fas fa-store me-1"></i>Shop
+          </li>
         </ol>
       </nav>
 
@@ -139,39 +143,105 @@
 
 @push('styles')
 <style>
-  .breadcrumb-glass {
-    background: rgba(255,255,255,0.05);
-    padding: 0.8rem 1.5rem;
-    border-radius: 12px;
-    display: inline-flex;
-    border: 1px solid rgba(255,255,255,0.1);
-  }
-
-  .breadcrumb-glass .breadcrumb-item {
+  /* Modern Breadcrumb Styles */
+  .breadcrumb-modern {
     display: flex;
     align-items: center;
+    list-style: none;
+    padding: 1rem 1.5rem;
+    margin: 0;
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    overflow: hidden;
+    position: relative;
   }
 
-  .breadcrumb-glass .breadcrumb-item + .breadcrumb-item::before {
-    content: "›";
-    color: rgba(245,230,204,0.4);
+  .breadcrumb-modern::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #f59e0b, #f43f5e);
+    border-radius: 16px 16px 0 0;
+  }
+
+  .breadcrumb-modern .breadcrumb-item {
+    display: flex;
+    align-items: center;
+    color: rgba(245, 230, 204, 0.7);
+    font-size: 0.9rem;
+    font-weight: 500;
+    position: relative;
+  }
+
+  .breadcrumb-modern .breadcrumb-item + .breadcrumb-item {
+    margin-left: 1rem;
+    padding-left: 1.5rem;
+  }
+
+  .breadcrumb-modern .breadcrumb-item + .breadcrumb-item::before {
+    content: '\f105';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    position: absolute;
+    left: 0;
+    color: rgba(245, 158, 11, 0.5);
     font-size: 0.8rem;
-    margin: 0 0.75rem;
   }
 
-  .breadcrumb-glass .breadcrumb-item a {
+  .breadcrumb-modern .breadcrumb-item a {
     color: #f59e0b;
     text-decoration: none;
     transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    padding: 0.4rem 0.8rem;
+    border-radius: 8px;
+    background: transparent;
   }
 
-  .breadcrumb-glass .breadcrumb-item a:hover {
+  .breadcrumb-modern .breadcrumb-item a:hover {
+    background: rgba(245, 158, 11, 0.15);
     color: #fbbf24;
-    text-decoration: underline;
+    transform: translateX(3px);
   }
 
-  .breadcrumb-glass .breadcrumb-item.active {
+  .breadcrumb-modern .breadcrumb-item.active {
     color: #f5e6cc;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    padding: 0.4rem 0.8rem;
+    background: rgba(245, 158, 11, 0.1);
+    border-radius: 8px;
+    border: 1px solid rgba(245, 158, 11, 0.2);
+  }
+
+  .breadcrumb-modern .breadcrumb-item i {
+    font-size: 0.85rem;
+    opacity: 0.8;
+  }
+
+  /* Responsive Breadcrumb */
+  @media (max-width: 768px) {
+    .breadcrumb-modern {
+      padding: 0.75rem 1rem;
+      font-size: 0.85rem;
+    }
+
+    .breadcrumb-modern .breadcrumb-item + .breadcrumb-item {
+      margin-left: 0.5rem;
+      padding-left: 1rem;
+    }
+
+    .breadcrumb-modern .breadcrumb-item a,
+    .breadcrumb-modern .breadcrumb-item.active {
+      padding: 0.3rem 0.6rem;
+    }
   }
 
   /* Shop Header Row */
