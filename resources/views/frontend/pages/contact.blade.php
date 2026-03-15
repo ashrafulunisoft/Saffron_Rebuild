@@ -26,22 +26,42 @@
           <h4 style="color: #f5e6cc; margin-bottom: 1.5rem;">
             <i class="fas fa-envelope me-2" style="color: #fbbf24;"></i>Get in Touch
           </h4>
-          <form>
+
+          @if(session('success'))
+            <div class="alert alert-success" style="background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.3); color: #86efac; margin-bottom: 1.5rem;">
+              <i class="fas fa-check-circle me-2"></i>{{ session('success') }}
+            </div>
+          @endif
+
+          <form action="{{ route('contact.submit') }}" method="POST">
+            @csrf
             <div class="mb-3">
               <label class="form-label">Your Name</label>
-              <input type="text" name="name" class="form-control input-dark" placeholder="Enter your name" required>
+              <input type="text" name="name" class="form-control input-dark" placeholder="Enter your name" value="{{ old('name') }}" required>
+              @error('name')
+                <div class="text-danger" style="color: #f43f5e; font-size: 0.875rem; margin-top: 0.25rem;">{{ $message }}</div>
+              @enderror
             </div>
             <div class="mb-3">
               <label class="form-label">Email Address</label>
-              <input type="email" name="email" class="form-control input-dark" placeholder="Enter your email" required>
+              <input type="email" name="email" class="form-control input-dark" placeholder="Enter your email" value="{{ old('email') }}" required>
+              @error('email')
+                <div class="text-danger" style="color: #f43f5e; font-size: 0.875rem; margin-top: 0.25rem;">{{ $message }}</div>
+              @enderror
             </div>
             <div class="mb-3">
               <label class="form-label">Subject</label>
-              <input type="text" name="subject" class="form-control input-dark" placeholder="What is this about?">
+              <input type="text" name="subject" class="form-control input-dark" placeholder="What is this about?" value="{{ old('subject') }}">
+              @error('subject')
+                <div class="text-danger" style="color: #f43f5e; font-size: 0.875rem; margin-top: 0.25rem;">{{ $message }}</div>
+              @enderror
             </div>
             <div class="mb-3">
               <label class="form-label">Message</label>
-              <textarea name="message" class="form-control input-dark" rows="5" placeholder="Type your message here..." required></textarea>
+              <textarea name="message" class="form-control input-dark" rows="5" placeholder="Type your message here..." required>{{ old('message') }}</textarea>
+              @error('message')
+                <div class="text-danger" style="color: #f43f5e; font-size: 0.875rem; margin-top: 0.25rem;">{{ $message }}</div>
+              @enderror
             </div>
             <button type="submit" class="btn btn-glow">
               <i class="fas fa-paper-plane me-2"></i>Send Message

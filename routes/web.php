@@ -485,6 +485,10 @@ Route::middleware(['auth'])->prefix('customer')->name('customer.')->group(functi
 // Other frontend pages
 Route::get('/about', function() { return view('frontend.pages.about'); })->name('about');
 Route::get('/contact', function() { return view('frontend.pages.contact'); })->name('contact');
+Route::post('/contact', [App\Http\Controllers\Frontend\ContactController::class, 'submit'])->name('contact.submit');
+Route::get('/faq', function() { return view('frontend.pages.faq'); })->name('faq');
+Route::get('/return', function() { return view('frontend.pages.return'); })->name('return');
+Route::get('/privacy', function() { return view('frontend.pages.privacy'); })->name('privacy');
 Route::get('/terms', function() { return view('terms'); })->name('terms');
 Route::get('/policy', function() { return view('policy'); })->name('policy');
 

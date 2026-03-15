@@ -1,7 +1,7 @@
 <footer class="footer-section" id="contact">
   <div class="container">
     <div class="row g-5">
-      <div class="col-lg-4">
+      <div class="col-6 col-lg">
         <div class="footer-brand d-flex align-items-center gap-3">
           <div class="brand-icon"><i class="fas fa-cookie-bite"></i></div>
           <div>
@@ -17,10 +17,9 @@
           <a href="#" class="social-btn"><i class="fab fa-instagram"></i></a>
           <a href="#" class="social-btn"><i class="fab fa-twitter"></i></a>
           <a href="#" class="social-btn"><i class="fab fa-youtube"></i></a>
-          <a href="#" class="social-btn"><i class="fab fa-pinterest"></i></a>
         </div>
       </div>
-      <div class="col-6 col-lg-2">
+      <div class="col-6 col-lg">
         <h5 class="footer-title">Quick Links</h5>
         <ul class="footer-links">
           <li><a href="{{ route('home') }}">Home</a></li>
@@ -30,7 +29,16 @@
           <li><a href="{{ route('contact') }}">Contact</a></li>
         </ul>
       </div>
-      <div class="col-6 col-lg-2">
+      <div class="col-6 col-lg">
+        <h5 class="footer-title">Customer Service</h5>
+        <ul class="footer-links">
+          <li><a href="{{ route('faq') }}">FAQ</a></li>
+          <li><a href="{{ route('return') }}">Return Policy</a></li>
+          <li><a href="{{ route('privacy') }}">Privacy Policy</a></li>
+          <li><a href="{{ route('terms') }}">Terms of Service</a></li>
+        </ul>
+      </div>
+      <div class="col-6 col-lg">
         <h5 class="footer-title">Categories</h5>
         <ul class="footer-links">
           <li><a href="{{ route('shop.category', 'bengali-sweets') }}">Bengali Sweets</a></li>
@@ -40,11 +48,11 @@
           <li><a href="{{ route('shop.category', 'gift-hampers') }}">Gift Hampers</a></li>
         </ul>
       </div>
-      <div class="col-lg-4">
+      <div class="col-6 col-lg">
         <h5 class="footer-title">Contact Us</h5>
         <div class="footer-contact-item">
           <i class="fas fa-map-marker-alt"></i>
-          <span>Jahir Smart Tower, 205/1, Begum Rokeya Sharani,<br/>Taltola, Dhaka-1207, Bangladesh</span>
+          <span>Jahir Smart Tower, 205/1,<br/>Begum Rokeya Sharani, Dhaka-1207</span>
         </div>
         <div class="footer-contact-item">
           <i class="fas fa-phone"></i>
@@ -56,12 +64,19 @@
         </div>
         <div class="footer-contact-item">
           <i class="fas fa-clock"></i>
-          <span>Mon - Sat: 9AM - 9PM<br/>Sunday: 10AM - 6PM</span>
+          <span>Mon-Sat: 9AM-9PM<br/>Sun: 10AM-6PM</span>
         </div>
       </div>
     </div>
     <div class="footer-bottom">
       <p class="footer-copy">© {{ date('Y') }} Saffron Sweets & Bakery. All rights reserved. Crafted with 💝</p>
+      <div class="footer-legal-links">
+        <a href="{{ route('privacy') }}">Privacy Policy</a>
+        <span class="mx-2">|</span>
+        <a href="{{ route('terms') }}">Terms of Service</a>
+        <span class="mx-2">|</span>
+        <a href="{{ route('return') }}">Return Policy</a>
+      </div>
       <div class="payment-icons">
         <span title="Visa">💳</span>
         <span title="MasterCard">🏦</span>
