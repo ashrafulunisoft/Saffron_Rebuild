@@ -57,9 +57,20 @@
                 Placed on {{ $order->created_at->format('M d, Y \a\t g:i A') }}
               </p>
             </div>
-            <span class="status-badge status-{{ $order->status }}" style="font-size: 1rem; padding: 0.5rem 1rem;">
-              {{ ucfirst($order->status) }}
-            </span>
+            <div class="d-flex gap-2 align-items-center flex-wrap">
+              <span class="status-badge status-{{ $order->status }}" style="font-size: 1rem; padding: 0.5rem 1rem;">
+                {{ ucfirst($order->status) }}
+              </span>
+              @if($order->payment_status === 'unpaid')
+                <span class="status-badge" style="background: rgba(245, 158, 11, 0.2); color: #fbbf24; font-size: 0.9rem; padding: 0.4rem 0.8rem;">
+                  <i class="fas fa-clock me-1"></i> Unpaid
+                </span>
+              @elseif($order->payment_status === 'paid')
+                <span class="status-badge" style="background: rgba(34, 197, 94, 0.2); color: #22c55e; font-size: 0.9rem; padding: 0.4rem 0.8rem;">
+                  <i class="fas fa-check-circle me-1"></i> Paid
+                </span>
+              @endif
+            </div>
           </div>
         </div>
 
@@ -124,11 +135,11 @@
               </h5>
               <div class="d-flex justify-content-between mb-2">
                 <span style="color: rgba(245,230,204,0.7);">Subtotal</span>
-                <span style="color: #f5e6cc;">৳{{ number_format($order->subtotal) }}</span>
+                <span style="color: #f5e6cc;">৳{{ number_format($order->total_amount) }}</span>
               </div>
               <div class="d-flex justify-content-between mb-2">
                 <span style="color: rgba(245,230,204,0.7);">Delivery</span>
-                <span style="color: #f5e6cc;">৳{{ number_format($order->delivery_charge) }}</span>
+                <span style="color: #f5e6cc;">৳{{ number_format($order->final_amount - $order->total_amount + ($order->discount ?? 0)) }}</span>
               </div>
               @if($order->discount > 0)
               <div class="d-flex justify-content-between mb-2">
@@ -137,6 +148,18 @@
               </div>
               @endif
               <hr style="border-color: rgba(255,255,255,0.1); margin: 0.75rem 0;">
+              <div class="d-flex justify-content-between mb-2">
+                <span style="color: rgba(245,230,204,0.7);">Payment Status</span>
+                @if($order->payment_status === 'paid')
+                  <span style="color: #22c55e; font-weight: 600;">
+                    <i class="fas fa-check-circle me-1"></i> Paid
+                  </span>
+                @else
+                  <span style="color: #fbbf24; font-weight: 600;">
+                    <i class="fas fa-clock me-1"></i> Unpaid
+                  </span>
+                @endif
+              </div>
               <div class="d-flex justify-content-between">
                 <span style="color: #fbbf24; font-weight: 600;">Total</span>
                 <span style="color: #fbbf24; font-weight: 600; font-size: 1.1rem;">৳{{ number_format($order->final_amount) }}</span>
@@ -144,6 +167,36 @@
             </div>
           </div>
         </div>
+
+        <!-- Payment Section - Only for unpaid orders -->
+        @if($order->payment_status === 'unpaid')
+          <div class="glass-card payment-pulse p-4 mb-4" style="border: 1px solid rgba(245,158,11,0.3); background: linear-gradient(135deg, rgba(245,158,11,0.05), rgba(244,63,94,0.02));">
+            <div class="row align-items-center">
+              <div class="col-md-9">
+                <h5 style="color: #fbbf24; margin-bottom: 0.5rem;">
+                  <i class="fas fa-exclamation-circle me-2"></i>Payment Required
+                </h5>
+                <p style="color: rgba(245,230,204,0.7); margin: 0;">
+                  Complete your payment of <strong style="color: #fbbf24;">৳{{ number_format($order->final_amount) }}</strong> to proceed with order processing
+                </p>
+                <div class="mt-2">
+                  <small style="color: rgba(245,230,204,0.5);">
+                    <i class="fas fa-shield-alt me-1"></i>Secure payment powered by SSLCommerz
+                  </small>
+                </div>
+              </div>
+              <div class="col-md-3 text-end">
+                <form method="POST" action="{{ route('payment.pay') }}">
+                  @csrf
+                  <input type="hidden" name="order_id" value="{{ $order->id }}">
+                  <button type="submit" class="btn btn-glow w-100">
+                    <i class="fas fa-credit-card me-2"></i>Pay Now
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        @endif
 
         <!-- Back Button -->
         <a href="{{ route('customer.orders') }}" class="btn btn-glass">
@@ -247,6 +300,38 @@
   .status-cancelled {
     background: rgba(239, 68, 68, 0.2);
     color: #ef4444;
+  }
+
+  /* Payment Alert Pulse Animation */
+  @keyframes payment-pulse {
+    0%, 100% {
+      box-shadow: 0 0 5px rgba(245, 158, 11, 0.3),
+                  0 0 10px rgba(245, 158, 11, 0.2);
+    }
+    50% {
+      box-shadow: 0 0 15px rgba(245, 158, 11, 0.4),
+                  0 0 25px rgba(245, 158, 11, 0.3);
+    }
+  }
+
+  .payment-pulse {
+    animation: payment-pulse 2s ease-in-out infinite;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .payment-pulse .col-md-9,
+    .payment-pulse .col-md-3 {
+      text-align: center !important;
+    }
+
+    .payment-pulse form {
+      margin-top: 1rem;
+    }
+
+    .payment-pulse .btn-glow {
+      width: 100%;
+    }
   }
 </style>
 @endpush
