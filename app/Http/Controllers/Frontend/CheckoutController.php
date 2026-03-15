@@ -113,12 +113,19 @@ class CheckoutController extends Controller
                 ]);
             }
 
-            // Clear the cart for authenticated user
-            Cart::where('user_id', Auth::id())->delete();
-
             DB::commit();
 
-            return redirect()->route('customer.orders.show', $order)->with('success', 'Order placed successfully!');
+            // If COD, clear cart and redirect to order confirmation
+            if ($request->payment_method === 'cod') {
+                // Clear the cart for authenticated user
+                Cart::where('user_id', Auth::id())->delete();
+
+                return redirect()->route('customer.orders.show', $order)
+                    ->with('success', 'Order placed successfully!');
+            }
+
+            // If card/bkash, redirect to SSLCommerz payment (don't clear cart yet)
+            return redirect()->route('payment.pay', ['order_id' => $order->id]);
 
         } catch (\Exception $e) {
             DB::rollback();

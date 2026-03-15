@@ -448,6 +448,15 @@ Route::prefix('checkout')->name('checkout.')->group(function () {
     Route::post('/', [App\Http\Controllers\Frontend\CheckoutController::class, 'store'])->name('store');
 });
 
+// Payment routes (requires authentication)
+Route::middleware(['auth'])->prefix('payment')->name('payment.')->group(function () {
+    Route::get('/pay', [App\Http\Controllers\Frontend\PaymentController::class, 'pay'])->name('pay');
+    Route::match(['get', 'post'], '/success', [App\Http\Controllers\Frontend\PaymentController::class, 'success'])->name('success');
+    Route::match(['get', 'post'], '/fail', [App\Http\Controllers\Frontend\PaymentController::class, 'fail'])->name('fail');
+    Route::match(['get', 'post'], '/cancel', [App\Http\Controllers\Frontend\PaymentController::class, 'cancel'])->name('cancel');
+    Route::post('/ipn', [App\Http\Controllers\Frontend\PaymentController::class, 'ipn'])->name('ipn');
+});
+
 // Customer routes (requires authentication)
 Route::middleware(['auth'])->prefix('customer')->name('customer.')->group(function () {
     Route::get('/dashboard', [App\Http\Controllers\Frontend\CustomerController::class, 'dashboard'])->name('dashboard');
@@ -705,3 +714,29 @@ Route::get('/test-sms', function () {
     //         return view('dashboard');
     //     })->name('dashboard');
     // });
+
+// Test route for SSLCommerz (remove in production)
+Route::get('/test-sslcommerz', function() {
+    $service = new \App\Services\SSLCommerzService();
+    
+    $testData = [
+        'total_amount' => 10,
+        'currency' => 'BDT',
+        'tran_id' => 'TEST-' . time(),
+        'success_url' => url('/'),
+        'fail_url' => url('/'),
+        'cancel_url' => url('/'),
+        'cus_name' => 'Test User',
+        'cus_email' => 'test@example.com',
+        'cus_phone' => '01700000000',
+        'cus_add1' => 'Test Address',
+        'cus_city' => 'Dhaka',
+        'product_name' => 'Test Payment',
+        'product_category' => 'Test',
+        'product_profile' => 'physical-goods',
+    ];
+    
+    $response = $service->createPayment($testData);
+    
+    return response()->json($response);
+});

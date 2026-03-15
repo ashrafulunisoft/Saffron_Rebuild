@@ -18,6 +18,7 @@ class Order extends Model
         'user_id',
         'b2b_customer_id',
         'order_number',
+        'transaction_id',
         'total_amount',
         'discount',
         'final_amount',
