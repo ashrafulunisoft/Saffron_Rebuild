@@ -377,7 +377,14 @@ Route::get('/', function(){
             ->get();
     }
 
-    return view('frontend.pages.home', compact('categories', 'featuredProducts', 'newArrivals', 'bestSellers'));
+    // Get approved reviews from database
+    $reviews = \App\Models\Review::approved()
+        ->with(['user', 'product'])
+        ->orderBy('created_at', 'desc')
+        ->take(3)
+        ->get();
+
+    return view('frontend.pages.home', compact('categories', 'featuredProducts', 'newArrivals', 'bestSellers', 'reviews'));
 })->name('home');
 
 

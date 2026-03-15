@@ -531,33 +531,75 @@
       </h2>
     </div>
     <div class="row g-4">
-      <div class="col-md-4">
-        <div class="testimonial-card glass-card text-center">
-          <div class="testimonial-avatar">👩</div>
-          <div class="testimonial-stars">★★★★★</div>
-          <p class="testimonial-text">"The best roshogolla I've ever had! Absolutely authentic taste and the delivery was super fast. Highly recommended!"</p>
-          <h6 class="testimonial-name">Fatima Rahman</h6>
-          <small class="testimonial-role">Dhaka</small>
+      @if(isset($reviews) && $reviews->count() > 0)
+        <!-- Show real reviews from database -->
+        @foreach($reviews as $review)
+          <div class="col-md-4">
+            <div class="testimonial-card glass-card text-center">
+              <div class="testimonial-avatar">
+                @if($review->user && $review->user->name)
+                  {{ substr($review->user->name, 0, 1) }}
+                @else
+                  👤
+                @endif
+              </div>
+              <div class="testimonial-stars">
+                @for($i = 1; $i <= 5; $i++)
+                  @if($i <= $review->rating)
+                    ★
+                  @else
+                    ☆
+                  @endif
+                @endfor
+              </div>
+              <p class="testimonial-text">"{{ $review->comment }}"</p>
+              <h6 class="testimonial-name">
+                @if($review->user)
+                  {{ $review->user->name }}
+                @else
+                  Anonymous
+                @endif
+              </h6>
+              <small class="testimonial-role">
+                @if($review->product)
+                  Verified Buyer - {{ $review->product->name }}
+                @else
+                  Verified Buyer
+                @endif
+              </small>
+            </div>
+          </div>
+        @endforeach
+      @else
+        <!-- Show demo reviews when no reviews in database -->
+        <div class="col-md-4">
+          <div class="testimonial-card glass-card text-center">
+            <div class="testimonial-avatar">👩</div>
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-text">"The best roshogolla I've ever had! Absolutely authentic taste and the delivery was super fast. Highly recommended!"</p>
+            <h6 class="testimonial-name">Fatima Rahman</h6>
+            <small class="testimonial-role">Dhaka</small>
+          </div>
         </div>
-      </div>
-      <div class="col-md-4">
-        <div class="testimonial-card glass-card text-center">
-          <div class="testimonial-avatar">👨</div>
-          <div class="testimonial-stars">★★★★★</div>
-          <p class="testimonial-text">"Ordered a custom cake for my daughter's birthday. It was perfect! Beautiful design and delicious taste. Thank you Saffron!"</p>
-          <h6 class="testimonial-name">Rahul Ahmed</h6>
-          <small class="testimonial-role">Chittagong</small>
+        <div class="col-md-4">
+          <div class="testimonial-card glass-card text-center">
+            <div class="testimonial-avatar">👨</div>
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-text">"Ordered a custom cake for my daughter's birthday. It was perfect! Beautiful design and delicious taste. Thank you Saffron!"</p>
+            <h6 class="testimonial-name">Rahul Ahmed</h6>
+            <small class="testimonial-role">Chittagong</small>
+          </div>
         </div>
-      </div>
-      <div class="col-md-4">
-        <div class="testimonial-card glass-card text-center">
-          <div class="testimonial-avatar">👩</div>
-          <div class="testimonial-stars">★★★★★</div>
-          <p class="testimonial-text">"Their chocolate collection is amazing! Perfect for gifting. The packaging is beautiful and the quality is top-notch."</p>
-          <h6 class="testimonial-name">Nusrat Jahan</h6>
-          <small class="testimonial-role">Sylhet</small>
+        <div class="col-md-4">
+          <div class="testimonial-card glass-card text-center">
+            <div class="testimonial-avatar">👩</div>
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-text">"Their chocolate collection is amazing! Perfect for gifting. The packaging is beautiful and the quality is top-notch."</p>
+            <h6 class="testimonial-name">Nusrat Jahan</h6>
+            <small class="testimonial-role">Sylhet</small>
+          </div>
         </div>
-      </div>
+      @endif
     </div>
   </div>
 </section>
