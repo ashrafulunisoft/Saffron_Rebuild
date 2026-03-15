@@ -48,6 +48,20 @@ class CustomerController extends Controller
     }
 
     /**
+     * Download order invoice.
+     */
+    public function downloadInvoice(Order $order)
+    {
+        if ($order->user_id !== auth()->id()) {
+            abort(403);
+        }
+
+        $order->load(['orderItems.product', 'user']);
+
+        return view('frontend.customer.invoice', compact('order'));
+    }
+
+    /**
      * Display customer wishlist.
      */
     public function wishlist()

@@ -47,21 +47,20 @@ Saffron Next Task List :
 3. Have to Connect the Megamenu with backend for dynamically showing (done)
 4. have to completet the wishlist connect with the backend (done)
 5. fix the cart section with backend (done)
-6. add the sslcommerz ()
-7. fix the order, 
-8. fix the payment, 
+6. add the sslcommerz (done)
+7. fix the order, (done)
+8. fix the payment, (done)
 9. invoice design have to connect with the backend logic .  
 10. fix the bilangual for the frontend theme and connect with the admin panel 
 11. Add the Blog Section on the Home page . (Done)
-12. connect review section with backend logic(done).
-13. connect the image for all kinds of the products . 
-14. connect the contact page with the backend .(Done is other branch ) 
-15. complete the FAQ , return and policy page .  (Done is other branch ) 
-16. single product page deatils shwo according to the database.
-17. add the delivery fee from the admin page inside / out side dhaka; 
-18. add pathoa integration ; 
-19. User sidebar need to live update wishlist number; 
-20. 
+12. connect review section with backend logic(done). 
+13. connect the contact page with the backend .(Done is other branch ) 
+14. complete the FAQ , return and policy page .  (Done is other branch ) 
+15. single product page deatils shwo according to the database.
+16. add the delivery fee from the admin page inside / out side dhaka; 
+17. add pathoa integration ; 
+18. User sidebar need to live update wishlist number; 
+19. connect the image for all kinds of the products .
 
 
 

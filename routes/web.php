@@ -471,6 +471,7 @@ Route::middleware(['auth'])->prefix('customer')->name('customer.')->group(functi
     Route::get('/dashboard', [App\Http\Controllers\Frontend\CustomerController::class, 'dashboard'])->name('dashboard');
     Route::get('/orders', [App\Http\Controllers\Frontend\CustomerController::class, 'orders'])->name('orders');
     Route::get('/orders/{order}', [App\Http\Controllers\Frontend\CustomerController::class, 'orderShow'])->name('orders.show');
+    Route::get('/orders/{order}/invoice', [App\Http\Controllers\Frontend\CustomerController::class, 'downloadInvoice'])->name('orders.invoice');
     Route::get('/wishlist', [App\Http\Controllers\Frontend\CustomerController::class, 'wishlist'])->name('wishlist');
     Route::get('/addresses', [App\Http\Controllers\Frontend\CustomerController::class, 'addresses'])->name('addresses');
     Route::post('/addresses', [App\Http\Controllers\Frontend\CustomerController::class, 'storeAddress'])->name('addresses.store');

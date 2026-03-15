@@ -70,6 +70,11 @@
                   <i class="fas fa-check-circle me-1"></i> Paid
                 </span>
               @endif
+
+              <!-- Invoice Download Button -->
+              <a href="{{ route('customer.orders.invoice', $order) }}" target="_blank" class="btn btn-glow" style="font-size: 0.9rem; padding: 0.5rem 1rem; text-decoration: none;">
+                <i class="fas fa-file-invoice me-1"></i> Invoice
+              </a>
             </div>
           </div>
         </div>
