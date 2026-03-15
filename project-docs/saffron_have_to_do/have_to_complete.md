@@ -48,10 +48,14 @@ Saffron Next Task List :
 4. have to completet the wishlist connect with the backend 
 5. fix the cart section with backend 
 6. add the sslcommerz 
-7. fix the order, payment, 
-8. invoice design have to connect with the backend logic .   9.  fix the bilangual for the frontend theme and connect with the admin panel 
-10. Add the Blog Section on the Home page . 
-11. connect review section with backend logic(done).
+7. fix the order, 
+8. fix the payment, 
+9. invoice design have to connect with the backend logic .  
+10. fix the bilangual for the frontend theme and connect with the admin panel 
+11. Add the Blog Section on the Home page . (Done)
+12. connect review section with backend logic(done).
+13. connect the image for all kinds of the products . 
+
 
 
 ------------------------------------------------
