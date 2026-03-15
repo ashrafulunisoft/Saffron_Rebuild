@@ -109,11 +109,16 @@ class PaymentController extends Controller
     {
         $tran_id = $request->input('tran_id');
         $token = $request->input('token');
+        $amount = $request->input('amount');
+        $currency = $request->input('currency');
 
         Log::info('Payment success callback received', [
             'tran_id' => $tran_id,
+            'amount' => $amount,
+            'currency' => $currency,
             'has_token' => !empty($token),
             'auth_check_before' => Auth::check(),
+            'all_params' => $request->all(),
         ]);
 
         // Re-authenticate from token if provided and user not logged in
@@ -135,67 +140,94 @@ class PaymentController extends Controller
             }
         }
 
-        // Validate transaction
-        $validation = $this->sslcommerz->validateTransaction($tran_id);
+        // Find order by transaction ID
+        $order = Order::where('transaction_id', $tran_id)->first();
 
-        if ($validation && isset($validation['element'][0]['error_title']) === 'N/A') {
-            // Update order status
-            $order = Order::where('transaction_id', $tran_id)->first();
+        if (!$order) {
+            Log::error('Order not found for transaction ID', ['tran_id' => $tran_id]);
+            return redirect()->route('customer.orders')
+                ->with('error', 'Order not found. Please contact support.');
+        }
 
-            if ($order) {
-                DB::beginTransaction();
-                try {
-                    $order->update([
-                        'payment_status' => 'paid',
-                        'status' => 'processing',
-                    ]);
+        // Check if order is already paid to prevent duplicate processing
+        if ($order->payment_status === 'paid') {
+            Log::info('Order already paid', ['order_id' => $order->id, 'tran_id' => $tran_id]);
+            return redirect()->route('customer.orders.show', $order)
+                ->with('info', 'This order has already been paid.');
+        }
 
-                    // Clear the cart for the order's user
-                    Cart::where('user_id', $order->user_id)->delete();
+        // Verify amount matches (security check)
+        if ($amount && abs($order->final_amount - $amount) > 0.01) {
+            Log::error('Amount mismatch', [
+                'order_id' => $order->id,
+                'expected' => $order->final_amount,
+                'received' => $amount,
+            ]);
+            return redirect()->route('customer.orders')
+                ->with('error', 'Payment amount mismatch. Please contact support.');
+        }
 
-                    DB::commit();
+        DB::beginTransaction();
+        try {
+            // Get cart count before deletion
+            $cartCountBefore = Cart::where('user_id', $order->user_id)->count();
 
-                    Log::info('Order updated successfully', [
-                        'order_id' => $order->id,
-                        'user_id' => $order->user_id,
-                        'auth_check' => Auth::check(),
-                    ]);
+            $order->update([
+                'payment_status' => 'paid',
+                'status' => 'processing',
+            ]);
 
-                    // Verify authentication before redirect
-                    if (!Auth::check()) {
-                        Log::error('User still not authenticated after re-authentication attempt');
-                        return redirect()->route('login')
-                            ->with('error', 'Payment completed but session was lost. Please login to view your order.');
-                    }
+            // Clear the cart for the order's user - delete both by user_id and session_id
+            $cartDeletedByUserId = Cart::where('user_id', $order->user_id)->delete();
 
-                    return redirect()->route('customer.orders.show', $order)
-                        ->with('success', 'Payment completed successfully!');
-
-                } catch (\Exception $e) {
-                    DB::rollback();
-                    Log::error("Payment success callback error: {$e->getMessage()}", [
-                        'trace' => $e->getTraceAsString(),
-                    ]);
-
-                    if (!Auth::check()) {
-                        return redirect()->route('login')
-                            ->with('error', 'Payment successful but session was lost. Please login to view your order.');
-                    }
-
-                    return redirect()->route('customer.orders')
-                        ->with('error', 'Payment successful but order update failed. Please contact support.');
-                }
+            // Also try to get the session_id from the shipping address if available
+            $address = json_decode($order->shipping_address, true);
+            if (isset($address['session_id'])) {
+                $cartDeletedBySessionId = Cart::where('session_id', $address['session_id'])->delete();
+            } else {
+                $cartDeletedBySessionId = 0;
             }
-        }
 
-        // Payment validation failed
-        if (!Auth::check()) {
-            return redirect()->route('login')
-                ->with('error', 'Payment validation failed. Please login to continue.');
-        }
+            // Get cart count after deletion
+            $cartCountAfter = Cart::where('user_id', $order->user_id)->count();
 
-        return redirect()->route('customer.orders')
-            ->with('error', 'Payment validation failed.');
+            DB::commit();
+
+            Log::info('Order and cart updated successfully', [
+                'order_id' => $order->id,
+                'user_id' => $order->user_id,
+                'tran_id' => $tran_id,
+                'auth_check' => Auth::check(),
+                'cart_count_before' => $cartCountBefore,
+                'cart_deleted_by_user_id' => $cartDeletedByUserId,
+                'cart_deleted_by_session_id' => $cartDeletedBySessionId,
+                'cart_count_after' => $cartCountAfter,
+            ]);
+
+            // Verify authentication before redirect
+            if (!Auth::check()) {
+                Log::error('User still not authenticated after re-authentication attempt');
+                return redirect()->route('login')
+                    ->with('error', 'Payment completed but session was lost. Please login to view your order.');
+            }
+
+            return redirect()->route('customer.orders.show', $order)
+                ->with('success', 'Payment completed successfully!');
+
+        } catch (\Exception $e) {
+            DB::rollback();
+            Log::error("Payment success callback error: {$e->getMessage()}", [
+                'trace' => $e->getTraceAsString(),
+            ]);
+
+            if (!Auth::check()) {
+                return redirect()->route('login')
+                    ->with('error', 'Payment successful but session was lost. Please login to view your order.');
+            }
+
+            return redirect()->route('customer.orders')
+                ->with('error', 'Payment successful but order update failed. Please contact support.');
+        }
     }
 
     /**
@@ -297,12 +329,26 @@ class PaymentController extends Controller
      */
     public function ipn(Request $request)
     {
-        // Verify IPN
-        if ($this->sslcommerz->verifyIPN($request->all())) {
-            $tran_id = $request->input('tran_id');
-            $order = Order::where('transaction_id', $tran_id)->first();
+        $tran_id = $request->input('tran_id');
+        $status = $request->input('status');
 
-            if ($order && $order->payment_status !== 'paid') {
+        Log::info('IPN received', [
+            'tran_id' => $tran_id,
+            'status' => $status,
+            'all_params' => $request->all(),
+        ]);
+
+        // Find order by transaction ID
+        $order = Order::where('transaction_id', $tran_id)->first();
+
+        if (!$order) {
+            Log::error('Order not found in IPN', ['tran_id' => $tran_id]);
+            return response()->json(['status' => 'error', 'message' => 'Order not found']);
+        }
+
+        // Check if payment was successful
+        if (in_array(strtolower($status), ['success', 'valid', 'completed'])) {
+            if ($order->payment_status !== 'paid') {
                 DB::beginTransaction();
                 try {
                     $order->update([
@@ -310,15 +356,30 @@ class PaymentController extends Controller
                         'status' => 'processing',
                     ]);
 
-                    // Clear the cart for authenticated user
-                    Cart::where('user_id', $order->user_id)->delete();
+                    // Clear the cart for the order's user
+                    $cartDeleted = Cart::where('user_id', $order->user_id)->delete();
 
                     DB::commit();
+
+                    Log::info('Order updated via IPN', [
+                        'order_id' => $order->id,
+                        'user_id' => $order->user_id,
+                        'cart_deleted' => $cartDeleted,
+                    ]);
+
+                    return response()->json(['status' => 'success', 'message' => 'Order updated']);
+
                 } catch (\Exception $e) {
                     DB::rollback();
                     Log::error('IPN Order Update Failed: ' . $e->getMessage());
+                    return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
                 }
+            } else {
+                Log::info('Order already paid via IPN', ['order_id' => $order->id]);
             }
+        } else {
+            Log::warning('Payment not successful in IPN', ['status' => $status]);
+            return response()->json(['status' => 'error', 'message' => 'Payment not successful']);
         }
 
         return response()->json(['status' => 'success']);

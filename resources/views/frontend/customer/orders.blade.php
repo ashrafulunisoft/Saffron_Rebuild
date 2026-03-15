@@ -106,7 +106,67 @@
           <!-- Pagination -->
           @if($orders->hasPages())
             <div class="mt-4">
-              {{ $orders->appends(request()->query())->links() }}
+              <div class="glass-card p-3">
+                <nav aria-label="Page navigation">
+                  <ul class="pagination custom-glass-pagination mb-0">
+                    {{-- Previous Page --}}
+                    @if($orders->onFirstPage())
+                      <li class="page-item disabled">
+                        <span class="page-link">
+                          <i class="fas fa-chevron-left"></i>
+                        </span>
+                      </li>
+                    @else
+                      <li class="page-item">
+                        <a class="page-link" href="{{ $orders->appends(request()->query())->previousPageUrl() }}" aria-label="Previous">
+                          <i class="fas fa-chevron-left"></i>
+                        </a>
+                      </li>
+                    @endif
+
+                    {{-- Page Numbers --}}
+                    @foreach($orders->getUrlRange(1, $orders->lastPage()) as $page => $url)
+                      @if($page == $orders->currentPage())
+                        <li class="page-item active">
+                          <span class="page-link">{{ $page }}</span>
+                        </li>
+                      @elseif($page == 1 || $page == $orders->lastPage() || in_array($page, [$orders->currentPage() - 1, $orders->currentPage() + 1]))
+                        <li class="page-item">
+                          <a class="page-link" href="{{ $url }}">{{ $page }}</a>
+                        </li>
+                      @elseif(!in_array($page, [$orders->currentPage() - 2, $orders->currentPage() + 2]))
+                          <li class="page-item disabled">
+                            <span class="page-link">...</span>
+                          </li>
+                        @endif
+                      @endforeach
+
+                    {{-- Next Page --}}
+                    @if($orders->hasMorePages())
+                      <li class="page-item">
+                        <a class="page-link" href="{{ $orders->appends(request()->query())->nextPageUrl() }}" aria-label="Next">
+                          <i class="fas fa-chevron-right"></i>
+                        </a>
+                      </li>
+                    @else
+                      <li class="page-item disabled">
+                        <span class="page-link">
+                          <i class="fas fa-chevron-right"></i>
+                        </span>
+                      </li>
+                    @endif
+                  </ul>
+                </nav>
+
+                {{-- Showing Info --}}
+                <div class="text-center mt-3">
+                  <small style="color: rgba(245,230,204,0.6);">
+                    Showing {{ ($orders->currentPage() - 1) * $orders->perPage() + 1 }}
+                    to {{ min($orders->currentPage() * $orders->perPage(), $orders->total()) }}
+                    of {{ $orders->total() }} orders
+                  </small>
+                </div>
+              </div>
             </div>
           @endif
         @else
@@ -229,6 +289,125 @@
   .status-cancelled {
     background: rgba(239, 68, 68, 0.2);
     color: #ef4444;
+  }
+
+  /* Custom Glassmorphism Pagination */
+  .custom-glass-pagination {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    gap: 0.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .custom-glass-pagination .page-item {
+    display: inline-block;
+  }
+
+  .custom-glass-pagination .page-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    height: 40px;
+    padding: 0 0.75rem;
+    background: rgba(15, 23, 42, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    color: rgba(245, 230, 204, 0.8);
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-weight: 500;
+    backdrop-filter: blur(10px);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .custom-glass-pagination .page-link::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(244, 63, 94, 0.1));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    border-radius: 9px;
+  }
+
+  .custom-glass-pagination .page-link:hover::before {
+    opacity: 1;
+  }
+
+  .custom-glass-pagination .page-link:hover {
+    border-color: rgba(245, 158, 11, 0.3);
+    color: #fbbf24;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(245, 158, 11, 0.2);
+  }
+
+  .custom-glass-pagination .page-item.active .page-link {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.3), rgba(244, 63, 94, 0.2));
+    border-color: rgba(245, 158, 11, 0.4);
+    color: #fbbf24;
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
+  }
+
+  .custom-glass-pagination .page-item.active .page-link::before {
+    opacity: 1;
+  }
+
+  .custom-glass-pagination .page-item.disabled .page-link {
+    background: rgba(15, 23, 42, 0.2);
+    border-color: rgba(255, 255, 255, 0.05);
+    color: rgba(245, 230, 204, 0.3);
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+
+  .custom-glass-pagination .page-item.disabled .page-link:hover {
+    transform: none;
+    box-shadow: none;
+    border-color: rgba(255, 255, 255, 0.05);
+    color: rgba(245, 230, 204, 0.3);
+  }
+
+  .custom-glass-pagination .page-item.disabled .page-link::before {
+    display: none;
+  }
+
+  /* Pagination glow effect on active/hover */
+  @keyframes pagination-glow {
+    0%, 100% {
+      box-shadow: 0 0 5px rgba(245, 158, 11, 0.3),
+                  0 0 10px rgba(245, 158, 11, 0.2);
+    }
+    50% {
+      box-shadow: 0 0 10px rgba(245, 158, 11, 0.4),
+                  0 0 20px rgba(245, 158, 11, 0.3);
+    }
+  }
+
+  .custom-glass-pagination .page-item.active .page-link {
+    animation: pagination-glow 2s ease-in-out infinite;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .custom-glass-pagination {
+      gap: 0.25rem;
+    }
+
+    .custom-glass-pagination .page-link {
+      min-width: 36px;
+      height: 36px;
+      font-size: 0.875rem;
+      padding: 0 0.5rem;
+    }
   }
 </style>
 @endpush
