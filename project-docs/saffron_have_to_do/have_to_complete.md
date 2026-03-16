@@ -66,7 +66,7 @@ Saffron Next Task List :
 22. password rest for the user (later)
 23. login or register with google / Facebook. (later)
 24. add pathoa integration ; (later)
-25. subcription fix 
+25. subcription fix (later)
 
 
 

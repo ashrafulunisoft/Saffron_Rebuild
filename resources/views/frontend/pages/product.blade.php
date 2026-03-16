@@ -169,16 +169,6 @@
           </button>
         </li>
         <li class="nav-item">
-          <button class="nav-link" id="ingredients-tab" data-bs-toggle="tab" data-bs-target="#ingredients" type="button">
-            <i class="fas fa-list me-2"></i>Ingredients
-          </button>
-        </li>
-        <li class="nav-item">
-          <button class="nav-link" id="nutrition-tab" data-bs-toggle="tab" data-bs-target="#nutrition" type="button">
-            <i class="fas fa-chart-pie me-2"></i>Nutrition
-          </button>
-        </li>
-        <li class="nav-item">
           <button class="nav-link" id="reviews-tab" data-bs-toggle="tab" data-bs-target="#reviews" type="button">
             <i class="fas fa-star me-2"></i>Reviews ({{ $product->reviews->count() ?? 0 }})
           </button>
@@ -190,63 +180,6 @@
             <h4>About this Product</h4>
             <p>{!! $product->description ?? 'Indulge in the exquisite taste of our ' . $product->name . '. Crafted with love and the finest ingredients, this delicious treat brings together traditional recipes and modern perfection. Each bite offers a perfect balance of flavors that will delight your taste buds.' !!}</p>
             <p>Perfect for celebrations, gifts, or simply treating yourself to something special. Our commitment to quality ensures that every product meets the highest standards of taste and freshness.</p>
-          </div>
-        </div>
-        <div class="tab-pane fade" id="ingredients" role="tabpanel">
-          <div class="product-tab-body">
-            <h4>Ingredients</h4>
-            <ul class="ingredients-list">
-              <li><i class="fas fa-check text-success me-2"></i>Premium Flour</li>
-              <li><i class="fas fa-check text-success me-2"></i>Fresh Dairy Products</li>
-              <li><i class="fas fa-check text-success me-2"></i>Natural Sweeteners</li>
-              <li><i class="fas fa-check text-success me-2"></i>Pure Ghee</li>
-              <li><i class="fas fa-check text-success me-2"></i>Dried Fruits & Nuts</li>
-              <li><i class="fas fa-check text-success me-2"></i>Natural Flavorings</li>
-              <li><small class="text-muted">* May contain traces of nuts and dairy products</small></li>
-            </ul>
-          </div>
-        </div>
-        <div class="tab-pane fade" id="nutrition" role="tabpanel">
-          <div class="product-tab-body">
-            <h4>Nutritional Information</h4>
-            <div class="row g-4">
-              <div class="col-md-6">
-                <div class="nutrition-item">
-                  <span class="nutrition-label">Calories</span>
-                  <span class="nutrition-value">280 kcal</span>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="nutrition-item">
-                  <span class="nutrition-label">Protein</span>
-                  <span class="nutrition-value">5g</span>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="nutrition-item">
-                  <span class="nutrition-label">Carbohydrates</span>
-                  <span class="nutrition-value">35g</span>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="nutrition-item">
-                  <span class="nutrition-label">Fat</span>
-                  <span class="nutrition-value">12g</span>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="nutrition-item">
-                  <span class="nutrition-label">Fiber</span>
-                  <span class="nutrition-value">2g</span>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="nutrition-item">
-                  <span class="nutrition-label">Sugar</span>
-                  <span class="nutrition-value">18g</span>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
         <div class="tab-pane fade" id="reviews" role="tabpanel">
@@ -859,53 +792,6 @@
     color: rgba(245,230,204,0.8);
     line-height: 1.8;
     margin-bottom: 1rem;
-  }
-
-  /* Ingredients List */
-  .ingredients-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  .ingredients-list li {
-    padding: 0.75rem 0;
-    color: rgba(245,230,204,0.8);
-    border-bottom: 1px solid rgba(255,255,255,0.05);
-    display: flex;
-    align-items: center;
-  }
-
-  .ingredients-list li:last-child {
-    border-bottom: none;
-  }
-
-  /* Nutrition Items */
-  .nutrition-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem;
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 10px;
-    transition: all 0.3s ease;
-  }
-
-  .nutrition-item:hover {
-    background: rgba(245,158,11,0.1);
-    border-color: rgba(245,158,11,0.2);
-  }
-
-  .nutrition-label {
-    color: rgba(245,230,204,0.8);
-    font-size: 0.95rem;
-  }
-
-  .nutrition-value {
-    color: #fbbf24;
-    font-size: 1.1rem;
-    font-weight: 700;
   }
 
   /* Reviews Section */
