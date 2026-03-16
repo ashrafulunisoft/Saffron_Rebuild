@@ -425,6 +425,11 @@ Route::prefix('shop')->name('shop.')->group(function () {
     Route::get('/product/{slug}', [App\Http\Controllers\Frontend\ProductController::class, 'show'])->name('product');
 });
 
+// Product Review routes (require authentication)
+Route::middleware('auth')->group(function () {
+    Route::post('/shop/product/{product}/review', [App\Http\Controllers\Frontend\ProductController::class, 'storeReview'])->name('product.review.store');
+});
+
 // Cart routes
 Route::get('/cart', [App\Http\Controllers\Frontend\CartController::class, 'index'])->name('cart');
 Route::prefix('cart')->name('cart.')->group(function () {

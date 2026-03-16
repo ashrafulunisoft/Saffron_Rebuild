@@ -253,9 +253,6 @@
           <div class="product-tab-body">
             <div class="d-flex justify-content-between align-items-center mb-4">
               <h4>Customer Reviews</h4>
-              <button class="btn btn-glow btn-sm">
-                <i class="fas fa-plus me-2"></i>Write Review
-              </button>
             </div>
             <div class="row mb-4">
               <div class="col-md-4 text-center">
@@ -284,6 +281,50 @@
                 </div>
               </div>
             </div>
+
+            <!-- Review Form Section -->
+            @auth
+            <div class="review-form-section mt-5">
+              <div class="glass-card p-4">
+                <h5 class="mb-4" style="color: #fbbf24;">
+                  <i class="fas fa-pen me-2"></i>Write Your Review
+                </h5>
+                <form id="reviewForm" method="POST" action="{{ route('product.review.store', $product) }}">
+                  @csrf
+                  <div class="row g-3">
+                    <div class="col-12">
+                      <label class="form-label">Your Rating <span class="text-danger">*</span></label>
+                      <div class="star-rating-input">
+                        @for($i = 1; $i <= 5; $i++)
+                        <input type="radio" id="star{{ $i }}" name="rating" value="{{ $i }}" required/>
+                        <label for="star{{ $i }}" class="star-label">★</label>
+                        @endfor
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <label for="comment" class="form-label">Your Review <span class="text-danger">*</span></label>
+                      <textarea class="form-control" id="comment" name="comment" rows="5" placeholder="Share your experience with this product..." required minlength="10" maxlength="1000" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #f5e6cc;"></textarea>
+                      <small class="text-muted" style="color: rgba(245,230,204,0.5);">Minimum 10 characters, maximum 1000 characters</small>
+                    </div>
+                    <div class="col-12">
+                      <button type="submit" class="btn btn-glow w-100">
+                        <i class="fas fa-paper-plane me-2"></i>Submit Review
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+            @else
+            <div class="text-center py-4 mb-4">
+              <p style="color: rgba(245,230,204,0.8); margin-bottom: 1rem;">
+                <i class="fas fa-sign-in-alt me-2" style="color: #fbbf24;"></i>
+                Please <a href="#" data-bs-toggle="modal" data-bs-target="#loginModal" style="color: #f59e0b; text-decoration: underline;">login</a> to write a review
+              </p>
+            </div>
+            @endif
+
+            <h6 class="mt-5 mb-4" style="color: #fbbf24;">Recent Reviews</h6>
             @if($product->reviews && $product->reviews->count() > 0)
               @foreach($product->reviews as $review)
               <div class="review-item">
@@ -1169,6 +1210,105 @@
   .breadcrumb-glass .breadcrumb-item.active {
     color: #f5e6cc;
   }
+
+  /* Star Rating Input Styles */
+  .star-rating-input {
+    display: inline-flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  .star-rating-input input {
+    display: none;
+  }
+
+  .star-rating-input label {
+    font-size: 2rem;
+    color: rgba(245,230,204,0.3);
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .star-rating-input label:hover,
+  .star-rating-input label:hover ~ label {
+    color: #fbbf24;
+    transform: scale(1.1);
+  }
+
+  .star-rating-input input:checked ~ label {
+    color: #fbbf24;
+  }
+
+  .star-rating-input label:active {
+    transform: scale(0.9);
+  }
+
+  /* Review Form Section - Mobile Responsive */
+  .review-form-section {
+    margin-top: 2rem;
+  }
+
+  .review-form-section .glass-card {
+    border: 1px solid rgba(245, 158, 11, 0.2);
+    background: rgba(15, 23, 42, 0.6);
+  }
+
+  .review-form-section .form-label {
+    color: #f5e6cc;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+  }
+
+  .review-form-section .form-control:focus {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: #f59e0b;
+    color: #f5e6cc;
+    box-shadow: 0 0 0 0.2rem rgba(245, 158, 11, 0.25);
+  }
+
+  /* Mobile Responsive Star Rating */
+  @media (max-width: 768px) {
+    .star-rating-input {
+      transform: scale(0.9);
+      transform-origin: left;
+    }
+
+    .star-rating-input label {
+      font-size: 1.5rem;
+    }
+
+    .review-form-section .glass-card {
+      padding: 1rem !important;
+    }
+
+    .review-form-section h5 {
+      font-size: 1.1rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .star-rating-input {
+      transform: scale(0.8);
+      transform-origin: left;
+    }
+
+    .star-rating-input label {
+      font-size: 1.2rem;
+    }
+  }
+
+  /* Responsive Review Form */
+  @media (max-width: 768px) {
+    .review-form-section .col-12 {
+      padding-left: 0.5rem;
+      padding-right: 0.5rem;
+    }
+
+    .review-form-section textarea {
+      font-size: 0.9rem;
+    }
+  }
 </style>
 @endpush
 
@@ -1553,6 +1693,98 @@ document.querySelectorAll('.prod-wishlist').forEach(btn => {
 
     // Make API call to toggle wishlist
     toggleWishlist(productId, this);
+  });
+});
+
+// Notification Function
+function showNotification(type, message) {
+  const notification = document.createElement('div');
+  notification.className = `alert alert-${type === 'success' ? 'success' : 'danger'} alert-dismissible fade show position-fixed`;
+  notification.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 300px; background: ' + (type === 'success' ? 'rgba(34, 197, 94, 0.95)' : 'rgba(239, 68, 68, 0.95)') + '; backdrop-filter: blur(20px); border: 1px solid ' + (type === 'success' ? 'rgba(34, 197, 94, 0.3)' : 'rgba(239, 68, 68, 0.3)') + '; color: #fff;';
+  notification.innerHTML = `
+    <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'} me-2"></i>
+    ${message}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" style="filter: brightness(0) invert(1);"></button>
+  `;
+
+  document.body.appendChild(notification);
+
+  setTimeout(() => {
+    notification.remove();
+  }, 5000);
+}
+
+// Review Form Submission (No Modal)
+const reviewForm = document.getElementById('reviewForm');
+if (reviewForm) {
+  reviewForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const formData = new FormData(this);
+    const submitBtn = this.querySelector('button[type="submit"]');
+    const originalText = submitBtn.innerHTML;
+
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Submitting...';
+
+    fetch(this.action, {
+      method: 'POST',
+      headers: {
+        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+        'Accept': 'application/json'
+      },
+      body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        // Show success message
+        showNotification('success', data.message);
+
+        // Reset form
+        reviewForm.reset();
+
+        // Reset star rating visual
+        const starInputs = document.querySelectorAll('.star-rating-input input');
+        starInputs.forEach(input => {
+          input.checked = false;
+          input.nextElementSibling.style.color = 'rgba(245,230,204,0.3)';
+        });
+
+        // Refresh the page after a short delay to show the new review
+        setTimeout(() => {
+          location.reload();
+        }, 2000);
+      } else {
+        showNotification('error', data.message || 'Failed to submit review. Please try again.');
+      }
+    })
+    .catch(error => {
+      console.error('Error submitting review:', error);
+      showNotification('error', 'An error occurred. Please try again.');
+    })
+    .finally(() => {
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = originalText;
+    });
+  });
+}
+
+// Star Rating Interaction
+const starInputs = document.querySelectorAll('.star-rating-input input');
+starInputs.forEach(input => {
+  input.addEventListener('change', function() {
+    // Reset all stars
+    starInputs.forEach(inp => {
+      inp.nextElementSibling.style.color = 'rgba(245,230,204,0.3)';
+    });
+
+    // Highlight selected and previous stars
+    let currentInput = this;
+    while (currentInput) {
+      currentInput.nextElementSibling.style.color = '#fbbf24';
+      currentInput = currentInput.previousElementSibling?.previousElementSibling;
+    }
   });
 });
 </script>

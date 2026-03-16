@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\Review;
 
 class ProductController extends Controller
 {
@@ -28,5 +29,42 @@ class ProductController extends Controller
             ->get();
 
         return view('frontend.pages.product', compact('product', 'relatedProducts'));
+    }
+
+    /**
+     * Store a newly created review in storage.
+     */
+    public function storeReview(Request $request, Product $product)
+    {
+        $validated = $request->validate([
+            'rating' => 'required|integer|min:1|max:5',
+            'comment' => 'required|string|min:10|max:1000',
+        ]);
+
+        // Check if user already reviewed this product
+        $existingReview = Review::where('user_id', auth()->id())
+            ->where('product_id', $product->id)
+            ->first();
+
+        if ($existingReview) {
+            return response()->json([
+                'success' => false,
+                'message' => 'You have already reviewed this product.',
+            ], 422);
+        }
+
+        $review = Review::create([
+            'user_id' => auth()->id(),
+            'product_id' => $product->id,
+            'rating' => $validated['rating'],
+            'comment' => $validated['comment'],
+            'is_approved' => false, // Reviews need admin approval
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Thank you for your review! It will be published after approval.',
+            'review' => $review,
+        ]);
     }
 }
