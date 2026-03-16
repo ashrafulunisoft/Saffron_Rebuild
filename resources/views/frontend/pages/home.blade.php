@@ -317,21 +317,20 @@
         <div class="col-6 col-md-4 col-lg-3">
           <a href="{{ route('shop.product', $product->slug) }}" class="text-decoration-none">
             <div class="prod-card prod-item" data-cat="{{ $product->category->slug ?? 'breads' }}">
-              <div class="prod-img">
+              <div class="prod-img-wrapper">
                 @if($product->image)
                   <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}">
                 @else
-                  <div class="prod-emoji">🍮</div>
+                  <div class="prod-img-placeholder">
+                    <i class="fas fa-cookie-bite"></i>
+                  </div>
                 @endif
                 @if($product->is_featured)
                   <span class="prod-badge badge-hot">FEATURED</span>
                 @endif
-                <div class="prod-actions">
-                  <button class="act-btn wishlist-btn" data-product-id="{{ $product->id }}" onclick="event.preventDefault(); event.stopPropagation();">
-                    <i class="far fa-heart"></i>
-                  </button>
-                  <button class="act-btn" onclick="event.preventDefault()"><i class="fas fa-eye"></i></button>
-                </div>
+                <button class="prod-wishlist" data-product-id="{{ $product->id }}" title="Add to Wishlist">
+                  <i class="far fa-heart"></i>
+                </button>
               </div>
               <div class="prod-body">
                 <div class="prod-cat">{{ $product->category->name_en ?? 'Sweets' }}</div>
@@ -381,19 +380,18 @@
         <div class="col-lg-3 col-md-6">
           <a href="{{ route('shop.product', $product->slug) }}" class="text-decoration-none">
             <div class="prod-card prod-item animate-on-scroll">
-              <div class="prod-img">
+              <div class="prod-img-wrapper">
                 @if($product->image)
-                  <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name_en }}">
+                  <img src="{{ asset("storage/{$product->image}") }}" alt="{{ $product->name_en }}">
                 @else
-                  <div class="prod-emoji">🥐</div>
+                  <div class="prod-img-placeholder">
+                    <i class="fas fa-cookie-bite"></i>
+                  </div>
                 @endif
                 <span class="prod-badge badge-new">NEW</span>
-                <div class="prod-actions">
-                  <button class="act-btn wishlist-btn" data-product-id="{{ $product->id }}" onclick="event.preventDefault(); event.stopPropagation();">
-                    <i class="far fa-heart"></i>
-                  </button>
-                  <button class="act-btn" onclick="event.preventDefault()"><i class="fas fa-eye"></i></button>
-                </div>
+                <button class="prod-wishlist" data-product-id="{{ $product->id }}" title="Add to Wishlist">
+                  <i class="far fa-heart"></i>
+                </button>
               </div>
               <div class="prod-body">
                 <div class="prod-cat">{{ $product->category->name_en ?? 'Sweets' }}</div>
@@ -443,19 +441,18 @@
           <div class="col-lg-4 col-md-6">
             <a href="{{ route('shop.product', $product->slug) }}" class="text-decoration-none">
               <div class="prod-card prod-item animate-on-scroll" style="border:1px solid rgba(245,158,11,{{ $index === 0 ? '0.3' : '0.2' }});">
-                <div class="prod-img">
+                <div class="prod-img-wrapper">
                   @if($product->image)
-                    <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}">
+                    <img src="{{ asset("storage/{$product->image}") }}" alt="{{ $product->name }}">
                   @else
-                    <div class="prod-emoji">🍮</div>
+                    <div class="prod-img-placeholder">
+                      <i class="fas fa-cookie-bite"></i>
+                    </div>
                   @endif
                   <span class="prod-badge badge-hot" style="background:linear-gradient(135deg,{{ $index === 0 ? '#f43f5e,#e11d48' : ($index === 1 ? '#f59e0b,#d97706' : '#8b5cf6,#7c3aed') }});">#{{ $index + 1 }} {{ $index === 0 ? 'BESTSELLER' : ($index === 1 ? 'TOP RATED' : 'POPULAR') }}</span>
-                  <div class="prod-actions">
-                    <button class="act-btn wishlist-btn" data-product-id="{{ $product->id }}" onclick="event.preventDefault(); event.stopPropagation();">
-                      <i class="far fa-heart"></i>
-                    </button>
-                    <button class="act-btn" onclick="event.preventDefault()"><i class="fas fa-eye"></i></button>
-                  </div>
+                  <button class="prod-wishlist" data-product-id="{{ $product->id }}" title="Add to Wishlist">
+                    <i class="far fa-heart"></i>
+                  </button>
                 </div>
                 <div class="prod-body">
                   <div class="prod-cat">{{ $product->category->name_en ?? 'Sweets' }}</div>
@@ -1105,6 +1102,71 @@ function toggleWishlist(productId, button) {
 
 .blog-meta i {
   margin-right: 4px;
+}
+
+/* Product Image Wrapper - Homepage */
+.prod-img-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: 12px 12px 0 0;
+  background: linear-gradient(135deg, rgba(245,158,11,0.05), rgba(244,63,94,0.05));
+}
+
+.prod-img-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.prod-card:hover .prod-img-wrapper img {
+  transform: scale(1.05);
+}
+
+.prod-img-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  background: linear-gradient(135deg, rgba(245,158,11,0.1), rgba(244,63,94,0.1));
+}
+
+.prod-wishlist {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background: rgba(15, 23, 42, 0.8);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #f5e6cc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 2;
+}
+
+.prod-wishlist:hover {
+  background: rgba(244, 63, 94, 0.8);
+  color: white;
+  transform: scale(1.1);
+}
+
+.prod-wishlist.active {
+  background: rgba(244, 63, 94, 0.9);
+  color: white;
+}
+
+.prod-wishlist.active i {
+  font-weight: 900;
 }
 </style>
 @endpush
