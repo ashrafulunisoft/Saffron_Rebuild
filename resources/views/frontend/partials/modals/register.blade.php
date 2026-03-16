@@ -67,10 +67,15 @@
             @enderror
           </div>
           <div class="mb-4">
-            <label class="auth-checkbox" style="display:flex;align-items:center;gap:0.5rem;color:rgba(245,230,204,0.7);font-size:0.9rem;cursor:pointer;">
-              <input type="checkbox" name="terms" value="1" required style="width:auto;">
-              <span>I agree to the <a href="{{ route('terms') }}" class="auth-link" data-bs-dismiss="modal">Terms of Service</a> and <a href="{{ route('privacy') }}" class="auth-link" data-bs-dismiss="modal">Privacy Policy</a></span>
-            </label>
+            <div class="auth-checkbox" style="display:flex;align-items:start;gap:0.5rem;color:rgba(245,230,204,0.7);font-size:0.9rem;">
+              <input type="checkbox" name="terms" value="1" required id="termsCheckbox" style="width:auto;margin-top:0.2rem;">
+              <label for="termsCheckbox" style="cursor:pointer;margin:0;">
+                I agree to the <a href="{{ route('terms') }}" class="auth-link" data-bs-dismiss="modal">Terms of Service</a> and <a href="{{ route('privacy') }}" class="auth-link" data-bs-dismiss="modal">Privacy Policy</a>
+              </label>
+            </div>
+            @error('terms')
+              <div class="text-danger small mt-1">{{ $message }}</div>
+            @enderror
           </div>
           <button type="submit" class="btn btn-glow w-100 py-3">
             <i class="fas fa-user-plus me-2"></i>Create Account
