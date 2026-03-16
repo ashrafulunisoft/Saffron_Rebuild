@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Register - UCB Bank</title>
+    <title>Register - Saffron Sweets & Bakery</title>
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Google Fonts: Inter -->
@@ -216,14 +216,14 @@
         </div> --}}
 
         <div class="text-center gap-3 mb-3 ">
-                <img class="bg-white " src="{{ asset('vms/logo/ucb-bank-logo-bg_removed.png') }}" style="height: 80px; width: 100px; border-radius:10px;" alt="UCB Bank Logo">
+                <img class="bg-white " src="{{ asset('vms/logo/ucb-bank-logo-bg_removed.png') }}" style="height: 80px; width: 100px; border-radius:10px;" alt="Saffron Sweets & Bakery Logo">
         </div>
 
 
         <!-- Header -->
         <div class="text-center mb-4">
             <h2 class="fw-800 text-white mb-2" style="letter-spacing: -1px;">Create an Account</h2>
-            <p class="text-white-50 mb-0" style="font-size: 0.9rem;">Join UCB Bank Visitor Management System</p>
+            <p class="text-white-50 mb-0" style="font-size: 0.9rem;">Join Saffron Sweets & Bakery</p>
         </div>
 
         <!-- Validation Errors -->
