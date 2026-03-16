@@ -2623,6 +2623,21 @@ document.addEventListener('DOMContentLoaded', function() {
 
     document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
 });
+
+// Global authentication check
+window.isAuthenticated = function() {
+    return @json(auth()->check());
+};
+
+// Show login modal if not authenticated
+window.requireAuth = function() {
+    if (!window.isAuthenticated()) {
+        const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+        loginModal.show();
+        return false;
+    }
+    return true;
+};
     </script>
 
     @stack('scripts')

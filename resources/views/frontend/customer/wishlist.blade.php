@@ -400,6 +400,11 @@ document.querySelectorAll('.prod-wishlist').forEach(btn => {
     e.preventDefault();
     e.stopPropagation();
 
+    // Check authentication first
+    if (!window.requireAuth()) {
+      return; // Stop if user is not authenticated
+    }
+
     const productId = this.getAttribute('data-product-id');
     const icon = this.querySelector('i');
     const isActive = this.classList.contains('active');

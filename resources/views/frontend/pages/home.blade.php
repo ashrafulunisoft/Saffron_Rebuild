@@ -923,6 +923,11 @@ document.querySelectorAll('.wishlist-btn').forEach(btn => {
     e.preventDefault();
     e.stopPropagation();
 
+    // Check authentication first
+    if (!window.requireAuth()) {
+      return; // Stop if user is not authenticated
+    }
+
     const productId = this.getAttribute('data-product-id');
     const icon = this.querySelector('i');
     const isActive = icon.classList.contains('fas');
@@ -932,6 +937,43 @@ document.querySelectorAll('.wishlist-btn').forEach(btn => {
       icon.classList.remove('fas');
       icon.classList.add('far');
     } else {
+      icon.classList.remove('far');
+      icon.classList.add('fas');
+
+      // Heart animation
+      icon.style.transform = 'scale(1.3)';
+      setTimeout(() => {
+        icon.style.transform = 'scale(1)';
+      }, 200);
+    }
+
+    // Make API call to toggle wishlist
+    toggleWishlist(productId, this);
+  });
+});
+
+// Product card wishlist buttons
+document.querySelectorAll('.prod-wishlist').forEach(btn => {
+  btn.addEventListener('click', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    // Check authentication first
+    if (!window.requireAuth()) {
+      return; // Stop if user is not authenticated
+    }
+
+    const productId = this.getAttribute('data-product-id');
+    const icon = this.querySelector('i');
+    const isActive = this.classList.contains('active');
+
+    // Toggle visual state immediately for better UX
+    if (isActive) {
+      this.classList.remove('active');
+      icon.classList.remove('fas');
+      icon.classList.add('far');
+    } else {
+      this.classList.add('active');
       icon.classList.remove('far');
       icon.classList.add('fas');
 

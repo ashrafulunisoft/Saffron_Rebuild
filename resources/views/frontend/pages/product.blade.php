@@ -1247,6 +1247,11 @@ function toggleWishlist(productId, button) {
 
 // Toggle wishlist for main product button
 function toggleProductWishlist(productId, button) {
+  // Check authentication first
+  if (!window.requireAuth()) {
+    return; // Stop if user is not authenticated
+  }
+
   const icon = button.querySelector('i');
   const isActive = button.classList.contains('active');
 
@@ -1491,6 +1496,11 @@ function showToast(message) {
 
 // Toggle wishlist for main product button
 function toggleProductWishlist(productId, button) {
+  // Check authentication first
+  if (!window.requireAuth()) {
+    return; // Stop if user is not authenticated
+  }
+
   const icon = button.querySelector('i');
   const isActive = button.classList.contains('active');
 
@@ -1516,6 +1526,11 @@ document.querySelectorAll('.prod-wishlist').forEach(btn => {
   btn.addEventListener('click', function(e) {
     e.preventDefault();
     e.stopPropagation();
+
+    // Check authentication first
+    if (!window.requireAuth()) {
+      return; // Stop if user is not authenticated
+    }
 
     const productId = this.getAttribute('data-product-id');
     const icon = this.querySelector('i');
