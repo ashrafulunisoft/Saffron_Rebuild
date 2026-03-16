@@ -68,7 +68,7 @@
           </div>
           <div class="mb-4">
             <label class="auth-checkbox" style="display:flex;align-items:center;gap:0.5rem;color:rgba(245,230,204,0.7);font-size:0.9rem;cursor:pointer;">
-              <input type="checkbox" name="terms" required style="width:auto;">
+              <input type="checkbox" name="terms" value="1" required style="width:auto;">
               <span>I agree to the <a href="{{ route('terms') }}" class="auth-link" data-bs-dismiss="modal">Terms of Service</a> and <a href="{{ route('privacy') }}" class="auth-link" data-bs-dismiss="modal">Privacy Policy</a></span>
             </label>
           </div>
