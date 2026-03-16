@@ -449,7 +449,7 @@ Route::prefix('checkout')->name('checkout.')->group(function () {
 });
 
 // Payment initiation route (requires authentication)
-Route::middleware(['auth'])->post('/payment/pay', [App\Http\Controllers\Frontend\PaymentController::class, 'pay'])->name('payment.pay');
+Route::middleware(['auth'])->match(['get', 'post'], '/payment/pay', [App\Http\Controllers\Frontend\PaymentController::class, 'pay'])->name('payment.pay');
 
 // Payment callback routes (session middleware, no auth - validated by transaction ID)
 Route::middleware(['web', \App\Http\Middleware\EnsureSessionForPayment::class])
