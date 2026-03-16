@@ -489,7 +489,7 @@ Route::post('/contact', [App\Http\Controllers\Frontend\ContactController::class,
 Route::get('/faq', function() { return view('frontend.pages.faq'); })->name('faq');
 Route::get('/return', function() { return view('frontend.pages.return'); })->name('return');
 Route::get('/privacy', function() { return view('frontend.pages.privacy'); })->name('privacy');
-Route::get('/terms', function() { return view('terms'); })->name('terms');
+Route::get('/terms', function() { return view('frontend.pages.terms'); })->name('terms');
 Route::get('/policy', function() { return view('policy'); })->name('policy');
 
 // Search route
