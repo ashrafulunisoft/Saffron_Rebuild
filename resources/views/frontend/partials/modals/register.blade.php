@@ -76,10 +76,10 @@
                 <span style="color:rgba(245,230,204,0.8);font-size:0.9rem;cursor:pointer;">I agree to the terms</span>
               </label>
               <div style="display:flex;gap:0.5rem;align-items:center;">
-                <a href="{{ route('terms') }}" class="btn btn-sm" style="background:rgba(139,92,246,0.2);color:#a855f7;border:1px solid rgba(139,92,246,0.3);padding:0.3rem 0.8rem;border-radius:6px;text-decoration:none;font-size:0.85rem;transition:all 0.3s;" data-bs-dismiss="modal">
+                <a href="{{ route('terms') }}" class="btn btn-command btn-sm" data-bs-dismiss="modal" style="text-decoration:none;">
                   <i class="fas fa-file-contract me-1"></i>Terms
                 </a>
-                <a href="{{ route('privacy') }}" class="btn btn-sm" style="background:rgba(59,130,246,0.2);color:var(--accent-blue);border:1px solid rgba(59,130,246,0.3);padding:0.3rem 0.8rem;border-radius:6px;text-decoration:none;font-size:0.85rem;transition:all 0.3s;" data-bs-dismiss="modal">
+                <a href="{{ route('privacy') }}" class="btn btn-command btn-sm" data-bs-dismiss="modal" style="text-decoration:none;">
                   <i class="fas fa-shield-alt me-1"></i>Privacy
                 </a>
               </div>
