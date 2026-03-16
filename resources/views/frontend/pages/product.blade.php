@@ -332,7 +332,14 @@
                   <div class="d-flex align-items-center">
                     <div class="review-avatar">{{ strtoupper(substr($review->user->name ?? 'A', 0, 1)) }}</div>
                   <div>
-                    <h6 class="mb-0">{{ $review->user->name ?? 'Anonymous' }}</h6>
+                    <h6 class="mb-0">
+                      {{ $review->user->name ?? 'Anonymous' }}
+                      @if(!$review->is_approved && auth()->id() === $review->user_id)
+                      <span class="badge bg-warning text-dark ms-2" style="font-size: 0.7rem;">
+                        <i class="fas fa-clock me-1"></i>Pending Approval
+                      </span>
+                      @endif
+                    </h6>
                     <small class="text-muted">{{ $review->created_at->diffForHumans() }}</small>
                   </div>
                 </div>

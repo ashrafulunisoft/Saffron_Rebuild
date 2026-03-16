@@ -14,9 +14,18 @@ class ProductController extends Controller
      */
     public function show($slug)
     {
+        $userId = auth()->id();
+
         $product = Product::where('slug', $slug)
-            ->with(['category', 'primaryImage', 'reviews' => function($query) {
-                $query->where('is_approved', true)->latest();
+            ->with(['category', 'primaryImage', 'reviews' => function($query) use ($userId) {
+                $query->where(function($q) use ($userId) {
+                    $q->where('is_approved', true)
+                      ->orWhere(function($q) use ($userId) {
+                          if ($userId) {
+                              $q->where('user_id', $userId);
+                          }
+                      });
+                })->latest();
             }])
             ->firstOrFail();
 
