@@ -145,17 +145,12 @@
             </a>
           @endguest
 
-          @guest
-            <a href="#" class="nav-icon-btn position-relative" title="Wishlist" data-bs-toggle="modal" data-bs-target="#loginModal">
-              <i class="fas fa-heart"></i>
-              <span class="cart-badge wishlist-count d-none">0</span>
-            </a>
-          @else
+          @auth
             <a href="{{ route('customer.wishlist') }}" class="nav-icon-btn position-relative" title="Wishlist">
               <i class="fas fa-heart"></i>
               <span class="cart-badge wishlist-count d-none">0</span>
             </a>
-          @endguest
+          @endauth
           <a href="{{ route('cart') }}" class="nav-icon-btn position-relative" title="Cart">
             <i class="fas fa-shopping-bag"></i>
             <span class="cart-badge cart-count d-none">0</span>
