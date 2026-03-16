@@ -136,7 +136,16 @@ class User extends Authenticatable
      */
     public function getWishlistCountAttribute()
     {
-        return $this->wishlist()->count();
+        $userId = $this->id;
+        $sessionId = session()->getId();
+
+        return Wishlist::where(function($query) use ($userId, $sessionId) {
+            $query->where('user_id', $userId)
+                  ->orWhere(function($q) use ($sessionId) {
+                      $q->whereNull('user_id')
+                        ->where('session_id', $sessionId);
+                  });
+        })->count();
     }
 
     /**

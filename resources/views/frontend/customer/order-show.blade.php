@@ -151,6 +151,29 @@
                 <span style="color: rgba(245,230,204,0.7);">Discount</span>
                 <span style="color: #22c55e;">-৳{{ number_format($order->discount) }}</span>
               </div>
+              @if($order->coupon)
+              <div class="d-flex justify-content-between mb-2" style="background: rgba(34, 197, 94, 0.1); padding: 0.5rem; border-radius: 8px; margin-top: 0.5rem;">
+                <div>
+                  <span style="color: rgba(245,230,204,0.7); font-size: 0.85rem;">
+                    <i class="fas fa-ticket-alt me-1" style="color: #22c55e;"></i>Coupon Applied
+                  </span>
+                  <div style="color: #22c55e; font-weight: 600; font-size: 1.1rem; margin-top: 0.25rem;">
+                    {{ $order->coupon->code }}
+                  </div>
+                </div>
+                @if($order->coupon->discount_type === 'percentage')
+                <div style="text-align: right;">
+                  <span style="color: #22c55e; font-weight: 600;">{{ $order->coupon->value }}%</span>
+                  <div style="color: rgba(245,230,204,0.5); font-size: 0.75rem;">{{ $order->coupon->description ?? 'Discount' }}</div>
+                </div>
+                @else
+                <div style="text-align: right;">
+                  <span style="color: #22c55e; font-weight: 600;">৳{{ number_format($order->coupon->value) }}</span>
+                  <div style="color: rgba(245,230,204,0.5); font-size: 0.75rem;">{{ $order->coupon->description ?? 'Flat Discount' }}</div>
+                </div>
+                @endif
+              </div>
+              @endif
               @endif
               <hr style="border-color: rgba(255,255,255,0.1); margin: 0.75rem 0;">
               <div class="d-flex justify-content-between mb-2">

@@ -24,8 +24,9 @@ class LoginController extends Controller
         ]);
 
         if (Auth::attempt($request->only('email', 'password'), $request->boolean('remember'))) {
-            // IMPORTANT: Merge cart BEFORE session regeneration to preserve session_id
+            // IMPORTANT: Merge cart AND wishlist BEFORE session regeneration to preserve session_id
             \App\Http\Controllers\Frontend\CartController::mergeSessionCart(Auth::id());
+            \App\Http\Controllers\Frontend\WishlistController::mergeSessionWishlist(Auth::id());
 
             $request->session()->regenerate();
 
@@ -35,10 +36,10 @@ class LoginController extends Controller
                 return redirect()->intended(route('admin.dashboard'));
             }
 
-            // Check if user came from cart
+            // Check if user came from cart or wishlist
             $intendedUrl = $request->session()->get('url.intended');
-            if ($intendedUrl && str_contains($intendedUrl, '/cart')) {
-                return redirect()->route('cart')->with('success', 'Login successful! Your cart has been merged.');
+            if ($intendedUrl && (str_contains($intendedUrl, '/cart') || str_contains($intendedUrl, '/wishlist'))) {
+                return redirect()->to($intendedUrl)->with('success', 'Login successful! Your items have been merged.');
             }
 
             // Redirect customers to profile page

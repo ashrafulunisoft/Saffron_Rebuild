@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\Address;
+use App\Models\Wishlist;
 
 class CustomerController extends Controller
 {
@@ -43,7 +44,7 @@ class CustomerController extends Controller
             abort(403);
         }
 
-        $order->load(['orderItems.product']);
+        $order->load(['orderItems.product', 'coupon']);
         return view('frontend.customer.order-show', compact('order'));
     }
 
@@ -66,7 +67,19 @@ class CustomerController extends Controller
      */
     public function wishlist()
     {
-        $wishlist = auth()->user()->wishlist()->with('product.category')->get() ?? collect();
+        $userId = auth()->id();
+        $sessionId = session()->getId();
+
+        $wishlist = Wishlist::with('product.category')
+            ->where(function($query) use ($userId, $sessionId) {
+                $query->where('user_id', $userId)
+                      ->orWhere(function($q) use ($sessionId) {
+                          $q->whereNull('user_id')
+                            ->where('session_id', $sessionId);
+                      });
+            })
+            ->get() ?? collect();
+
         return view('frontend.customer.wishlist', compact('wishlist'));
     }
 

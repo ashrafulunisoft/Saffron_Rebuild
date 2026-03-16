@@ -55,8 +55,8 @@ Saffron Next Task List :
 11. connect review section with backend logic(done). 
 12. connect the contact page with the backend .(Done is other branch ) 
 13. complete the FAQ , return and policy page .  (Done is other branch ) 
-14. complete the copuon on the checkout page . 
-15. single product page deatils shwo according to the database.
+14. complete the copuon on the checkout page . (done)
+15. single product page deatils shwo according to the database. (Newtration a)
 16. fix the review : section for product details pages and others pages. 
 17. fix the bilangual for the frontend theme and connect with the admin panel 
 18. add the delivery fee from the admin page inside / out side dhaka; 
@@ -66,6 +66,7 @@ Saffron Next Task List :
 22. password rest for the user (later)
 23. login or register with google / Facebook. (later)
 24. add pathoa integration ; (later)
+25. subcription fix 
 
 
 
