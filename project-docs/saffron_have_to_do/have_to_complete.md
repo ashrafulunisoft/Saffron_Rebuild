@@ -71,6 +71,7 @@ Saffron Next Task List :
 27. login or register with google / Facebook. (later)
 28. add pathoa integration ; (later)
 29. subcription fix (later)
+30. sms & email for notification; 
 
 
 
