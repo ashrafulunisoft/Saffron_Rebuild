@@ -67,11 +67,22 @@
             @enderror
           </div>
           <div class="mb-4">
-            <div class="auth-checkbox" style="display:flex;align-items:start;gap:0.5rem;color:rgba(245,230,204,0.7);font-size:0.9rem;">
-              <input type="checkbox" name="terms" value="1" required id="termsCheckbox" style="width:auto;margin-top:0.2rem;">
-              <label for="termsCheckbox" style="cursor:pointer;margin:0;">
-                I agree to the <a href="{{ route('terms') }}" class="auth-link" data-bs-dismiss="modal">Terms of Service</a> and <a href="{{ route('privacy') }}" class="auth-link" data-bs-dismiss="modal">Privacy Policy</a>
+            <label class="auth-label" style="display:block;margin-bottom:0.5rem;">
+              <i class="fas fa-check-circle me-1"></i> Terms & Conditions
+            </label>
+            <div class="terms-agreement" style="display:flex;gap:0.75rem;align-items:center;flex-wrap:wrap;">
+              <label class="terms-checkbox-btn" style="display:flex;align-items:center;gap:0.5rem;padding:0.5rem 1rem;background:rgba(59,130,246,0.1);border:1px solid rgba(59,130,246,0.3);border-radius:8px;cursor:pointer;transition:all 0.3s;">
+                <input type="checkbox" name="terms" value="1" required id="termsCheckbox" style="width:auto;cursor:pointer;">
+                <span style="color:rgba(245,230,204,0.8);font-size:0.9rem;cursor:pointer;">I agree to the terms</span>
               </label>
+              <div style="display:flex;gap:0.5rem;align-items:center;">
+                <a href="{{ route('terms') }}" class="btn btn-sm" style="background:rgba(139,92,246,0.2);color:#a855f7;border:1px solid rgba(139,92,246,0.3);padding:0.3rem 0.8rem;border-radius:6px;text-decoration:none;font-size:0.85rem;transition:all 0.3s;" data-bs-dismiss="modal">
+                  <i class="fas fa-file-contract me-1"></i>Terms
+                </a>
+                <a href="{{ route('privacy') }}" class="btn btn-sm" style="background:rgba(59,130,246,0.2);color:var(--accent-blue);border:1px solid rgba(59,130,246,0.3);padding:0.3rem 0.8rem;border-radius:6px;text-decoration:none;font-size:0.85rem;transition:all 0.3s;" data-bs-dismiss="modal">
+                  <i class="fas fa-shield-alt me-1"></i>Privacy
+                </a>
+              </div>
             </div>
             @error('terms')
               <div class="text-danger small mt-1">{{ $message }}</div>
@@ -81,6 +92,40 @@
             <i class="fas fa-user-plus me-2"></i>Create Account
           </button>
         </form>
+        <style>
+          .terms-checkbox-btn:hover {
+            background: rgba(59,130,246,0.2) !important;
+            border-color: rgba(59,130,246,0.5) !important;
+            transform: translateY(-1px);
+          }
+          .terms-checkbox-btn input[type="checkbox"]:checked + span {
+            color: #22c55e !important;
+            font-weight: 600;
+          }
+          .terms-checkbox-btn input[type="checkbox"] {
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border: 2px solid rgba(59,130,246,0.5);
+            border-radius: 4px;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s;
+          }
+          .terms-checkbox-btn input[type="checkbox"]:checked {
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            border-color: #22c55e;
+          }
+          .terms-checkbox-btn input[type="checkbox"]:checked::after {
+            content: '✓';
+            position: absolute;
+            color: white;
+            font-size: 12px;
+            left: 3px;
+            top: -1px;
+            font-weight: bold;
+          }
+        </style>
         <div class="auth-divider"><span>or sign up with</span></div>
         <div class="d-flex gap-2">
           <button class="btn btn-social flex-fill"><i class="fab fa-google"></i> Google</button>
