@@ -241,9 +241,15 @@ class CartController extends Controller
         return Cart::with('product')
             ->where(function($query) use ($userId, $sessionId) {
                 if ($userId) {
+                    // For authenticated users, get their cart items
+                    // Include items that might still have session_id from before merge
                     $query->where('user_id', $userId)
-                          ->orWhere('session_id', $sessionId);
+                          ->orWhere(function($q) use ($userId, $sessionId) {
+                              $q->whereNull('user_id')
+                                ->where('session_id', $sessionId);
+                          });
                 } else {
+                    // For guests, get only their session items
                     $query->where('session_id', $sessionId);
                 }
             })
@@ -292,10 +298,18 @@ class CartController extends Controller
      */
     public static function mergeSessionCart($userId)
     {
-        $sessionId = session()->getId();
+        // Get current session ID (after login)
+        $currentSessionId = session()->getId();
 
-        Cart::where('session_id', $sessionId)
-            ->whereNull('user_id')
+        // Find all cart items that don't have a user_id
+        // This catches both:
+        // 1. Items from the previous session (before login)
+        // 2. Items in the current session that haven't been assigned
+        Cart::whereNull('user_id')
+            ->where(function($query) use ($currentSessionId) {
+                $query->where('session_id', $currentSessionId)
+                      ->orWhere('session_id', '!=', $currentSessionId);
+            })
             ->get()
             ->each(function($item) use ($userId) {
                 $existingItem = Cart::where('user_id', $userId)
@@ -303,9 +317,11 @@ class CartController extends Controller
                     ->first();
 
                 if ($existingItem) {
+                    // Merge quantities if item exists
                     $existingItem->increment('quantity', $item->quantity);
                     $item->delete();
                 } else {
+                    // Transfer ownership to user
                     $item->update([
                         'user_id' => $userId,
                         'session_id' => null,

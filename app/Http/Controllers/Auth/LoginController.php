@@ -24,15 +24,21 @@ class LoginController extends Controller
         ]);
 
         if (Auth::attempt($request->only('email', 'password'), $request->boolean('remember'))) {
-            $request->session()->regenerate();
-
-            // Merge session cart to user cart
+            // IMPORTANT: Merge cart BEFORE session regeneration to preserve session_id
             \App\Http\Controllers\Frontend\CartController::mergeSessionCart(Auth::id());
+
+            $request->session()->regenerate();
 
             // Check user role and redirect accordingly
             $user = Auth::user();
             if ($user->hasRole('admin')) {
                 return redirect()->intended(route('admin.dashboard'));
+            }
+
+            // Check if user came from cart
+            $intendedUrl = $request->session()->get('url.intended');
+            if ($intendedUrl && str_contains($intendedUrl, '/cart')) {
+                return redirect()->route('cart')->with('success', 'Login successful! Your cart has been merged.');
             }
 
             // Redirect customers to profile page
