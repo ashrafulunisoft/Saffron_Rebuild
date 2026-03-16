@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Models\Product;
+use App\Models\Coupon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Session;
 
 class CartController extends Controller
 {
@@ -164,6 +166,56 @@ class CartController extends Controller
         }
 
         return redirect()->back()->with('success', 'Item removed from cart!');
+    }
+
+    /**
+     * Apply coupon code.
+     */
+    public function applyCoupon(Request $request)
+    {
+        $request->validate([
+            'coupon_code' => 'required|string',
+        ]);
+
+        $couponCode = strtoupper($request->coupon_code);
+
+        // Find active coupon
+        $coupon = Coupon::where('code', $couponCode)
+            ->where('expires_at', '>', now())
+            ->first();
+
+        if (!$coupon || !$coupon->isValid()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Invalid or expired coupon code.',
+            ], 404);
+        }
+
+        // Get cart subtotal
+        $cartItems = $this->getCartItems();
+        $subtotal = $cartItems->sum(function($item) {
+            return ($item->product->sale_price ?? $item->product->price) * $item->quantity;
+        });
+
+        // Calculate discount
+        $discount = $coupon->calculateDiscount($subtotal);
+
+        // Store coupon in session
+        Session::put('applied_coupon', [
+            'code' => $coupon->code,
+            'coupon_id' => $coupon->id,
+            'discount' => $discount,
+        ]);
+
+        $shipping = $subtotal >= 1000 ? 0 : 60;
+        $newTotal = $subtotal + $shipping - $discount;
+
+        return response()->json([
+            'success' => true,
+            'message' => "Coupon applied successfully! You saved ৳{$discount}",
+            'discount' => number_format($discount, 2),
+            'new_total' => number_format(max(0, $newTotal), 2),
+        ]);
     }
 
     /**

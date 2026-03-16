@@ -436,6 +436,7 @@ Route::prefix('cart')->name('cart.')->group(function () {
     Route::post('/add', [App\Http\Controllers\Frontend\CartController::class, 'add'])->name('add');
     Route::post('/update', [App\Http\Controllers\Frontend\CartController::class, 'update'])->name('update');
     Route::post('/remove', [App\Http\Controllers\Frontend\CartController::class, 'remove'])->name('remove');
+    Route::post('/apply-coupon', [App\Http\Controllers\Frontend\CartController::class, 'applyCoupon'])->name('apply-coupon');
     Route::get('/count', [App\Http\Controllers\Frontend\CartController::class, 'count'])->name('count');
 });
 

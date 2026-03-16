@@ -127,10 +127,28 @@
               <p class="text-center" style="color: rgba(245,230,204,0.6);">Your cart is empty</p>
             </div>
 
+            <!-- Coupon Code Section -->
+            <div class="mb-4">
+              <label style="color: #f5e6cc; font-weight: 500; margin-bottom: 0.5rem; display: block;">
+                <i class="fas fa-tag me-2" style="color: #fbbf24;"></i>Coupon Code
+              </label>
+              <div class="input-group">
+                <input type="text" id="checkoutCouponInput" class="form-control input-dark" placeholder="Enter coupon code" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #f5e6cc;">
+                <button class="btn btn-glow" type="button" id="checkoutApplyCouponBtn" onclick="applyCheckoutCoupon()">
+                  Apply
+                </button>
+              </div>
+              <div id="checkoutCouponMessage" style="margin-top: 0.5rem; font-size: 0.85rem;"></div>
+            </div>
+
             <div class="order-totals">
               <div class="d-flex justify-content-between mb-2">
                 <span style="color: rgba(245,230,204,0.7);">Subtotal:</span>
-                <span style="color: #f5e6cc;">৳0</span>
+                <span id="checkoutSubtotal" style="color: #f5e6cc;">৳0</span>
+              </div>
+              <div class="d-flex justify-content-between mb-2" id="checkoutDiscountRow" style="display: none;">
+                <span style="color: rgba(245,230,204,0.7);">Discount:</span>
+                <span id="checkoutDiscount" style="color: #10b981;">-৳0</span>
               </div>
               <div class="d-flex justify-content-between mb-2">
                 <span style="color: rgba(245,230,204,0.7);">Tax:</span>
@@ -138,7 +156,7 @@
               </div>
               <div class="d-flex justify-content-between mb-3 pt-3" style="border-top: 1px solid rgba(255,255,255,0.1);">
                 <span style="color: #f5e6cc; font-weight: 600;">Total:</span>
-                <span style="color: #fbbf24; font-weight: 700; font-size: 1.2rem;">৳0</span>
+                <span id="checkoutTotal" style="color: #fbbf24; font-weight: 700; font-size: 1.2rem;">৳0</span>
               </div>
             </div>
 
@@ -285,6 +303,86 @@ function setupFormValidation() {
     // Show loading state
     submitBtn.disabled = true;
     submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Processing...';
+  });
+}
+
+// Apply coupon code in checkout
+function applyCheckoutCoupon() {
+  const couponInput = document.getElementById('checkoutCouponInput');
+  const couponCode = couponInput.value.trim();
+  const messageDiv = document.getElementById('checkoutCouponMessage');
+  const applyBtn = document.getElementById('checkoutApplyCouponBtn');
+  const discountRow = document.getElementById('checkoutDiscountRow');
+  const discountAmount = document.getElementById('checkoutDiscount');
+  const checkoutTotal = document.getElementById('checkoutTotal');
+
+  if (!couponCode) {
+    messageDiv.innerHTML = '<span style="color: #f43f5e;"><i class="fas fa-exclamation-circle me-1"></i>Please enter a coupon code</span>';
+    return;
+  }
+
+  // Show loading state
+  applyBtn.disabled = true;
+  applyBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+  messageDiv.innerHTML = '';
+
+  fetch('/cart/apply-coupon', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+      'Accept': 'application/json',
+      'X-Requested-With': 'XMLHttpRequest'
+    },
+    body: JSON.stringify({ coupon_code: couponCode })
+  })
+  .then(async response => {
+    const contentType = response.headers.get('content-type');
+
+    if (contentType && contentType.includes('application/json')) {
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || 'Invalid coupon code');
+      }
+      return data;
+    } else {
+      const text = await response.text();
+      throw new Error('Server error. Please try again.');
+    }
+  })
+  .then(data => {
+    if (data.success) {
+      // Show success message
+      messageDiv.innerHTML = `<span style="color: #10b981;"><i class="fas fa-check-circle me-1"></i>${data.message}</span>`;
+
+      // Update discount display
+      if (data.discount > 0) {
+        discountRow.style.display = 'flex';
+        discountAmount.textContent = `-৳${data.discount}`;
+
+        // Update total
+        if (checkoutTotal && data.new_total) {
+          checkoutTotal.textContent = `৳${data.new_total}`;
+        }
+      }
+
+      // Disable coupon input after successful application
+      couponInput.disabled = true;
+      applyBtn.innerHTML = '<i class="fas fa-check"></i> Applied';
+      applyBtn.classList.remove('btn-glow');
+      applyBtn.classList.add('btn-success');
+    } else {
+      messageDiv.innerHTML = `<span style="color: #f43f5e;"><i class="fas fa-times-circle me-1"></i>${data.message}</span>`;
+      applyBtn.disabled = false;
+      applyBtn.innerHTML = 'Apply';
+    }
+  })
+  .catch(error => {
+    console.error('Error:', error);
+    messageDiv.innerHTML = `<span style="color: #f43f5e;"><i class="fas fa-exclamation-circle me-1"></i>${error.message || 'Failed to apply coupon'}</span>`;
+    applyBtn.disabled = false;
+    applyBtn.innerHTML = 'Apply';
   });
 }
 </script>

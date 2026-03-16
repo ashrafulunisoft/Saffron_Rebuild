@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
+use App\Models\Coupon;
 use App\Models\Order;
 use App\Models\OrderItem;
 use Illuminate\Http\Request;
@@ -78,7 +79,25 @@ class CheckoutController extends Controller
 
             // Shipping calculation (free shipping over 1000)
             $shipping = $totalAmount >= 1000 ? 0 : 60;
+
+            // Handle coupon discount
             $discount = 0;
+            $couponId = null;
+            $appliedCoupon = session()->get('applied_coupon');
+
+            if ($appliedCoupon && isset($appliedCoupon['coupon_id'])) {
+                $coupon = Coupon::find($appliedCoupon['coupon_id']);
+
+                if ($coupon && $coupon->isValid()) {
+                    // Use the stored discount amount
+                    $discount = $appliedCoupon['discount'];
+                    $couponId = $coupon->id;
+                } else {
+                    // Remove invalid coupon from session
+                    session()->forget('applied_coupon');
+                }
+            }
+
             $finalAmount = $totalAmount + $shipping - $discount;
 
             // Build shipping address string
@@ -101,6 +120,7 @@ class CheckoutController extends Controller
                 'payment_status' => 'unpaid',
                 'shipping_address' => $shippingAddress,
                 'status' => 'pending',
+                'coupon_id' => $couponId,
             ]);
 
             foreach ($cartItems as $item) {
@@ -111,6 +131,13 @@ class CheckoutController extends Controller
                     'price' => $price,
                     'quantity' => $item->quantity,
                 ]);
+            }
+
+            // Increment coupon usage count if coupon was used
+            if ($couponId && $coupon) {
+                $coupon->incrementUsage();
+                // Clear coupon from session after successful order
+                session()->forget('applied_coupon');
             }
 
             DB::commit();

@@ -124,10 +124,28 @@
               <i class="fas fa-receipt me-2"></i>Order Summary
             </h4>
 
+            <!-- Coupon Code Section -->
+            <div style="margin-bottom: 1.5rem;">
+              <label style="color: #f5e6cc; font-weight: 500; margin-bottom: 0.5rem; display: block;">
+                <i class="fas fa-tag me-2" style="color: #fbbf24;"></i>Coupon Code
+              </label>
+              <div class="input-group">
+                <input type="text" id="couponInput" class="form-control" placeholder="Enter coupon code" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #f5e6cc; placeholder-color: rgba(245,230,204,0.5);">
+                <button class="btn btn-glow" type="button" id="applyCouponBtn" onclick="applyCoupon()">
+                  Apply
+                </button>
+              </div>
+              <div id="couponMessage" style="margin-top: 0.5rem; font-size: 0.85rem;"></div>
+            </div>
+
             <div class="cart-totals" style="margin-bottom: 1.5rem;" data-subtotal="{{ number_format($subtotal) }}" data-shipping="{{ number_format($shipping) }}" data-total="{{ number_format($total) }}">
               <div class="d-flex justify-content-between mb-2">
                 <span style="color: rgba(245,230,204,0.7);">Subtotal</span>
                 <span style="color: #f5e6cc; font-weight: 600;">৳{{ number_format($subtotal) }}</span>
+              </div>
+              <div class="d-flex justify-content-between mb-2" id="discountRow" style="display: none;">
+                <span style="color: rgba(245,230,204,0.7);">Discount</span>
+                <span id="discountAmount" style="color: #10b981; font-weight: 600;">-৳0</span>
               </div>
               <div class="d-flex justify-content-between mb-2">
                 <span style="color: rgba(245,230,204,0.7);">Shipping</span>
@@ -161,9 +179,15 @@
               </div>
             </div>
 
+            @auth
             <a href="{{ route('checkout') }}" class="btn btn-glow w-100 btn-lg">
               <i class="fas fa-lock me-2"></i>Proceed to Checkout
             </a>
+            @else
+            <button class="btn btn-glow w-100 btn-lg" data-bs-toggle="modal" data-bs-target="#loginModal">
+              <i class="fas fa-lock me-2"></i>Proceed to Checkout
+            </button>
+            @endauth
 
             <a href="{{ route('shop') }}" class="btn btn-glass w-100 mt-3">
               <i class="fas fa-arrow-left me-2"></i>Continue Shopping
@@ -360,6 +384,86 @@ function updateCartCountBadge(count) {
       badge.classList.add('d-none');
       badge.classList.remove('d-flex');
     }
+  });
+}
+
+// Apply coupon code
+function applyCoupon() {
+  const couponInput = document.getElementById('couponInput');
+  const couponCode = couponInput.value.trim();
+  const messageDiv = document.getElementById('couponMessage');
+  const applyBtn = document.getElementById('applyCouponBtn');
+  const discountRow = document.getElementById('discountRow');
+  const discountAmount = document.getElementById('discountAmount');
+  const cartTotal = document.querySelector('.cart-total');
+
+  if (!couponCode) {
+    messageDiv.innerHTML = '<span style="color: #f43f5e;"><i class="fas fa-exclamation-circle me-1"></i>Please enter a coupon code</span>';
+    return;
+  }
+
+  // Show loading state
+  applyBtn.disabled = true;
+  applyBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+  messageDiv.innerHTML = '';
+
+  fetch('/cart/apply-coupon', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-CSRF-TOKEN': getCsrfToken(),
+      'Accept': 'application/json',
+      'X-Requested-With': 'XMLHttpRequest'
+    },
+    body: JSON.stringify({ coupon_code: couponCode })
+  })
+  .then(async response => {
+    const contentType = response.headers.get('content-type');
+
+    if (contentType && contentType.includes('application/json')) {
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || 'Invalid coupon code');
+      }
+      return data;
+    } else {
+      const text = await response.text();
+      throw new Error('Server error. Please try again.');
+    }
+  })
+  .then(data => {
+    if (data.success) {
+      // Show success message
+      messageDiv.innerHTML = `<span style="color: #10b981;"><i class="fas fa-check-circle me-1"></i>${data.message}</span>`;
+
+      // Update discount display
+      if (data.discount > 0) {
+        discountRow.style.display = 'flex';
+        discountAmount.textContent = `-৳${data.discount}`;
+
+        // Update total
+        if (cartTotal && data.new_total) {
+          cartTotal.textContent = `৳${data.new_total}`;
+        }
+      }
+
+      // Disable coupon input after successful application
+      couponInput.disabled = true;
+      applyBtn.innerHTML = '<i class="fas fa-check"></i> Applied';
+      applyBtn.classList.remove('btn-glow');
+      applyBtn.classList.add('btn-success');
+    } else {
+      messageDiv.innerHTML = `<span style="color: #f43f5e;"><i class="fas fa-times-circle me-1"></i>${data.message}</span>`;
+      applyBtn.disabled = false;
+      applyBtn.innerHTML = 'Apply';
+    }
+  })
+  .catch(error => {
+    console.error('Error:', error);
+    messageDiv.innerHTML = `<span style="color: #f43f5e;"><i class="fas fa-exclamation-circle me-1"></i>${error.message || 'Failed to apply coupon'}</span>`;
+    applyBtn.disabled = false;
+    applyBtn.innerHTML = 'Apply';
   });
 }
 
