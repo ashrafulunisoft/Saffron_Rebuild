@@ -20,6 +20,9 @@
             </div>
             <h5 class="mt-3" style="color: #f5e6cc;">{{ auth()->user()->name }}</h5>
             <p style="color: rgba(245,230,204,0.6); font-size: 0.9rem;">{{ auth()->user()->email }}</p>
+            <span class="badge" style="background: rgba(245,158,11,0.2); color: #fbbf24; border: 1px solid rgba(245,158,11,0.3);">
+              Customer
+            </span>
           </div>
 
           <!-- Navigation Menu -->
@@ -29,9 +32,18 @@
             </a>
             <a href="{{ route('customer.orders') }}" class="customer-nav-item active">
               <i class="fas fa-shopping-bag me-2"></i> My Orders
+              @if(auth()->user()->orders()->count() > 0)
+                <span class="nav-badge">{{ auth()->user()->orders()->count() }}</span>
+              @endif
             </a>
             <a href="{{ route('customer.wishlist') }}" class="customer-nav-item">
               <i class="fas fa-heart me-2"></i> Wishlist
+            </a>
+            <a href="{{ route('customer.addresses') }}" class="customer-nav-item">
+              <i class="fas fa-map-marker-alt me-2"></i> Addresses
+            </a>
+            <a href="{{ route('customer.profile') }}" class="customer-nav-item">
+              <i class="fas fa-user-edit me-2"></i> Profile Settings
             </a>
             <hr style="border-color: rgba(255,255,255,0.1); margin: 1rem 0;">
             <form method="POST" action="{{ route('logout') }}">
@@ -285,6 +297,15 @@
     background: linear-gradient(135deg, rgba(245,158,11,0.2), rgba(244,63,94,0.1));
     color: #fbbf24;
     border: 1px solid rgba(245,158,11,0.3);
+  }
+  .nav-badge {
+    background: rgba(245, 158, 11, 0.3);
+    color: #fbbf24;
+    padding: 0.2rem 0.5rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-left: auto;
   }
   .order-detail-items {
     display: flex;
