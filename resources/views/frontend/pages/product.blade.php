@@ -31,7 +31,7 @@
         <div class="glass-card p-4 mb-3">
           <div class="product-main-image">
             @if($product->image)
-              <img src="{{ asset("storage/products/{$product->image}") }}" alt="{{ $product->name }}">
+              <img src="{{ asset("storage/{$product->image}") }}" alt="{{ $product->name }}">
             @else
               <div class="product-image-placeholder">
                 <i class="fas fa-cookie-bite"></i>
@@ -42,7 +42,7 @@
         <div class="d-flex gap-2 justify-content-center">
           <div class="product-thumb active">
             @if($product->image)
-              <img src="{{ asset("storage/products/{$product->image}") }}" alt="{{ $product->name }}">
+              <img src="{{ asset("storage/{$product->image}") }}" alt="{{ $product->name }}">
             @else
               <i class="fas fa-cookie-bite"></i>
             @endif
@@ -323,7 +323,7 @@
           <div class="prod-card">
             <div class="prod-img-wrapper">
               @if($related->image)
-                <img src="{{ asset("storage/products/{$related->image}") }}" alt="{{ $related->name }}">
+                <img src="{{ asset("storage/{$related->image}") }}" alt="{{ $related->name }}">
               @else
                 <div class="prod-img-placeholder">
                   <i class="fas fa-cookie-bite"></i>

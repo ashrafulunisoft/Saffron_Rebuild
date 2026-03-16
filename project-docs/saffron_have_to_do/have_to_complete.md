@@ -51,17 +51,19 @@ Saffron Next Task List :
 7. fix the order, (done)
 8. fix the payment, (done)
 9. invoice design have to connect with the backend logic . (done)
-10. fix the bilangual for the frontend theme and connect with the admin panel 
-11. Add the Blog Section on the Home page . (Done)
-12. connect review section with backend logic(done). 
-13. connect the contact page with the backend .(Done is other branch ) 
-14. complete the FAQ , return and policy page .  (Done is other branch ) 
-15. single product page deatils shwo according to the database.
+10. Add the Blog Section on the Home page . (Done)
+11. connect review section with backend logic(done). 
+12. connect the contact page with the backend .(Done is other branch ) 
+13. complete the FAQ , return and policy page .  (Done is other branch ) 
+14. single product page deatils shwo according to the database.
+15. fix the bilangual for the frontend theme and connect with the admin panel 
 16. add the delivery fee from the admin page inside / out side dhaka; 
-17. add pathoa integration ; 
-18. User sidebar need to live update wishlist number; 
-19. connect the image for all kinds of the products .
-20. have to fix the mobile design 
+17. User sidebar need to live update wishlist number; 
+18. connect the image for all kinds of the products .
+19. have to fix the mobile design (later)
+20. password rest for the user (later)
+21. login or register with google / Facebook. (later)
+22. add pathoa integration ; (later)
 
 
 

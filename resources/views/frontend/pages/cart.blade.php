@@ -35,7 +35,7 @@
                     <!-- Product Image -->
                     <div class="col-3 col-md-2">
                       @if($item->product->image)
-                        <img src="{{ asset('storage/products/' . $item->product->image) }}"
+                        <img src="{{ asset('storage/' . $item->product->image) }}"
                              alt="{{ $item->product->name }}"
                              style="width: 100%; border-radius: 12px; aspect-ratio: 1; object-fit: cover;">
                       @else

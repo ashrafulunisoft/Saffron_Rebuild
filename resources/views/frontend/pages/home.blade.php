@@ -319,7 +319,7 @@
             <div class="prod-card prod-item" data-cat="{{ $product->category->slug ?? 'breads' }}">
               <div class="prod-img">
                 @if($product->image)
-                  <img src="{{ asset('storage/products/' . $product->image) }}" alt="{{ $product->name }}">
+                  <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}">
                 @else
                   <div class="prod-emoji">🍮</div>
                 @endif
@@ -383,7 +383,7 @@
             <div class="prod-card prod-item animate-on-scroll">
               <div class="prod-img">
                 @if($product->image)
-                  <img src="{{ asset('storage/products/' . $product->image) }}" alt="{{ $product->name_en }}">
+                  <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name_en }}">
                 @else
                   <div class="prod-emoji">🥐</div>
                 @endif
@@ -445,7 +445,7 @@
               <div class="prod-card prod-item animate-on-scroll" style="border:1px solid rgba(245,158,11,{{ $index === 0 ? '0.3' : '0.2' }});">
                 <div class="prod-img">
                   @if($product->image)
-                    <img src="{{ asset('storage/products/' . $product->image) }}" alt="{{ $product->name }}">
+                    <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}">
                   @else
                     <div class="prod-emoji">🍮</div>
                   @endif

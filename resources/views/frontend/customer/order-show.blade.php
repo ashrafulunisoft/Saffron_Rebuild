@@ -89,7 +89,7 @@
               <div class="order-detail-item">
                 <div style="width: 80px; height: 80px; border-radius: 12px; overflow: hidden; flex-shrink: 0;">
                   @if($item->product && $item->product->image)
-                    <img src="{{ asset('storage/products/' . $item->product->image) }}" alt="{{ $item->product->name }}" style="width: 100%; height: 100%; object-fit: cover;">
+                    <img src="{{ asset('storage/' . $item->product->image) }}" alt="{{ $item->product->name }}" style="width: 100%; height: 100%; object-fit: cover;">
                   @else
                     <div style="width: 100%; height: 100%; background: rgba(245,158,11,0.1); display: flex; align-items: center; justify-content: center;">
                       <i class="fas fa-cookie" style="color: #fbbf24; font-size: 2rem;"></i>

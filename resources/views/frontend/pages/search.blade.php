@@ -28,7 +28,7 @@
           <div class="prod-card">
             <div class="prod-img-wrapper">
               @if($product->image)
-                <img src="{{ asset('storage/products/' . $product->image) }}" alt="{{ $product->name }}">
+                <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}">
               @else
                 <div class="prod-img-placeholder">
                   <i class="fas fa-cookie-bite"></i>
