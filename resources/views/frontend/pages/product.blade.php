@@ -85,7 +85,7 @@
 
         <div class="product-rating-row">
           <div class="stars">★★★★★</div>
-          <span class="review-count">({{ $product->reviews_count ?? 0 }} reviews)</span>
+          <span class="review-count">({{ $product->reviews->count() ?? 0 }} reviews)</span>
           @if($product->stock > 0 && $product->stock < 10)
             <span class="stock-badge low-stock">Only {{ $product->stock }} left</span>
           @elseif($product->stock > 0)
@@ -180,7 +180,7 @@
         </li>
         <li class="nav-item">
           <button class="nav-link" id="reviews-tab" data-bs-toggle="tab" data-bs-target="#reviews" type="button">
-            <i class="fas fa-star me-2"></i>Reviews ({{ $product->reviews_count ?? 0 }})
+            <i class="fas fa-star me-2"></i>Reviews ({{ $product->reviews->count() ?? 0 }})
           </button>
         </li>
       </ul>
@@ -258,12 +258,12 @@
               <div class="col-md-4 text-center">
                 <div class="review-average">{{ number_format($product->averageRating, 1) }}</div>
                 <div class="review-stars">{{ str_repeat('★', round($product->averageRating)) }}{{ str_repeat('☆', 5 - round($product->averageRating)) }}</div>
-                <small class="text-muted">Based on {{ $product->reviews_count ?? 0 }} reviews</small>
+                <small class="text-muted">Based on {{ $product->reviews->count() ?? 0 }} reviews</small>
               </div>
               <div class="col-md-8">
                 @php
                   $ratingCounts = [1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0];
-                  $totalReviews = $product->reviews_count ?? 0;
+                  $totalReviews = $product->reviews->count() ?? 0;
                   if($totalReviews > 0) {
                     foreach($product->reviews as $review) {
                       $ratingCounts[$review->rating] = ($ratingCounts[$review->rating] ?? 0) + 1;
