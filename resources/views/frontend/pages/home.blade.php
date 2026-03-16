@@ -194,7 +194,7 @@
             <div><div class="sf-title">Traditional</div><div class="sf-desc">Ancient recipes</div></div>
           </div>
         </div>
-        <a href="{{ route('shop.category', 'bengali-sweets') }}" class="btn btn-glow mt-4 animate-on-scroll">
+        <a href="{{ route('shop.category', 'traditional-sweets') }}" class="btn btn-glow mt-4 animate-on-scroll">
           Discover Sweets <i class="fas fa-arrow-right ms-2"></i>
         </a>
       </div>
@@ -243,7 +243,7 @@
             <div><div class="sf-title">Artisan Crafted</div><div class="sf-desc">Made with love</div></div>
           </div>
         </div>
-        <a href="{{ route('shop.category', 'chocolates') }}" class="btn btn-glow mt-4 animate-on-scroll" style="background:linear-gradient(135deg, #f43f5e, #a855f7);">
+        <a href="{{ route('shop') }}" class="btn btn-glow mt-4 animate-on-scroll" style="background:linear-gradient(135deg, #f43f5e, #a855f7);">
           Discover Chocolates <i class="fas fa-arrow-right ms-2"></i>
         </a>
       </div>
@@ -431,7 +431,7 @@
   <div class="container">
     <div class="text-center mb-5">
       <span class="section-badge animate-on-scroll" style="background:linear-gradient(135deg,rgba(244,63,94,0.2),rgba(245,158,11,0.2));border-color:rgba(244,63,94,0.3);"><i class="fas fa-fire me-2"></i>Top Rated</span>
-      <h2 class="section-title mt-3 animate-on-scroll">Best <span style="background:linear-gradient(135deg,#f43f5e,#f59e0b);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Sellers</span></h2>
+      <h2 class="section-title mt-3 animate-on-scroll">Best <span id="sellers-text" style="background:linear-gradient(135deg,#f43f5e,#f59e0b);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;"></span></h2>
       <p class="mt-3 animate-on-scroll" style="color:rgba(245,230,204,0.6);max-width:600px;margin:0 auto;">Our most loved products that customers keep coming back for</p>
     </div>
 
@@ -745,6 +745,47 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.1 });
 
 document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+
+// "Best Sellers" text typing animation
+const sellersWords = ['Sellers', 'Products', 'Deals', 'Offers'];
+let sellersWordIndex = 0;
+let sellersCharIndex = 0;
+let sellersIsDeleting = false;
+const sellersElement = document.getElementById('sellers-text');
+
+function typeSellersText() {
+    if (!sellersElement) return;
+
+    const currentWord = sellersWords[sellersWordIndex];
+
+    if (sellersIsDeleting) {
+        sellersElement.textContent = currentWord.substring(0, sellersCharIndex - 1);
+        sellersCharIndex--;
+    } else {
+        sellersElement.textContent = currentWord.substring(0, sellersCharIndex + 1);
+        sellersCharIndex++;
+    }
+
+    let typeSpeed = sellersIsDeleting ? 50 : 100;
+
+    if (!sellersIsDeleting && sellersCharIndex === currentWord.length) {
+        // Word completed, pause before deleting
+        typeSpeed = 2000;
+        sellersIsDeleting = true;
+    } else if (sellersIsDeleting && sellersCharIndex === 0) {
+        // Deletion completed, move to next word
+        sellersIsDeleting = false;
+        sellersWordIndex = (sellersWordIndex + 1) % sellersWords.length;
+        typeSpeed = 500;
+    }
+
+    setTimeout(typeSellersText, typeSpeed);
+}
+
+// Start the animation when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(typeSellersText, 1000);
+});
 
 // Add to Cart function
 function addToCart(productId, productName, price, image, event) {

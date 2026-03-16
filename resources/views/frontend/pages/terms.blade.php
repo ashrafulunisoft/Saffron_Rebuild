@@ -1,6 +1,6 @@
 @extends('frontend.layouts.app')
 
-@section('title', 'Terms & Conditions - Saffron Sweets & Bakery')
+@section('title', $page->title . ' - Saffron Sweets & Bakery')
 
 @section('content')
 <div style="padding-top: 120px; padding-bottom: 60px;">
@@ -14,7 +14,7 @@
           </a>
         </li>
         <li class="breadcrumb-item active">
-          <i class="fas fa-file-contract me-1"></i>Terms & Conditions
+          <i class="fas fa-file-contract me-1"></i>{{ $page->title }}
         </li>
       </ol>
     </nav>
@@ -22,93 +22,101 @@
     <!-- Terms Content -->
     <div class="glass-card p-4">
       <h2 class="text-center mb-4" style="color: #f5e6cc;">
-        <i class="fas fa-file-contract me-2" style="color: #fbbf24;"></i>Terms & Conditions
+        <i class="fas fa-file-contract me-2" style="color: #fbbf24;"></i>{{ $page->title }}
       </h2>
 
-      <div class="policy-section">
-        <h4 style="color: #fbbf24; margin-bottom: 1rem;">1. Acceptance of Terms</h4>
-        <p style="color: rgba(245,230,204,0.8); line-height: 1.8;">
-          By accessing and using the Saffron Sweets & Bakery website, you accept and agree to be bound by the terms and provisions of this agreement. If you do not agree to abide by these terms, please do not use this service.
-        </p>
-      </div>
+      @if($page->has_custom_content && $page->content)
+        <!-- CMS Content -->
+        <div style="color: rgba(245,230,204,0.8); line-height: 1.8;">
+          {!! $page->content !!}
+        </div>
+      @else
+        <!-- Default Content -->
+        <div class="policy-section">
+          <h4 style="color: #fbbf24; margin-bottom: 1rem;">1. Acceptance of Terms</h4>
+          <p style="color: rgba(245,230,204,0.8); line-height: 1.8;">
+            By accessing and using the Saffron Sweets & Bakery website, you accept and agree to be bound by the terms and provisions of this agreement. If you do not agree to abide by these terms, please do not use this service.
+          </p>
+        </div>
 
-      <div class="policy-section">
-        <h4 style="color: #fbbf24; margin-bottom: 1rem;">2. Products and Services</h4>
-        <p style="color: rgba(245,230,204,0.8); line-height: 1.8;">
-          All products displayed on our website are subject to availability. We reserve the right to discontinue any product at any time. We strive to provide accurate product descriptions and images, but we do not warrant that descriptions are error-free.
-        </p>
-      </div>
+        <div class="policy-section">
+          <h4 style="color: #fbbf24; margin-bottom: 1rem;">2. Products and Services</h4>
+          <p style="color: rgba(245,230,204,0.8); line-height: 1.8;">
+            All products displayed on our website are subject to availability. We reserve the right to discontinue any product at any time. We strive to provide accurate product descriptions and images, but we do not warrant that descriptions are error-free.
+          </p>
+        </div>
 
-      <div class="policy-section">
-        <h4 style="color: #fbbf24; margin-bottom: 1rem;">3. Pricing and Payment</h4>
-        <p style="color: rgba(245,230,204,0.8); line-height: 1.8;">
-          All prices are in BDT (Bangladeshi Taka) and are subject to change without notice. We reserve the right to modify prices or discontinue products at any time. Payment is due at the time of placing your order. We accept cash on delivery, bKash, Nagad, and major credit/debit cards.
-        </p>
-      </div>
+        <div class="policy-section">
+          <h4 style="color: #fbbf24; margin-bottom: 1rem;">3. Pricing and Payment</h4>
+          <p style="color: rgba(245,230,204,0.8); line-height: 1.8;">
+            All prices are in BDT (Bangladeshi Taka) and are subject to change without notice. We reserve the right to modify prices or discontinue products at any time. Payment is due at the time of placing your order. We accept cash on delivery, bKash, Nagad, and major credit/debit cards.
+          </p>
+        </div>
 
-      <div class="policy-section">
-        <h4 style="color: #fbbf24; margin-bottom: 1rem;">4. Orders and Delivery</h4>
-        <p style="color: rgba(245,230,204,0.8); line-height: 1.8;">
-          We reserve the right to accept or decline any order. Delivery times are estimates and cannot be guaranteed. We are not liable for any delays in delivery. Once an order is placed, you will receive an order confirmation via email or SMS.
-        </p>
-      </div>
+        <div class="policy-section">
+          <h4 style="color: #fbbf24; margin-bottom: 1rem;">4. Orders and Delivery</h4>
+          <p style="color: rgba(245,230,204,0.8); line-height: 1.8;">
+            We reserve the right to accept or decline any order. Delivery times are estimates and cannot be guaranteed. We are not liable for any delays in delivery. Once an order is placed, you will receive an order confirmation via email or SMS.
+          </p>
+        </div>
 
-      <div class="policy-section">
-        <h4 style="color: #fbbf24; margin-bottom: 1rem;">5. Returns and Refunds</h4>
-        <p style="color: rgba(245,230,204,0.8); line-height: 1.8;">
-          Due to the perishable nature of our products, we cannot accept returns or exchanges. However, if you receive a damaged or incorrect order, please contact us within 24 hours of delivery, and we will work to resolve the issue.
-        </p>
-      </div>
+        <div class="policy-section">
+          <h4 style="color: #fbbf24; margin-bottom: 1rem;">5. Returns and Refunds</h4>
+          <p style="color: rgba(245,230,204,0.8); line-height: 1.8;">
+            Due to the perishable nature of our products, we cannot accept returns or exchanges. However, if you receive a damaged or incorrect order, please contact us within 24 hours of delivery, and we will work to resolve the issue.
+          </p>
+        </div>
 
-      <div class="policy-section">
-        <h4 style="color: #fbbf24; margin-bottom: 1rem;">6. User Accounts</h4>
-        <p style="color: rgba(245,230,204,0.8); line-height: 1.8;">
-          You are responsible for maintaining the confidentiality of your account information. You agree to notify us immediately of any unauthorized use of your account. We are not liable for any loss or damage arising from your failure to protect your account information.
-        </p>
-      </div>
+        <div class="policy-section">
+          <h4 style="color: #fbbf24; margin-bottom: 1rem;">6. User Accounts</h4>
+          <p style="color: rgba(245,230,204,0.8); line-height: 1.8;">
+            You are responsible for maintaining the confidentiality of your account information. You agree to notify us immediately of any unauthorized use of your account. We are not liable for any loss or damage arising from your failure to protect your account information.
+          </p>
+        </div>
 
-      <div class="policy-section">
-        <h4 style="color: #fbbf24; margin-bottom: 1rem;">7. Intellectual Property</h4>
-        <p style="color: rgba(245,230,204,0.8); line-height: 1.8;">
-          All content on this website, including text, graphics, logos, images, and software, is the property of Saffron Sweets & Bakery or its content suppliers and is protected by copyright and other intellectual property laws.
-        </p>
-      </div>
+        <div class="policy-section">
+          <h4 style="color: #fbbf24; margin-bottom: 1rem;">7. Intellectual Property</h4>
+          <p style="color: rgba(245,230,204,0.8); line-height: 1.8;">
+            All content on this website, including text, graphics, logos, images, and software, is the property of Saffron Sweets & Bakery or its content suppliers and is protected by copyright and other intellectual property laws.
+          </p>
+        </div>
 
-      <div class="policy-section">
-        <h4 style="color: #fbbf24; margin-bottom: 1rem;">8. Limitation of Liability</h4>
-        <p style="color: rgba(245,230,204,0.8); line-height: 1.8;">
-          Saffron Sweets & Bakery shall not be liable for any indirect, incidental, special, or consequential damages arising out of or in connection with the use of our products or services.
-        </p>
-      </div>
+        <div class="policy-section">
+          <h4 style="color: #fbbf24; margin-bottom: 1rem;">8. Limitation of Liability</h4>
+          <p style="color: rgba(245,230,204,0.8); line-height: 1.8;">
+            Saffron Sweets & Bakery shall not be liable for any indirect, incidental, special, or consequential damages arising out of or in connection with the use of our products or services.
+          </p>
+        </div>
 
-      <div class="policy-section">
-        <h4 style="color: #fbbf24; margin-bottom: 1rem;">9. Privacy Policy</h4>
-        <p style="color: rgba(245,230,204,0.8); line-height: 1.8;">
-          Your use of our website is also governed by our Privacy Policy. Please review our Privacy Policy, which also governs the website and informs users of our data collection practices.
-        </p>
-      </div>
+        <div class="policy-section">
+          <h4 style="color: #fbbf24; margin-bottom: 1rem;">9. Privacy Policy</h4>
+          <p style="color: rgba(245,230,204,0.8); line-height: 1.8;">
+            Your use of our website is also governed by our Privacy Policy. Please review our Privacy Policy, which also governs the website and informs users of our data collection practices.
+          </p>
+        </div>
 
-      <div class="policy-section">
-        <h4 style="color: #fbbf24; margin-bottom: 1rem;">10. Changes to Terms</h4>
-        <p style="color: rgba(245,230,204,0.8); line-height: 1.8;">
-          We reserve the right to modify these terms at any time. Changes will be effective immediately upon posting to the website. Your continued use of the website following the posting of changes constitutes your acceptance of such changes.
-        </p>
-      </div>
+        <div class="policy-section">
+          <h4 style="color: #fbbf24; margin-bottom: 1rem;">10. Changes to Terms</h4>
+          <p style="color: rgba(245,230,204,0.8); line-height: 1.8;">
+            We reserve the right to modify these terms at any time. Changes will be effective immediately upon posting to the website. Your continued use of the website following the posting of changes constitutes your acceptance of such changes.
+          </p>
+        </div>
 
-      <div class="policy-section">
-        <h4 style="color: #fbbf24; margin-bottom: 1rem;">11. Contact Information</h4>
-        <p style="color: rgba(245,230,204,0.8); line-height: 1.8;">
-          If you have any questions about these Terms & Conditions, please contact us at:
-        </p>
-        <p style="color: rgba(245,230,204,0.8); line-height: 1.8;">
-          <i class="fas fa-envelope me-2" style="color: #fbbf24;"></i>info@saffronsweets.com.bd<br>
-          <i class="fas fa-phone me-2" style="color: #fbbf24;"></i>+880 1730 702000
-        </p>
-      </div>
+        <div class="policy-section">
+          <h4 style="color: #fbbf24; margin-bottom: 1rem;">11. Contact Information</h4>
+          <p style="color: rgba(245,230,204,0.8); line-height: 1.8;">
+            If you have any questions about these Terms & Conditions, please contact us at:
+          </p>
+          <p style="color: rgba(245,230,204,0.8); line-height: 1.8;">
+            <i class="fas fa-envelope me-2" style="color: #fbbf24;"></i>info@saffronsweets.com.bd<br>
+            <i class="fas fa-phone me-2" style="color: #fbbf24;"></i>+880 1730 702000
+          </p>
+        </div>
 
-      <p style="color: rgba(245,230,204,0.6); text-align: center; margin-top: 2rem; font-size: 0.9rem;">
-        Last Updated: March 2026
-      </p>
+        <p style="color: rgba(245,230,204,0.6); text-align: center; margin-top: 2rem; font-size: 0.9rem;">
+          Last Updated: March 2026
+        </p>
+      @endif
     </div>
   </div>
 </div>

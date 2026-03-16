@@ -578,6 +578,9 @@
                         <a href="{{ route('admin.ecommerce.blog.index') }}" class="submenu-item {{ request()->routeIs('admin.ecommerce.blog.*') ? 'active' : '' }}">
                             <i class="fas fa-newspaper"></i> Blog Management
                         </a>
+                        <a href="{{ route('admin.ecommerce.cms.index') }}" class="submenu-item {{ request()->routeIs('admin.ecommerce.cms.*') ? 'active' : '' }}">
+                            <i class="fas fa-file-alt"></i> CMS Pages
+                        </a>
                     </div>
                 </div>
 

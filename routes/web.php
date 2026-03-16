@@ -315,6 +315,20 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
             ->name('blog.destroy');
         Route::post('/blog/{blog}/toggle-status', [App\Http\Controllers\Admin\BlogController::class, 'toggleStatus'])
             ->name('blog.toggle-status');
+
+        // CMS Pages
+        Route::get('/cms', [App\Http\Controllers\Admin\CmsController::class, 'index'])
+            ->name('cms.index');
+        Route::get('/cms/create', [App\Http\Controllers\Admin\CmsController::class, 'create'])
+            ->name('cms.create');
+        Route::post('/cms', [App\Http\Controllers\Admin\CmsController::class, 'store'])
+            ->name('cms.store');
+        Route::get('/cms/{cms}', [App\Http\Controllers\Admin\CmsController::class, 'edit'])
+            ->name('cms.edit');
+        Route::put('/cms/{cms}', [App\Http\Controllers\Admin\CmsController::class, 'update'])
+            ->name('cms.update');
+        Route::delete('/cms/{cms}', [App\Http\Controllers\Admin\CmsController::class, 'destroy'])
+            ->name('cms.destroy');
     });
 });
 
@@ -495,7 +509,7 @@ Route::post('/contact', [App\Http\Controllers\Frontend\ContactController::class,
 Route::get('/faq', function() { return view('frontend.pages.faq'); })->name('faq');
 Route::get('/return', function() { return view('frontend.pages.return'); })->name('return');
 Route::get('/privacy', function() { return view('frontend.pages.privacy'); })->name('privacy');
-Route::get('/terms', function() { return view('frontend.pages.terms'); })->name('terms');
+Route::get('/terms', [App\Http\Controllers\Frontend\PageController::class, 'terms'])->name('terms');
 Route::get('/policy', function() { return view('policy'); })->name('policy');
 
 // Search route
