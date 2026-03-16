@@ -57,14 +57,15 @@ Saffron Next Task List :
 13. complete the FAQ , return and policy page .  (Done is other branch ) 
 14. complete the copuon on the checkout page . 
 15. single product page deatils shwo according to the database.
-16. fix the bilangual for the frontend theme and connect with the admin panel 
-17. add the delivery fee from the admin page inside / out side dhaka; 
-18. User sidebar need to live update wishlist number; 
-19. connect the image for all kinds of the products .
-20. have to fix the mobile design (later)
-21. password rest for the user (later)
-22. login or register with google / Facebook. (later)
-23. add pathoa integration ; (later)
+16. fix the review : section for product details pages and others pages. 
+17. fix the bilangual for the frontend theme and connect with the admin panel 
+18. add the delivery fee from the admin page inside / out side dhaka; 
+19. User sidebar need to live update wishlist number; 
+20. connect the image for all kinds of the products .
+21. have to fix the mobile design (later)
+22. password rest for the user (later)
+23. login or register with google / Facebook. (later)
+24. add pathoa integration ; (later)
 
 
 

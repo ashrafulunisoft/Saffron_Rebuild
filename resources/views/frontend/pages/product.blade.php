@@ -188,7 +188,7 @@
         <div class="tab-pane fade show active" id="description" role="tabpanel">
           <div class="product-tab-body">
             <h4>About this Product</h4>
-            <p>{{ $product->description ?? 'Indulge in the exquisite taste of our ' . $product->name . '. Crafted with love and the finest ingredients, this delicious treat brings together traditional recipes and modern perfection. Each bite offers a perfect balance of flavors that will delight your taste buds.' }}</p>
+            <p>{!! $product->description ?? 'Indulge in the exquisite taste of our ' . $product->name . '. Crafted with love and the finest ingredients, this delicious treat brings together traditional recipes and modern perfection. Each bite offers a perfect balance of flavors that will delight your taste buds.' !!}</p>
             <p>Perfect for celebrations, gifts, or simply treating yourself to something special. Our commitment to quality ensures that every product meets the highest standards of taste and freshness.</p>
           </div>
         </div>
@@ -259,53 +259,53 @@
             </div>
             <div class="row mb-4">
               <div class="col-md-4 text-center">
-                <div class="review-average">4.8</div>
-                <div class="review-stars">★★★★★</div>
+                <div class="review-average">{{ number_format($product->averageRating, 1) }}</div>
+                <div class="review-stars">{{ str_repeat('★', round($product->averageRating)) }}{{ str_repeat('☆', 5 - round($product->averageRating)) }}</div>
                 <small class="text-muted">Based on {{ $product->reviews_count ?? 0 }} reviews</small>
               </div>
               <div class="col-md-8">
+                @php
+                  $ratingCounts = [1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0];
+                  $totalReviews = $product->reviews_count ?? 0;
+                  if($totalReviews > 0) {
+                    foreach($product->reviews as $review) {
+                      $ratingCounts[$review->rating] = ($ratingCounts[$review->rating] ?? 0) + 1;
+                    }
+                  }
+                @endphp
                 <div class="review-bars">
+                  @for($i = 5; $i >= 1; $i--)
                   <div class="review-bar">
-                    <span>5 ★</span>
-                    <div class="bar-bg"><div class="bar-fill" style="width: 75%;"></div></div>
-                    <span>75%</span>
+                    <span>{{ $i }} ★</span>
+                    <div class="bar-bg"><div class="bar-fill" style="width: {{ $totalReviews > 0 ? ($ratingCounts[$i] / $totalReviews * 100) : 0 }}%;"></div></div>
+                    <span>{{ $totalReviews > 0 ? round($ratingCounts[$i] / $totalReviews * 100) : 0 }}%</span>
                   </div>
-                  <div class="review-bar">
-                    <span>4 ★</span>
-                    <div class="bar-bg"><div class="bar-fill" style="width: 18%;"></div></div>
-                    <span>18%</span>
-                  </div>
-                  <div class="review-bar">
-                    <span>3 ★</span>
-                    <div class="bar-bg"><div class="bar-fill" style="width: 5%;"></div></div>
-                    <span>5%</span>
-                  </div>
-                  <div class="review-bar">
-                    <span>2 ★</span>
-                    <div class="bar-bg"><div class="bar-fill" style="width: 2%;"></div></div>
-                    <span>2%</span>
-                  </div>
-                  <div class="review-bar">
-                    <span>1 ★</span>
-                    <div class="bar-bg"><div class="bar-fill" style="width: 0%;"></div></div>
-                    <span>0%</span>
-                  </div>
+                  @endfor
                 </div>
               </div>
             </div>
-            <div class="review-item">
-              <div class="d-flex justify-content-between">
-                <div class="d-flex align-items-center">
-                  <div class="review-avatar">A</div>
+            @if($product->reviews && $product->reviews->count() > 0)
+              @foreach($product->reviews as $review)
+              <div class="review-item">
+                <div class="d-flex justify-content-between">
+                  <div class="d-flex align-items-center">
+                    <div class="review-avatar">{{ strtoupper(substr($review->user->name ?? 'A', 0, 1)) }}</div>
                   <div>
-                    <h6 class="mb-0">Ahmed Khan</h6>
-                    <small class="text-muted">2 days ago</small>
+                    <h6 class="mb-0">{{ $review->user->name ?? 'Anonymous' }}</h6>
+                    <small class="text-muted">{{ $review->created_at->diffForHumans() }}</small>
                   </div>
                 </div>
-                <div class="review-stars">★★★★★</div>
+                <div class="review-stars">{{ str_repeat('★', $review->rating) }}{{ str_repeat('☆', 5 - $review->rating) }}</div>
               </div>
-              <p class="mt-3 mb-0" style="color: rgba(245,230,204,0.8);">Absolutely delicious! The quality is amazing and it arrived fresh. Will definitely order again.</p>
+              <p class="mt-3 mb-0" style="color: rgba(245,230,204,0.8);">{{ $review->comment }}</p>
             </div>
+            @endforeach
+            @else
+              <div class="text-center py-5">
+                <i class="fas fa-star fa-3x mb-3" style="color: rgba(245,158,11,0.3);"></i>
+                <p style="color: rgba(245,230,204,0.7);">No reviews yet. Be the first to review this product!</p>
+              </div>
+            @endif
           </div>
         </div>
       </div>
