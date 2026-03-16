@@ -10,23 +10,17 @@
         <p class="auth-subtitle">Join Saffron Sweets today</p>
         <form method="POST" action="{{ route('register') }}" id="registerForm">
           @csrf
-          <div class="row g-3">
-            <div class="col-6">
-              <label class="auth-label">First Name</label>
-              <div class="auth-input-group">
-                <i class="fas fa-user"></i>
-                <input type="text" class="auth-input" name="first_name" placeholder="John" required value="{{ old('first_name') }}">
-              </div>
+          <div class="mb-3">
+            <label class="auth-label">Full Name</label>
+            <div class="auth-input-group">
+              <i class="fas fa-user"></i>
+              <input type="text" class="auth-input" name="name" placeholder="Enter your full name" required value="{{ old('name') }}">
             </div>
-            <div class="col-6">
-              <label class="auth-label">Last Name</label>
-              <div class="auth-input-group">
-                <i class="fas fa-user"></i>
-                <input type="text" class="auth-input" name="last_name" placeholder="Doe" required value="{{ old('last_name') }}">
-              </div>
-            </div>
+            @error('name')
+              <div class="text-danger small mt-1">{{ $message }}</div>
+            @enderror
           </div>
-          <div class="mb-3 mt-3">
+          <div class="mb-3">
             <label class="auth-label">Email Address</label>
             <div class="auth-input-group">
               <i class="fas fa-envelope"></i>
@@ -37,7 +31,17 @@
             @enderror
           </div>
           <div class="mb-3">
-            <label class="auth-label">Password</label>
+            <label class="auth-label">Phone Number <span class="text-white-50">(Optional)</span></label>
+            <div class="auth-input-group">
+              <i class="fas fa-phone"></i>
+              <input type="tel" class="auth-input" name="phone" placeholder="01XXXXXXXXX" value="{{ old('phone') }}">
+            </div>
+            @error('phone')
+              <div class="text-danger small mt-1">{{ $message }}</div>
+            @enderror
+          </div>
+          <div class="mb-3">
+            <label class="auth-label">Password <span class="text-white-50">(min 8 characters)</span></label>
             <div class="auth-input-group">
               <i class="fas fa-lock"></i>
               <input type="password" class="auth-input" name="password" placeholder="Create password" required>
@@ -49,10 +53,23 @@
               <div class="text-danger small mt-1">{{ $message }}</div>
             @enderror
           </div>
+          <div class="mb-3">
+            <label class="auth-label">Confirm Password</label>
+            <div class="auth-input-group">
+              <i class="fas fa-lock"></i>
+              <input type="password" class="auth-input" name="password_confirmation" placeholder="Confirm your password" required>
+              <button type="button" class="auth-toggle-pass" onclick="togglePassword(this)">
+                <i class="fas fa-eye"></i>
+              </button>
+            </div>
+            @error('password_confirmation')
+              <div class="text-danger small mt-1">{{ $message }}</div>
+            @enderror
+          </div>
           <div class="mb-4">
             <label class="auth-checkbox" style="display:flex;align-items:center;gap:0.5rem;color:rgba(245,230,204,0.7);font-size:0.9rem;cursor:pointer;">
               <input type="checkbox" name="terms" required style="width:auto;">
-              <span>I agree to the <a href="{{ route('terms') }}" class="auth-link" data-bs-dismiss="modal">Terms of Service</a> and <a href="{{ route('policy') }}" class="auth-link" data-bs-dismiss="modal">Privacy Policy</a></span>
+              <span>I agree to the <a href="{{ route('terms') }}" class="auth-link" data-bs-dismiss="modal">Terms of Service</a> and <a href="{{ route('privacy') }}" class="auth-link" data-bs-dismiss="modal">Privacy Policy</a></span>
             </label>
           </div>
           <button type="submit" class="btn btn-glow w-100 py-3">

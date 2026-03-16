@@ -4,9 +4,10 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 use App\Models\User;
-use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 
 class RegisterController extends Controller
@@ -24,6 +25,7 @@ class RegisterController extends Controller
             'email' => 'required|email|unique:users',
             'phone' => 'nullable|string|max:20',
             'password' => 'required|confirmed|min:8',
+            'terms' => 'required|accepted',
         ]);
 
         $user = User::create([
@@ -40,7 +42,7 @@ class RegisterController extends Controller
         }
 
         // Log the user in after registration
-        auth()->login($user);
+        Auth::login($user);
 
         return redirect()->route('home');
     }
