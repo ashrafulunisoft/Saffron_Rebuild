@@ -22,12 +22,14 @@ class RegisterController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users',
+            'phone' => 'nullable|string|max:20',
             'password' => 'required|confirmed|min:8',
         ]);
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
+            'phone' => $request->phone,
             'password' => Hash::make($request->password),
         ]);
 
@@ -37,7 +39,10 @@ class RegisterController extends Controller
             $user->assignRole('visitor');
         }
 
-        return redirect()->route('login');
+        // Log the user in after registration
+        auth()->login($user);
+
+        return redirect()->route('home');
     }
 
 
