@@ -6,9 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\Tag;
+use App\Models\ProductImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -115,6 +117,9 @@ class ProductController extends Controller
             'sale_price' => 'nullable|numeric|min:0',
             'stock' => 'required|integer|min:0',
             'category_id' => 'required|exists:categories,id',
+            'primary_image' => 'required|image|mimes:jpg,jpeg,png,webp|max:5120',
+            'images' => 'nullable|array',
+            'images.*' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
             'tags' => 'nullable|array',
             'tags.*' => 'exists:tags,id',
             'is_featured' => 'nullable|boolean',
@@ -126,6 +131,9 @@ class ProductController extends Controller
             'name_bn.required' => 'The Bengali name is required.',
             'price.required' => 'Price is required.',
             'category_id.required' => 'Please select a category.',
+            'primary_image.required' => 'Primary image is required.',
+            'primary_image.max' => 'The primary image must not be larger than 5MB.',
+            'images.*.max' => 'The images must not be larger than 5MB each.',
         ]);
 
         // Generate slug from English name
@@ -152,6 +160,28 @@ class ProductController extends Controller
             'is_featured' => $request->has('is_featured') ? true : false,
             'is_active' => $request->has('is_active') ? true : false,
         ]);
+
+        // Handle primary image upload
+        if ($request->hasFile('primary_image')) {
+            $primaryImagePath = $request->file('primary_image')->store('products', 'public');
+            ProductImage::create([
+                'product_id' => $product->id,
+                'image' => $primaryImagePath,
+                'is_primary' => true,
+            ]);
+        }
+
+        // Handle additional images upload
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                $imagePath = $image->store('products', 'public');
+                ProductImage::create([
+                    'product_id' => $product->id,
+                    'image' => $imagePath,
+                    'is_primary' => false,
+                ]);
+            }
+        }
 
         // Attach tags if provided
         if ($request->has('tags')) {
@@ -219,6 +249,9 @@ class ProductController extends Controller
             'sale_price' => 'nullable|numeric|min:0',
             'stock' => 'required|integer|min:0',
             'category_id' => 'required|exists:categories,id',
+            'primary_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
+            'images' => 'nullable|array',
+            'images.*' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
             'tags' => 'nullable|array',
             'tags.*' => 'exists:tags,id',
             'is_featured' => 'nullable|boolean',
@@ -230,6 +263,8 @@ class ProductController extends Controller
             'name_bn.required' => 'The Bengali name is required.',
             'price.required' => 'Price is required.',
             'category_id.required' => 'Please select a category.',
+            'primary_image.max' => 'The primary image must not be larger than 5MB.',
+            'images.*.max' => 'The images must not be larger than 5MB each.',
         ]);
 
         // Update slug if English name changed
@@ -259,6 +294,35 @@ class ProductController extends Controller
             'is_active' => $request->has('is_active') ? true : false,
         ]);
 
+        // Handle primary image upload
+        if ($request->hasFile('primary_image')) {
+            // Delete old primary image
+            $oldPrimaryImage = $product->primaryImage;
+            if ($oldPrimaryImage) {
+                Storage::disk('public')->delete($oldPrimaryImage->image);
+                $oldPrimaryImage->delete();
+            }
+
+            $primaryImagePath = $request->file('primary_image')->store('products', 'public');
+            ProductImage::create([
+                'product_id' => $product->id,
+                'image' => $primaryImagePath,
+                'is_primary' => true,
+            ]);
+        }
+
+        // Handle additional images upload
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                $imagePath = $image->store('products', 'public');
+                ProductImage::create([
+                    'product_id' => $product->id,
+                    'image' => $imagePath,
+                    'is_primary' => false,
+                ]);
+            }
+        }
+
         // Sync tags
         if ($request->has('tags')) {
             $product->tags()->sync($request->tags);
@@ -281,16 +345,24 @@ class ProductController extends Controller
     {
         // Check if product has order items
         if ($product->orderItems()->count() > 0) {
-            return redirect()
-                ->route('admin.ecommerce.products.index')
-                ->with('error', 'Cannot delete product with orders! অর্ডার সহ পণ্য মুছে ফেলা যাবে না!');
+            return response()->json([
+                'success' => false,
+                'message' => 'Cannot delete product with orders! অর্ডার সহ পণ্য মুছে ফেলা যাবে না!'
+            ], 400);
+        }
+
+        // Delete product images
+        foreach ($product->images as $image) {
+            Storage::disk('public')->delete($image->image);
+            $image->delete();
         }
 
         $product->delete();
 
-        return redirect()
-            ->route('admin.ecommerce.products.index')
-            ->with('success', 'Product deleted successfully! পণ্য সফলভাবে মুছে ফেলা হয়েছে!');
+        return response()->json([
+            'success' => true,
+            'message' => 'Product deleted successfully! পণ্য সফলভাবে মুছে ফেলা হয়েছে!'
+        ]);
     }
 
     /**

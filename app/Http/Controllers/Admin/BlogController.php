@@ -74,7 +74,17 @@ class BlogController extends Controller
         // Handle featured image upload
         $featuredImagePath = null;
         if ($request->hasFile('featured_image')) {
-            $featuredImagePath = $request->file('featured_image')->store('blog', 'public');
+            try {
+                $featuredImagePath = $request->file('featured_image')->store('blog', 'public');
+                if (!$featuredImagePath) {
+                    throw new \Exception('Failed to store the uploaded image.');
+                }
+            } catch (\Exception $e) {
+                return redirect()
+                    ->back()
+                    ->withInput()
+                    ->with('error', 'The featured image failed to upload. Error: ' . $e->getMessage());
+            }
         }
 
         $post = BlogPost::create([
@@ -158,11 +168,22 @@ class BlogController extends Controller
 
         // Handle featured image upload
         if ($request->hasFile('featured_image')) {
-            // Delete old image
-            if ($blog->featured_image) {
-                Storage::disk('public')->delete($blog->featured_image);
+            try {
+                // Delete old image
+                if ($blog->featured_image) {
+                    Storage::disk('public')->delete($blog->featured_image);
+                }
+                $imagePath = $request->file('featured_image')->store('blog', 'public');
+                if (!$imagePath) {
+                    throw new \Exception('Failed to store the uploaded image.');
+                }
+                $blog->featured_image = $imagePath;
+            } catch (\Exception $e) {
+                return redirect()
+                    ->back()
+                    ->withInput()
+                    ->with('error', 'The featured image failed to upload. Error: ' . $e->getMessage());
             }
-            $blog->featured_image = $request->file('featured_image')->store('blog', 'public');
         }
 
         $blog->title_en = $validated['title_en'];
@@ -203,9 +224,10 @@ class BlogController extends Controller
 
         $blog->delete();
 
-        return redirect()
-            ->route('admin.ecommerce.blog.index')
-            ->with('success', 'Blog post deleted successfully! ব্লগ পোস্ট সফলভাবে মুছে ফেলা হয়েছে!');
+        return response()->json([
+            'success' => true,
+            'message' => 'Blog post deleted successfully! ব্লগ পোস্ট সফলভাবে মুছে ফেলা হয়েছে!'
+        ]);
     }
 
     /**

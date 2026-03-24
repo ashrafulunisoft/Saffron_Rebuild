@@ -125,6 +125,7 @@
                 <div class="col-md-12">
                     <label class="form-label">Primary Image <span class="text-danger">*</span></label>
                     <input type="file" name="primary_image" class="input-dark input-custom" accept="image/*" required>
+                    <small class="text-muted">Max size: 5MB. Supported formats: JPG, JPEG, PNG, WEBP</small>
                     @error('primary_image')
                         <div class="text-danger mt-2" style="font-size: 0.8rem;">{{ $message }}</div>
                     @enderror
@@ -132,7 +133,7 @@
                 <div class="col-md-12">
                     <label class="form-label">Additional Images</label>
                     <input type="file" name="images[]" class="input-dark input-custom" accept="image/*" multiple>
-                    <small class="text-muted">You can select multiple images</small>
+                    <small class="text-muted">You can select multiple images. Max size: 5MB each.</small>
                 </div>
             </div>
 

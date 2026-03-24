@@ -102,7 +102,7 @@
             <div class="row g-4 mb-5">
                 <div class="col-md-12">
                     <input type="file" name="featured_image" class="input-dark input-custom" accept="image/*">
-                    <small class="text-white" style="opacity: 0.6;">Leave empty to keep current image. Recommended size: 1200x630px. Max size: 2MB.</small>
+                    <small class="text-white" style="opacity: 0.6;">Leave empty to keep current image. Recommended size: 1200x630px. Max size: 5MB. Supported: JPG, JPEG, PNG, WEBP</small>
                     @error('featured_image')
                         <div class="text-danger mt-2">{{ $message }}</div>
                     @enderror

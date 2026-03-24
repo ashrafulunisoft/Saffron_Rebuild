@@ -161,11 +161,12 @@
                 <div class="col-md-6">
                     <label class="form-label">Replace Primary Image</label>
                     <input type="file" name="primary_image" class="input-dark input-custom" accept="image/*">
+                    <small class="text-muted">Max size: 5MB. Supported: JPG, JPEG, PNG, WEBP</small>
                 </div>
                 <div class="col-md-6">
                     <label class="form-label">Add More Images</label>
                     <input type="file" name="images[]" class="input-dark input-custom" accept="image/*" multiple>
-                    <small class="text-muted">You can select multiple images</small>
+                    <small class="text-muted">You can select multiple images. Max size: 5MB each.</small>
                 </div>
             </div>
 

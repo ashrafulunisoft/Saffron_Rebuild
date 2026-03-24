@@ -268,23 +268,31 @@ function toggleStatus(id) {
             'X-CSRF-TOKEN': '{{ csrf_token() }}'
         }
     })
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
     .then(data => {
         if (data.success) {
             Swal.fire({
                 icon: 'success',
                 title: 'Success!',
-                text: data.message,
+                text: data.message || 'Status updated successfully!',
                 confirmButtonColor: '#22c55e'
             });
             setTimeout(() => location.reload(), 1500);
+        } else {
+            throw new Error(data.message || 'Status toggle failed');
         }
     })
     .catch(error => {
+        console.error('Error:', error);
         Swal.fire({
             icon: 'error',
             title: 'Error!',
-            text: 'Something went wrong / কিছু ভুল হয়েছে',
+            text: error.message || 'Something went wrong / কিছু ভুল হয়েছে',
             confirmButtonColor: '#ef4444'
         });
     });
@@ -309,23 +317,31 @@ function deletePost(id, title) {
                     'X-CSRF-TOKEN': '{{ csrf_token() }}'
                 }
             })
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
             .then(data => {
                 if (data.success) {
                     Swal.fire({
                         icon: 'success',
                         title: 'Deleted!',
-                        text: 'Blog post has been deleted. / ব্লগ পোস্ট মুছে ফেলা হয়েছে।',
+                        text: data.message || 'Blog post has been deleted. / ব্লগ পোস্ট মুছে ফেলা হয়েছে।',
                         confirmButtonColor: '#22c55e'
                     });
                     setTimeout(() => location.reload(), 1500);
+                } else {
+                    throw new Error(data.message || 'Delete failed');
                 }
             })
             .catch(error => {
+                console.error('Error:', error);
                 Swal.fire({
                     icon: 'error',
                     title: 'Error!',
-                    text: 'Something went wrong / কিছু ভুল হয়েছে',
+                    text: error.message || 'Something went wrong / কিছু ভুল হয়েছে',
                     confirmButtonColor: '#ef4444'
                 });
             });

@@ -394,7 +394,47 @@ function deleteProduct(productId, productName) {
         color: '#fff'
     }).then((result) => {
         if (result.isConfirmed) {
-            window.location.href = `/admin/ecommerce/products/${productId}/delete`;
+            fetch(`/admin/ecommerce/products/${productId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(err => {
+                        throw new Error(err.message || 'Failed to delete product');
+                    });
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Deleted!',
+                        text: data.message || 'Product deleted successfully!',
+                        confirmButtonColor: '#22c55e',
+                        background: '#0f172a',
+                        color: '#fff'
+                    });
+                    setTimeout(() => location.reload(), 1500);
+                } else {
+                    throw new Error(data.message || 'Delete failed');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error!',
+                    text: error.message || 'Something went wrong / কিছু ভুল হয়েছে',
+                    confirmButtonColor: '#ef4444',
+                    background: '#0f172a',
+                    color: '#fff'
+                });
+            });
         }
     });
 }
