@@ -25,8 +25,8 @@
           <div class="dropdown-menu glass-mega-menu" aria-labelledby="glassMegaMenu">
             <div class="container">
               <div class="row g-4">
-                <!-- Dynamic Categories from Database -->
-                <div class="col-12">
+                <!-- Desktop: Dynamic Categories Grid -->
+                <div class="col-12 d-none d-md-block">
                   @if(isset($navCategories) && $navCategories->count() > 0)
                     <div class="row g-3">
                       @php
@@ -98,6 +98,66 @@
                     <a href="{{ route('shop') }}?featured=1" class="mega-tag">Featured</a>
                     <a href="{{ route('shop') }}?sort=newest" class="mega-tag">New Arrivals</a>
                     <a href="{{ route('shop') }}?sort=popular" class="mega-tag">Popular</a>
+                  </div>
+                </div>
+
+                <!-- Mobile: Category List View -->
+                <div class="col-12 d-md-none">
+                  <div class="mobile-shop-categories">
+                    <h5 class="mobile-shop-title">
+                      <i class="fas fa-store"></i> Browse Categories
+                    </h5>
+
+                    @if(isset($navCategories) && $navCategories->count() > 0)
+                      @foreach($navCategories as $category)
+                        <a href="{{ route('shop.category', $category->slug) }}" class="mobile-category-item">
+                          <div class="mobile-category-icon">
+                            @php
+                              $categoryEmojis = [
+                                'breads' => '🍞',
+                                'cakes' => '🎂',
+                                'cake' => '🎂',
+                                'cookies-biscuits' => '🍪',
+                                'traditional-sweets' => '🍬',
+                                'sweet' => '🍮',
+                                'sweets' => '🍬',
+                                'dairy-products' => '🥛',
+                                'buns-rolls' => '🥯',
+                                'pastries-savories' => '🥧',
+                                'bengali-sweets' => '🍬',
+                                'bakery' => '🥐',
+                                'chocolates' => '🍫',
+                                'cookies' => '🍪',
+                                'pastries' => '🥧',
+                              ];
+                              $emoji = $categoryEmojis[$category->slug] ?? '🍰';
+                            @endphp
+                            {{ $emoji }}
+                          </div>
+                          <div class="mobile-category-content">
+                            <div class="mobile-category-name">{{ $category->name_en }}</div>
+                            @if($category->products_count > 0)
+                              <div class="mobile-category-count">{{ $category->products_count }} products</div>
+                            @endif
+                          </div>
+                        </a>
+                      @endforeach
+                    @endif
+
+                    <div class="mobile-shop-quicklinks">
+                      <a href="{{ route('shop') }}" class="mobile-quicklink">
+                        <i class="fas fa-th-large"></i>
+                        <span>All Products</span>
+                      </a>
+                      <a href="{{ route('shop') }}?featured=1" class="mobile-quicklink">
+                        <i class="fas fa-star"></i>
+                        <span>Featured</span>
+                      </a>
+                      <a href="{{ route('shop') }}?sort=newest" class="mobile-quicklink">
+                        <i class="fas fa-sparkles"></i>
+                        <span>New Arrivals</span>
+                      </a>
+                    </div>
                   </div>
                 </div>
               </div>

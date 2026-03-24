@@ -2170,6 +2170,107 @@ section {
   box-shadow:0 5px 20px rgba(245,158,11,0.3);
 }
 
+/* MOBILE SHOP CATEGORIES */
+.mobile-shop-categories {
+  padding:1rem 0;
+}
+
+.mobile-shop-title {
+  color:#f5e6cc;
+  font-size:1.1rem;
+  font-weight:600;
+  margin-bottom:1rem;
+  padding-bottom:0.75rem;
+  border-bottom:1px solid rgba(245,230,204,0.15);
+  display:flex;
+  align-items:center;
+  gap:0.5rem;
+}
+
+.mobile-category-item {
+  display:flex;
+  align-items:center;
+  gap:1rem;
+  padding:1rem;
+  background:rgba(245,230,204,0.04);
+  border:1px solid rgba(245,230,204,0.08);
+  border-radius:12px;
+  margin-bottom:0.75rem;
+  text-decoration:none;
+  transition:all 0.3s ease;
+}
+
+.mobile-category-item:hover {
+  background:rgba(245,230,204,0.08);
+  border-color:rgba(245,158,11,0.3);
+  transform:translateX(5px);
+}
+
+.mobile-category-icon {
+  width:45px;
+  height:45px;
+  background:linear-gradient(135deg, rgba(245,158,11,0.15), rgba(244,63,94,0.1));
+  border:1px solid rgba(245,158,11,0.2);
+  border-radius:10px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:1.5rem;
+  flex-shrink:0;
+}
+
+.mobile-category-content {
+  flex:1;
+  min-width:0;
+}
+
+.mobile-category-name {
+  color:#f5e6cc;
+  font-size:0.95rem;
+  font-weight:500;
+  margin-bottom:0.15rem;
+}
+
+.mobile-category-count {
+  font-size:0.8rem;
+  color:rgba(245,230,204,0.5);
+}
+
+.mobile-shop-quicklinks {
+  display:flex;
+  flex-direction:column;
+  gap:0.5rem;
+  margin-top:1rem;
+  padding-top:1rem;
+  border-top:1px solid rgba(245,230,204,0.1);
+}
+
+.mobile-quicklink {
+  display:flex;
+  align-items:center;
+  gap:0.75rem;
+  padding:0.85rem 1rem;
+  background:linear-gradient(135deg, rgba(245,158,11,0.1), rgba(244,63,94,0.08));
+  border:1px solid rgba(245,158,11,0.2);
+  border-radius:10px;
+  color:#f5e6cc;
+  text-decoration:none;
+  font-size:0.9rem;
+  font-weight:500;
+  transition:all 0.3s ease;
+}
+
+.mobile-quicklink:hover {
+  background:linear-gradient(135deg, rgba(245,158,11,0.2), rgba(244,63,94,0.15));
+  border-color:rgba(245,158,11,0.4);
+  transform:translateX(3px);
+}
+
+.mobile-quicklink i {
+  color:#fbbf24;
+  font-size:1rem;
+}
+
 .prod-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(280px, 1fr)); gap:2rem; }
 .prod-card {
   border-radius:24px; overflow:hidden;
