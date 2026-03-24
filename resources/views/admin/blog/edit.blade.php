@@ -21,6 +21,20 @@
             @method('PUT')
             @csrf
 
+            @if(session('error'))
+                <div class="alert alert-danger alert-dismissible fade show" role="alert" style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); color: #ef4444; margin-bottom: 1.5rem;">
+                    <i class="fas fa-exclamation-circle me-2"></i>{{ session('error') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
+
+            @if(session('success'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert" style="background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.3); color: #22c55e; margin-bottom: 1.5rem;">
+                    <i class="fas fa-check-circle me-2"></i>{{ session('success') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
+
             <!-- Current Post Info -->
             @if($blog->featured_image)
             <div class="alert alert-info mb-4" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3);">
@@ -102,7 +116,7 @@
             <div class="row g-4 mb-5">
                 <div class="col-md-12">
                     <input type="file" name="featured_image" class="input-dark input-custom" accept="image/*">
-                    <small class="text-white" style="opacity: 0.6;">Leave empty to keep current image. Recommended size: 1200x630px. Max size: 5MB. Supported: JPG, JPEG, PNG, WEBP</small>
+                    <small class="text-white" style="opacity: 0.6;">Leave empty to keep current image. Recommended size: 1200x630px. Max size: 2MB. Supported: JPG, JPEG, PNG, WEBP</small>
                     @error('featured_image')
                         <div class="text-danger mt-2">{{ $message }}</div>
                     @enderror
