@@ -83,7 +83,7 @@
                                class="input-dark input-custom"
                                placeholder="Search reviews... / রিভিউ খুঁজুন..."
                                value="{{ $query ?? '' }}">
-                        <i class="fas fa-search input-icon"></i>
+
                     </div>
                 </form>
             </div>
@@ -224,7 +224,7 @@
         background: rgba(15, 23, 42, 0.6);
         border: 1px solid rgba(255, 255, 255, 0.1);
         color: #fff;
-        padding: 0.75rem 1rem 0.75rem 2.75rem;
+        padding: 0.75rem 1rem;
         border-radius: 12px;
         transition: 0.3s;
         width: 100%;
@@ -244,14 +244,7 @@
         font-size: 0.9rem;
     }
 
-    .input-icon {
-        position: absolute;
-        left: 1rem;
-        top: 50%;
-        transform: translateY(-50%);
-        color: rgba(255, 255, 255, 0.4);
-        pointer-events: none;
-    }
+    
 
     .btn-gradient {
         background: linear-gradient(135deg, var(--accent-blue), #8b5cf6);

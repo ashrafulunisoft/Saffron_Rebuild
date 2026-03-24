@@ -81,10 +81,7 @@
         <!-- Filter Section -->
         <div class="filter-section row g-3 mb-4" style="background: rgba(15, 23, 42, 0.4); backdrop-filter: blur(20px); padding: 1.5rem; border-radius: 16px; border: 1px solid rgba(255,255,255,0.08); transition: all 0.3s ease; position: relative; overflow: hidden;">
             <div class="col-md-6">
-                <div class="position-relative">
-                    <input type="text" id="categorySearch" class="input-dark input-custom" placeholder="Search categories..." style="color: white;">
-                    <i class="fas fa-search input-icon"></i>
-                </div>
+                <input type="text" id="categorySearch" class="input-dark input-custom" placeholder="Search categories..." style="color: white;">
             </div>
             <div class="col-md-6">
                 <select class="input-dark input-custom" id="parentFilter">

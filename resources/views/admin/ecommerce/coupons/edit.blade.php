@@ -35,7 +35,6 @@
                                required
                                style="text-transform: uppercase;"
                                autofocus>
-                        <i class="fas fa-ticket-alt input-icon"></i>
                     </div>
                     @error('code')
                         <div class="text-danger mt-2" style="font-size: 0.8rem;">{{ $message }}</div>
@@ -64,7 +63,6 @@
                                min="0"
                                value="{{ old('value', $coupon->value) }}"
                                required>
-                        <i class="fas fa-percentage input-icon"></i>
                     </div>
                     @error('value')
                         <div class="text-danger mt-2" style="font-size: 0.8rem;">{{ $message }}</div>
@@ -85,7 +83,6 @@
                                step="0.01"
                                min="0"
                                value="{{ old('max_discount', $coupon->max_discount) }}">
-                        <i class="fas fa-tag input-icon"></i>
                     </div>
                     <small class="text-muted">Maximum discount amount (for percentage discounts)</small>
                     @error('max_discount')
@@ -101,7 +98,6 @@
                                placeholder="e.g., 100"
                                min="1"
                                value="{{ old('usage_limit', $coupon->usage_limit) }}">
-                        <i class="fas fa-hashtag input-icon"></i>
                     </div>
                     <small class="text-muted">Leave empty for unlimited usage</small>
                     @error('usage_limit')
@@ -115,7 +111,6 @@
                                name="expires_at"
                                class="input-dark input-custom"
                                value="{{ old('expires_at', $coupon->expires_at ? $coupon->expires_at->format('Y-m-d\TH:i') : '') }}">
-                        <i class="fas fa-calendar input-icon"></i>
                     </div>
                     <small class="text-muted">Leave empty for no expiration</small>
                     @error('expires_at')
@@ -202,7 +197,7 @@
         background: rgba(15, 23, 42, 0.6);
         border: 1px solid rgba(255, 255, 255, 0.1);
         color: #fff;
-        padding: 0.75rem 1rem 0.75rem 2.75rem;
+        padding: 0.75rem 1rem;
         border-radius: 12px;
         transition: 0.3s;
         width: 100%;
@@ -222,14 +217,7 @@
         font-size: 0.9rem;
     }
 
-    .input-icon {
-        position: absolute;
-        left: 1rem;
-        top: 50%;
-        transform: translateY(-50%);
-        color: rgba(255, 255, 255, 0.4);
-        pointer-events: none;
-    }
+    
 
     select.input-dark,
     input[type="datetime-local"].input-dark {
@@ -246,9 +234,6 @@
         padding-right: 2.75rem;
     }
 
-    select.input-dark + .input-icon {
-        display: none;
-    }
 
     .text-muted {
         color: rgba(255, 255, 255, 0.5) !important;

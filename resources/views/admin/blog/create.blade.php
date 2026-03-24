@@ -24,19 +24,13 @@
             <div class="permission-title">Basic Information / মৌলিক তথ্য</div>
             <div class="row g-4 mb-5">
                 <div class="col-md-6">
-                    <div class="position-relative">
-                        <input type="text" name="title_en" class="input-dark input-custom" placeholder="Title (English) *" required>
-                        <i class="fas fa-heading input-icon"></i>
-                    </div>
+                    <input type="text" name="title_en" class="input-dark input-custom" placeholder="Title (English) *" required>
                     @error('title_en')
                         <div class="text-danger mt-2">{{ $message }}</div>
                     @enderror
                 </div>
                 <div class="col-md-6">
-                    <div class="position-relative">
-                        <input type="text" name="title_bn" class="input-dark input-custom" placeholder="শিরোনাম (বাংলা) *" required>
-                        <i class="fas fa-heading input-icon"></i>
-                    </div>
+                    <input type="text" name="title_bn" class="input-dark input-custom" placeholder="শিরোনাম (বাংলা) *" required>
                     @error('title_bn')
                         <div class="text-danger mt-2">{{ $message }}</div>
                     @enderror
@@ -89,10 +83,7 @@
             <div class="permission-title">Featured Image / বৈশিষ্ট্যযুক্ত চিত্র</div>
             <div class="row g-4 mb-5">
                 <div class="col-md-12">
-                    <div class="position-relative">
-                        <input type="file" name="featured_image" class="input-dark input-custom" accept="image/*">
-                        <i class="fas fa-image input-icon"></i>
-                    </div>
+                    <input type="file" name="featured_image" class="input-dark input-custom" accept="image/*">
                     <small class="text-white" style="opacity: 0.6;">Recommended size: 1200x630px. Max size: 2MB.</small>
                     @error('featured_image')
                         <div class="text-danger mt-2">{{ $message }}</div>
@@ -111,17 +102,13 @@
                                 <option value="{{ $category }}">{{ $category }}</option>
                             @endforeach
                         </select>
-                        <i class="fas fa-folder input-icon"></i>
                     </div>
                     @error('category')
                         <div class="text-danger mt-2">{{ $message }}</div>
                     @enderror
                 </div>
                 <div class="col-md-6">
-                    <div class="position-relative">
-                        <input type="text" name="tags" class="input-dark input-custom" placeholder="Tags (comma separated) / ট্যাগ">
-                        <i class="fas fa-tags input-icon"></i>
-                    </div>
+                    <input type="text" name="tags" class="input-dark input-custom" placeholder="Tags (comma separated) / ট্যাগ">
                     <small class="text-white" style="opacity: 0.6;">Example: recipe, baking, cake</small>
                     @error('tags')
                         <div class="text-danger mt-2">{{ $message }}</div>
@@ -138,7 +125,6 @@
                             <option value="draft">Draft / খসড়া</option>
                             <option value="published">Published / প্রকাশিত</option>
                         </select>
-                        <i class="fas fa-file-alt input-icon"></i>
                     </div>
                     @error('status')
                         <div class="text-danger mt-2">{{ $message }}</div>
@@ -158,10 +144,7 @@
             <div class="permission-title">SEO Settings / SEO সেটিংস</div>
             <div class="row g-4 mb-5">
                 <div class="col-md-12">
-                    <div class="position-relative">
-                        <input type="text" name="meta_title" class="input-dark input-custom" placeholder="Meta Title">
-                        <i class="fas fa-heading input-icon"></i>
-                    </div>
+                    <input type="text" name="meta_title" class="input-dark input-custom" placeholder="Meta Title">
                     @error('meta_title')
                         <div class="text-danger mt-2">{{ $message }}</div>
                     @enderror
@@ -175,10 +158,7 @@
                     @enderror
                 </div>
                 <div class="col-md-12">
-                    <div class="position-relative">
-                        <input type="text" name="meta_keywords" class="input-dark input-custom" placeholder="Meta Keywords (comma separated)">
-                        <i class="fas fa-key input-icon"></i>
-                    </div>
+                    <input type="text" name="meta_keywords" class="input-dark input-custom" placeholder="Meta Keywords (comma separated)">
                     @error('meta_keywords')
                         <div class="text-danger mt-2">{{ $message }}</div>
                     @enderror

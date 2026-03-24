@@ -102,10 +102,7 @@
         <!-- Filter Section -->
         <div class="row g-3 mb-4" style="background: rgba(15, 23, 42, 0.6); padding: 1.5rem; border-radius: 16px; border: 1px solid rgba(255,255,255,0.05);">
             <div class="col-md-6">
-                <div class="position-relative">
-                    <input type="text" id="orderSearch" class="input-dark input-custom" placeholder="Search orders..." style="color: white;">
-                    <i class="fas fa-search input-icon"></i>
-                </div>
+                <input type="text" id="orderSearch" class="input-dark input-custom" placeholder="Search orders..." style="color: white;">
             </div>
             <div class="col-md-6">
                 <select class="input-dark input-custom" id="statusFilter">

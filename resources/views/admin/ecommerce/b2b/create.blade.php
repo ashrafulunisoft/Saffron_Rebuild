@@ -52,24 +52,15 @@
                 </div>
                 <div class="col-md-12">
                     <label class="form-label">Company Name *</label>
-                    <div class="position-relative">
-                        <input type="text" name="company_name" class="input-dark input-custom" placeholder="e.g., ABC Trading Co." value="{{ old('company_name') }}" required>
-                        <i class="fas fa-building input-icon"></i>
-                    </div>
+                    <input type="text" name="company_name" class="input-dark input-custom" placeholder="e.g., ABC Trading Co." value="{{ old('company_name') }}" required>
                 </div>
                 <div class="col-md-6">
                     <label class="form-label">Trade License Number</label>
-                    <div class="position-relative">
-                        <input type="text" name="trade_license_number" class="input-dark input-custom" placeholder="License number" value="{{ old('trade_license_number') }}">
-                        <i class="fas fa-id-card input-icon"></i>
-                    </div>
+                    <input type="text" name="trade_license_number" class="input-dark input-custom" placeholder="License number" value="{{ old('trade_license_number') }}">
                 </div>
                 <div class="col-md-6">
                     <label class="form-label">Tax ID</label>
-                    <div class="position-relative">
-                        <input type="text" name="tax_id" class="input-dark input-custom" placeholder="Tax identification number" value="{{ old('tax_id') }}">
-                        <i class="fas fa-file-invoice input-icon"></i>
-                    </div>
+                    <input type="text" name="tax_id" class="input-dark input-custom" placeholder="Tax identification number" value="{{ old('tax_id') }}">
                 </div>
             </div>
 
@@ -78,24 +69,15 @@
             <div class="row g-4 mb-5">
                 <div class="col-md-12">
                     <label class="form-label">Contact Person</label>
-                    <div class="position-relative">
-                        <input type="text" name="contact_person" class="input-dark input-custom" placeholder="Primary contact person" value="{{ old('contact_person') }}">
-                        <i class="fas fa-user input-icon"></i>
-                    </div>
+                    <input type="text" name="contact_person" class="input-dark input-custom" placeholder="Primary contact person" value="{{ old('contact_person') }}">
                 </div>
                 <div class="col-md-6">
                     <label class="form-label">Contact Phone</label>
-                    <div class="position-relative">
-                        <input type="text" name="contact_phone" class="input-dark input-custom" placeholder="+880 1XXX-XXXXXX" value="{{ old('contact_phone') }}">
-                        <i class="fas fa-phone input-icon"></i>
-                    </div>
+                    <input type="text" name="contact_phone" class="input-dark input-custom" placeholder="+880 1XXX-XXXXXX" value="{{ old('contact_phone') }}">
                 </div>
                 <div class="col-md-6">
                     <label class="form-label">Contact Email</label>
-                    <div class="position-relative">
-                        <input type="email" name="contact_email" class="input-dark input-custom" placeholder="business@email.com" value="{{ old('contact_email') }}">
-                        <i class="fas fa-envelope input-icon"></i>
-                    </div>
+                    <input type="email" name="contact_email" class="input-dark input-custom" placeholder="business@email.com" value="{{ old('contact_email') }}">
                 </div>
                 <div class="col-md-12">
                     <label class="form-label">Billing Address</label>
@@ -116,10 +98,7 @@
             <div class="row g-4 mb-5">
                 <div class="col-md-6">
                     <label class="form-label">Credit Limit (৳) *</label>
-                    <div class="position-relative">
-                        <input type="number" name="credit_limit" class="input-dark input-custom" placeholder="0.00" value="{{ old('credit_limit', 0) }}" min="0" step="0.01" required>
-                        <i class="fas fa-wallet input-icon"></i>
-                    </div>
+                    <input type="number" name="credit_limit" class="input-dark input-custom" placeholder="0.00" value="{{ old('credit_limit', 0) }}" min="0" step="0.01" required>
                     <small class="text-muted" style="font-size: 0.75rem; opacity: 0.6;">Maximum credit amount allowed</small>
                 </div>
                 <div class="col-md-6">
@@ -136,10 +115,7 @@
                 </div>
                 <div class="col-md-6">
                     <label class="form-label">Payment Days *</label>
-                    <div class="position-relative">
-                        <input type="number" name="payment_days" class="input-dark input-custom" placeholder="0" value="{{ old('payment_days', 0) }}" min="0" max="365" required>
-                        <i class="fas fa-calendar input-icon"></i>
-                    </div>
+                    <input type="number" name="payment_days" class="input-dark input-custom" placeholder="0" value="{{ old('payment_days', 0) }}" min="0" max="365" required>
                     <small class="text-muted" style="font-size: 0.75rem; opacity: 0.6;">Days allowed for payment (0 = immediate)</small>
                 </div>
             </div>
@@ -160,10 +136,7 @@
                 </div>
                 <div class="col-md-6">
                     <label class="form-label">Wholesale Discount (%) *</label>
-                    <div class="position-relative">
-                        <input type="number" name="wholesale_discount" class="input-dark input-custom" placeholder="0.00" value="{{ old('wholesale_discount', 0) }}" min="0" max="100" step="0.01" required>
-                        <i class="fas fa-percent input-icon"></i>
-                    </div>
+                    <input type="number" name="wholesale_discount" class="input-dark input-custom" placeholder="0.00" value="{{ old('wholesale_discount', 0) }}" min="0" max="100" step="0.01" required>
                     <small class="text-muted" style="font-size: 0.75rem; opacity: 0.6;">Discount on wholesale orders</small>
                 </div>
             </div>
@@ -219,7 +192,7 @@
         background: rgba(15, 23, 42, 0.6);
         border: 1px solid rgba(255, 255, 255, 0.1);
         color: #fff;
-        padding: 0.75rem 1rem 0.75rem 2.75rem;
+        padding: 0.75rem 1rem;
         border-radius: 12px;
         transition: 0.3s;
         width: 100%;
@@ -245,14 +218,7 @@
         resize: vertical;
     }
 
-    .input-icon {
-        position: absolute;
-        left: 1rem;
-        top: 50%;
-        transform: translateY(-0.5rem);
-        color: rgba(255, 255, 255, 0.4);
-        pointer-events: none;
-    }
+    
 
     select.input-dark {
         padding-left: 1rem;
@@ -265,10 +231,6 @@
         padding-right: 2.75rem;
     }
 
-    textarea.input-dark + .input-icon,
-    select.input-dark + .input-icon {
-        display: none;
-    }
 
     .form-label {
         color: #fff;

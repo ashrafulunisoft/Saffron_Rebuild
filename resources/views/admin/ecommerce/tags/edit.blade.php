@@ -34,7 +34,6 @@
                                value="{{ old('name_en', $tag->name_en) }}"
                                required
                                autofocus>
-                        <i class="fas fa-tag input-icon"></i>
                     </div>
                     @error('name_en')
                         <div class="text-danger mt-2" style="font-size: 0.8rem;">{{ $message }}</div>
@@ -49,7 +48,6 @@
                                placeholder="উদাহরণ: অর্গানিক, প্রিমিয়াম"
                                value="{{ old('name_bn', $tag->name_bn) }}"
                                required>
-                        <i class="fas fa-language input-icon"></i>
                     </div>
                     @error('name_bn')
                         <div class="text-danger mt-2" style="font-size: 0.8rem;">{{ $message }}</div>
@@ -129,7 +127,7 @@
         background: rgba(15, 23, 42, 0.6);
         border: 1px solid rgba(255, 255, 255, 0.1);
         color: #fff;
-        padding: 0.75rem 1rem 0.75rem 2.75rem;
+        padding: 0.75rem 1rem;
         border-radius: 12px;
         transition: 0.3s;
         width: 100%;
@@ -149,14 +147,7 @@
         font-size: 0.9rem;
     }
 
-    .input-icon {
-        position: absolute;
-        left: 1rem;
-        top: 50%;
-        transform: translateY(-50%);
-        color: rgba(255, 255, 255, 0.4);
-        pointer-events: none;
-    }
+    
 
     .text-muted {
         color: rgba(255, 255, 255, 0.5) !important;

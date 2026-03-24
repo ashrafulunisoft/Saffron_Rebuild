@@ -89,7 +89,6 @@
                                placeholder="Search coupons..."
                                value="{{ $query ?? '' }}"
                                style="color: white;">
-                        <i class="fas fa-search input-icon"></i>
                     </div>
                     <button type="submit" class="btn-gradient" style="padding: 0.75rem 1.5rem; border-radius: 12px;">
                         <i class="fas fa-search me-2"></i>Search

@@ -197,9 +197,6 @@ document.getElementById('nameBn')?.addEventListener('input', function(e) {
         padding-right: 2.75rem;
     }
 
-    select.input-dark + .input-icon {
-        display: none;
-    }
 
     .text-muted {
         color: rgba(255, 255, 255, 0.5) !important;

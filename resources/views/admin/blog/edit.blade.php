@@ -40,7 +40,6 @@
                 <div class="col-md-6">
                     <div class="position-relative">
                         <input type="text" name="title_en" class="input-dark input-custom" value="{{ old('title_en', $blog->title_en) }}" placeholder="Title (English) *" required>
-                        <i class="fas fa-heading input-icon"></i>
                     </div>
                     @error('title_en')
                         <div class="text-danger mt-2">{{ $message }}</div>
@@ -49,7 +48,6 @@
                 <div class="col-md-6">
                     <div class="position-relative">
                         <input type="text" name="title_bn" class="input-dark input-custom" value="{{ old('title_bn', $blog->title_bn) }}" placeholder="শিরোনাম (বাংলা) *" required>
-                        <i class="fas fa-heading input-icon"></i>
                     </div>
                     @error('title_bn')
                         <div class="text-danger mt-2">{{ $message }}</div>
@@ -103,10 +101,7 @@
             <div class="permission-title">Featured Image / বৈশিষ্ট্যযুক্ত চিত্র</div>
             <div class="row g-4 mb-5">
                 <div class="col-md-12">
-                    <div class="position-relative">
-                        <input type="file" name="featured_image" class="input-dark input-custom" accept="image/*">
-                        <i class="fas fa-image input-icon"></i>
-                    </div>
+                    <input type="file" name="featured_image" class="input-dark input-custom" accept="image/*">
                     <small class="text-white" style="opacity: 0.6;">Leave empty to keep current image. Recommended size: 1200x630px. Max size: 2MB.</small>
                     @error('featured_image')
                         <div class="text-danger mt-2">{{ $message }}</div>
@@ -125,7 +120,6 @@
                                 <option value="{{ $category }}" {{ old('category', $blog->category) === $category ? 'selected' : '' }}>{{ $category }}</option>
                             @endforeach
                         </select>
-                        <i class="fas fa-folder input-icon"></i>
                     </div>
                     @error('category')
                         <div class="text-danger mt-2">{{ $message }}</div>
@@ -134,7 +128,6 @@
                 <div class="col-md-6">
                     <div class="position-relative">
                         <input type="text" name="tags" class="input-dark input-custom" value="{{ old('tags', $blog->tags) }}" placeholder="Tags (comma separated) / ট্যাগ">
-                        <i class="fas fa-tags input-icon"></i>
                     </div>
                     <small class="text-white" style="opacity: 0.6;">Example: recipe, baking, cake</small>
                     @error('tags')
@@ -153,7 +146,6 @@
                             <option value="published" {{ old('status', $blog->status) === 'published' ? 'selected' : '' }}>Published / প্রকাশিত</option>
                             <option value="archived" {{ old('status', $blog->status) === 'archived' ? 'selected' : '' }}>Archived / সংরক্ষিত</option>
                         </select>
-                        <i class="fas fa-file-alt input-icon"></i>
                     </div>
                     @error('status')
                         <div class="text-danger mt-2">{{ $message }}</div>
@@ -199,7 +191,6 @@
                 <div class="col-md-12">
                     <div class="position-relative">
                         <input type="text" name="meta_title" class="input-dark input-custom" value="{{ old('meta_title', $blog->meta_title) }}" placeholder="Meta Title">
-                        <i class="fas fa-heading input-icon"></i>
                     </div>
                     @error('meta_title')
                         <div class="text-danger mt-2">{{ $message }}</div>
@@ -216,7 +207,6 @@
                 <div class="col-md-12">
                     <div class="position-relative">
                         <input type="text" name="meta_keywords" class="input-dark input-custom" value="{{ old('meta_keywords', $blog->meta_keywords) }}" placeholder="Meta Keywords (comma separated)">
-                        <i class="fas fa-key input-icon"></i>
                     </div>
                     @error('meta_keywords')
                         <div class="text-danger mt-2">{{ $message }}</div>

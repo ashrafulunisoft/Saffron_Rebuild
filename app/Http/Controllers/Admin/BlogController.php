@@ -50,7 +50,7 @@ class BlogController extends Controller
             'content_bn' => 'required|string',
             'excerpt_en' => 'nullable|string',
             'excerpt_bn' => 'nullable|string',
-            'featured_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'featured_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120', // Increased to 5MB
             'category' => 'nullable|string|max:100',
             'tags' => 'nullable|string|max:500',
             'status' => 'required|in:draft,published',
@@ -58,6 +58,8 @@ class BlogController extends Controller
             'meta_title' => 'nullable|string|max:255',
             'meta_description' => 'nullable|string|max:500',
             'meta_keywords' => 'nullable|string|max:500',
+        ], [
+            'featured_image.max' => 'The featured image must not be larger than 5MB.',
         ]);
 
         // Generate unique slug
@@ -130,7 +132,7 @@ class BlogController extends Controller
             'content_bn' => 'required|string',
             'excerpt_en' => 'nullable|string',
             'excerpt_bn' => 'nullable|string',
-            'featured_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'featured_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
             'category' => 'nullable|string|max:100',
             'tags' => 'nullable|string|max:500',
             'status' => 'required|in:draft,published,archived',
@@ -138,6 +140,8 @@ class BlogController extends Controller
             'meta_title' => 'nullable|string|max:255',
             'meta_description' => 'nullable|string|max:500',
             'meta_keywords' => 'nullable|string|max:500',
+        ], [
+            'featured_image.max' => 'The featured image must not be larger than 5MB.',
         ]);
 
         // Generate unique slug if title changed
@@ -183,7 +187,7 @@ class BlogController extends Controller
         $blog->save();
 
         return redirect()
-            ->route('admin.blog.index')
+            ->route('admin.ecommerce.blog.index')
             ->with('success', 'Blog post updated successfully! ব্লগ পোস্ট সফলভাবে আপডেট করা হয়েছে!');
     }
 
@@ -200,7 +204,7 @@ class BlogController extends Controller
         $blog->delete();
 
         return redirect()
-            ->route('admin.blog.index')
+            ->route('admin.ecommerce.blog.index')
             ->with('success', 'Blog post deleted successfully! ব্লগ পোস্ট সফলভাবে মুছে ফেলা হয়েছে!');
     }
 

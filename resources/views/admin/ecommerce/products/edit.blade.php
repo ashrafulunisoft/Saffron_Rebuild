@@ -28,7 +28,6 @@
                     <label class="form-label">SKU <span class="text-danger">*</span></label>
                     <div class="position-relative">
                         <input type="text" name="sku" class="input-dark input-custom" placeholder="e.g., CAKE-001" value="{{ old('sku', $product->sku) }}" required>
-                        <i class="fas fa-barcode input-icon"></i>
                     </div>
                     @error('sku')
                         <div class="text-danger mt-2" style="font-size: 0.8rem;">{{ $message }}</div>
@@ -54,7 +53,6 @@
                     <label class="form-label">Product Name (English) <span class="text-danger">*</span></label>
                     <div class="position-relative">
                         <input type="text" name="name_en" class="input-dark input-custom" placeholder="e.g., Chocolate Cake" value="{{ old('name_en', $product->name_en) }}" required>
-                        <i class="fas fa-tag input-icon"></i>
                     </div>
                     @error('name_en')
                         <div class="text-danger mt-2" style="font-size: 0.8rem;">{{ $message }}</div>
@@ -64,7 +62,6 @@
                     <label class="form-label">Product Name (Bengali) <span class="text-danger">*</span></label>
                     <div class="position-relative">
                         <input type="text" name="name_bn" class="input-dark input-custom" placeholder="উদাহরণ: চকোলেট কেক" value="{{ old('name_bn', $product->name_bn) }}" required>
-                        <i class="fas fa-language input-icon"></i>
                     </div>
                     @error('name_bn')
                         <div class="text-danger mt-2" style="font-size: 0.8rem;">{{ $message }}</div>
@@ -79,7 +76,6 @@
                     <label class="form-label">Regular Price (৳) <span class="text-danger">*</span></label>
                     <div class="position-relative">
                         <input type="number" name="price" class="input-dark input-custom" placeholder="0.00" step="0.01" min="0" value="{{ old('price', $product->price) }}" required>
-                        <i class="fas fa-dollar-sign input-icon"></i>
                     </div>
                     @error('price')
                         <div class="text-danger mt-2" style="font-size: 0.8rem;">{{ $message }}</div>
@@ -89,7 +85,6 @@
                     <label class="form-label">Sale Price (৳)</label>
                     <div class="position-relative">
                         <input type="number" name="sale_price" class="input-dark input-custom" placeholder="0.00" step="0.01" min="0" value="{{ old('sale_price', $product->sale_price) }}">
-                        <i class="fas fa-tags input-icon"></i>
                     </div>
                     <small class="text-muted">Leave empty if no sale</small>
                 </div>
@@ -102,14 +97,12 @@
                     <label class="form-label">Stock <span class="text-danger">*</span></label>
                     <div class="position-relative">
                         <input type="number" name="stock" class="input-dark input-custom" placeholder="0" min="0" value="{{ old('stock', $product->stock) }}" required>
-                        <i class="fas fa-boxes input-icon"></i>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <label class="form-label">Weight (kg)</label>
                     <div class="position-relative">
                         <input type="number" name="weight" class="input-dark input-custom" placeholder="0.00" step="0.01" min="0" value="{{ old('weight', $product->weight) }}">
-                        <i class="fas fa-weight input-icon"></i>
                     </div>
                 </div>
                 <div class="col-md-3">
@@ -167,17 +160,11 @@
                 </div>
                 <div class="col-md-6">
                     <label class="form-label">Replace Primary Image</label>
-                    <div class="position-relative">
-                        <input type="file" name="primary_image" class="input-dark input-custom" accept="image/*">
-                        <i class="fas fa-image input-icon"></i>
-                    </div>
+                    <input type="file" name="primary_image" class="input-dark input-custom" accept="image/*">
                 </div>
                 <div class="col-md-6">
                     <label class="form-label">Add More Images</label>
-                    <div class="position-relative">
-                        <input type="file" name="images[]" class="input-dark input-custom" accept="image/*" multiple>
-                        <i class="fas fa-images input-icon"></i>
-                    </div>
+                    <input type="file" name="images[]" class="input-dark input-custom" accept="image/*" multiple>
                     <small class="text-muted">You can select multiple images</small>
                 </div>
             </div>
@@ -235,7 +222,7 @@
         background: rgba(15, 23, 42, 0.6);
         border: 1px solid rgba(255, 255, 255, 0.1);
         color: #fff;
-        padding: 0.75rem 1rem 0.75rem 2.75rem;
+        padding: 0.75rem 1rem;
         border-radius: 12px;
         transition: 0.3s;
         width: 100%;
@@ -255,14 +242,7 @@
         font-size: 0.9rem;
     }
 
-    .input-icon {
-        position: absolute;
-        left: 1rem;
-        top: 50%;
-        transform: translateY(-50%);
-        color: rgba(255, 255, 255, 0.4);
-        pointer-events: none;
-    }
+    
 
     select.input-dark,
     textarea.input-dark {
@@ -284,10 +264,6 @@
         resize: vertical;
     }
 
-    select.input-dark + .input-icon,
-    textarea.input-dark + .input-icon {
-        display: none;
-    }
 
     .text-muted {
         color: rgba(255, 255, 255, 0.5) !important;

@@ -85,7 +85,6 @@
                 <div class="d-flex gap-2">
                     <div class="position-relative flex-grow-1">
                         <input type="text" name="search" class="input-dark input-custom" placeholder="Search customers..." value="{{ request('search') }}" style="color: white;">
-                        <i class="fas fa-search input-icon"></i>
                     </div>
                     <button type="submit" class="btn-gradient" style="padding: 0.75rem 1.5rem; border-radius: 12px;">
                         <i class="fas fa-search"></i>

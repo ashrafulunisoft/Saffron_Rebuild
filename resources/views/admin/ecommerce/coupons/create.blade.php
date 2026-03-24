@@ -25,8 +25,7 @@
             <div class="row g-4 mb-5">
                 <div class="col-md-12">
                     <label class="form-label">Coupon Code <span class="text-danger">*</span></label>
-                    <div class="position-relative">
-                        <input type="text"
+                    <input type="text"
                                name="code"
                                class="input-dark input-custom"
                                placeholder="e.g., SUMMER2026, WELCOME10"
@@ -34,8 +33,6 @@
                                required
                                style="text-transform: uppercase;"
                                autofocus>
-                        <i class="fas fa-ticket-alt input-icon"></i>
-                    </div>
                     <small class="text-muted">Enter a unique code (will be converted to uppercase)</small>
                     @error('code')
                         <div class="text-danger mt-2" style="font-size: 0.8rem;">{{ $message }}</div>
@@ -55,8 +52,7 @@
                 </div>
                 <div class="col-md-6">
                     <label class="form-label">Discount Value <span class="text-danger">*</span></label>
-                    <div class="position-relative">
-                        <input type="number"
+                    <input type="number"
                                name="value"
                                class="input-dark input-custom"
                                placeholder="e.g., 10"
@@ -64,8 +60,6 @@
                                min="0"
                                value="{{ old('value') }}"
                                required>
-                        <i class="fas fa-percentage input-icon"></i>
-                    </div>
                     <small class="text-muted">Percentage (e.g., 10 for 10%) or Fixed Amount</small>
                     @error('value')
                         <div class="text-danger mt-2" style="font-size: 0.8rem;">{{ $message }}</div>
@@ -78,16 +72,13 @@
             <div class="row g-4 mb-5">
                 <div class="col-md-6">
                     <label class="form-label">Maximum Discount</label>
-                    <div class="position-relative">
-                        <input type="number"
+                    <input type="number"
                                name="max_discount"
                                class="input-dark input-custom"
                                placeholder="e.g., 500"
                                step="0.01"
                                min="0"
                                value="{{ old('max_discount') }}">
-                        <i class="fas fa-tag input-icon"></i>
-                    </div>
                     <small class="text-muted">Maximum discount amount (for percentage discounts)</small>
                     @error('max_discount')
                         <div class="text-danger mt-2" style="font-size: 0.8rem;">{{ $message }}</div>
@@ -95,15 +86,12 @@
                 </div>
                 <div class="col-md-6">
                     <label class="form-label">Usage Limit</label>
-                    <div class="position-relative">
-                        <input type="number"
+                    <input type="number"
                                name="usage_limit"
                                class="input-dark input-custom"
                                placeholder="e.g., 100"
                                min="1"
                                value="{{ old('usage_limit') }}">
-                        <i class="fas fa-hashtag input-icon"></i>
-                    </div>
                     <small class="text-muted">Leave empty for unlimited usage</small>
                     @error('usage_limit')
                         <div class="text-danger mt-2" style="font-size: 0.8rem;">{{ $message }}</div>
@@ -111,13 +99,10 @@
                 </div>
                 <div class="col-md-12">
                     <label class="form-label">Expiration Date</label>
-                    <div class="position-relative">
-                        <input type="datetime-local"
+                    <input type="datetime-local"
                                name="expires_at"
                                class="input-dark input-custom"
                                value="{{ old('expires_at') }}">
-                        <i class="fas fa-calendar input-icon"></i>
-                    </div>
                     <small class="text-muted">Leave empty for no expiration</small>
                     @error('expires_at')
                         <div class="text-danger mt-2" style="font-size: 0.8rem;">{{ $message }}</div>
@@ -165,7 +150,7 @@
         background: rgba(15, 23, 42, 0.6);
         border: 1px solid rgba(255, 255, 255, 0.1);
         color: #fff;
-        padding: 0.75rem 1rem 0.75rem 2.75rem;
+        padding: 0.75rem 1rem;
         border-radius: 12px;
         transition: 0.3s;
         width: 100%;
@@ -185,14 +170,7 @@
         font-size: 0.9rem;
     }
 
-    .input-icon {
-        position: absolute;
-        left: 1rem;
-        top: 50%;
-        transform: translateY(-50%);
-        color: rgba(255, 255, 255, 0.4);
-        pointer-events: none;
-    }
+    
 
     select.input-dark,
     input[type="datetime-local"].input-dark {
@@ -209,9 +187,6 @@
         padding-right: 2.75rem;
     }
 
-    select.input-dark + .input-icon {
-        display: none;
-    }
 
     .text-muted {
         color: rgba(255, 255, 255, 0.5) !important;
