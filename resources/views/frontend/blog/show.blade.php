@@ -30,11 +30,11 @@
       <div class="col-lg-10">
         <div class="glass-card" style="padding:1.5rem;border-radius:16px;box-shadow:0 10px 40px rgba(0,0,0,0.3);">
           <!-- Blog Image Container -->
-          <div style="position:relative;width:100%;padding-top:56.25%;overflow:hidden;border-radius:12px;background:rgba(245,230,204,0.02);margin-bottom:1.5rem;">
+          <div style="position:relative;width:100%;border-radius:12px;background:rgba(245,230,204,0.02);margin-bottom:1.5rem;">
             @if($post->is_featured)
               <span style="position:absolute;top:15px;right:15px;background:linear-gradient(135deg,#f59e0b,#f43f5e);color:white;padding:6px 16px;border-radius:20px;font-size:0.75rem;font-weight:700;box-shadow:0 4px 12px rgba(245,158,11,0.4);z-index:2;">⭐ Featured</span>
             @endif
-            <img src="{{ asset('storage/' . $post->featured_image) }}" alt="{{ $post->title }}" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;display:block;">
+            <img src="{{ asset('storage/' . $post->featured_image) }}" alt="{{ $post->title }}" style="width:100%;height:auto;display:block;border-radius:12px;">
           </div>
         </div>
       </div>
@@ -97,9 +97,6 @@
             <div class="d-flex gap-2 mt-2">
               <a href="https://www.facebook.com/sharer/sharer.php?u={{ url()->current() }}" target="_blank" class="btn-share" style="background:#1877f2;">
                 <i class="fab fa-facebook-f"></i> Facebook
-              </a>
-              <a href="https://twitter.com/intent/tweet?url={{ url()->current() }}&text={{ $post->title }}" target="_blank" class="btn-share" style="background:#000000;">
-                <i class="fab fa-x-twitter"></i> Twitter
               </a>
               <a href="https://wa.me/?text={{ $post->title }} - {{ url()->current() }}" target="_blank" class="btn-share" style="background:#25d366;">
                 <i class="fab fa-whatsapp"></i> WhatsApp

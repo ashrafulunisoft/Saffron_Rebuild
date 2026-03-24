@@ -2007,11 +2007,17 @@ section {
 }
 .floating-card.fc-1 { top:15%; left:5%; animation-delay:0s; }
 .floating-card.fc-2 { top:25%; right:8%; animation-delay:1.5s; }
-.floating-card.fc-3 { bottom:25%; left:8%; animation-delay:3s; }
+.floating-card.fc-3 { bottom:20%; left:3%; animation-delay:3s; animation:floatSlideLeft 6s ease-in-out infinite; }
 .floating-card.fc-4 { bottom:15%; right:5%; animation-delay:4.5s; }
 @keyframes float {
   0%,100% { transform:translateY(0) rotate(0deg); }
   50% { transform:translateY(-20px) rotate(2deg); }
+}
+@keyframes floatSlideLeft {
+  0%,100% { transform:translate(0, 0) rotate(0deg); }
+  25% { transform:translate(-10px, -15px) rotate(-1deg); }
+  50% { transform:translate(0, -25px) rotate(0deg); }
+  75% { transform:translate(10px, -15px) rotate(1deg); }
 }
 .fc-icon { font-size:2.5rem; }
 .fc-text { font-size:.9rem; font-weight:600; color:#f5e6cc; }
