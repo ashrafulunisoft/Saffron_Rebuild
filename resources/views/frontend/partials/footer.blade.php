@@ -39,16 +39,6 @@
         </ul>
       </div>
       <div class="col-6 col-lg">
-        <h5 class="footer-title">Categories</h5>
-        <ul class="footer-links">
-          <li><a href="{{ route('shop.category', 'bengali-sweets') }}">Bengali Sweets</a></li>
-          <li><a href="{{ route('shop.category', 'chocolates') }}">Chocolates</a></li>
-          <li><a href="{{ route('shop.category', 'bakery') }}">Bakery</a></li>
-          <li><a href="{{ route('shop.category', 'cakes') }}">Custom Cakes</a></li>
-          <li><a href="{{ route('shop.category', 'gift-hampers') }}">Gift Hampers</a></li>
-        </ul>
-      </div>
-      <div class="col-6 col-lg">
         <h5 class="footer-title">Contact Us</h5>
         <div class="footer-contact-item">
           <i class="fas fa-map-marker-alt"></i>

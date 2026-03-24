@@ -766,7 +766,7 @@ Route::get('/test-sms', function () {
 // Test route for SSLCommerz (remove in production)
 Route::get('/test-sslcommerz', function() {
     $service = new \App\Services\SSLCommerzService();
-    
+
     $testData = [
         'total_amount' => 10,
         'currency' => 'BDT',
@@ -783,8 +783,8 @@ Route::get('/test-sslcommerz', function() {
         'product_category' => 'Test',
         'product_profile' => 'physical-goods',
     ];
-    
+
     $response = $service->createPayment($testData);
-    
+
     return response()->json($response);
 });
