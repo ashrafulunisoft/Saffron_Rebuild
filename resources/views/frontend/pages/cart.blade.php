@@ -802,5 +802,60 @@ document.addEventListener('DOMContentLoaded', function() {
     padding: 0.3rem 0.6rem;
   }
 }
+
+/* CRITICAL FIX: Modal backdrop issue on cart page */
+/* Force modal backdrop to appear and block ALL clicks */
+.modal-backdrop {
+  z-index: 99990 !important;
+  background-color: rgba(0, 0, 0, 0.5) !important;
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+}
+
+/* Ensure modals appear above backdrop */
+.modal {
+  z-index: 99991 !important;
+}
+
+.modal.show {
+  z-index: 99991 !important;
+}
+
+/* Specific modals */
+#loginModal,
+#registerModal {
+  z-index: 99991 !important;
+}
+
+/* When modal is open, ensure body can't scroll */
+body.modal-open {
+  overflow: hidden !important;
+  padding-right: 0 !important;
+}
+
+/* Prevent any page elements from appearing above modal backdrop */
+body.modal-open * {
+  z-index: auto !important;
+}
+
+/* Modals should maintain their z-index */
+body.modal-open .modal,
+body.modal-open .modal-backdrop {
+  z-index: inherit !important;
+}
+
+/* Ensure glass-card doesn't interfere with modals */
+.glass-card {
+  position: relative;
+  isolation: isolate;
+}
+
+/* Fix sticky element stacking context */
+.glass-card[style*="position: sticky"] {
+  z-index: 1 !important;
+}
 </style>
 @endpush
