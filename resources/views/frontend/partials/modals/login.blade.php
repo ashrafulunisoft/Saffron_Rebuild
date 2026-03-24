@@ -46,11 +46,11 @@
             <i class="fas fa-sign-in-alt me-2"></i>Sign In
           </button>
         </form>
-        <div class="auth-divider"><span>or continue with</span></div>
+        {{-- <div class="auth-divider"><span>or continue with</span></div>
         <div class="d-flex gap-2">
           <button class="btn btn-social flex-fill"><i class="fab fa-google"></i> Google</button>
           <button class="btn btn-social flex-fill"><i class="fab fa-facebook-f"></i> Facebook</button>
-        </div>
+        </div> --}}
         <p class="auth-footer mt-4">
           Don't have an account?
           <a href="#" class="auth-link" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#registerModal">Create Account</a>
