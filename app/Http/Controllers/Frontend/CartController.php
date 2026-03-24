@@ -124,6 +124,7 @@ class CartController extends Controller
                 return ($item->product->sale_price ?? $item->product->price) * $item->quantity;
             });
             $shipping = $subtotal >= 1000 ? 0 : 60;
+            $shippingThreshold = 1000;
 
             return response()->json([
                 'success' => true,
@@ -131,8 +132,11 @@ class CartController extends Controller
                 'cart_count' => (int)$cartCount,
                 'subtotal' => number_format($subtotal, 2),
                 'shipping' => $shipping,
+                'shipping_threshold' => $shippingThreshold,
                 'total' => number_format($subtotal + $shipping, 2),
                 'item_subtotal' => number_format(($cartItem->product->sale_price ?? $cartItem->product->price) * $cartItem->quantity, 2),
+                'shipping_message' => $shipping == 0 ? 'Free shipping applied!' : 'Add ৳' . number_format($shippingThreshold - $subtotal, 0) . ' more for free shipping!',
+                'shipping_is_free' => $shipping == 0,
             ]);
         }
 
@@ -158,10 +162,24 @@ class CartController extends Controller
         $cartCount = $this->getCartCount();
 
         if ($request->ajax() || $request->wantsJson()) {
+            // Recalculate totals
+            $cartItems = $this->getCartItems();
+            $subtotal = $cartItems->sum(function($item) {
+                return ($item->product->sale_price ?? $item->product->price) * $item->quantity;
+            });
+            $shipping = $subtotal >= 1000 ? 0 : 60;
+            $shippingThreshold = 1000;
+
             return response()->json([
                 'success' => true,
                 'message' => 'Item removed from cart!',
                 'cart_count' => (int)$cartCount,
+                'subtotal' => number_format($subtotal, 2),
+                'shipping' => $shipping,
+                'shipping_threshold' => $shippingThreshold,
+                'total' => number_format($subtotal + $shipping, 2),
+                'shipping_message' => $shipping == 0 ? 'Free shipping applied!' : 'Add ৳' . number_format($shippingThreshold - $subtotal, 0) . ' more for free shipping!',
+                'shipping_is_free' => $shipping == 0,
             ]);
         }
 

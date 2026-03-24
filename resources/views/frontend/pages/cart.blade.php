@@ -238,35 +238,21 @@
               </div>
               <div class="d-flex justify-content-between mb-2">
                 <span style="color: rgba(245,230,204,0.7);">Shipping</span>
-                @if($shipping === 0)
-                  <span style="color: #10b981; font-weight: 600;">Free</span>
-                @else
-                  <span style="color: #f5e6cc; font-weight: 600;">৳{{ number_format($shipping) }}</span>
-                @endif
+                <span id="shippingCost" style="color: #f5e6cc; font-weight: 600;">
+                  @if($shipping === 0)
+                    Free
+                  @else
+                    ৳{{ number_format($shipping) }}
+                  @endif
+                </span>
               </div>
-              @if($shipping === 0)
-                <div style="background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.3); border-radius: 8px; padding: 0.75rem; margin-top: 1rem;">
-                  <small style="color: #10b981;">
-                    <i class="fas fa-check-circle me-1"></i>
-                    Free shipping applied!
-                  </small>
+              <div id="shippingMessage"></div>
+              <div style="border-top: 1px solid rgba(245,230,204,0.1); padding-top: 1.5rem; margin-bottom: 1.5rem;">
+                <div class="d-flex justify-content-between">
+                  <span style="color: #f5e6cc; font-size: 1.2rem; font-weight: 600;">Total</span>
+                  <span class="cart-total" style="color: #fbbf24; font-size: 1.5rem; font-weight: 700;">৳{{ number_format($total) }}</span>
                 </div>
-              @else
-                <div style="background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.3); border-radius: 8px; padding: 0.75rem; margin-top: 1rem;">
-                  <small style="color: #fbbf24;">
-                    <i class="fas fa-info-circle me-1"></i>
-                    Add ৳{{ number_format(1000 - $subtotal) }} more for free shipping!
-                  </small>
-                </div>
-              @endif
-            </div>
-
-            <div style="border-top: 1px solid rgba(245,230,204,0.1); padding-top: 1.5rem; margin-bottom: 1.5rem;">
-              <div class="d-flex justify-content-between">
-                <span style="color: #f5e6cc; font-size: 1.2rem; font-weight: 600;">Total</span>
-                <span class="cart-total" style="color: #fbbf24; font-size: 1.5rem; font-weight: 700;">৳{{ number_format($total) }}</span>
               </div>
-            </div>
 
             @auth
             <a href="{{ route('checkout') }}" class="btn btn-glow w-100 btn-lg">
@@ -312,17 +298,27 @@ function updateCartQty(cartId, newQuantity) {
   const cartItem = document.querySelector(`.cart-item[data-cart-id="${cartId}"]`);
   if (!cartItem) return;
 
-  const qtyInput = cartItem.querySelector('.qty-input');
-  const minusBtn = cartItem.querySelector('.qty-minus');
-  const plusBtn = cartItem.querySelector('.qty-plus');
+  // Find ALL qty-inputs with matching cart-id (handles both desktop and mobile layouts)
+  const qtyInputs = cartItem.querySelectorAll(`.qty-input[data-cart-id="${cartId}"]`);
+  const minusBtns = cartItem.querySelectorAll(`.qty-minus[data-cart-id="${cartId}"]`);
+  const plusBtns = cartItem.querySelectorAll(`.qty-plus[data-cart-id="${cartId}"]`);
+
+  // Use the first visible qty-input for fallback
+  const qtyInput = qtyInputs[0];
+  const minusBtn = minusBtns[0];
+  const plusBtn = plusBtns[0];
 
   // Store original value for revert
   const originalQty = parseInt(qtyInput.value);
 
-  // Show loading state
-  qtyInput.value = newQuantity;
-  minusBtn.disabled = true;
-  plusBtn.disabled = true;
+  // Show loading state - update ALL qty-inputs
+  qtyInputs.forEach(input => {
+    input.value = newQuantity;
+    input.setAttribute('value', newQuantity);
+  });
+
+  minusBtns.forEach(btn => btn.disabled = true);
+  plusBtns.forEach(btn => btn.disabled = true);
 
   fetch('/cart/update', {
     method: 'POST',
@@ -351,14 +347,23 @@ function updateCartQty(cartId, newQuantity) {
   })
   .then(data => {
     if (data.success) {
+      // Confirm the quantity input value is updated (important for mobile)
+      // Update ALL matching qty-inputs (both desktop and mobile)
+      qtyInputs.forEach(input => {
+        input.value = parseInt(newQuantity);
+        input.setAttribute('value', parseInt(newQuantity));
+      });
+
       // Update cart count in header
       updateCartCountBadge(data.cart_count);
 
-      // Update item subtotal
-      const itemSubtotal = cartItem.querySelector('.item-subtotal');
-      if (itemSubtotal && data.item_subtotal) {
-        itemSubtotal.textContent = '৳' + data.item_subtotal;
-      }
+      // Update item subtotal (both desktop and mobile)
+      const itemSubtotals = cartItem.querySelectorAll('.item-subtotal');
+      itemSubtotals.forEach(el => {
+        if (data.item_subtotal) {
+          el.textContent = '৳' + data.item_subtotal;
+        }
+      });
 
       // Update Order Summary subtotal
       const orderSubtotal = document.getElementById('orderSubtotal');
@@ -366,49 +371,75 @@ function updateCartQty(cartId, newQuantity) {
         orderSubtotal.textContent = '৳' + data.subtotal;
       }
 
-      // Update cart totals
+      // Update shipping cost
+      const shippingCost = document.getElementById('shippingCost');
+      if (shippingCost && data.shipping !== undefined) {
+        if (data.shipping == 0) {
+          shippingCost.textContent = 'Free';
+          shippingCost.style.color = '#10b981';
+        } else {
+          shippingCost.textContent = '৳' + data.shipping;
+          shippingCost.style.color = '#f5e6cc';
+        }
+      }
+
+      // Update shipping message
+      const shippingMessage = document.getElementById('shippingMessage');
+      if (shippingMessage && data.shipping_message) {
+        if (data.shipping == 0) {
+          shippingMessage.innerHTML = `<div style="background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.3); border-radius: 8px; padding: 0.75rem; margin-top: 1rem;">
+            <small style="color: #10b981;">
+              <i class="fas fa-check-circle me-1"></i>
+              Free shipping applied!
+            </small>
+          </div>`;
+        } else {
+          const amountNeeded = data.shipping_threshold ? (data.shipping_threshold - data.subtotal) : 0;
+          shippingMessage.innerHTML = `<div style="background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.3); border-radius: 8px; padding: 0.75rem; margin-top: 1rem;">
+            <small style="color: #fbbf24;">
+              <i class="fas fa-info-circle me-1"></i>
+              Add ৳${amountNeeded} more for free shipping!
+            </small>
+          </div>`;
+        }
+      }
+
+      // Update discount if exists
+      if (data.discount > 0) {
+        const discountRow = document.getElementById('discountRow');
+        const discountAmount = document.getElementById('discountAmount');
+        if (discountRow && discountAmount) {
+          discountRow.style.display = 'flex';
+          discountAmount.textContent = '-৳' + data.discount;
+        }
+      }
+
+      // Update cart total
       const cartTotal = document.querySelector('.cart-total');
       if (cartTotal && data.total) {
         cartTotal.textContent = '৳' + data.total;
       }
 
-      // Update shipping message if provided
-      if (data.shipping_message) {
-        const cartTotals = document.querySelector('.cart-totals');
-        if (cartTotals) {
-          // Remove old shipping message if exists
-          const oldMessage = cartTotals.querySelector('.shipping-message');
-          if (oldMessage) oldMessage.remove();
+      // Update button states based on NEW quantity (update ALL matching buttons)
+      minusBtns.forEach(btn => btn.disabled = newQuantity <= 1);
+      plusBtns.forEach(btn => btn.disabled = newQuantity >= 10);
 
-          // Add new shipping message
-          const messageDiv = document.createElement('div');
-          messageDiv.className = 'shipping-message';
-          messageDiv.style.cssText = data.shipping_is_free
-            ? 'background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.3); border-radius: 8px; padding: 0.75rem; margin-top: 1rem;'
-            : 'background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.3); border-radius: 8px; padding: 0.75rem; margin-top: 1rem;';
-          messageDiv.innerHTML = `<small style="color: ${data.shipping_is_free ? '#10b981' : '#fbbf24'};">
-            <i class="fas fa-${data.shipping_is_free ? 'check' : 'info-circle'} me-1"></i>
-            ${data.shipping_message}
-          </small>`;
-          cartTotals.appendChild(messageDiv);
-        }
-      }
-
-      // Update button states based on NEW quantity
-      minusBtn.disabled = newQuantity <= 1;
-      plusBtn.disabled = newQuantity >= 10;
-
-      // Show brief success feedback
-      qtyInput.style.color = '#10b981';
-      setTimeout(() => {
-        qtyInput.style.color = '#f5e6cc';
-      }, 500);
+      // Show brief success feedback on ALL qty-inputs
+      qtyInputs.forEach(input => {
+        input.style.color = '#10b981';
+        setTimeout(() => {
+          input.style.color = '#f5e6cc';
+        }, 500);
+      });
     } else {
       alert(data.message || 'Failed to update cart');
-      // Revert to original quantity
-      qtyInput.value = originalQty;
-      minusBtn.disabled = originalQty <= 1;
-      plusBtn.disabled = originalQty >= 10;
+      // Revert to original quantity - update ALL qty-inputs
+      qtyInputs.forEach(input => {
+        input.value = parseInt(originalQty);
+        input.setAttribute('value', parseInt(originalQty));
+      });
+      minusBtns.forEach(btn => btn.disabled = originalQty <= 1);
+      plusBtns.forEach(btn => btn.disabled = originalQty >= 10);
     }
   })
   .catch(error => {
@@ -465,6 +496,39 @@ function removeFromCart(cartId) {
       const orderSubtotal = document.getElementById('orderSubtotal');
       if (orderSubtotal && data.subtotal) {
         orderSubtotal.textContent = '৳' + data.subtotal;
+      }
+
+      // Update shipping cost
+      const shippingCost = document.getElementById('shippingCost');
+      if (shippingCost && data.shipping !== undefined) {
+        if (data.shipping == 0) {
+          shippingCost.textContent = 'Free';
+          shippingCost.style.color = '#10b981';
+        } else {
+          shippingCost.textContent = '৳' + data.shipping;
+          shippingCost.style.color = '#f5e6cc';
+        }
+      }
+
+      // Update shipping message
+      const shippingMessage = document.getElementById('shippingMessage');
+      if (shippingMessage && data.shipping_message) {
+        if (data.shipping == 0) {
+          shippingMessage.innerHTML = `<div style="background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.3); border-radius: 8px; padding: 0.75rem; margin-top: 1rem;">
+            <small style="color: #10b981;">
+              <i class="fas fa-check-circle me-1"></i>
+              Free shipping applied!
+            </small>
+          </div>`;
+        } else {
+          const amountNeeded = data.shipping_threshold ? (data.shipping_threshold - data.subtotal) : 0;
+          shippingMessage.innerHTML = `<div style="background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.3); border-radius: 8px; padding: 0.75rem; margin-top: 1rem;">
+            <small style="color: #fbbf24;">
+              <i class="fas fa-info-circle me-1"></i>
+              Add ৳${amountNeeded} more for free shipping!
+            </small>
+          </div>`;
+        }
       }
 
       // Update cart total
