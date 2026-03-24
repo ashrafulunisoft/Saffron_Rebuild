@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Login - UCB Bank</title>
+    <title>Login - Saffron Sweets & Bakery</title>
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Google Fonts: Inter -->
@@ -224,6 +224,50 @@
             color: rgba(255, 255, 255, 0.5) !important;
         }
 
+        .saffron-logo-custom {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .saffron-logo-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--accent-indigo), var(--accent-blue));
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: #fff;
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.4);
+        }
+
+        .saffron-logo-text {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .saffron-logo-title {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: #fff;
+            line-height: 1;
+            letter-spacing: 2px;
+            text-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+        }
+
+        .saffron-logo-subtitle {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--accent-blue);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
         @media (max-width: 576px) {
             body {
                 padding: 1rem;
@@ -247,15 +291,23 @@
         {{-- <div class="logo-vms">
             <i class="fas fa-university"></i>
         </div> --}}
-        <div class="text-center gap-3 mb-3 ">
-                <img class="bg-white " src="{{ asset('vms/logo/ucb-bank-logo-bg_removed.png') }}" style="height: 80px; width: 100px; border-radius:10px;" alt="UCB Bank Logo">
+        <div class="text-center gap-3 mb-3">
+            <div class="saffron-logo-custom">
+                <div class="saffron-logo-icon">
+                    <i class="fas fa-cookie-bite"></i>
+                </div>
+                <div class="saffron-logo-text">
+                    <div class="saffron-logo-title">SAFFRON</div>
+                    <div class="saffron-logo-subtitle">Sweets & Bakery</div>
+                </div>
+            </div>
         </div>
 
 
         <!-- Header -->
         <div class="text-center mb-4">
             <h2 class="fw-800 text-white mb-2" style="letter-spacing: -1px;">Please Sign In</h2>
-            <p class="text-white-50 mb-0" style="font-size: 0.9rem;">Welcome back to UCB Bank VMS</p>
+            <p class="text-white-50 mb-0" style="font-size: 0.9rem;">Welcome to Saffron Sweets & Bakery</p>
         </div>
 
         <!-- Validation Errors -->

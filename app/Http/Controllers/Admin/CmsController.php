@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\CmsPage;
+use App\Models\CmsSection;
 use Illuminate\Http\Request;
 
 class CmsController extends Controller
@@ -116,5 +117,126 @@ class CmsController extends Controller
 
         return redirect()->route('admin.cms.index')
             ->with('success', 'CMS page deleted successfully!');
+    }
+
+    /**
+     * Show sections for a CMS page.
+     */
+    public function sections(CmsPage $cms)
+    {
+        return view('admin.cms.sections', compact('cms'));
+    }
+
+    /**
+     * Show form to create a new section.
+     */
+    public function createSection(CmsPage $cms)
+    {
+        return view('admin.cms.create-section', compact('cms'));
+    }
+
+    /**
+     * Store a new section.
+     */
+    public function storeSection(Request $request, CmsPage $cms)
+    {
+        $request->validate([
+            'section_key' => 'required|string|max:255',
+            'title_en' => 'required|string|max:255',
+            'title_bn' => 'nullable|string|max:255',
+            'subtitle_en' => 'nullable|string',
+            'subtitle_bn' => 'nullable|string',
+            'content_en' => 'nullable|string',
+            'content_bn' => 'nullable|string',
+            'button_text_en' => 'nullable|string',
+            'button_text_bn' => 'nullable|string',
+            'button_url' => 'nullable|string',
+            'image_url' => 'nullable|string',
+            'icon' => 'nullable|string|max:50',
+            'sort_order' => 'integer',
+            'is_active' => 'boolean',
+        ]);
+
+        $cms->sections()->create([
+            'section_key' => $request->section_key,
+            'title_en' => $request->title_en,
+            'title_bn' => $request->title_bn,
+            'subtitle_en' => $request->subtitle_en,
+            'subtitle_bn' => $request->subtitle_bn,
+            'content_en' => $request->content_en,
+            'content_bn' => $request->content_bn,
+            'button_text_en' => $request->button_text_en,
+            'button_text_bn' => $request->button_text_bn,
+            'button_url' => $request->button_url,
+            'image_url' => $request->image_url,
+            'icon' => $request->icon,
+            'sort_order' => $request->sort_order ?? 0,
+            'is_active' => $request->has('is_active'),
+        ]);
+
+        return redirect()->route('admin.cms.sections', $cms)
+            ->with('success', 'Section created successfully!');
+    }
+
+    /**
+     * Show form to edit a section.
+     */
+    public function editSection(CmsPage $cms, CmsSection $section)
+    {
+        return view('admin.cms.edit-section', compact('cms', 'section'));
+    }
+
+    /**
+     * Update a section.
+     */
+    public function updateSection(Request $request, CmsPage $cms, CmsSection $section)
+    {
+        $request->validate([
+            'section_key' => 'required|string|max:255',
+            'title_en' => 'required|string|max:255',
+            'title_bn' => 'nullable|string|max:255',
+            'subtitle_en' => 'nullable|string',
+            'subtitle_bn' => 'nullable|string',
+            'content_en' => 'nullable|string',
+            'content_bn' => 'nullable|string',
+            'button_text_en' => 'nullable|string',
+            'button_text_bn' => 'nullable|string',
+            'button_url' => 'nullable|string',
+            'image_url' => 'nullable|string',
+            'icon' => 'nullable|string|max:50',
+            'sort_order' => 'integer',
+            'is_active' => 'boolean',
+        ]);
+
+        $section->update([
+            'section_key' => $request->section_key,
+            'title_en' => $request->title_en,
+            'title_bn' => $request->title_bn,
+            'subtitle_en' => $request->subtitle_en,
+            'subtitle_bn' => $request->subtitle_bn,
+            'content_en' => $request->content_en,
+            'content_bn' => $request->content_bn,
+            'button_text_en' => $request->button_text_en,
+            'button_text_bn' => $request->button_text_bn,
+            'button_url' => $request->button_url,
+            'image_url' => $request->image_url,
+            'icon' => $request->icon,
+            'sort_order' => $request->sort_order ?? 0,
+            'is_active' => $request->has('is_active'),
+        ]);
+
+        return redirect()->route('admin.cms.sections', $cms)
+            ->with('success', 'Section updated successfully!');
+    }
+
+    /**
+     * Delete a section.
+     */
+    public function destroySection(CmsPage $cms, CmsSection $section)
+    {
+        $section->delete();
+
+        return redirect()->route('admin.cms.sections', $cms)
+            ->with('success', 'Section deleted successfully!');
     }
 }

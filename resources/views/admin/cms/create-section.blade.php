@@ -14,12 +14,12 @@
                     <span class="permission-title" style="font-size: 0.7rem; margin: 0; text-shadow-blue">CREATE SECTION - {{ $cms->title }}</span>
                 </div>
             </div>
-            <a href="{{ route('admin.cms.sections', $cms) }}" class="btn btn-sm" style="background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2); padding: 0.5rem 1rem; border-radius: 100px; text-decoration: none;">
+            <a href="{{ route('admin.ecommerce.cms.sections', $cms) }}" class="btn btn-sm" style="background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2); padding: 0.5rem 1rem; border-radius: 100px; text-decoration: none;">
                 <i class="fas fa-arrow-left me-2"></i>Back
             </a>
         </div>
 
-        <form action="{{ route('admin.cms.sections.store', $cms) }}" method="POST">
+        <form action="{{ route('admin.ecommerce.cms.sections.store', $cms) }}" method="POST">
             @csrf
 
             <!-- Basic Info -->
@@ -134,7 +134,7 @@
                 <button type="submit" class="btn-gradient" style="padding: 0.75rem 2rem; border: none; border-radius: 100px;">
                     <i class="fas fa-save me-2"></i>Save Section
                 </button>
-                <a href="{{ route('admin.cms.sections', $cms) }}" class="btn btn-sm" style="background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2); padding: 0.75rem 2rem; border-radius: 100px; text-decoration: none;">
+                <a href="{{ route('admin.ecommerce.cms.sections', $cms) }}" class="btn btn-sm" style="background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2); padding: 0.75rem 2rem; border-radius: 100px; text-decoration: none;">
                     Cancel
                 </a>
             </div>

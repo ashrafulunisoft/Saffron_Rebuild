@@ -65,12 +65,13 @@ Saffron Next Task List :
 21. add the delivery fee from the admin page inside / out side dhaka; 
 22. CMS section with  Bangla.
 23. Remove/Edit the category section form the footer 
-24. ------------------------------------------------------------
+24. Admin can't change the password fix it ;  ------------------------------------------------------------
 25. have to fix the mobile design (later)
 26. password rest for the user (later)
 27. login or register with google / Facebook. (later)
 28. add pathoa integration ; (later)
 29. subcription fix (later)
+30. sms & email for notification; 
 
 
 

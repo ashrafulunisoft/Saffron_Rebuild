@@ -329,6 +329,20 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
             ->name('cms.update');
         Route::delete('/cms/{cms}', [App\Http\Controllers\Admin\CmsController::class, 'destroy'])
             ->name('cms.destroy');
+
+        // CMS Sections
+        Route::get('/cms/{cms}/sections', [App\Http\Controllers\Admin\CmsController::class, 'sections'])
+            ->name('cms.sections');
+        Route::get('/cms/{cms}/sections/create', [App\Http\Controllers\Admin\CmsController::class, 'createSection'])
+            ->name('cms.sections.create');
+        Route::post('/cms/{cms}/sections', [App\Http\Controllers\Admin\CmsController::class, 'storeSection'])
+            ->name('cms.sections.store');
+        Route::get('/cms/{cms}/sections/{section}/edit', [App\Http\Controllers\Admin\CmsController::class, 'editSection'])
+            ->name('cms.sections.edit');
+        Route::put('/cms/{cms}/sections/{section}', [App\Http\Controllers\Admin\CmsController::class, 'updateSection'])
+            ->name('cms.sections.update');
+        Route::delete('/cms/{cms}/sections/{section}', [App\Http\Controllers\Admin\CmsController::class, 'destroySection'])
+            ->name('cms.sections.destroy');
     });
 });
 

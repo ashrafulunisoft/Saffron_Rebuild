@@ -46,6 +46,14 @@ class CmsPage extends Model
     }
 
     /**
+     * Get the sections for the CMS page.
+     */
+    public function sections()
+    {
+        return $this->hasMany(CmsSection::class)->orderBy('sort_order');
+    }
+
+    /**
      * Get title based on locale.
      */
     public function getTitleAttribute()

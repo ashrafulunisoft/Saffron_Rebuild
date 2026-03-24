@@ -36,6 +36,7 @@
                     <tr style="border-bottom: 2px solid rgba(255,255,255,0.1);">
                         <th style="color: rgba(255,255,255,0.7); font-weight: 600;">Page Title / শিরোনাম</th>
                         <th style="color: rgba(255,255,255,0.7); font-weight: 600;">Slug / স্লাগ</th>
+                        <th style="color: rgba(255,255,255,0.7); font-weight: 600;">Sections / সেকশন</th>
                         <th style="color: rgba(255,255,255,0.7); font-weight: 600;">Status / অবস্থা</th>
                         <th style="color: rgba(255,255,255,0.7); font-weight: 600;">Created / তৈরি</th>
                         <th style="color: rgba(255,255,255,0.7); font-weight: 600;">Actions / পদক্ষেপ</th>
@@ -59,6 +60,11 @@
                             <code style="background: rgba(59, 130, 246, 0.2); color: var(--accent-blue); padding: 0.25rem 0.5rem; border-radius: 6px; font-size: 0.9rem;">{{ $page->slug }}</code>
                         </td>
                         <td>
+                            <span style="background: rgba(168, 85, 247, 0.2); color: #a855f7; padding: 0.25rem 0.75rem; border-radius: 100px; font-size: 0.85rem;">
+                                <i class="fas fa-layer-group me-1"></i>{{ $page->sections()->count() }}
+                            </span>
+                        </td>
+                        <td>
                             @if($page->is_active)
                                 <span style="background: rgba(34, 197, 94, 0.2); color: #22c55e; padding: 0.25rem 0.75rem; border-radius: 100px; font-size: 0.85rem; font-weight: 500;">
                                     <i class="fas fa-check-circle me-1"></i>Active
@@ -74,6 +80,9 @@
                         </td>
                         <td>
                             <div class="d-flex gap-2">
+                                <a href="{{ route('admin.ecommerce.cms.sections', $page) }}" class="btn btn-sm" style="background: rgba(168, 85, 247, 0.2); color: #a855f7; border: 1px solid rgba(168, 85, 247, 0.3); padding: 0.4rem 0.8rem; border-radius: 8px; text-decoration: none;" title="Manage Sections">
+                                    <i class="fas fa-layer-group"></i>
+                                </a>
                                 <a href="{{ route('admin.ecommerce.cms.edit', $page) }}" class="btn btn-sm" style="background: rgba(59, 130, 246, 0.2); color: var(--accent-blue); border: 1px solid rgba(59, 130, 246, 0.3); padding: 0.4rem 0.8rem; border-radius: 8px; text-decoration: none;">
                                     <i class="fas fa-edit"></i>
                                 </a>
@@ -89,7 +98,7 @@
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="5" class="text-center py-5">
+                        <td colspan="6" class="text-center py-5">
                             <div style="color: rgba(255,255,255,0.5);">
                                 <i class="fas fa-file-alt" style="font-size: 3rem; margin-bottom: 1rem; display: block;"></i>
                                 <p>No CMS pages found. / কোনো পেজ পাওয়া যায়নি</p>

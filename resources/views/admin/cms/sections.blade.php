@@ -15,10 +15,10 @@
                 </div>
             </div>
             <div class="d-flex align-items-center gap-3">
-                <a href="{{ route('admin.cms.index') }}" class="btn btn-sm" style="background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2); padding: 0.5rem 1rem; border-radius: 100px; text-decoration: none;">
+                <a href="{{ route('admin.ecommerce.cms.index') }}" class="btn btn-sm" style="background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2); padding: 0.5rem 1rem; border-radius: 100px; text-decoration: none;">
                     <i class="fas fa-arrow-left me-2"></i>Back to Pages
                 </a>
-                <a href="{{ route('admin.cms.sections.create', $cms) }}" class="btn-gradient" style="padding: 0.75rem 1.5rem; border-radius: 100px; text-decoration: none;">
+                <a href="{{ route('admin.ecommerce.cms.sections.create', $cms) }}" class="btn-gradient" style="padding: 0.75rem 1.5rem; border-radius: 100px; text-decoration: none;">
                     <i class="fas fa-plus me-2"></i>Add Section
                 </a>
             </div>
@@ -72,10 +72,10 @@
                         <td style="color: rgba(255,255,255,0.7);">{{ $section->sort_order }}</td>
                         <td>
                             <div class="d-flex gap-2">
-                                <a href="{{ route('admin.cms.sections.edit', [$cms, $section]) }}" class="btn btn-sm" style="background: rgba(59, 130, 246, 0.2); color: var(--accent-blue); border: 1px solid rgba(59, 130, 246, 0.3); padding: 0.4rem 0.8rem; border-radius: 8px; text-decoration: none;">
+                                <a href="{{ route('admin.ecommerce.cms.sections.edit', [$cms, $section]) }}" class="btn btn-sm" style="background: rgba(59, 130, 246, 0.2); color: var(--accent-blue); border: 1px solid rgba(59, 130, 246, 0.3); padding: 0.4rem 0.8rem; border-radius: 8px; text-decoration: none;">
                                     <i class="fas fa-edit"></i>
                                 </a>
-                                <form action="{{ route('admin.cms.sections.destroy', [$cms, $section]) }}" method="POST" onsubmit="return confirm('Are you sure?');" style="display: inline;">
+                                <form action="{{ route('admin.ecommerce.cms.sections.destroy', [$cms, $section]) }}" method="POST" onsubmit="return confirm('Are you sure?');" style="display: inline;">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-sm" style="background: rgba(239, 68, 68, 0.2); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3); padding: 0.4rem 0.8rem; border-radius: 8px;">
@@ -91,7 +91,7 @@
                             <div style="color: rgba(255,255,255,0.5);">
                                 <i class="fas fa-puzzle-piece" style="font-size: 3rem; margin-bottom: 1rem; display: block;"></i>
                                 <p>No sections found. Create your first section!</p>
-                                <a href="{{ route('admin.cms.sections.create', $cms) }}" class="btn-gradient" style="padding: 0.5rem 1.5rem; border-radius: 100px; text-decoration: none; margin-top: 1rem; display: inline-block;">
+                                <a href="{{ route('admin.ecommerce.cms.sections.create', $cms) }}" class="btn-gradient" style="padding: 0.5rem 1.5rem; border-radius: 100px; text-decoration: none; margin-top: 1rem; display: inline-block;">
                                     <i class="fas fa-plus me-2"></i>Create Section
                                 </a>
                             </div>
