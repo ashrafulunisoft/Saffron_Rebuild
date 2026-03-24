@@ -644,10 +644,10 @@
             document.getElementById('sidebarOverlay').classList.toggle('show');
         }
 
-        // Automatically open Ecommerce submenu if on category, product, tags, reviews, coupons, orders, customers, b2b, or reports pages
+        // Automatically open Ecommerce submenu if on any ecommerce page
         document.addEventListener('DOMContentLoaded', function() {
             const currentPath = window.location.pathname;
-            if (currentPath.includes('/admin/ecommerce/categories') || currentPath.includes('/admin/ecommerce/products') || currentPath.includes('/admin/ecommerce/tags') || currentPath.includes('/admin/ecommerce/reviews') || currentPath.includes('/admin/ecommerce/coupons') || currentPath.includes('/admin/ecommerce/orders') || currentPath.includes('/admin/ecommerce/customers') || currentPath.includes('/admin/ecommerce/b2b') || currentPath.includes('/admin/ecommerce/reports') || currentPath.includes('/admin/ecommerce/blog')) {
+            if (currentPath.includes('/admin/ecommerce/')) {
                 const ecommerceSubmenu = document.getElementById('ecommerce-submenu');
                 if (ecommerceSubmenu) {
                     ecommerceSubmenu.classList.add('active');
