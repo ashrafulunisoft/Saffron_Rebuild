@@ -1100,16 +1100,17 @@ function toggleWishlist(productId, button) {
 }
 
 .blog-img {
-  width: 100%;
-  height: 200px;
-  overflow: hidden;
   position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 12px 12px 0 0;
+  background: linear-gradient(135deg, rgba(245,158,11,0.05), rgba(244,63,94,0.05));
 }
 
 .blog-img img {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: auto;
+  display: block;
   transition: transform 0.3s ease;
 }
 

@@ -2162,6 +2162,7 @@ section {
   padding:.6rem 1.5rem; border-radius:100px; font-size:.9rem; font-weight:500;
   background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1);
   color:rgba(245,230,204,0.7); cursor:pointer; transition:all .3s ease;
+  text-decoration:none;
 }
 .filter-btn.active, .filter-btn:hover {
   background:linear-gradient(135deg, rgba(245,158,11,0.3), rgba(244,63,94,0.3));
