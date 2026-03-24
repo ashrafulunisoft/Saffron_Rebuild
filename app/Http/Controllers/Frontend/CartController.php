@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Models\Product;
 use App\Models\Coupon;
+use App\Models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -24,8 +25,12 @@ class CartController extends Controller
             return ($item->product->sale_price ?? $item->product->price) * $item->quantity;
         });
 
-        // Shipping calculation (free shipping over 1000)
-        $shipping = $subtotal >= 1000 ? 0 : 60;
+        // Get shipping settings from database
+        $freeShippingThreshold = Setting::getFreeShippingThreshold();
+        $shippingInsideDhaka = Setting::getShippingInsideDhaka();
+
+        // Shipping calculation (free shipping over threshold, default to inside dhaka rate)
+        $shipping = $subtotal >= $freeShippingThreshold ? 0 : $shippingInsideDhaka;
         $total = $subtotal + $shipping;
 
         return view('frontend.pages.cart', compact('cartItems', 'subtotal', 'shipping', 'total'));
@@ -123,8 +128,12 @@ class CartController extends Controller
             $subtotal = $cartItems->sum(function($item) {
                 return ($item->product->sale_price ?? $item->product->price) * $item->quantity;
             });
-            $shipping = $subtotal >= 1000 ? 0 : 60;
-            $shippingThreshold = 1000;
+
+            // Get shipping settings from database
+            $freeShippingThreshold = Setting::getFreeShippingThreshold();
+            $shippingInsideDhaka = Setting::getShippingInsideDhaka();
+
+            $shipping = $subtotal >= $freeShippingThreshold ? 0 : $shippingInsideDhaka;
 
             return response()->json([
                 'success' => true,
@@ -132,10 +141,10 @@ class CartController extends Controller
                 'cart_count' => (int)$cartCount,
                 'subtotal' => number_format($subtotal, 2),
                 'shipping' => $shipping,
-                'shipping_threshold' => $shippingThreshold,
+                'shipping_threshold' => $freeShippingThreshold,
                 'total' => number_format($subtotal + $shipping, 2),
                 'item_subtotal' => number_format(($cartItem->product->sale_price ?? $cartItem->product->price) * $cartItem->quantity, 2),
-                'shipping_message' => $shipping == 0 ? 'Free shipping applied!' : 'Add ৳' . number_format($shippingThreshold - $subtotal, 0) . ' more for free shipping!',
+                'shipping_message' => $shipping == 0 ? 'Free shipping applied!' : 'Add ৳' . number_format($freeShippingThreshold - $subtotal, 0) . ' more for free shipping!',
                 'shipping_is_free' => $shipping == 0,
             ]);
         }
@@ -167,8 +176,12 @@ class CartController extends Controller
             $subtotal = $cartItems->sum(function($item) {
                 return ($item->product->sale_price ?? $item->product->price) * $item->quantity;
             });
-            $shipping = $subtotal >= 1000 ? 0 : 60;
-            $shippingThreshold = 1000;
+
+            // Get shipping settings from database
+            $freeShippingThreshold = Setting::getFreeShippingThreshold();
+            $shippingInsideDhaka = Setting::getShippingInsideDhaka();
+
+            $shipping = $subtotal >= $freeShippingThreshold ? 0 : $shippingInsideDhaka;
 
             return response()->json([
                 'success' => true,
@@ -176,9 +189,9 @@ class CartController extends Controller
                 'cart_count' => (int)$cartCount,
                 'subtotal' => number_format($subtotal, 2),
                 'shipping' => $shipping,
-                'shipping_threshold' => $shippingThreshold,
+                'shipping_threshold' => $freeShippingThreshold,
                 'total' => number_format($subtotal + $shipping, 2),
-                'shipping_message' => $shipping == 0 ? 'Free shipping applied!' : 'Add ৳' . number_format($shippingThreshold - $subtotal, 0) . ' more for free shipping!',
+                'shipping_message' => $shipping == 0 ? 'Free shipping applied!' : 'Add ৳' . number_format($freeShippingThreshold - $subtotal, 0) . ' more for free shipping!',
                 'shipping_is_free' => $shipping == 0,
             ]);
         }

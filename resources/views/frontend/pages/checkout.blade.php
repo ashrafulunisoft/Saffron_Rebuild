@@ -57,7 +57,7 @@
               </div>
               <div class="col-md-6">
                 <label class="form-label">City *</label>
-                <select name="city" class="form-select input-dark" required>
+                <select name="city" class="form-select input-dark" id="citySelect" required>
                   <option value="">Select City</option>
                   <option value="dhaka">Dhaka</option>
                   <option value="chittagong">Chittagong</option>
@@ -65,6 +65,21 @@
                   <option value="rajshahi">Rajshahi</option>
                   <option value="khulna">Khulna</option>
                 </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Shipping Location *</label>
+                <select name="shipping_location" class="form-select input-dark" id="shippingLocationSelect" required>
+                  <option value="">Select Shipping Location</option>
+                  <option value="inside_dhaka" {{ old('shipping_location') == 'inside_dhaka' ? 'selected' : (old('shipping_location') ? '' : 'selected') }}>Inside Dhaka</option>
+                  <option value="outside_dhaka" {{ old('shipping_location') == 'outside_dhaka' ? 'selected' : '' }}>Outside Dhaka</option>
+                </select>
+                <small class="text-white-50 mt-1" style="font-size: 0.8rem;">
+                  @if($isFreeShipping)
+                    <span style="color: #22c55e;"><i class="fas fa-gift me-1"></i>Free shipping applied!</span>
+                  @else
+                    Inside: ৳{{ number_format($shippingInsideDhaka) }} | Outside: ৳{{ number_format($shippingOutsideDhaka) }}
+                  @endif
+                </small>
               </div>
             </div>
           </div>
@@ -144,11 +159,15 @@
             <div class="order-totals">
               <div class="d-flex justify-content-between mb-2">
                 <span style="color: rgba(245,230,204,0.7);">Subtotal:</span>
-                <span id="checkoutSubtotal" style="color: #f5e6cc;">৳0</span>
+                <span id="checkoutSubtotal" style="color: #f5e6cc;">৳{{ number_format($totalAmount) }}</span>
               </div>
               <div class="d-flex justify-content-between mb-2" id="checkoutDiscountRow" style="display: none;">
                 <span style="color: rgba(245,230,204,0.7);">Discount:</span>
                 <span id="checkoutDiscount" style="color: #10b981;">-৳0</span>
+              </div>
+              <div class="d-flex justify-content-between mb-2" id="checkoutShippingRow">
+                <span style="color: rgba(245,230,204,0.7);">Shipping:</span>
+                <span id="checkoutShipping" style="color: #f5e6cc;">৳{{ number_format($shipping) }}</span>
               </div>
               <div class="d-flex justify-content-between mb-2">
                 <span style="color: rgba(245,230,204,0.7);">Tax:</span>
@@ -156,7 +175,7 @@
               </div>
               <div class="d-flex justify-content-between mb-3 pt-3" style="border-top: 1px solid rgba(255,255,255,0.1);">
                 <span style="color: #f5e6cc; font-weight: 600;">Total:</span>
-                <span id="checkoutTotal" style="color: #fbbf24; font-weight: 700; font-size: 1.2rem;">৳0</span>
+                <span id="checkoutTotal" style="color: #fbbf24; font-weight: 700; font-size: 1.2rem;">৳{{ number_format($total) }}</span>
               </div>
             </div>
 
@@ -177,9 +196,65 @@
 
 @push('scripts')
 <script>
-// Fetch cart data on page load
+// Initialize totals from backend
+const subtotal = {{ number_format($totalAmount, 2, '.', '') }};
+const shippingInsideDhaka = {{ number_format($shippingInsideDhaka, 2, '.', '') }};
+const shippingOutsideDhaka = {{ number_format($shippingOutsideDhaka, 2, '.', '') }};
+const freeShippingThreshold = {{ number_format($freeShippingThreshold, 2, '.', '') }};
+const isFreeShipping = {{ $isFreeShipping ? 'true' : 'false' }};
+
+let currentShipping = {{ number_format($shipping, 2, '.', '') }};
+
+// Function to update order totals
+function updateOrderTotals() {
+  const shippingLocation = document.getElementById('shippingLocationSelect').value;
+  let shipping = 0;
+
+  if (isFreeShipping) {
+    shipping = 0;
+  } else {
+    if (shippingLocation === 'inside_dhaka') {
+      shipping = shippingInsideDhaka;
+    } else if (shippingLocation === 'outside_dhaka') {
+      shipping = shippingOutsideDhaka;
+    } else {
+      shipping = shippingInsideDhaka; // Default to inside dhaka
+    }
+  }
+
+  currentShipping = shipping;
+  const total = parseFloat(subtotal) + parseFloat(shipping);
+
+  // Update the display values
+  document.getElementById('checkoutSubtotal').textContent = '৳' + numberFormat(subtotal);
+  document.getElementById('checkoutShipping').textContent = '৳' + numberFormat(shipping);
+  document.getElementById('checkoutTotal').textContent = '৳' + numberFormat(total);
+}
+
+// Format number with commas
+function numberFormat(num) {
+  return parseFloat(num).toLocaleString('en-BD', {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0
+  });
+}
+
+// Listen for shipping location changes
 document.addEventListener('DOMContentLoaded', function() {
-  fetchCartData();
+  // Setup shipping location change listener
+  const shippingLocationSelect = document.getElementById('shippingLocationSelect');
+  if (shippingLocationSelect) {
+    shippingLocationSelect.addEventListener('change', updateOrderTotals);
+  }
+
+  // Initialize totals immediately (before cart data loads)
+  updateOrderTotals();
+
+  // Fetch cart data and re-initialize totals
+  fetchCartData().then(() => {
+    updateOrderTotals();
+  });
+
   setupFormValidation();
 });
 
@@ -207,9 +282,12 @@ async function fetchCartData() {
     // Enable place order button
     document.getElementById('placeOrderBtn').disabled = false;
 
+    return true; // Return success
+
   } catch (error) {
     console.error('Error fetching cart:', error);
     window.location.href = '/cart';
+    return false;
   }
 }
 
@@ -238,32 +316,8 @@ function displayCartItems(doc) {
 
   cartItemsContainer.innerHTML = itemsHTML;
 
-  // Extract totals
-  const subtotal = doc.querySelector('[data-subtotal]')?.getAttribute('data-subtotal') || '0';
-  const shipping = doc.querySelector('[data-shipping]')?.getAttribute('data-shipping') || '0';
-  const total = doc.querySelector('[data-total]')?.getAttribute('data-total') || '0';
-
-  // Update totals
-  const totalsHTML = `
-    <div class="d-flex justify-content-between mb-2">
-      <span style="color: rgba(245,230,204,0.7);">Subtotal:</span>
-      <span style="color: #f5e6cc;">৳${subtotal}</span>
-    </div>
-    <div class="d-flex justify-content-between mb-2">
-      <span style="color: rgba(245,230,204,0.7);">Shipping:</span>
-      <span style="color: #f5e6cc;">৳${shipping}</span>
-    </div>
-    <div class="d-flex justify-content-between mb-2">
-      <span style="color: rgba(245,230,204,0.7);">Tax:</span>
-      <span style="color: #f5e6cc;">৳0</span>
-    </div>
-    <div class="d-flex justify-content-between mb-3 pt-3" style="border-top: 1px solid rgba(255,255,255,0.1);">
-      <span style="color: #f5e6cc; font-weight: 600;">Total:</span>
-      <span style="color: #fbbf24; font-weight: 700; font-size: 1.2rem;">৳${total}</span>
-    </div>
-  `;
-
-  document.querySelector('.order-totals').innerHTML = totalsHTML;
+  // Don't overwrite totals - they are dynamically calculated based on shipping location
+  // The totals are already initialized in updateOrderTotals()
 }
 
 // Setup form validation

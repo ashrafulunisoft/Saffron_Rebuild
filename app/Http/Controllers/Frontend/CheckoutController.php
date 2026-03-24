@@ -7,6 +7,7 @@ use App\Models\Cart;
 use App\Models\Coupon;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -35,11 +36,28 @@ class CheckoutController extends Controller
             return ($item->product->sale_price ?? $item->product->price) * $item->quantity;
         });
 
-        // Shipping calculation (free shipping over 1000)
-        $shipping = $totalAmount >= 1000 ? 0 : 60;
+        // Get shipping settings
+        $freeShippingThreshold = Setting::getFreeShippingThreshold();
+        $shippingInsideDhaka = Setting::getShippingInsideDhaka();
+        $shippingOutsideDhaka = Setting::getShippingOutsideDhaka();
+
+        // Check if eligible for free shipping
+        $isFreeShipping = $totalAmount >= $freeShippingThreshold;
+
+        // Default shipping (inside dhaka)
+        $shipping = $isFreeShipping ? 0 : $shippingInsideDhaka;
         $total = $totalAmount + $shipping;
 
-        return view('frontend.pages.checkout', compact('cartItems', 'totalAmount', 'shipping', 'total'));
+        return view('frontend.pages.checkout', compact(
+            'cartItems',
+            'totalAmount',
+            'shipping',
+            'total',
+            'shippingInsideDhaka',
+            'shippingOutsideDhaka',
+            'freeShippingThreshold',
+            'isFreeShipping'
+        ));
     }
 
     /**
@@ -59,7 +77,8 @@ class CheckoutController extends Controller
             'email' => 'required|email|max:255',
             'phone' => 'required|string|max:20',
             'address' => 'required|string',
-            'city' => 'required|string',
+            'city' => 'required|string|in:dhaka,chittagong,sylhet,rajshahi,khulna',
+            'shipping_location' => 'required|string|in:inside_dhaka,outside_dhaka',
             'payment_method' => 'required|in:cod,card,bkash',
         ]);
 
@@ -77,8 +96,24 @@ class CheckoutController extends Controller
                 return ($item->product->sale_price ?? $item->product->price) * $item->quantity;
             });
 
-            // Shipping calculation (free shipping over 1000)
-            $shipping = $totalAmount >= 1000 ? 0 : 60;
+            // Get shipping settings
+            $freeShippingThreshold = Setting::getFreeShippingThreshold();
+            $shippingInsideDhaka = Setting::getShippingInsideDhaka();
+            $shippingOutsideDhaka = Setting::getShippingOutsideDhaka();
+
+            // Check if eligible for free shipping
+            $isFreeShipping = $totalAmount >= $freeShippingThreshold;
+
+            // Calculate shipping based on location
+            if ($isFreeShipping) {
+                $shipping = 0;
+            } else {
+                if ($request->shipping_location === 'inside_dhaka') {
+                    $shipping = $shippingInsideDhaka;
+                } else {
+                    $shipping = $shippingOutsideDhaka;
+                }
+            }
 
             // Handle coupon discount
             $discount = 0;
@@ -114,6 +149,7 @@ class CheckoutController extends Controller
                 'user_id' => Auth::id(),
                 'order_number' => 'ORD-' . strtoupper(uniqid()),
                 'total_amount' => $totalAmount,
+                'shipping_amount' => $shipping,
                 'discount' => $discount,
                 'final_amount' => $finalAmount,
                 'payment_method' => $request->payment_method,

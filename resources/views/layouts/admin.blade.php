@@ -563,6 +563,9 @@
                         <a href="{{ route('admin.ecommerce.coupons.index') }}" class="submenu-item {{ request()->routeIs('admin.ecommerce.coupons.*') ? 'active' : '' }}">
                             <i class="fas fa-ticket-alt"></i> Coupons
                         </a>
+                        <a href="{{ route('admin.ecommerce.shipping.index') }}" class="submenu-item {{ request()->routeIs('admin.ecommerce.shipping.*') ? 'active' : '' }}">
+                            <i class="fas fa-truck"></i> Shipping Settings
+                        </a>
                         <a href="{{ route('admin.ecommerce.orders.index') }}" class="submenu-item {{ request()->routeIs('admin.ecommerce.orders.*') ? 'active' : '' }}">
                             <i class="fas fa-shopping-bag"></i> Orders
                         </a>

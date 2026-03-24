@@ -61,17 +61,19 @@ Saffron Next Task List :
 17. User sidebar need to live update wishlist number; (done)
 18. connect the image for all kinds of the products .(done)
 19. Remove/Edit the category section form the footer (done)
-20. -----------------------------------------------------------
-21. fix the bilangual for the frontend theme and connect with the admin panel 
-22. add the delivery fee from the admin page inside / out side dhaka; 
-23. CMS section with  Bangla.
-24. Admin can't change the password fix it ;  ------------------------------------------------------------
-25. have to fix the mobile design (later)
-26. password rest for the user (later)
-27. login or register with google / Facebook. (later)
-28. add pathoa integration ; (later)
-29. subcription fix (later)
-30. sms & email for notification;
+20. Admin can't change the password fix it (done);  
+21. -----------------------------------------------------------
+22. fix the bilangual for the frontend theme and connect with the admin panel 
+23. add the delivery fee from the admin page inside / out side dhaka; 
+24. CMS section with  Bangla.
+25. Blog check 
+26. -----------------------------------------------------------
+27. have to fix the mobile design (later)
+28. password rest for the user (later)
+29. login or register with google / Facebook. (later)
+30. add pathoa integration ; (later)
+31. subcription fix (later)
+32. sms & email for notification;
 
 
 ------------------------------------------------

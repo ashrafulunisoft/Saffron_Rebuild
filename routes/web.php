@@ -316,6 +316,14 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::post('/blog/{blog}/toggle-status', [App\Http\Controllers\Admin\BlogController::class, 'toggleStatus'])
             ->name('blog.toggle-status');
 
+        // Shipping Settings
+        Route::prefix('shipping')->name('shipping.')->group(function () {
+            Route::get('/', [App\Http\Controllers\Admin\Ecommerce\ShippingController::class, 'index'])
+                ->name('index');
+            Route::post('/', [App\Http\Controllers\Admin\Ecommerce\ShippingController::class, 'update'])
+                ->name('update');
+        });
+
         // CMS Pages
         Route::get('/cms', [App\Http\Controllers\Admin\CmsController::class, 'index'])
             ->name('cms.index');
