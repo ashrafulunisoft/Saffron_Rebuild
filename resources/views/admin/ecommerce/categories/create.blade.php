@@ -25,36 +25,28 @@
             <div class="row g-4 mb-5">
                 <div class="col-md-12">
                     <label class="form-label">Category Name (English) <span class="text-danger">*</span></label>
-                    <div class="position-relative">
-                        <input type="text" name="name_en" class="input-dark input-custom" placeholder="e.g., Cakes" value="{{ old('name_en') }}" required autofocus id="nameEn">
-                        <i class="fas fa-tag input-icon"></i>
-                    </div>
+                    <input type="text" name="name_en" class="input-dark input-custom" placeholder="e.g., Cakes" value="{{ old('name_en') }}" required autofocus id="nameEn">
                     @error('name_en')
                         <div class="text-danger mt-2" style="font-size: 0.8rem;">{{ $message }}</div>
                     @enderror
                 </div>
                 <div class="col-md-12">
                     <label class="form-label">Category Name (Bengali) <span class="text-danger">*</span></label>
-                    <div class="position-relative">
-                        <input type="text" name="name_bn" class="input-dark input-custom" placeholder="উদাহরণ: কেক" value="{{ old('name_bn') }}" required id="nameBn">
-                        <i class="fas fa-language input-icon"></i>
-                    </div>
+                    <input type="text" name="name_bn" class="input-dark input-custom" placeholder="উদাহরণ: কেক" value="{{ old('name_bn') }}" required id="nameBn">
                     @error('name_bn')
                         <div class="text-danger mt-2" style="font-size: 0.8rem;">{{ $message }}</div>
                     @enderror
                 </div>
                 <div class="col-md-12">
                     <label class="form-label">Parent Category</label>
-                    <div class="position-relative">
-                        <select name="parent_id" class="input-dark input-custom">
-                            <option value="">No Parent (Root Category)</option>
-                            @foreach($parentCategories as $parent)
-                                <option value="{{ $parent->id }}" @if(old('parent_id') == $parent->id) selected @endif>
-                                    {{ $parent->name_en }} / {{ $parent->name_bn }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
+                    <select name="parent_id" class="input-dark input-custom">
+                        <option value="">No Parent (Root Category)</option>
+                        @foreach($parentCategories as $parent)
+                            <option value="{{ $parent->id }}" @if(old('parent_id') == $parent->id) selected @endif>
+                                {{ $parent->name_en }} / {{ $parent->name_bn }}
+                            </option>
+                        @endforeach
+                    </select>
                     <small class="text-muted">Leave empty for root category</small>
                     @error('parent_id')
                         <div class="text-danger mt-2" style="font-size: 0.8rem;">{{ $message }}</div>
@@ -67,12 +59,10 @@
             <div class="row g-4 mb-5">
                 <div class="col-md-6">
                     <label class="form-label">Status</label>
-                    <div class="position-relative">
-                        <select name="is_active" class="input-dark input-custom">
-                            <option value="1" @if(old('is_active', '1') === '1') selected @endif>Active</option>
-                            <option value="0" @if(old('is_active') === '0') selected @endif>Inactive</option>
-                        </select>
-                    </div>
+                    <select name="is_active" class="input-dark input-custom">
+                        <option value="1" @if(old('is_active', '1') === '1') selected @endif>Active</option>
+                        <option value="0" @if(old('is_active') === '0') selected @endif>Inactive</option>
+                    </select>
                 </div>
                 <div class="col-md-6">
                     <div class="form-check form-switch" style="padding-top: 0.5rem;">
@@ -167,7 +157,7 @@ document.getElementById('nameBn')?.addEventListener('input', function(e) {
         background: rgba(15, 23, 42, 0.6);
         border: 1px solid rgba(255, 255, 255, 0.1);
         color: #fff;
-        padding: 0.75rem 1rem 0.75rem 2.75rem;
+        padding: 0.75rem 1rem;
         border-radius: 12px;
         transition: 0.3s;
         width: 100%;
@@ -187,18 +177,14 @@ document.getElementById('nameBn')?.addEventListener('input', function(e) {
         font-size: 0.9rem;
     }
 
-    .input-icon {
-        position: absolute;
-        left: 1rem;
-        top: 50%;
-        transform: translateY(-50%);
-        color: rgba(255, 255, 255, 0.4);
-        pointer-events: none;
-    }
-
-    select.input-dark,
-    textarea.input-dark {
-        padding-left: 1rem;
+    select.input-dark {
+        cursor: pointer;
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='rgba(255,255,255,0.5)'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 1rem center;
+        background-size: 1rem;
+        padding-right: 2.75rem;
     }
 
     select.input-dark {

@@ -255,7 +255,28 @@ function deleteCategory(categoryId, categoryName) {
         color: '#fff'
     }).then((result) => {
         if (result.isConfirmed) {
-            window.location.href = `/admin/ecommerce/categories/${categoryId}`;
+            // Create a form to submit DELETE request
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = `/admin/ecommerce/categories/${categoryId}`;
+
+            // Add CSRF token
+            const csrfToken = document.createElement('input');
+            csrfToken.type = 'hidden';
+            csrfToken.name = '_token';
+            csrfToken.value = '{{ csrf_token() }}';
+            form.appendChild(csrfToken);
+
+            // Add DELETE method
+            const methodField = document.createElement('input');
+            methodField.type = 'hidden';
+            methodField.name = '_method';
+            methodField.value = 'DELETE';
+            form.appendChild(methodField);
+
+            // Submit form
+            document.body.appendChild(form);
+            form.submit();
         }
     });
 }
