@@ -31,83 +31,172 @@
             <div class="cart-items">
               @foreach($cartItems as $item)
                 <div class="cart-item" data-cart-id="{{ $item->id }}" style="border-bottom: 1px solid rgba(245,230,204,0.1); padding-bottom: 1.5rem; margin-bottom: 1.5rem;">
-                  <div class="row align-items-center g-3">
-                    <!-- Product Image -->
-                    <div class="col-3 col-md-2">
-                      @if($item->product->image)
-                        <img src="{{ asset('storage/' . $item->product->image) }}"
-                             alt="{{ $item->product->name }}"
-                             style="width: 100%; border-radius: 12px; aspect-ratio: 1; object-fit: cover;">
-                      @else
-                        <div style="width: 100%; aspect-ratio: 1; background: linear-gradient(135deg, rgba(245,158,11,0.1), rgba(244,63,94,0.1)); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 2rem;">
-                          🍰
-                        </div>
-                      @endif
-                    </div>
-
-                    <!-- Product Info -->
-                    <div class="col-6 col-md-5">
-                      <h6 class="cart-item-name" style="color: #f5e6cc; margin-bottom: 0.5rem;">
-                        <a href="{{ route('shop.product', $item->product->slug) }}" style="color: inherit; text-decoration: none;">
-                          {{ $item->product->name }}
-                        </a>
-                      </h6>
-                      <p style="color: rgba(245,230,204,0.6); font-size: 0.9rem; margin: 0;">
-                        {{ $item->product->category->name_en ?? 'Sweets' }}
-                      </p>
-                      <div style="margin-top: 0.5rem;">
-                        @if($item->product->sale_price)
-                          <span class="cart-item-price" style="color: #fbbf24; font-weight: 600; font-size: 1.1rem;">
-                            ৳{{ number_format($item->product->sale_price) }}
-                          </span>
-                          <span style="color: rgba(245,230,204,0.4); text-decoration: line-through; margin-left: 0.5rem; font-size: 0.9rem;">
-                            ৳{{ number_format($item->product->price) }}
-                          </span>
+                  <!-- Desktop Layout -->
+                  <div class="d-none d-md-block">
+                    <div class="row align-items-center g-3">
+                      <!-- Product Image -->
+                      <div class="col-md-2">
+                        @if($item->product->image)
+                          <img src="{{ asset('storage/' . $item->product->image) }}"
+                               alt="{{ $item->product->name }}"
+                               style="width: 100%; border-radius: 12px; aspect-ratio: 1; object-fit: cover;">
                         @else
-                          <span class="cart-item-price" style="color: #fbbf24; font-weight: 600; font-size: 1.1rem;">
-                            ৳{{ number_format($item->product->price) }}
-                          </span>
+                          <div style="width: 100%; aspect-ratio: 1; background: linear-gradient(135deg, rgba(245,158,11,0.1), rgba(244,63,94,0.1)); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 2rem;">
+                            🍰
+                          </div>
                         @endif
                       </div>
-                    </div>
 
-                    <!-- Quantity & Actions -->
-                    <div class="col-3 col-md-5">
-                      <div class="d-flex align-items-center justify-content-between">
-                        <!-- Quantity Control -->
-                        <div class="quantity-control" style="display: flex; align-items: center; gap: 0.5rem; background: rgba(245,230,204,0.05); border-radius: 8px; padding: 0.25rem;">
+                      <!-- Product Info -->
+                      <div class="col-md-5">
+                        <h6 class="cart-item-name" style="color: #f5e6cc; margin-bottom: 0.5rem;">
+                          <a href="{{ route('shop.product', $item->product->slug) }}" style="color: inherit; text-decoration: none;">
+                            {{ $item->product->name }}
+                          </a>
+                        </h6>
+                        <p style="color: rgba(245,230,204,0.6); font-size: 0.9rem; margin: 0;">
+                          {{ $item->product->category->name_en ?? 'Sweets' }}
+                        </p>
+                        <div style="margin-top: 0.5rem;">
+                          @if($item->product->sale_price)
+                            <span class="cart-item-price" style="color: #fbbf24; font-weight: 600; font-size: 1.1rem;">
+                              ৳{{ number_format($item->product->sale_price) }}
+                            </span>
+                            <span style="color: rgba(245,230,204,0.4); text-decoration: line-through; margin-left: 0.5rem; font-size: 0.9rem;">
+                              ৳{{ number_format($item->product->price) }}
+                            </span>
+                          @else
+                            <span class="cart-item-price" style="color: #fbbf24; font-weight: 600; font-size: 1.1rem;">
+                              ৳{{ number_format($item->product->price) }}
+                            </span>
+                          @endif
+                        </div>
+                      </div>
+
+                      <!-- Quantity & Actions -->
+                      <div class="col-md-5">
+                        <div class="d-flex align-items-center justify-content-between">
+                          <!-- Quantity Control -->
+                          <div class="quantity-control" style="display: flex; align-items: center; gap: 0.5rem; background: rgba(245,230,204,0.05); border-radius: 8px; padding: 0.25rem;">
+                            <button class="qty-btn qty-minus" data-cart-id="{{ $item->id }}"
+                                    style="width: 32px; height: 32px; border: none; background: rgba(245,158,11,0.2); color: #fbbf24; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center;"
+                                    {{ $item->quantity <= 1 ? 'disabled' : '' }}>
+                              <i class="fas fa-minus" style="font-size: 0.75rem;"></i>
+                            </button>
+                            <input type="number" value="{{ $item->quantity }}" min="1" max="10"
+                                   class="qty-input"
+                                   data-cart-id="{{ $item->id }}"
+                                   style="width: 50px; text-align: center; border: none; background: transparent; color: #f5e6cc; font-weight: 600;"
+                                   readonly>
+                            <button class="qty-btn qty-plus" data-cart-id="{{ $item->id }}"
+                                    style="width: 32px; height: 32px; border: none; background: rgba(245,158,11,0.2); color: #fbbf24; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center;"
+                                    {{ $item->quantity >= 10 ? 'disabled' : '' }}>
+                              <i class="fas fa-plus" style="font-size: 0.75rem;"></i>
+                            </button>
+                          </div>
+
+                          <!-- Remove Button -->
+                          <button class="remove-item-btn" data-cart-id="{{ $item->id }}"
+                                  style="border: none; background: rgba(244,63,94,0.1); color: #f43f5e; padding: 0.5rem; border-radius: 8px; cursor: pointer; transition: all 0.3s ease;"
+                                  onmouseover="this.style.background='rgba(244,63,94,0.2)'"
+                                  onmouseout="this.style.background='rgba(244,63,94,0.1)'">
+                            <i class="fas fa-trash-alt"></i>
+                          </button>
+                        </div>
+
+                        <!-- Item Subtotal -->
+                        <div style="text-align: right; margin-top: 0.5rem;">
+                          <span style="color: rgba(245,230,204,0.6); font-size: 0.85rem;">Subtotal:</span>
+                          <span class="item-subtotal" style="color: #fbbf24; font-weight: 600; margin-left: 0.5rem;">
+                            ৳{{ number_format(($item->product->sale_price ?? $item->product->price) * $item->quantity) }}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Mobile Layout -->
+                  <div class="d-md-none">
+                    <div class="row g-2">
+                      <!-- Product Image -->
+                      <div class="col-4">
+                        @if($item->product->image)
+                          <img src="{{ asset('storage/' . $item->product->image) }}"
+                               alt="{{ $item->product->name }}"
+                               style="width: 100%; border-radius: 12px; aspect-ratio: 1; object-fit: cover;">
+                        @else
+                          <div style="width: 100%; aspect-ratio: 1; background: linear-gradient(135deg, rgba(245,158,11,0.1), rgba(244,63,94,0.1)); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 2rem;">
+                            🍰
+                          </div>
+                        @endif
+                      </div>
+
+                      <!-- Product Info -->
+                      <div class="col-8">
+                        <h6 class="cart-item-name" style="color: #f5e6cc; margin-bottom: 0.25rem; font-size: 0.95rem; line-height: 1.3;">
+                          <a href="{{ route('shop.product', $item->product->slug) }}" style="color: inherit; text-decoration: none;">
+                            {{ $item->product->name }}
+                          </a>
+                        </h6>
+                        <p style="color: rgba(245,230,204,0.6); font-size: 0.8rem; margin: 0;">
+                          {{ $item->product->category->name_en ?? 'Sweets' }}
+                        </p>
+                        <div style="margin-top: 0.25rem;">
+                          @if($item->product->sale_price)
+                            <span class="cart-item-price" style="color: #fbbf24; font-weight: 600; font-size: 1rem;">
+                              ৳{{ number_format($item->product->sale_price) }}
+                            </span>
+                            <span style="color: rgba(245,230,204,0.4); text-decoration: line-through; margin-left: 0.25rem; font-size: 0.8rem;">
+                              ৳{{ number_format($item->product->price) }}
+                            </span>
+                          @else
+                            <span class="cart-item-price" style="color: #fbbf24; font-weight: 600; font-size: 1rem;">
+                              ৳{{ number_format($item->product->price) }}
+                            </span>
+                          @endif
+                        </div>
+                      </div>
+
+                      <!-- Quantity Row - Full Width -->
+                      <div class="col-12">
+                        <div class="d-flex align-items-center justify-content-center gap-2" style="background: rgba(245,230,204,0.03); border-radius: 10px; padding: 0.75rem;">
                           <button class="qty-btn qty-minus" data-cart-id="{{ $item->id }}"
-                                  style="width: 32px; height: 32px; border: none; background: rgba(245,158,11,0.2); color: #fbbf24; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center;"
+                                  style="width: 44px; height: 44px; min-width: 44px; border: none; background: rgba(245,158,11,0.2); color: #fbbf24; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"
                                   {{ $item->quantity <= 1 ? 'disabled' : '' }}>
-                            <i class="fas fa-minus" style="font-size: 0.75rem;"></i>
+                            <i class="fas fa-minus" style="font-size: 1.1rem;"></i>
                           </button>
                           <input type="number" value="{{ $item->quantity }}" min="1" max="10"
                                  class="qty-input"
                                  data-cart-id="{{ $item->id }}"
-                                 style="width: 50px; text-align: center; border: none; background: transparent; color: #f5e6cc; font-weight: 600;"
+                                 style="width: 60px; text-align: center; border: none; background: transparent; color: #f5e6cc; font-weight: 700; font-size: 1.4rem;"
                                  readonly>
                           <button class="qty-btn qty-plus" data-cart-id="{{ $item->id }}"
-                                  style="width: 32px; height: 32px; border: none; background: rgba(245,158,11,0.2); color: #fbbf24; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center;"
+                                  style="width: 44px; height: 44px; min-width: 44px; border: none; background: rgba(245,158,11,0.2); color: #fbbf24; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"
                                   {{ $item->quantity >= 10 ? 'disabled' : '' }}>
-                            <i class="fas fa-plus" style="font-size: 0.75rem;"></i>
+                            <i class="fas fa-plus" style="font-size: 1.1rem;"></i>
                           </button>
                         </div>
-
-                        <!-- Remove Button -->
-                        <button class="remove-item-btn" data-cart-id="{{ $item->id }}"
-                                style="border: none; background: rgba(244,63,94,0.1); color: #f43f5e; padding: 0.5rem; border-radius: 8px; cursor: pointer; transition: all 0.3s ease;"
-                                onmouseover="this.style.background='rgba(244,63,94,0.2)'"
-                                onmouseout="this.style.background='rgba(244,63,94,0.1)'">
-                          <i class="fas fa-trash-alt"></i>
-                        </button>
                       </div>
 
-                      <!-- Item Subtotal -->
-                      <div style="text-align: right; margin-top: 0.5rem;">
-                        <span style="color: rgba(245,230,204,0.6); font-size: 0.85rem;">Subtotal:</span>
-                        <span class="item-subtotal" style="color: #fbbf24; font-weight: 600; margin-left: 0.5rem;">
-                          ৳{{ number_format(($item->product->sale_price ?? $item->product->price) * $item->quantity) }}
-                        </span>
+                      <!-- Subtotal & Remove Row - Full Width -->
+                      <div class="col-12">
+                        <div class="d-flex justify-content-between align-items-center gap-2">
+                          <!-- Subtotal -->
+                          <div style="flex: 1; background: rgba(245,158,11,0.08); border-radius: 8px; padding: 0.6rem 0.75rem; text-align: center;">
+                            <span style="color: rgba(245,230,204,0.7); font-size: 0.85rem; display: block; margin-bottom: 0.2rem;">Subtotal:</span>
+                            <span class="item-subtotal" style="color: #fbbf24; font-weight: 700; font-size: 1.2rem;">
+                              ৳{{ number_format(($item->product->sale_price ?? $item->product->price) * $item->quantity) }}
+                            </span>
+                          </div>
+
+                          <!-- Remove Button -->
+                          <button class="remove-item-btn" data-cart-id="{{ $item->id }}"
+                                  style="flex: 0 0 auto; border: none; background: rgba(244,63,94,0.15); color: #f43f5e; padding: 0.6rem 1rem; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; white-space: nowrap; font-size: 0.9rem;"
+                                  onmouseover="this.style.background='rgba(244,63,94,0.25)'"
+                                  onmouseout="this.style.background='rgba(244,63,94,0.15)'">
+                            <i class="fas fa-trash-alt me-1" style="font-size: 0.9rem;"></i>Remove
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -141,7 +230,7 @@
             <div class="cart-totals" style="margin-bottom: 1.5rem;" data-subtotal="{{ number_format($subtotal) }}" data-shipping="{{ number_format($shipping) }}" data-total="{{ number_format($total) }}">
               <div class="d-flex justify-content-between mb-2">
                 <span style="color: rgba(245,230,204,0.7);">Subtotal</span>
-                <span style="color: #f5e6cc; font-weight: 600;">৳{{ number_format($subtotal) }}</span>
+                <span id="orderSubtotal" style="color: #f5e6cc; font-weight: 600;">৳{{ number_format($subtotal) }}</span>
               </div>
               <div class="d-flex justify-content-between mb-2" id="discountRow" style="display: none;">
                 <span style="color: rgba(245,230,204,0.7);">Discount</span>
@@ -271,10 +360,38 @@ function updateCartQty(cartId, newQuantity) {
         itemSubtotal.textContent = '৳' + data.item_subtotal;
       }
 
+      // Update Order Summary subtotal
+      const orderSubtotal = document.getElementById('orderSubtotal');
+      if (orderSubtotal && data.subtotal) {
+        orderSubtotal.textContent = '৳' + data.subtotal;
+      }
+
       // Update cart totals
       const cartTotal = document.querySelector('.cart-total');
       if (cartTotal && data.total) {
         cartTotal.textContent = '৳' + data.total;
+      }
+
+      // Update shipping message if provided
+      if (data.shipping_message) {
+        const cartTotals = document.querySelector('.cart-totals');
+        if (cartTotals) {
+          // Remove old shipping message if exists
+          const oldMessage = cartTotals.querySelector('.shipping-message');
+          if (oldMessage) oldMessage.remove();
+
+          // Add new shipping message
+          const messageDiv = document.createElement('div');
+          messageDiv.className = 'shipping-message';
+          messageDiv.style.cssText = data.shipping_is_free
+            ? 'background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.3); border-radius: 8px; padding: 0.75rem; margin-top: 1rem;'
+            : 'background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.3); border-radius: 8px; padding: 0.75rem; margin-top: 1rem;';
+          messageDiv.innerHTML = `<small style="color: ${data.shipping_is_free ? '#10b981' : '#fbbf24'};">
+            <i class="fas fa-${data.shipping_is_free ? 'check' : 'info-circle'} me-1"></i>
+            ${data.shipping_message}
+          </small>`;
+          cartTotals.appendChild(messageDiv);
+        }
       }
 
       // Update button states based on NEW quantity
@@ -343,6 +460,18 @@ function removeFromCart(cartId) {
     if (data.success) {
       // Update cart count in header
       updateCartCountBadge(data.cart_count);
+
+      // Update Order Summary subtotal
+      const orderSubtotal = document.getElementById('orderSubtotal');
+      if (orderSubtotal && data.subtotal) {
+        orderSubtotal.textContent = '৳' + data.subtotal;
+      }
+
+      // Update cart total
+      const cartTotal = document.querySelector('.cart-total');
+      if (cartTotal && data.total) {
+        cartTotal.textContent = '৳' + data.total;
+      }
 
       // Animate and remove item from DOM
       cartItem.style.transition = 'all 0.3s ease';
