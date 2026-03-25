@@ -6,7 +6,7 @@
 
 **RFP Reference:** VMS/UCBL/RFP/2026/001
 **Document Version:** 2.0  
-**Date:** January 26, 2026
+**Date:** March 25, 2026
 
 ---
 
@@ -54,12 +54,6 @@ This document outlines the current demo system's technical specifications and th
 - **SweetAlert2** - Beautiful alerts and modals
 - **DataTables** - jQuery plugin for table operations
 
-**Production Upgrade Options:**
-- **React.js** - Component-based UI with virtual DOM
-- **Vue.js** - Progressive framework with excellent documentation
-- **Angular** - Full-featured framework with TypeScript support
-- **Inertia.js** - SPA-like experience without building API
-
 #### 1.3 Database
 
 **Current Implementation:**
@@ -87,16 +81,14 @@ This document outlines the current demo system's technical specifications and th
 - Gzip/Brotli compression
 - Rate limiting and DDoS protection
 
-**Docker Swarm / Kubernetes**
-- **Docker Swarm** (Current) - Simple orchestration for container deployment
-- **Kubernetes** (Recommended for Production) - Enterprise-grade orchestration
+**Docker Swarm**
+- **Docker Swarm** - Simple orchestration for container deployment
   - Automatic scaling
   - Self-healing capabilities
   - Rolling updates without downtime
   - Secrets management
-  - Config maps for configuration
   - Service discovery
-  - Ingress controllers for routing
+  - Load balancing
 
 **Ubuntu Server**
 - Ubuntu 22.04 LTS (Long Term Support)
@@ -157,7 +149,7 @@ This document outlines the current demo system's technical specifications and th
 **Recommended for High Availability:**
 - **Nodes:** 3+ application servers
 - **Load Balancer:** HAProxy or Nginx Plus
-- **Auto-scaling:** Kubernetes Horizontal Pod Autoscaler
+- **Auto-scaling:** Docker Swarm auto-scaling
 - **CDN:** CloudFront or Cloud CDN for static assets
 
 #### 2.2 Database Server Specifications
@@ -178,21 +170,12 @@ This document outlines the current demo system's technical specifications and th
 
 #### 2.3 Container Orchestration
 
-**Docker Swarm (Current Demo):**
+**Docker Swarm:**
 - Simple deployment using docker-compose
 - Service discovery
 - Load balancing
 - Rolling updates
-- Easy setup for small deployments
-
-**Kubernetes (Recommended for Production):**
-- **Control Plane:** 3 master nodes for HA
-- **Worker Nodes:** 6+ worker nodes
-- **Storage:** Persistent volumes for database
-- **Ingress:** Nginx Ingress Controller
-- **Scaling:** Horizontal Pod Autoscaler
-- **Monitoring:** Prometheus Operator
-- **Logging:** Fluent Bit to Loki
+- Easy setup for deployments
 
 #### 2.4 Monitoring Infrastructure
 
@@ -657,17 +640,7 @@ This document outlines the current demo system's technical specifications and th
 - **Failed Delivery:** Retry mechanism (3 attempts)
 - **Reporting:** Daily delivery report
 
-#### 9.2 Real-time Features (Current Demo)
 
-**Reverb WebSockets (Currently Implemented):**
-- **Real-time Dashboard:** Live visitor count, recent check-ins
-- **Visitor Updates:** Real-time visitor status changes
-- **Notifications:** Instant notifications to users
-- **Presence Tracking:** Online users count
-- **Channels:**
-  - Public channel: Live dashboard updates
-  - Private channels: User-specific notifications
-  - Presence channels: Online/offline status
 
 **Production Scaling:**
 - **Multiple WebSocket Servers:** Load balance WebSocket connections
@@ -930,7 +903,7 @@ This document outlines the current demo system's technical specifications and th
 1. **Build:** Build Docker images
 2. **Test:** Run automated tests
 3. **Push:** Push images to container registry
-4. **Deploy:** Deploy to Kubernetes/Docker Swarm
+4. **Deploy:** Deploy to Docker Swarm
 5. **Verify:** Health checks and smoke tests
 6. **Rollback:** Automatic rollback if health checks fail
 
@@ -954,8 +927,55 @@ This document outlines the current demo system's technical specifications and th
 
 ---
 
+### 15. VISITOR MANAGEMENT SYSTEM - WORKING FLOW DIAGRAM
+
+> **📊 Interactive Diagrams Available:** All workflow diagrams below are available as interactive HTML files that can be opened in any web browser. These HTML files provide better rendering and allow you to save diagrams as images or PDFs.
+>
+> **Diagram Files:**
+> - [15.1 System Architecture Overview](15_1_system_architecture_overview.html)
+> - [15.2 Visitor Registration & Check-in Flow](15_2_visitor_registration_checkin_flow.html)
+> - [15.3 Admin Management Flow](15_3_admin_management_flow.html)
+> - [15.4 Host Approval Flow](15_4_host_approval_flow.html)
+> - [15.5 Real-time Notification Flow](15_5_realtime_notification_flow.html)
+>
+> **To view:** Open any HTML file in your web browser. To save as image: Open in browser → Press Ctrl+P → Save as PDF or take a screenshot.
+>
+> **See also:** [DIAGRAMS_INDEX.md](DIAGRAMS_INDEX.md) for complete documentation.
+
+#### 15.1 System Architecture Overview
+
+> **🔗 Interactive Version:** [View in Browser](15_1_system_architecture_overview.html) - Open this HTML file in your browser for an interactive view of this diagram.
+
+**Description:** High-level system architecture showing user roles (Visitors, Staff, Admins), authentication gate (Login, Register, 2FA, Password Reset), and role-based access control with three levels.
+
+#### 15.2 Visitor Registration & Check-in Flow
+
+> **🔗 Interactive Version:** [View in Browser](15_2_visitor_registration_checkin_flow.html) - Open this HTML file in your browser for an interactive view of this diagram.
+
+**Description:** Complete visitor journey from arrival to departure, including pre-registration, host approval workflow, multiple verification methods (OTP, Face Recognition, RFID, QR Code), check-in/check-out process, visit monitoring, and archival.
+
+#### 15.3 Admin Management Flow
+
+> **🔗 Interactive Version:** [View in Browser](15_3_admin_management_flow.html) - Open this HTML file in your browser for an interactive view of this diagram.
+
+**Description:** Administrative functions including visitor management (CRUD operations, search, pending/active visits), role management, reports and analytics, live dashboard monitoring, and system settings.
+
+#### 15.4 Host Approval Flow
+
+> **🔗 Interactive Version:** [View in Browser](15_4_host_approval_flow.html) - Open this HTML file in your browser for an interactive view of this diagram.
+
+**Description:** Host-side workflow including new visitor notifications, approval/rejection process, visit monitoring, visitor arrival tracking, and optional auto-cancel with timeout functionality.
+
+#### 15.5 Real-time Notification Flow
+
+> **🔗 Interactive Version:** [View in Browser](15_5_realtime_notification_flow.html) - Open this HTML file in your browser for an interactive view of this diagram.
+
+**Description:** Multi-channel notification system architecture showing event types (registration, approval, check-in, check-out, rejection, overstay), notification channels (Email with retry logic, SMS with delivery tracking, WebSocket via Reverb/Redis for real-time updates, and database audit logging for compliance).
+
+---
+
 **END OF TECHNICAL SPECIFICATIONS**
 
 ---
 
-*This document describes the current demo system and production upgrade requirements for the VMS UCBL project.*
+

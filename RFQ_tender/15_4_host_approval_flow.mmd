@@ -1,0 +1,59 @@
+flowchart TD
+    HostLogin([Host Login]) --> HostDashboard[Host Dashboard]
+
+    HostDashboard --> Notification{New Visitor?}
+    Notification -->|Yes| ShowAlert[Show Notification]
+    Notification -->|No| CheckPending[Check Pending Visits]
+
+    ShowAlert --> ViewDetails[View Visit Details]
+    CheckPending --> PendingList[List Pending Visits]
+    PendingList --> SelectVisit[Select Visit]
+    SelectVisit --> ViewDetails
+
+    ViewDetails --> VisitorInfo[Visitor Information]
+
+    VisitorInfo --> HostDecision{Host Decision}
+
+    HostDecision -->|Approve| ApproveVisit[Approve Visit]
+    HostDecision -->|Reject| RejectVisit[Reject Visit]
+    HostDecision -->|Request Info| RequestInfo[Request More Info]
+
+    ApproveVisit --> NotifyVisitor[Notify Visitor]
+
+    RejectVisit --> RejectReason{Provide Reason?}
+    RejectReason -->|Yes| ProvideReason[Enter Rejection Reason]
+    RejectReason -->|No| NotifyReject[Notify Visitor]
+    ProvideReason --> NotifyReject
+
+    RequestInfo --> SendMessage[Send Message to Visitor]
+    SendMessage --> UpdateRequest[Update Visit Request]
+
+    NotifyVisitor --> ApprovedStatus[Status: Approved]
+    ApprovedStatus --> HostMonitor[Monitor Visit Status]
+
+    HostMonitor --> VisitorArrived{Visitor Arrived?}
+    VisitorArrived -->|Yes| VisitorCheckin[Visitor Checked-in]
+    VisitorArrived -->|No| Waiting[Waiting for Visitor]
+
+    VisitorCheckin --> ActiveVisit[Visit in Progress]
+    ActiveVisit --> VisitTracking[Track Visit]
+
+    Waiting --> Timeout{Timeout Limit?}
+    Timeout -->|Yes| AutoCancel[Auto-cancel Visit]
+    Timeout -->|No| HostMonitor
+
+    AutoCancel --> NotifyCancel[Notify Visitor: Cancelled]
+
+    VisitTracking --> VisitorDepart{Visitor Departed?}
+    VisitorDepart -->|Yes| VisitComplete[Visit Completed]
+    VisitorDepart -->|No| VisitTracking
+
+    VisitComplete --> Feedback[Optional Feedback]
+    Feedback --> HostDashboard
+
+    style HostLogin fill:#e1f5e1
+    style HostDashboard fill:#e1f0ff
+    style ApprovedStatus fill:#e1f5e1
+    style ActiveVisit fill:#fff4e1
+    style NotifyReject fill:#ffe1e1
+    style AutoCancel fill:#ffe1e1

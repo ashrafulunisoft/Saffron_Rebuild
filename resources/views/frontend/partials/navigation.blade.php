@@ -12,6 +12,12 @@
       <span class="navbar-toggler-icon" style="filter:invert(1)"></span>
     </button>
     <div class="collapse navbar-collapse" id="navMenu">
+      <!-- Mobile Close Button -->
+      <div class="d-lg-none w-100 d-flex justify-content-end mb-3">
+        <button class="btn btn-close-menu" type="button" data-bs-dismiss="collapse" data-bs-target="#navMenu" aria-label="Close">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
       <ul class="navbar-nav mx-auto gap-2">
         <li class="nav-item">
           <a class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" href="{{ route('home') }}">Home</a>
@@ -167,6 +173,9 @@
 
         <li class="nav-item">
           <a class="nav-link {{ request()->routeIs('about') ? 'active' : '' }}" href="{{ route('about') }}">About</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {{ request()->routeIs('blog.index') ? 'active' : '' }}" href="{{ route('blog.index') }}">Blog</a>
         </li>
         <li class="nav-item">
           <a class="nav-link {{ request()->routeIs('contact') ? 'active' : '' }}" href="{{ route('contact') }}">Contact</a>

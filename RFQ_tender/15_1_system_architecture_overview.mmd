@@ -1,0 +1,39 @@
+flowchart TB
+    subgraph Users["User Roles"]
+        V[Visitors<br/>Guests]
+        S[Staff<br/>Hosts]
+        A[Admins<br/>Superusers]
+    end
+
+    subgraph Auth["Authentication Gate"]
+        L[Login<br/>/login]
+        R[Register<br/>/register]
+        T[2FA<br/>OTP]
+        P[Password<br/>Reset]
+    end
+
+    subgraph RBAC["Role-Based Access Control"]
+        VR[Visitor<br/>Staff]
+        RS[Receptionist<br/>Staff]
+        RA[Admin]
+    end
+
+    V --> Auth
+    S --> Auth
+    A --> Auth
+
+    Auth --> RBAC
+
+    L --> R
+    R --> T
+    T --> P
+
+    VR --> RS
+    RS --> RA
+
+    style Users fill:#e1f0ff
+    style Auth fill:#fff4e1
+    style RBAC fill:#e1f5e1
+    style V fill:#ffffff
+    style S fill:#ffffff
+    style A fill:#ffffff

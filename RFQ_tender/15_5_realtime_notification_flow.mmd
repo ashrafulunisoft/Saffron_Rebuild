@@ -1,0 +1,54 @@
+flowchart TD
+    Event[Visitor Event] --> EventType{Event Type}
+
+    EventType -->|Registration| RegNotify[Registration Notification]
+    EventType -->|Approval| ApproveNotify[Approval Notification]
+    EventType -->|Check-in| CheckinNotify[Check-in Notification]
+    EventType -->|Check-out| CheckoutNotify[Check-out Notification]
+    EventType -->|Rejection| RejectNotify[Rejection Notification]
+    EventType -->|Overstay| OverstayNotify[Overstay Alert]
+
+    RegNotify --> NotificationChannels{Notification Channels}
+    ApproveNotify --> NotificationChannels
+    CheckinNotify --> NotificationChannels
+    CheckoutNotify --> NotificationChannels
+    RejectNotify --> NotificationChannels
+    OverstayNotify --> NotificationChannels
+
+    NotificationChannels -->|Email| EmailChannel[Email Channel Service]
+    NotificationChannels -->|SMS| SMSChannel[SMS Channel Service]
+    NotificationChannels -->|WebSocket| WSChannel[WebSocket Channel]
+    NotificationChannels -->|Database| DBChannel[Database Channel]
+
+    EmailChannel --> EmailQueue[Queue Email Job]
+    EmailQueue --> EmailProcess[Process Email SMTP]
+    EmailProcess --> EmailDelivered{Delivered?}
+    EmailDelivered -->|Yes| EmailSuccess[Email Success Log]
+    EmailDelivered -->|No| EmailRetry[Retry Queue 3 attempts]
+    EmailRetry --> EmailProcess
+
+    SMSChannel --> SMSQueue[Queue SMS Job]
+    SMSQueue --> SMSProcess[Process SMS Gateway]
+    SMSProcess --> SMSDelivered{Delivered?}
+    SMSDelivered -->|Yes| SMSSuccess[SMS Success Log]
+    SMSDelivered -->|No| SMSRetry[Retry Queue 3 attempts]
+    SMSRetry --> SMSProcess
+
+    WSChannel --> RedisPub[Redis Pub/Sub Event]
+    RedisPub --> ReverbServer[Reverb WebSocket Server]
+    ReverbServer --> ConnectedClients[Connected Clients]
+    ConnectedClients --> RealtimeUpdate[Real-time UI Update]
+
+    DBChannel --> AuditLog[Audit Log Entry]
+    AuditLog --> Compliance[Compliance Report]
+
+    EmailSuccess --> NotificationComplete[Notification Complete]
+    SMSSuccess --> NotificationComplete
+    RealtimeUpdate --> NotificationComplete
+    AuditLog --> NotificationComplete
+
+    style Event fill:#e1f0ff
+    style NotificationChannels fill:#fff4e1
+    style RealtimeUpdate fill:#e1f5e1
+    style EmailDelivered fill:#ffe1e1
+    style SMSDelivered fill:#ffe1e1

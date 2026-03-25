@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>15.2 Visitor Registration & Check-in Flow - VMS UCBL</title>
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose',
+        });
+    </script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .diagram-container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+        h1 {
+            color: #333;
+            border-bottom: 3px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+        .info {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 20px 0;
+            border-left: 4px solid #2196F3;
+        }
+        .info h3 {
+            margin-top: 0;
+        }
+        .download-btn {
+            background: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            margin: 10px 0;
+        }
+        .download-btn:hover {
+            background: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>15.2 Visitor Registration & Check-in Flow</h1>
+    <p><strong>Complete Visitor Journey from Arrival to Departure</strong></p>
+
+    <div class="info">
+        <h3>💡 How to Save as Image</h3>
+        <ol>
+            <li>Right-click on the diagram below</li>
+            <li>Select "Save as image" or take a screenshot</li>
+            <li>Or use your browser's print function (Ctrl+P) to save as PDF</li>
+            <li>For best quality, use browser zoom (Ctrl +) to enlarge</li>
+        </ol>
+        <button class="download-btn" onclick="window.print()">🖨️ Print / Save as PDF</button>
+    </div>
+
+    <div class="diagram-container">
+        <pre class="mermaid">
+flowchart TD
+    Start([Visitor Arrives]) --> Check{Already Registered?}
+
+    Check -->|No| PreRegister[Pre-register Online or Walk-in]
+    Check -->|Yes| Search[Search Visitor]
+
+    PreRegister --> RegForm[Fill Registration Form]
+    RegForm --> RegData[Visitor Data Entry]
+
+    RegData --> Validate{Validate Data}
+    Validate -->|Invalid| RegForm
+    Validate -->|Valid| CheckDuplicate{Visitor Exists?}
+
+    CheckDuplicate -->|Yes| Update[Update Existing Visitor]
+    CheckDuplicate -->|No| Create[Create New Visitor]
+
+    Update --> SelectHost[Select Host]
+    Create --> SelectHost
+
+    Search --> Found{Visitor Found?}
+    Found -->|No| PreRegister
+    Found -->|Yes| SelectHost
+
+    SelectHost --> NotifyHost[Notify Host]
+
+    NotifyHost --> HostDecision{Host Approval}
+
+    HostDecision -->|Auto-approve| AutoApproved[Visit Auto-Approved]
+    HostDecision -->|Manual| Pending[Visit Status: Pending]
+    HostDecision -->|Reject| Rejected[Visit Status: Rejected]
+
+    Pending --> HostAction{Host Action}
+    HostAction -->|Approve| Approved[Visit Status: Approved]
+    HostAction -->|Reject| Rejected
+
+    AutoApproved --> GenerateOTP[Generate OTP]
+    Approved --> GenerateOTP
+
+    GenerateOTP --> SendOTP[Send OTP via Email/SMS]
+
+    SendOTP --> VisitorArrives[Visitor Arrives at Branch]
+
+    VisitorArrives --> VerifyMethod{Verification Method}
+
+    VerifyMethod -->|OTP| OTPVerify[Verify OTP]
+    VerifyMethod -->|Face ID| FaceVerify[Face Recognition]
+    VerifyMethod -->|RFID| RFIDVerify[Scan RFID Card]
+    VerifyMethod -->|QR Code| QRVerify[Scan QR Code]
+
+    OTPVerify --> OTPCheck{OTP Valid?}
+    OTPCheck -->|No| RetryOTP[Retry OTP - Max 3 attempts]
+    RetryOTP --> OTPCheck
+    OTPCheck -->|Yes| CheckIn
+
+    FaceVerify --> FaceCheck{Face Match?}
+    FaceCheck -->|No| ManualVerify[Manual Verification]
+    FaceCheck -->|Yes| CheckIn
+
+    RFIDVerify --> RFIDCheck{Card Valid?}
+    RFIDCheck -->|No| InvalidCard[Invalid Card Alert]
+    RFIDCheck -->|Yes| CheckIn
+
+    QRVerify --> QRCheck{QR Code Valid?}
+    QRCheck -->|Expired| QRExpired[QR Expired]
+    QRCheck -->|Used| QRUsed[QR Already Used]
+    QRCheck -->|Valid| CheckIn
+
+    ManualVerify --> CheckIn
+    QRExpired --> GenerateOTP
+    QRUsed --> SecurityAlert[Security Alert]
+    InvalidCard --> SecurityAlert
+    Rejected --> NotifyReject[Notify Visitor: Rejected]
+
+    CheckIn[Check-in Visitor] --> AssignBadge[Assign Access Badge]
+
+    AssignBadge --> NotifyCheckin[Notify Host]
+
+    NotifyCheckin --> ActiveVisit[Visit Status: Active]
+
+    ActiveVisit --> MonitorVisit[Monitor Visit]
+
+    MonitorVisit --> VisitorLeaves[Visitor Departs]
+
+    VisitorLeaves --> CheckOut[Check-out Visitor]
+
+    CheckOut --> ReturnBadge[Return Badge]
+    ReturnBadge --> VisitComplete[Visit Status: Completed]
+
+    VisitComplete --> CalculateDuration[Calculate Duration]
+    CalculateDuration --> UpdateStats[Update Statistics]
+
+    UpdateStats --> Feedback[Optional Feedback]
+
+    Feedback --> Archive[Archive Visit Record]
+    Archive --> End([Visit Complete])
+
+    NotifyReject --> Archive
+
+    style Start fill:#e1f5e1
+    style End fill:#e1f5e1
+    style CheckIn fill:#fff4e1
+    style CheckOut fill:#fff4e1
+    style SecurityAlert fill:#ffe1e1
+    style Approved fill:#e1f5e1
+    style Rejected fill:#ffe1e1
+    style ActiveVisit fill:#e1f0ff
+
+        </pre>
+    </div>
+
+    <div class="info">
+        <h3>📋 Description</h3>
+        <p>This diagram shows the complete visitor management workflow:</p>
+        <ul>
+            <li><strong>Registration:</strong> Pre-registration online or walk-in registration</li>
+            <li><strong>Host Approval:</strong> Manual or auto-approval process</li>
+            <li><strong>Verification Methods:</strong> OTP, Face Recognition, RFID, or QR Code</li>
+            <li><strong>Check-in Process:</strong> Badge assignment and host notification</li>
+            <li><strong>Visit Monitoring:</strong> Real-time tracking with overstay alerts</li>
+            <li><strong>Check-out:</strong> Badge return and visit archival</li>
+        </ul>
+        <p><strong>Source File:</strong> 15_2_visitor_registration_checkin_flow.mmd</p>
+    </div>
+</body>
+</html>

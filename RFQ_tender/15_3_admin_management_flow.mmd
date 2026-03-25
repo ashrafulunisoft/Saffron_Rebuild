@@ -1,0 +1,80 @@
+flowchart TD
+    AdminStart([Admin Login]) --> Dashboard[Admin Dashboard]
+
+    Dashboard --> AdminMenu{Admin Functions}
+
+    AdminMenu -->|Visitor Management| VisitorMgmt[Visitor Management]
+    AdminMenu -->|Role Management| RoleMgmt[Role Management]
+    AdminMenu -->|Reports| Reports[Reports and Analytics]
+    AdminMenu -->|Live Dashboard| LiveDashboard[Live Dashboard]
+    AdminMenu -->|Settings| Settings[System Settings]
+
+    VisitorMgmt --> VisitorActions{Visitor Actions}
+    VisitorActions -->|Create| CreateVisitor[Create Visitor]
+    VisitorActions -->|View List| VisitorList[View All Visitors]
+    VisitorActions -->|Search| SearchVisitor[Search Visitor]
+    VisitorActions -->|Pending| PendingVisits[Pending Visits]
+    VisitorActions -->|Active| ActiveVisits[Active Visits]
+    VisitorActions -->|History| VisitHistory[Visit History]
+    VisitorActions -->|Check-in/Check-out| CheckinMgmt[Check-in Management]
+
+    CreateVisitor --> VisitorForm[Registration Form]
+    VisitorForm --> VisitorSubmit[Submit Visitor Data]
+    VisitorSubmit --> VisitorStore[Store in Database]
+
+    VisitorList --> ViewVisitor[View Visitor Details]
+    ViewVisitor --> EditVisitor[Edit Visitor]
+    ViewVisitor --> DeleteVisitor{Delete Visitor?}
+    DeleteVisitor -->|Yes| ConfirmDelete[Confirm Delete]
+    DeleteVisitor -->|No| VisitorList
+
+    PendingVisits --> PendingAction{Pending Action}
+    PendingAction -->|Approve| AdminApprove[Approve Visit]
+    PendingAction -->|Reject| AdminReject[Reject Visit]
+
+    ActiveVisits --> MonitorActive[Monitor Active Visitors]
+    MonitorActive --> ForceCheckout{Force Check-out?}
+    ForceCheckout -->|Yes| AdminCheckout[Check-out Visitor]
+
+    CheckinMgmt --> CheckinList[Check-in Log]
+    CheckinList --> ViewTimestamps[View Timestamps and Duration]
+
+    RoleMgmt --> RoleActions{Role Actions}
+    RoleActions -->|Create Role| CreateRole[Create Role]
+    RoleActions -->|Assign Role| AssignRole[Assign Role]
+    RoleActions -->|Remove Role| RemoveRole[Remove Role]
+
+    CreateRole --> RoleForm[Define Role Name and Permissions]
+    RoleForm --> StoreRole[Store Role]
+
+    AssignRole --> UserSelect[Select User]
+    UserSelect --> RoleSelect[Select Role]
+    RoleSelect --> AssignStore[Store Assignment]
+
+    Reports --> ReportType{Report Type}
+    ReportType -->|Visitor Stats| VisitorStats[Visitor Statistics]
+    ReportType -->|Visit Report| VisitReport[Visit Report]
+    ReportType -->|Export CSV| ExportCSV[Export CSV]
+
+    VisitorStats --> ViewStats[View Statistics]
+
+    VisitReport --> GenerateReport[Generate Report]
+    GenerateReport --> DisplayReport[Display Report]
+    DisplayReport --> ExportOption{Export?}
+    ExportOption -->|Yes| ExportCSV
+    ExportOption -->|No| AdminMenu
+
+    LiveDashboard --> LiveView[Live Dashboard View]
+    LiveView --> WebSocket[WebSocket Connection]
+    WebSocket --> LiveMetrics[Live Metrics]
+
+    Settings --> SettingOptions{Settings Options}
+    SettingOptions -->|General| GeneralSettings[General Settings]
+    SettingOptions -->|Notifications| NotificationSettings[Notification Settings]
+    SettingOptions -->|Security| SecuritySettings[Security Settings]
+
+    style AdminStart fill:#e1f5e1
+    style Dashboard fill:#e1f0ff
+    style LiveDashboard fill:#fff4e1
+    style PendingVisits fill:#ffe1e1
+    style ActiveVisits fill:#e1f5e1

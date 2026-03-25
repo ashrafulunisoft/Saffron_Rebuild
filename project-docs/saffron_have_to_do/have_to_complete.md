@@ -66,9 +66,9 @@ Saffron Next Task List :
 22. add the delivery fee from the admin page inside / out side dhaka; (done)
 23. CMS section with  Bangla.
 24. Blog check (done)
-25. fix the bilangual for the frontend theme and connect with the admin panel 
-26. -----------------------------------------------------------
-27. have to fix the mobile design (later)
+25. have to fix the mobile design (done- cart , blog , header , footer)
+26. fix the bilangual for the frontend theme and connect with the admin panel 
+27. -----------------------------------------------------------
 28. password rest for the user (later)
 29. login or register with google / Facebook. (later)
 30. add pathoa integration ; (later)

@@ -149,6 +149,24 @@ body {
   transform:translateY(-1px) scale(0.98);
 }
 
+/* Mobile Menu Close Button */
+.btn-close-menu {
+  width:44px; height:44px; border-radius:14px;
+  background:rgba(244,63,94,0.15); border:1px solid rgba(244,63,94,0.3);
+  color:#f43f5e; display:inline-flex; align-items:center; justify-content:center;
+  transition:all .3s cubic-bezier(0.4,0,0.2,1);
+  font-size:1.3rem;
+}
+.btn-close-menu:hover {
+  background:rgba(244,63,94,0.25);
+  border-color:rgba(244,63,94,0.5);
+  color:#ff6b8a; transform:scale(1.1);
+  box-shadow:0 8px 25px rgba(244,63,94,0.3);
+}
+.btn-close-menu:active {
+  transform:scale(0.95);
+}
+
 /* Dropdown Menu Styles */
 .dropdown-menu {
   background: rgba(15, 10, 0, 0.95);
