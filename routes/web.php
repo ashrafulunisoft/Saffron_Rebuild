@@ -598,7 +598,7 @@ Route::middleware('auth')->group(function () {
 Route::get('/test-mail', function() {
     try {
         Mail::raw('This is a test email from Laravel', function($message) {
-            $message->to('ashrafulunisoft@gmail.com')
+            $message->to('ashrafulinstasure@gmail.com')
                     ->subject('Test Email');
         });
         return 'Email sent successfully! Check your inbox.';

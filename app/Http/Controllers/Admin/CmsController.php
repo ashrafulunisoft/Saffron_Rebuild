@@ -59,7 +59,7 @@ class CmsController extends Controller
             'is_active' => $request->has('is_active'),
         ]);
 
-        return redirect()->route('admin.cms.index')
+        return redirect()->route('admin.ecommerce.cms.index')
             ->with('success', 'CMS page created successfully!');
     }
 
@@ -104,7 +104,7 @@ class CmsController extends Controller
             'is_active' => $request->has('is_active'),
         ]);
 
-        return redirect()->route('admin.cms.index')
+        return redirect()->route('admin.ecommerce.cms.index')
             ->with('success', 'CMS page updated successfully!');
     }
 
@@ -115,7 +115,7 @@ class CmsController extends Controller
     {
         $cms->delete();
 
-        return redirect()->route('admin.cms.index')
+        return redirect()->route('admin.ecommerce.cms.index')
             ->with('success', 'CMS page deleted successfully!');
     }
 
@@ -174,7 +174,7 @@ class CmsController extends Controller
             'is_active' => $request->has('is_active'),
         ]);
 
-        return redirect()->route('admin.cms.sections', $cms)
+        return redirect()->route('admin.ecommerce.cms.sections', $cms)
             ->with('success', 'Section created successfully!');
     }
 
@@ -225,7 +225,7 @@ class CmsController extends Controller
             'is_active' => $request->has('is_active'),
         ]);
 
-        return redirect()->route('admin.cms.sections', $cms)
+        return redirect()->route('admin.ecommerce.cms.sections', $cms)
             ->with('success', 'Section updated successfully!');
     }
 
@@ -236,7 +236,7 @@ class CmsController extends Controller
     {
         $section->delete();
 
-        return redirect()->route('admin.cms.sections', $cms)
+        return redirect()->route('admin.ecommerce.cms.sections', $cms)
             ->with('success', 'Section deleted successfully!');
     }
 }
