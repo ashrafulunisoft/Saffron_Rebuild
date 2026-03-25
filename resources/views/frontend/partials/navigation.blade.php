@@ -14,7 +14,7 @@
     <div class="collapse navbar-collapse" id="navMenu">
       <!-- Mobile Close Button -->
       <div class="d-lg-none w-100 d-flex justify-content-end mb-3">
-        <button class="btn btn-close-menu" type="button" data-bs-dismiss="collapse" data-bs-target="#navMenu" aria-label="Close">
+        <button class="btn btn-close-menu" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-label="Close">
           <i class="fas fa-times"></i>
         </button>
       </div>
