@@ -29,6 +29,13 @@
             </div>
         @endif
 
+        @if(session('error'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert" style="background: rgba(239, 68, 68, 0.2); border: 1px solid rgba(239, 68, 68, 0.3); color: white; margin-bottom: 1.5rem; border-radius: 12px;">
+                <i class="fas fa-exclamation-circle me-2"></i>{{ session('error') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" style="filter: invert(1);"></button>
+            </div>
+        @endif
+
         <!-- CMS Pages Table -->
         <div class="table-responsive">
             <table class="table table-dark table-hover" id="cmsTable">
