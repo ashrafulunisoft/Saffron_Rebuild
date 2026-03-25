@@ -15,7 +15,7 @@ class CmsHelper
      */
     public static function getPage(string $slug, array $defaults = [])
     {
-        $page = CmsPage::active()->where('slug', $slug)->first();
+        $page = CmsPage::active()->with('sections')->where('slug', $slug)->first();
 
         return (object) [
             'title' => $page ? $page->title : ($defaults['title'] ?? 'Page'),
@@ -25,6 +25,7 @@ class CmsHelper
             'meta_description' => $page ? $page->meta_description : ($defaults['meta_description'] ?? null),
             'meta_keywords' => $page ? $page->meta_keywords : ($defaults['meta_keywords'] ?? null),
             'has_custom_content' => $page !== null,
+            'sections' => $page ? $page->sections : collect(),
         ];
     }
 
@@ -63,5 +64,25 @@ class CmsHelper
     {
         $page = CmsPage::active()->where('slug', $slug)->first();
         return $page ? $page->content : $default;
+    }
+
+    /**
+     * Get a specific section from a page by section key.
+     *
+     * @param string $pageSlug
+     * @param string $sectionKey
+     * @return object|null
+     */
+    public static function getSection(string $pageSlug, string $sectionKey)
+    {
+        $page = CmsPage::active()->where('slug', $pageSlug)->first();
+        if (!$page) {
+            return null;
+        }
+
+        return $page->sections()
+            ->where('section_key', $sectionKey)
+            ->where('is_active', true)
+            ->first();
     }
 }

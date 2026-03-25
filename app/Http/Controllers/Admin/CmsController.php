@@ -153,8 +153,7 @@ class CmsController extends Controller
             'button_url' => 'nullable|string',
             'image_url' => 'nullable|string',
             'icon' => 'nullable|string|max:50',
-            'sort_order' => 'integer',
-            'is_active' => 'boolean',
+            'sort_order' => 'nullable|integer',
         ]);
 
         $cms->sections()->create([
@@ -191,7 +190,7 @@ class CmsController extends Controller
      */
     public function updateSection(Request $request, CmsPage $cms, CmsSection $section)
     {
-        $request->validate([
+        $validated = $request->validate([
             'section_key' => 'required|string|max:255',
             'title_en' => 'required|string|max:255',
             'title_bn' => 'nullable|string|max:255',
@@ -204,29 +203,34 @@ class CmsController extends Controller
             'button_url' => 'nullable|string',
             'image_url' => 'nullable|string',
             'icon' => 'nullable|string|max:50',
-            'sort_order' => 'integer',
-            'is_active' => 'boolean',
+            'sort_order' => 'nullable|integer',
         ]);
 
-        $section->update([
-            'section_key' => $request->section_key,
-            'title_en' => $request->title_en,
-            'title_bn' => $request->title_bn,
-            'subtitle_en' => $request->subtitle_en,
-            'subtitle_bn' => $request->subtitle_bn,
-            'content_en' => $request->content_en,
-            'content_bn' => $request->content_bn,
-            'button_text_en' => $request->button_text_en,
-            'button_text_bn' => $request->button_text_bn,
-            'button_url' => $request->button_url,
-            'image_url' => $request->image_url,
-            'icon' => $request->icon,
-            'sort_order' => $request->sort_order ?? 0,
-            'is_active' => $request->has('is_active'),
-        ]);
+        try {
+            $section->update([
+                'section_key' => $request->section_key,
+                'title_en' => $request->title_en,
+                'title_bn' => $request->title_bn,
+                'subtitle_en' => $request->subtitle_en,
+                'subtitle_bn' => $request->subtitle_bn,
+                'content_en' => $request->content_en,
+                'content_bn' => $request->content_bn,
+                'button_text_en' => $request->button_text_en,
+                'button_text_bn' => $request->button_text_bn,
+                'button_url' => $request->button_url,
+                'image_url' => $request->image_url,
+                'icon' => $request->icon,
+                'sort_order' => $request->sort_order ?? 0,
+                'is_active' => $request->has('is_active'),
+            ]);
 
-        return redirect()->route('admin.ecommerce.cms.sections', $cms)
-            ->with('success', 'Section updated successfully!');
+            return redirect()->route('admin.ecommerce.cms.sections', $cms)
+                ->with('success', 'Section updated successfully!');
+        } catch (\Exception $e) {
+            return redirect()->back()
+                ->withInput()
+                ->with('error', 'Failed to update section: ' . $e->getMessage());
+        }
     }
 
     /**

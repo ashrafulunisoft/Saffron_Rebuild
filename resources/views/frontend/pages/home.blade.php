@@ -3,6 +3,7 @@
 @section('title', 'Home - Saffron Sweets & Bakery')
 
 @section('content')
+
 <!-- HERO SECTION -->
 <section class="hero-section">
   <div class="hero-bg-pattern"></div>

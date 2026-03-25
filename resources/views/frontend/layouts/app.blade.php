@@ -31,8 +31,8 @@ html { scroll-behavior:smooth; }
 body {
   font-family:'Poppins',sans-serif;
   background: linear-gradient(135deg, #0f0a00 0%, #1a0a00 20%, #0d0520 40%, #001a0d 60%, #1a0a00 80%, #0f0502 100%);
-  min-height:100vh; 
-  color:#f5e6cc; 
+  min-height:100vh;
+  color:#f5e6cc;
   overflow-x:hidden;
 }
 
@@ -479,7 +479,7 @@ input[type="password"].input-dark:-webkit-autofill::first-line {
   border-top: 1px solid rgba(245, 158, 11, 0.15);
   border-bottom: 1px solid rgba(245, 158, 11, 0.1);
   border-radius: 0 0 30px 30px;
-  box-shadow: 
+  box-shadow:
     0 30px 80px rgba(0, 0, 0, 0.5),
     0 0 60px rgba(245, 158, 11, 0.1),
     inset 0 1px 0 rgba(255, 255, 255, 0.05);
@@ -503,7 +503,7 @@ input[type="password"].input-dark:-webkit-autofill::first-line {
   content: '';
   position: absolute;
   inset: 0;
-  background: 
+  background:
     radial-gradient(ellipse at 20% 0%, rgba(245, 158, 11, 0.08) 0%, transparent 50%),
     radial-gradient(ellipse at 80% 100%, rgba(244, 63, 94, 0.06) 0%, transparent 50%);
   pointer-events: none;
@@ -737,19 +737,19 @@ input[type="password"].input-dark:-webkit-autofill::first-line {
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
   }
-  
+
   .glass-mega-menu .container {
     padding-bottom: 1rem;
   }
-  
+
   .glass-mega-featured {
     margin-bottom: 1.5rem;
   }
-  
+
   .glass-mega-col {
     margin-bottom: 1rem;
   }
-  
+
   .mega-chevron {
     font-size: 0.6rem;
     margin-right: 0.5rem;
@@ -2001,7 +2001,7 @@ section {
 }
 .hero-bg-pattern {
   position:absolute; inset:0;
-  background-image: 
+  background-image:
     radial-gradient(circle at 20% 50%, rgba(245,158,11,0.1) 0%, transparent 50%),
     radial-gradient(circle at 80% 80%, rgba(244,63,94,0.08) 0%, transparent 50%),
     radial-gradient(circle at 40% 20%, rgba(139,92,246,0.06) 0%, transparent 40%);
@@ -2648,7 +2648,7 @@ let lastScroll = 0;
 window.addEventListener('scroll', () => {
     const nav = document.getElementById('navbar');
     const currentScroll = window.scrollY;
-    
+
     // Navbar effect
     if (nav) {
         if (currentScroll > 50) {
@@ -2657,7 +2657,7 @@ window.addEventListener('scroll', () => {
             nav.classList.remove('scrolled');
         }
     }
-    
+
     lastScroll = currentScroll;
 });
 
@@ -2692,7 +2692,7 @@ function showToast(message, type = 'success') {
         toastContainer.style.zIndex = '9999';
         document.body.appendChild(toastContainer);
     }
-    
+
     const toastId = 'toast-' + Date.now();
     const toastHTML = `
         <div id="${toastId}" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
@@ -2706,12 +2706,12 @@ function showToast(message, type = 'success') {
             </div>
         </div>
     `;
-    
+
     toastContainer.insertAdjacentHTML('beforeend', toastHTML);
     const toastElement = document.getElementById(toastId);
     const toast = new bootstrap.Toast(toastElement, { delay: 3000 });
     toast.show();
-    
+
     toastElement.addEventListener('hidden.bs.toast', () => {
         toastElement.remove();
     });

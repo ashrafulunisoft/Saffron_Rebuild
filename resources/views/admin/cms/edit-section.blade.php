@@ -19,6 +19,32 @@
             </a>
         </div>
 
+        @if(session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert" style="background: rgba(34, 197, 94, 0.2); border: 1px solid rgba(34, 197, 94, 0.3); color: white; margin-bottom: 1.5rem; border-radius: 12px;">
+            <i class="fas fa-check-circle me-2"></i>{{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" style="filter: invert(1);"></button>
+        </div>
+        @endif
+
+        @if(session('error'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert" style="background: rgba(239, 68, 68, 0.2); border: 1px solid rgba(239, 68, 68, 0.3); color: white; margin-bottom: 1.5rem; border-radius: 12px;">
+            <i class="fas fa-exclamation-circle me-2"></i>{{ session('error') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" style="filter: invert(1);"></button>
+        </div>
+        @endif
+
+        @if($errors->any())
+        <div class="alert alert-danger alert-dismissible fade show" role="alert" style="background: rgba(239, 68, 68, 0.2); border: 1px solid rgba(239, 68, 68, 0.3); color: white; margin-bottom: 1.5rem; border-radius: 12px;">
+            <strong><i class="fas fa-exclamation-triangle me-2"></i>Please fix the following errors:</strong>
+            <ul style="margin-top: 0.5rem; margin-bottom: 0;">
+                @foreach($errors->all() as $error)
+                <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" style="filter: invert(1);"></button>
+        </div>
+        @endif
+
         <form action="{{ route('admin.ecommerce.cms.sections.update', [$cms, $section]) }}" method="POST">
             @csrf
             @method('PUT')
