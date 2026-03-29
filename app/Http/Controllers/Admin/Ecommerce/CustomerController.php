@@ -119,7 +119,7 @@ class CustomerController extends Controller
     {
         // Load customer's orders with items
         $orders = $customer->orders()
-            ->with('items.product')
+            ->with('orderItems.product')
             ->orderBy('created_at', 'desc')
             ->paginate(10);
 

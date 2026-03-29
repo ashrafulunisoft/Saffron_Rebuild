@@ -187,7 +187,7 @@
                                 <div style="font-size: 0.85rem;">{{ $order->created_at->format('M d, Y') }}</div>
                             </td>
                             <td>
-                                <span class="badge badge-visit-type">{{ $order->items->count() }} items</span>
+                                <span class="badge badge-visit-type">{{ $order->orderItems->count() }} items</span>
                             </td>
                             <td>
                                 <div class="text-success fw-700" style="font-size: 0.95rem;">৳{{ number_format($order->final_amount, 2) }}</div>

@@ -75,10 +75,11 @@ Saffron Next Task List :
 31. subcription fix (later)
 32. fix : when click feature product => all product then can't show the new arrival and best product . 
 33. remove the bangla option from admin cms section . (done)
-34. -----------------------------------------------------------
-35. contact mail admin can see(later)
-36. login or register with google / Facebook. (later)
-37. add pathoa integration ; (later)
+34. fix : mobile pagination . 
+35. -----------------------------------------------------------
+36. contact mail admin can see(later)
+37. login or register with google / Facebook. (later)
+38. add pathoa integration ; (later)
 
 
 ------------------------------------------------
