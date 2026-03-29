@@ -6,10 +6,10 @@
         <!-- Header -->
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3.5rem; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 1.5rem;">
             <div class="d-flex align-items-center gap-3">
-                <div class="logo-vms" style="width: 44px; height: 44px; font-size: 1.2rem;">V</div>
+                <div class="logo-vms" style="width: 44px; height: 44px; font-size: 1.2rem;">S</div>
                 <div>
-                    <h6 class="fw-800 mb-0 text-white text-shadow-white">UCB BANK</h6>
-                    <span class="permission-title" style="font-size: 0.7rem; margin: 0; text-shadow-blue">VISITOR SYSTEM</span>
+                    <h6 class="fw-800 mb-0 text-white text-shadow-white">SAFFRON</h6>
+                    <span class="permission-title" style="font-size: 0.7rem; margin: 0; text-shadow-blue">SWEETS & BAKERY</span>
                 </div>
             </div>
             <div>
@@ -65,8 +65,8 @@
                     <div class="position-relative">
                         <select name="role_id" class="input-dark input-custom" id="role-select" required>
                             <option value="" disabled selected>Choose a functional role</option>
-                            @foreach($roles as $role)
-                            <option value="{{ $role->id }}">{{ $role->name }}</option>
+                            @foreach($roles->whereIn('name', ['customer', 'staff', 'admin']) as $role)
+                            <option value="{{ $role->id }}">{{ ucfirst($role->name) }}</option>
                             @endforeach
                         </select>
                         <i class="fas fa-user-shield input-icon"></i>
