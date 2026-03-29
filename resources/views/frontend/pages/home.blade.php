@@ -126,7 +126,7 @@
       <div class="col-lg-6">
         <div class="about-image-container">
           <div class="glass-card-glow p-3 animate-on-scroll" style="height:100%;display:flex;align-items:center;justify-content:center;">
-            <div style="font-size:12rem;">🏪</div>
+            <div style="font-size:12rem;">{{ $cmsSections['who-we-are']->icon ?? '🏪' }}</div>
           </div>
           <div class="about-image-float aif-1 glass-card text-center p-3">
             <div class="about-badge">👨‍🍳</div>
@@ -141,17 +141,27 @@
         </div>
       </div>
       <div class="col-lg-6">
-        <span class="section-badge animate-on-scroll">Who We Are</span>
-        <h2 class="section-title mt-3 animate-on-scroll">
-          Authentic Saffron<br/>
-          <span class="gradient-text">Sweets & Traditional Bakery</span>
-        </h2>
-        <p class="mt-4 animate-on-scroll" style="color:rgba(245,230,204,0.75);line-height:1.9;font-size:1.05rem;">
-          Welcome to Saffron, where tradition meets excellence. We bring you the finest collection of authentic Bengali sweets and premium bakery items, crafted with love and the purest saffron.
-        </p>
-        <p class="animate-on-scroll" style="color:rgba(245,230,204,0.7);line-height:1.9;">
-          Our skilled artisans use time-honored recipes passed down through generations to create mouth-watering treats that will transport you to the streets of Bangladesh. From roshogolla to sandesh, from freshly baked cakes to artisan cookies – every bite is a celebration of flavor.
-        </p>
+        @if($cmsSections && isset($cmsSections['who-we-are']))
+          <span class="section-badge animate-on-scroll">{{ $cmsSections['who-we-are']->title_en ?? 'Who We Are' }}</span>
+          <h2 class="section-title mt-3 animate-on-scroll">
+            {!! $cmsSections['who-we-are']->subtitle_en ?? 'Authentic Saffron<br/><span class="gradient-text">Sweets & Traditional Bakery</span>' !!}
+          </h2>
+          <p class="mt-4 animate-on-scroll" style="color:rgba(245,230,204,0.75);line-height:1.9;font-size:1.05rem;">
+            {!! $cmsSections['who-we-are']->content_en ?? 'Welcome to Saffron, where tradition meets excellence.' !!}
+          </p>
+        @else
+          <span class="section-badge animate-on-scroll">Who We Are</span>
+          <h2 class="section-title mt-3 animate-on-scroll">
+            Authentic Saffron<br/>
+            <span class="gradient-text">Sweets & Traditional Bakery</span>
+          </h2>
+          <p class="mt-4 animate-on-scroll" style="color:rgba(245,230,204,0.75);line-height:1.9;font-size:1.05rem;">
+            Welcome to Saffron, where tradition meets excellence. We bring you the finest collection of authentic Bengali sweets and premium bakery items, crafted with love and the purest saffron.
+          </p>
+          <p class="animate-on-scroll" style="color:rgba(245,230,204,0.7);line-height:1.9;">
+            Our skilled artisans use time-honored recipes passed down through generations to create mouth-watering treats that will transport you to the streets of Bangladesh. From roshogolla to sandesh, from freshly baked cakes to artisan cookies – every bite is a celebration of flavor.
+          </p>
+        @endif
         <div class="feature-list animate-on-scroll">
           <div class="feature-item">
             <div class="feature-icon-box">✓</div>
