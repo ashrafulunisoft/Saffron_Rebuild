@@ -2613,7 +2613,14 @@ section {
         </div>
 
         <!-- Footer -->
-        @include('frontend.partials.footer')
+        @php
+            $footerSections = \App\Models\CmsSection::where('cms_page_id', 9)
+                ->where('is_active', true)
+                ->orderBy('sort_order')
+                ->get()
+                ->keyBy('section_key');
+        @endphp
+        @include('frontend.partials.footer', ['footerSections' => $footerSections])
     </div>
 
     <!-- Cart Sidebar -->
