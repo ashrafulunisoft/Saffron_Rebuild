@@ -30,24 +30,46 @@
   <div class="container">
     <div class="row align-items-center g-5">
       <div class="col-lg-6 hero-content">
-        <div class="section-badge mb-3 animate-on-scroll">
-          <i class="fas fa-star text-warning me-2"></i>Premium Quality Since 1995
-        </div>
-        <h1 class="hero-title animate-on-scroll">
-          Authentic Saffron<br/>
-          <span class="gradient-text">Sweets & Bakery</span>
-        </h1>
-        <p class="hero-sub animate-on-scroll">
-          Indulge in the rich heritage of Bengal with our exquisite collection of traditional sweets and premium bakery items, crafted with love and the purest saffron.
-        </p>
-        <div class="d-flex gap-3 flex-wrap animate-on-scroll">
-          <a href="{{ route('shop') }}" class="btn btn-glow btn-lg px-4">
-            <i class="fas fa-shopping-basket me-2"></i>Shop Now
-          </a>
-          <a href="#about" class="btn btn-glass btn-lg px-4">
-            <i class="fas fa-play-circle me-2"></i>Our Story
-          </a>
-        </div>
+        @if($cmsSections && isset($cmsSections['hero']))
+          <div class="section-badge mb-3 animate-on-scroll">
+            <i class="fas fa-star text-warning me-2"></i>{{ $cmsSections['hero']->subtitle_en ?? 'Premium Quality Since 1995' }}
+          </div>
+          <h1 class="hero-title animate-on-scroll">
+            {!! $cmsSections['hero']->title_en !!}
+          </h1>
+          <p class="hero-sub animate-on-scroll">
+            {!! $cmsSections['hero']->content_en !!}
+          </p>
+          <div class="d-flex gap-3 flex-wrap animate-on-scroll">
+            @if($cmsSections['hero']->button_url)
+            <a href="{{ $cmsSections['hero']->button_url }}" class="btn btn-glow btn-lg px-4">
+              <i class="fas fa-shopping-basket me-2"></i>{{ $cmsSections['hero']->button_text_en ?? 'Shop Now' }}
+            </a>
+            @endif
+            <a href="#about" class="btn btn-glass btn-lg px-4">
+              <i class="fas fa-play-circle me-2"></i>Our Story
+            </a>
+          </div>
+        @else
+          <div class="section-badge mb-3 animate-on-scroll">
+            <i class="fas fa-star text-warning me-2"></i>Premium Quality Since 1995
+          </div>
+          <h1 class="hero-title animate-on-scroll">
+            Authentic Saffron<br/>
+            <span class="gradient-text">Sweets & Bakery</span>
+          </h1>
+          <p class="hero-sub animate-on-scroll">
+            Indulge in the rich heritage of Bengal with our exquisite collection of traditional sweets and premium bakery items, crafted with love and the purest saffron.
+          </p>
+          <div class="d-flex gap-3 flex-wrap animate-on-scroll">
+            <a href="{{ route('shop') }}" class="btn btn-glow btn-lg px-4">
+              <i class="fas fa-shopping-basket me-2"></i>Shop Now
+            </a>
+            <a href="#about" class="btn btn-glass btn-lg px-4">
+              <i class="fas fa-play-circle me-2"></i>Our Story
+            </a>
+          </div>
+        @endif
         <div class="hero-stats animate-on-scroll">
           <div class="stat-item">
             <span class="stat-num">250+</span>
@@ -71,7 +93,7 @@
         <div class="hero-showcase animate-on-scroll">
           <div class="showcase-ring"></div>
           <div class="showcase-center">
-            <div class="showcase-emoji">🎂</div>
+            <div class="showcase-emoji">{{ $cmsSections['hero']->icon ?? '🎂' }}</div>
           </div>
         </div>
       </div>

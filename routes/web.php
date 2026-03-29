@@ -427,7 +427,14 @@ Route::get('/', function(){
         ->take(3)
         ->get();
 
-    return view('frontend.pages.home', compact('categories', 'featuredProducts', 'newArrivals', 'bestSellers', 'reviews', 'blogPosts'));
+    // Load CMS sections for home page
+    $cmsSections = \App\Models\CmsSection::where('cms_page_id', 6)
+        ->where('is_active', true)
+        ->orderBy('sort_order')
+        ->get()
+        ->keyBy('section_key');
+
+    return view('frontend.pages.home', compact('categories', 'featuredProducts', 'newArrivals', 'bestSellers', 'reviews', 'blogPosts', 'cmsSections'));
 })->name('home');
 
 

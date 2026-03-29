@@ -64,16 +64,18 @@ Saffron Next Task List :
 20. Remove/Edit the category section form the footer (done)
 21. Admin can't change the password fix it (done);  
 22. add the delivery fee from the admin page inside / out side dhaka; (done)
-23. CMS section with  Bangla.
-24. Blog check (done)
-25. have to fix the mobile design (done- cart , blog , header , footer)
-26. fix the bilangual for the frontend theme and connect with the admin panel 
-27. -----------------------------------------------------------
+23. sms & email for notification;(done)
+24. CMS section with  Bangla.
+25. Blog check (done)
+26. have to fix the mobile design (done- cart , blog , header , footer)
+27. fix the frontend theme and connect with the admin cms content.  
 28. password rest for the user (later)
-29. login or register with google / Facebook. (later)
-30. add pathoa integration ; (later)
-31. subcription fix (later)
-32. sms & email for notification;
+29. user role ways check the redirection 
+30. subcription fix (later)
+31. fix : when click feature product => all product then can't show the new arrival and best product . 
+32. -----------------------------------------------------------
+33. login or register with google / Facebook. (later)
+34. add pathoa integration ; (later)
 
 
 ------------------------------------------------
