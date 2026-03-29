@@ -7,10 +7,10 @@
     <!-- Header -->
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2.5rem; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 1.5rem;">
         <div class="d-flex align-items-center gap-3">
-            <div class="logo-vms" style="width: 44px; height: 44px; font-size: 1.2rem;">V</div>
+            <div class="logo-vms" style="width: 44px; height: 44px; font-size: 1.2rem;">S</div>
             <div>
-                <h6 class="fw-800 mb-0 text-white text-shadow-white" style="font-size: 1.1rem;">UCB BANK</h6>
-                <span class="permission-title" style="font-size: 0.7rem; margin: 0; text-shadow-blue">ADMIN PANEL</span>
+                <h6 class="fw-800 mb-0 text-white text-shadow-white" style="font-size: 1.1rem;">SAFFRON</h6>
+                <span class="permission-title" style="font-size: 0.7rem; margin: 0; text-shadow-blue">SWEETS & BAKERY</span>
             </div>
         </div>
         <h2 class="fw-800 mb-0 text-white letter-spacing-1 text-shadow-white" style="font-size: 2rem;">My Profile</h2>
