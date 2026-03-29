@@ -192,23 +192,42 @@
     <div class="row g-5 align-items-center">
       <div class="col-lg-6 order-lg-2">
         <div class="specialty-card animate-on-scroll">
-          <div style="font-size:8rem;text-align:center;margin-bottom:1rem;">🍮</div>
+          <div style="font-size:8rem;text-align:center;margin-bottom:1rem;">
+            @if($cmsSections && isset($cmsSections['specialty']) && $cmsSections['specialty']->icon)
+              {{ $cmsSections['specialty']->icon }}
+            @else
+              🍮
+            @endif
+          </div>
+          @if($cmsSections && isset($cmsSections['specialty']))
           <h3 class="text-center" style="font-family:'Playfair Display',serif;color:#fbbf24;">Authentic Bengali Sweets</h3>
-          <p class="text-center" style="color:rgba(245,230,204,0.7);">Indulge in the rich heritage of Bengal</p>
+          @else
+          <h3 class="text-center" style="font-family:'Playfair Display',serif;color:#fbbf24;">Authentic Bengali Sweets</h3>
+          @endif
         </div>
       </div>
       <div class="col-lg-6 order-lg-1">
-        <span class="section-badge animate-on-scroll">Our Specialty</span>
-        <h2 class="section-title mt-3 animate-on-scroll">
-          Authentic Bengali<br/>
-          <span class="gradient-text">Sweets Collection</span>
-        </h2>
-        <p class="mt-4 animate-on-scroll" style="color:rgba(245,230,204,0.75);line-height:1.9;">
-          Indulge in the rich heritage of Bengal with our exquisite collection of traditional sweets, crafted with love and the finest ingredients.
-        </p>
-        <p class="animate-on-scroll" style="color:rgba(245,230,204,0.7);line-height:1.9;">
-          From the melt-in-your-mouth roshogolla to the delicate sandesh, our sweets are made using recipes passed down through generations. Each sweet is a celebration of authentic Bengali tradition, bringing you the true taste of home.
-        </p>
+        @if($cmsSections && isset($cmsSections['specialty']))
+          <span class="section-badge animate-on-scroll">{{ $cmsSections['specialty']->title_en ?? 'Our Specialty' }}</span>
+          <h2 class="section-title mt-3 animate-on-scroll">
+            {!! $cmsSections['specialty']->subtitle_en ?? 'Authentic Bengali<br/><span class="gradient-text">Sweets Collection</span>' !!}
+          </h2>
+          <p class="mt-4 animate-on-scroll" style="color:rgba(245,230,204,0.75);line-height:1.9;">
+            {!! $cmsSections['specialty']->content_en ?? 'Indulge in the rich heritage of Bengal.' !!}
+          </p>
+        @else
+          <span class="section-badge animate-on-scroll">Our Specialty</span>
+          <h2 class="section-title mt-3 animate-on-scroll">
+            Authentic Bengali<br/>
+            <span class="gradient-text">Sweets Collection</span>
+          </h2>
+          <p class="mt-4 animate-on-scroll" style="color:rgba(245,230,204,0.75);line-height:1.9;">
+            Indulge in the rich heritage of Bengal with our exquisite collection of traditional sweets, crafted with love and the finest ingredients.
+          </p>
+          <p class="animate-on-scroll" style="color:rgba(245,230,204,0.7);line-height:1.9;">
+            From the melt-in-your-mouth roshogolla to the delicate sandesh, our sweets are made using recipes passed down through generations. Each sweet is a celebration of authentic Bengali tradition, bringing you the true taste of home.
+          </p>
+        @endif
         <div class="specialty-features animate-on-scroll">
           <div class="sf-item">
             <div class="sf-icon">🥛</div>
@@ -227,9 +246,15 @@
             <div><div class="sf-title">Traditional</div><div class="sf-desc">Ancient recipes</div></div>
           </div>
         </div>
+        @if($cmsSections && isset($cmsSections['specialty']) && $cmsSections['specialty']->button_url)
+        <a href="{{ $cmsSections['specialty']->button_url }}" class="btn btn-glow mt-4 animate-on-scroll">
+          {{ $cmsSections['specialty']->button_text_en ?? 'Discover' }} <i class="fas fa-arrow-right ms-2"></i>
+        </a>
+        @else
         <a href="{{ route('shop.category', 'traditional-sweets') }}" class="btn btn-glow mt-4 animate-on-scroll">
           Discover Sweets <i class="fas fa-arrow-right ms-2"></i>
         </a>
+        @endif
       </div>
     </div>
   </div>
