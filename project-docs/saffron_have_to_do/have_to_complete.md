@@ -67,17 +67,18 @@ Saffron Next Task List :
 23. sms & email for notification;(done)
 24. CMS section with  Bangla.
 25. Blog check (done)
-26. have to fix the mobile design (done- cart , blog , header , footer)
-27. fix the frontend theme and connect with the admin cms content.  
-28. password rest for the user (later)
-29. user role ways check the redirection 
-30. subcription fix (later)
-31. fix : when click feature product => all product then can't show the new arrival and best product . 
-32. contact mail admin can see
-33. remove the bangla option from admin cms section . 
-34. -----------------------------------------------------------
-35. login or register with google / Facebook. (later)
-36. add pathoa integration ; (later)
+26. cms : faq, privacy, return , terms, contact , about, homepage, footer. 
+27. have to fix the mobile design (done- cart , blog , header , footer)
+28. fix the frontend theme and connect with the admin cms content.  
+29. password rest for the user (later)
+30. user role ways check the redirection 
+31. subcription fix (later)
+32. fix : when click feature product => all product then can't show the new arrival and best product . 
+33. contact mail admin can see
+34. remove the bangla option from admin cms section . 
+35. -----------------------------------------------------------
+36. login or register with google / Facebook. (later)
+37. add pathoa integration ; (later)
 
 
 ------------------------------------------------

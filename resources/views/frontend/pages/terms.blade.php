@@ -25,11 +25,55 @@
         <i class="fas fa-file-contract me-2" style="color: #fbbf24;"></i>{{ $page->title }}
       </h2>
 
-      @if($page->has_custom_content && $page->content)
-        <!-- CMS Content -->
-        <div style="color: rgba(245,230,204,0.8); line-height: 1.8;">
-          {!! $page->content !!}
+      @if($page->sections && count($page->sections) > 0)
+        <!-- CMS Sections -->
+        @foreach($page->sections->sortBy('sort_order') as $index => $section)
+        <div class="policy-section">
+          <h4 style="color: #fbbf24; margin-bottom: 1rem;">
+            @if($section->icon)
+            <span style="margin-right: 0.5rem;">{{ $section->icon }}</span>
+            @endif
+            {{ $index + 1 }}. {!! $section->title_en !!}
+          </h4>
+          @if($section->section_key == 'terms_contact')
+            @php
+              $content = $section->content_en;
+              $parts = explode("\n\n", trim($content));
+              $intro = $parts[0] ?? '';
+              $contacts = $parts[1] ?? '';
+            @endphp
+            @if($intro)
+            <p style="color: rgba(245,230,204,0.8); line-height: 1.8;">
+              {!! $intro !!}
+            </p>
+            @endif
+            @if($contacts)
+            <p style="color: rgba(245,230,204,0.8); line-height: 1.8;">
+              @foreach(explode("\n", trim($contacts)) as $line)
+                @if(trim($line) && strpos($line, '|') !== false)
+                  @php
+                    $cols = explode('|', trim($line));
+                    $label = trim($cols[0] ?? '');
+                    $value = trim($cols[1] ?? '');
+                  @endphp
+                  @if($label && $value)
+                    <i class="fas fa-{{ $label == 'Email' ? 'envelope' : 'phone' }} me-2" style="color: #fbbf24;"></i>{{ $label }}: {{ $value }}<br>
+                  @endif
+                @endif
+              @endforeach
+            </p>
+            @endif
+          @else
+            <p style="color: rgba(245,230,204,0.8); line-height: 1.8;">
+              {!! $section->content_en !!}
+            </p>
+          @endif
         </div>
+        @endforeach
+
+        <p style="color: rgba(245,230,204,0.6); text-align: center; margin-top: 2rem; font-size: 0.9rem;">
+          Last Updated: March 2026
+        </p>
       @else
         <!-- Default Content -->
         <div class="policy-section">
