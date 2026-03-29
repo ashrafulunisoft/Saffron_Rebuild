@@ -553,9 +553,21 @@
 <section class="section-gap" style="background:linear-gradient(180deg, rgba(244,63,94,0.03), transparent);">
   <div class="container">
     <div class="text-center mb-5">
-      <span class="section-badge animate-on-scroll" style="background:linear-gradient(135deg,rgba(244,63,94,0.2),rgba(245,158,11,0.2));border-color:rgba(244,63,94,0.3);"><i class="fas fa-fire me-2"></i>Top Rated</span>
-      <h2 class="section-title mt-3 animate-on-scroll">Best <span id="sellers-text" style="background:linear-gradient(135deg,#f43f5e,#f59e0b);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;"></span></h2>
-      <p class="mt-3 animate-on-scroll" style="color:rgba(245,230,204,0.6);max-width:600px;margin:0 auto;">Our most loved products that customers keep coming back for</p>
+      @if($cmsSections && isset($cmsSections['best-offers']))
+        <span class="section-badge animate-on-scroll" style="background:linear-gradient(135deg,rgba(244,63,94,0.2),rgba(245,158,11,0.2));border-color:rgba(244,63,94,0.3);"><i class="fas fa-fire me-2"></i>{{ $cmsSections['best-offers']->title_en ?? 'Top Rated' }}</span>
+        <h2 class="section-title mt-3 animate-on-scroll">
+          {!! $cmsSections['best-offers']->subtitle_en ?? 'Best <span class="gradient-text">Offers</span>' !!}
+        </h2>
+        @if($cmsSections['best-offers']->content_en)
+        <p class="mt-3 animate-on-scroll" style="color:rgba(245,230,204,0.6);max-width:600px;margin:0 auto;">
+          {!! $cmsSections['best-offers']->content_en !!}
+        </p>
+        @endif
+      @else
+        <span class="section-badge animate-on-scroll" style="background:linear-gradient(135deg,rgba(244,63,94,0.2),rgba(245,158,11,0.2));border-color:rgba(244,63,94,0.3);"><i class="fas fa-fire me-2"></i>Top Rated</span>
+        <h2 class="section-title mt-3 animate-on-scroll">Best <span id="sellers-text" style="background:linear-gradient(135deg,#f43f5e,#f59e0b);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;"></span></h2>
+        <p class="mt-3 animate-on-scroll" style="color:rgba(245,230,204,0.6);max-width:600px;margin:0 auto;">Our most loved products that customers keep coming back for</p>
+      @endif
     </div>
 
     <div class="row g-4">
@@ -735,9 +747,21 @@
 <section class="section-gap">
   <div class="container">
     <div class="text-center mb-5">
-      <span class="section-badge animate-on-scroll">Latest News</span>
-      <h2 class="section-title mt-3 animate-on-scroll">From Our <span class="gradient-text">Blog</span></h2>
-      <p class="mt-3 animate-on-scroll" style="color:rgba(245,230,204,0.7);">Discover recipes, stories, and sweet updates from our kitchen</p>
+      @if($cmsSections && isset($cmsSections['blog']))
+        <span class="section-badge animate-on-scroll">{{ $cmsSections['blog']->title_en ?? 'Latest News' }}</span>
+        <h2 class="section-title mt-3 animate-on-scroll">
+          {!! $cmsSections['blog']->subtitle_en ?? 'From Our <span class="gradient-text">Blog</span>' !!}
+        </h2>
+        @if($cmsSections['blog']->content_en)
+        <p class="mt-3 animate-on-scroll" style="color:rgba(245,230,204,0.7);">
+          {!! $cmsSections['blog']->content_en !!}
+        </p>
+        @endif
+      @else
+        <span class="section-badge animate-on-scroll">Latest News</span>
+        <h2 class="section-title mt-3 animate-on-scroll">From Our <span class="gradient-text">Blog</span></h2>
+        <p class="mt-3 animate-on-scroll" style="color:rgba(245,230,204,0.7);">Discover recipes, stories, and sweet updates from our kitchen</p>
+      @endif
     </div>
 
     <div class="row g-4">
@@ -781,9 +805,15 @@
     </div>
 
     <div class="text-center mt-5">
+      @if($cmsSections && isset($cmsSections['blog']) && $cmsSections['blog']->button_url)
+      <a href="{{ $cmsSections['blog']->button_url }}" class="btn btn-glow">
+        {{ $cmsSections['blog']->button_text_en ?? 'View All Posts' }} <i class="fas fa-arrow-right ms-2"></i>
+      </a>
+      @else
       <a href="{{ route('blog.index') }}" class="btn btn-glow">
         View All Posts <i class="fas fa-arrow-right ms-2"></i>
       </a>
+      @endif
     </div>
   </div>
 </section>
