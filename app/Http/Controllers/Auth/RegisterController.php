@@ -34,10 +34,10 @@ class RegisterController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        // Assign visitor role to the new user by default
-        $visitorRole = Role::where('name', 'visitor')->first();
-        if ($visitorRole) {
-            $user->assignRole('visitor');
+        // Assign customer role to the new user by default
+        $customerRole = Role::where('name', 'customer')->first();
+        if ($customerRole) {
+            $user->assignRole('customer');
         }
 
         // Log the user in after registration

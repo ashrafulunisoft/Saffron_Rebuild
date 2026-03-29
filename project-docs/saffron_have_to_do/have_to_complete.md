@@ -74,9 +74,9 @@ Saffron Next Task List :
 30. user role ways check the redirection 
 31. subcription fix (later)
 32. fix : when click feature product => all product then can't show the new arrival and best product . 
-33. contact mail admin can see
-34. remove the bangla option from admin cms section . 
-35. -----------------------------------------------------------
+33. remove the bangla option from admin cms section . (done)
+34. -----------------------------------------------------------
+35. contact mail admin can see(later)
 36. login or register with google / Facebook. (later)
 37. add pathoa integration ; (later)
 

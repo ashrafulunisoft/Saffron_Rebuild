@@ -19,20 +19,23 @@ class RedirectUserByRole
 
         // dd($user);
 
-        if ($user->hasRole('admin')) {
+        // Admin and Staff → Admin Dashboard
+        if ($user->hasRole('admin') || $user->hasRole('staff')) {
             return redirect()->route('admin.dashboard');
         }
 
-        if ($user->hasRole('receptionist')) {
-            return redirect()->route('receptionist.dashboard');
+        // Customer → Customer Dashboard
+        if ($user->hasRole('customer')) {
+            return redirect()->route('customer.dashboard');
         }
 
-        if ($user->hasRole('visitor')) {
+        // Receptionist and Visitor → Visitor Dashboard
+        if ($user->hasRole('receptionist') || $user->hasRole('visitor')) {
             return redirect()->route('visitor.dashboard');
         }
 
-        // 🔴 Any other role → staff
-        return redirect()->route('staff.dashboard');
+        // User has no role → redirect to home with error
+        return redirect()->route('home')->with('error', 'You do not have any role assigned. Please contact the administrator.');
 
         // return $next($request); // this line pass to the the web.php file for next codeing execution
     }

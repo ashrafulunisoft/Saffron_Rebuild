@@ -593,7 +593,7 @@
                 {{-- <a href="#" class="sidebar-item"><i class="fas fa-list"></i> Visitor's Log</a> --}}
                 {{-- <a href="#" class="sidebar-item"><i class="fas fa-users"></i> All Users</a> --}}
 
-                <div class="sidebar-dropdown">
+                {{-- <div class="sidebar-dropdown">
                     <a href="#" class="sidebar-item d-flex align-items-center" onclick="toggleSubmenu(event)">
                         <i class="fas fa-user-shield"></i> RBAC Roles
                         <i class="fas fa-chevron-down ms-auto small opacity-50"></i>
@@ -602,7 +602,7 @@
                         <a href="{{ route('admin.role.create') }}" class="submenu-item"><i class="fas fa-plus-circle"></i> Add Role</a>
                         <a href="{{ route('admin.role.assign.create') }}" class="submenu-item"><i class="fas fa-user-tag"></i> Assign Role</a>
                     </div>
-                </div>
+                </div> --}}
 
                 <a href="{{ route('logout') }}" class="sidebar-item text-danger"><i class="fas fa-cog"></i> Logout</a>
                 {{-- <a href="#" class="sidebar-item"><i class="fas fa-cog"></i> Settings</a> --}}

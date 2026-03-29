@@ -43,7 +43,7 @@ Route::get('/dashboard', function () {
 | Role-wise Dashboards
 |--------------------------------------------------------------------------
 */
-Route::middleware(['auth', 'role:admin'])->group(function () {
+Route::middleware(['auth', 'role:admin|staff'])->group(function () {
     // Admin Dashboard
     Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
 
@@ -359,7 +359,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 | Role-wise Dashboards (Receptionist, Staff, Visitor all use same controller)
 |--------------------------------------------------------------------------
 */
-Route::middleware(['auth', 'role:receptionist|staff|visitor'])->group(function () {
+Route::middleware(['auth', 'role:receptionist|visitor'])->group(function () {
     Route::get('/dashboard', [App\Http\Controllers\Visitor\VisitorController::class, 'dashboard'])
         ->name('dashboard');
 });
@@ -515,8 +515,8 @@ Route::middleware(['web', \App\Http\Middleware\EnsureSessionForPayment::class])
 
 Route::middleware(['web'])->post('/payment/ipn', [App\Http\Controllers\Frontend\PaymentController::class, 'ipn'])->name('payment.ipn');
 
-// Customer routes (requires authentication)
-Route::middleware(['auth'])->prefix('customer')->name('customer.')->group(function () {
+// Customer routes (requires authentication and customer role)
+Route::middleware(['auth', 'role:customer'])->prefix('customer')->name('customer.')->group(function () {
     Route::get('/dashboard', [App\Http\Controllers\Frontend\CustomerController::class, 'dashboard'])->name('dashboard');
     Route::get('/orders', [App\Http\Controllers\Frontend\CustomerController::class, 'orders'])->name('orders');
     Route::get('/orders/{order}', [App\Http\Controllers\Frontend\CustomerController::class, 'orderShow'])->name('orders.show');
@@ -722,7 +722,7 @@ Route::get('/test-visitor-email', function () {
 
 // -------------------------------------------------------------------------
 // Visitor Management Routes (with permission middleware)
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'role:visitor|receptionist'])->group(function () {
     // Specific static routes MUST come before dynamic routes
     Route::get('/visitor/pending', [App\Http\Controllers\Visitor\VisitorController::class, 'pendingVisits'])->name('visitor.pending');
     Route::get('/visitor/rejected', [App\Http\Controllers\Visitor\VisitorController::class, 'rejectedVisits'])->name('visitor.rejected');
