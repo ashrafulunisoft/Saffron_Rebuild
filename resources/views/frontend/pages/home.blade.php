@@ -858,11 +858,16 @@
       <div style="font-size: 3rem; margin-bottom: 1rem;">📧</div>
       <h2 style="font-family:'Playfair Display',serif;color:#f5e6cc;">Stay Sweet with Updates</h2>
       <p style="color:rgba(245,230,204,0.7);margin-bottom:2rem;">Subscribe to get exclusive offers, new arrivals, and sweet surprises!</p>
-      <form class="newsletter-form" style="max-width:500px;margin:0 auto;">
+      <form id="newsletterForm" class="newsletter-form" style="max-width:500px;margin:0 auto;">
+        @csrf
         <div class="input-group">
-          <input type="email" class="form-control" placeholder="Enter your email" style="border-radius:12px 0 0 12px;padding:1rem;">
-          <button class="btn btn-glow" type="submit" style="border-radius:0 12px 12px 0;padding:0 2rem;">Subscribe</button>
+          <input type="email" name="email" id="newsletterEmail" class="form-control" placeholder="Enter your email" style="border-radius:12px 0 0 12px;padding:1rem;" required>
+          <button class="btn btn-glow" type="submit" id="subscribeBtn" style="border-radius:0 12px 12px 0;padding:0 2rem;">
+            <span class="btn-text">Subscribe</span>
+            <span class="btn-loading" style="display:none;"><i class="fas fa-spinner fa-spin"></i> Subscribing...</span>
+          </button>
         </div>
+        <div id="newsletterMessage" style="margin-top:1rem;font-size:0.9rem;"></div>
       </form>
     </div>
   </div>
@@ -870,6 +875,70 @@
 @endsection
 
 @push('scripts')
+<script>
+// Newsletter subscription
+document.addEventListener('DOMContentLoaded', function() {
+    const newsletterForm = document.getElementById('newsletterForm');
+    if (newsletterForm) {
+        newsletterForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const email = document.getElementById('newsletterEmail').value;
+            const subscribeBtn = document.getElementById('subscribeBtn');
+            const btnText = subscribeBtn.querySelector('.btn-text');
+            const btnLoading = subscribeBtn.querySelector('.btn-loading');
+            const messageDiv = document.getElementById('newsletterMessage');
+
+            // Show loading state
+            subscribeBtn.disabled = true;
+            btnText.style.display = 'none';
+            btnLoading.style.display = 'inline';
+            messageDiv.innerHTML = '';
+
+            fetch('/subscribe', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                    'Accept': 'application/json',
+                },
+                body: JSON.stringify({ email: email })
+            })
+            .then(async response => {
+                const contentType = response.headers.get('content-type');
+                if (contentType && contentType.includes('application/json')) {
+                    const data = await response.json();
+                    if (!response.ok) {
+                        throw new Error(data.message || 'Subscription failed');
+                    }
+                    return data;
+                } else {
+                    throw new Error('Something went wrong. Please try again.');
+                }
+            })
+            .then(data => {
+                if (data.success) {
+                    messageDiv.innerHTML = `<span style="color:#22c55e;"><i class="fas fa-check-circle me-1"></i>${data.message}</span>`;
+                    document.getElementById('newsletterEmail').value = '';
+                } else {
+                    messageDiv.innerHTML = `<span style="color:#f43f5e;"><i class="fas fa-exclamation-circle me-1"></i>${data.message}</span>`;
+                }
+            })
+            .catch(error => {
+                console.error('Subscription error:', error);
+                messageDiv.innerHTML = `<span style="color:#f43f5e;"><i class="fas fa-exclamation-circle me-1"></i>${error.message}</span>`;
+            })
+            .finally(() => {
+                // Reset button state
+                subscribeBtn.disabled = false;
+                btnText.style.display = 'inline';
+                btnLoading.style.display = 'none';
+            });
+        });
+    }
+});
+</script>
+
 <script>
 // Product filter
 function filterProd(btn, cat) {

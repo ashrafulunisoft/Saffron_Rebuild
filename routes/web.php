@@ -596,6 +596,10 @@ Route::prefix('blog')->name('blog.')->group(function () {
     Route::get('/{slug}', [App\Http\Controllers\Frontend\BlogController::class, 'show'])->name('show');
 });
 
+// Newsletter subscription routes
+Route::post('/subscribe', [App\Http\Controllers\SubscriptionController::class, 'subscribe'])->name('subscribe');
+Route::post('/unsubscribe', [App\Http\Controllers\SubscriptionController::class, 'unsubscribe'])->name('unsubscribe');
+
 // Public Live Dashboard Routes (No authentication required)
 Route::get('/public/live-dashboard', [App\Http\Controllers\Visitor\VisitorController::class, 'liveDashboardPublic'])
     ->name('visitor.live.public');
