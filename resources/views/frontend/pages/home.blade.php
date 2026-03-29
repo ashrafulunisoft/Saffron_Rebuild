@@ -390,11 +390,21 @@
 <section class="section-gap" id="products">
   <div class="container">
     <div class="text-center mb-5">
-      <span class="section-badge">Our Collection</span>
-      <h2 class="section-title mt-3">
-        Featured <span class="gradient-text">Products</span>
-      </h2>
-      <p style="color:rgba(245,230,204,0.7);">Handpicked favorites from our extensive collection</p>
+      @if($cmsSections && isset($cmsSections['featured_products']))
+        <span class="section-badge">{{ $cmsSections['featured_products']->title_en ?? 'Our Collection' }}</span>
+        <h2 class="section-title mt-3">
+          {!! $cmsSections['featured_products']->subtitle_en ?? 'Featured <span class="gradient-text">Products</span>' !!}
+        </h2>
+        @if($cmsSections['featured_products']->content_en)
+        <p style="color:rgba(245,230,204,0.7);">{!! $cmsSections['featured_products']->content_en !!}</p>
+        @endif
+      @else
+        <span class="section-badge">Our Collection</span>
+        <h2 class="section-title mt-3">
+          Featured <span class="gradient-text">Products</span>
+        </h2>
+        <p style="color:rgba(245,230,204,0.7);">Handpicked favorites from our extensive collection</p>
+      @endif
     </div>
 
     <!-- Category Filters -->
