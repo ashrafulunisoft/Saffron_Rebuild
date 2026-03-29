@@ -24,7 +24,7 @@
       </ol>
     </nav>
 
-    <form method="POST" action="{{ route('checkout.store') }}">
+    <form method="POST" action="{{ route('checkout.store') }}" id="checkoutForm" novalidate>
       @csrf
       <div class="row g-4">
         <!-- Billing Details -->
@@ -93,7 +93,7 @@
             <div class="row g-3">
               <div class="col-md-4">
                 <label class="payment-option-card" style="display: block; padding: 1.5rem; border: 2px solid rgba(255,255,255,0.1); border-radius: 12px; cursor: pointer; transition: all 0.3s ease;">
-                  <input type="radio" name="payment_method" value="cod" class="d-none" required>
+                  <input type="radio" name="payment_method" value="cod" class="d-none payment-radio" required>
                   <div class="d-flex align-items-center gap-3">
                     <div style="font-size: 2rem;">💵</div>
                     <div>
@@ -105,7 +105,7 @@
               </div>
               <div class="col-md-4">
                 <label class="payment-option-card" style="display: block; padding: 1.5rem; border: 2px solid rgba(255,255,255,0.1); border-radius: 12px; cursor: pointer; transition: all 0.3s ease;">
-                  <input type="radio" name="payment_method" value="bkash" class="d-none">
+                  <input type="radio" name="payment_method" value="bkash" class="d-none payment-radio">
                   <div class="d-flex align-items-center gap-3">
                     <div style="font-size: 2rem;">📱</div>
                     <div>
@@ -117,7 +117,7 @@
               </div>
               <div class="col-md-4">
                 <label class="payment-option-card" style="display: block; padding: 1.5rem; border: 2px solid rgba(255,255,255,0.1); border-radius: 12px; cursor: pointer; transition: all 0.3s ease;">
-                  <input type="radio" name="payment_method" value="card" class="d-none">
+                  <input type="radio" name="payment_method" value="card" class="d-none payment-radio">
                   <div class="d-flex align-items-center gap-3">
                     <div style="font-size: 2rem;">💳</div>
                     <div>
@@ -241,6 +241,9 @@ function numberFormat(num) {
 
 // Listen for shipping location changes
 document.addEventListener('DOMContentLoaded', function() {
+  // Setup form validation IMMEDIATELY to prevent premature submission
+  setupFormValidation();
+
   // Setup shipping location change listener
   const shippingLocationSelect = document.getElementById('shippingLocationSelect');
   if (shippingLocationSelect) {
@@ -254,8 +257,6 @@ document.addEventListener('DOMContentLoaded', function() {
   fetchCartData().then(() => {
     updateOrderTotals();
   });
-
-  setupFormValidation();
 });
 
 // Fetch cart data from backend
@@ -322,42 +323,67 @@ function displayCartItems(doc) {
 
 // Setup form validation
 function setupFormValidation() {
-  const form = document.querySelector('form');
+  const form = document.getElementById('checkoutForm');
   const submitBtn = document.getElementById('placeOrderBtn');
-  const requiredFields = form.querySelectorAll('[required]');
 
-  // Check if all required fields are filled
-  function checkFormValidity() {
-    let isValid = true;
-
-    requiredFields.forEach(field => {
-      if (field.type === 'radio') {
-        const radioGroup = form.querySelectorAll(`[name="${field.name}"]`);
-        const isChecked = Array.from(radioGroup).some(radio => radio.checked);
-        if (!isChecked) isValid = false;
-      } else {
-        if (!field.value.trim()) isValid = false;
-      }
-    });
-
-    submitBtn.disabled = !isValid;
+  if (!form) {
+    console.error('Checkout form not found!');
+    return;
   }
 
-  // Add event listeners to all required fields
-  requiredFields.forEach(field => {
-    field.addEventListener('change', checkFormValidity);
-    field.addEventListener('input', checkFormValidity);
-  });
-
-  // Initial check
-  checkFormValidity();
-
-  // Handle form submission
+  // Handle form submission - this is the most reliable method
   form.addEventListener('submit', function(e) {
+    console.log('=== FORM SUBMIT TRIGGERED ===');
+
+    // Check if payment method is selected
+    const paymentMethods = document.querySelectorAll('input[name="payment_method"]');
+    const paymentSelected = Array.from(paymentMethods).some(method => method.checked);
+
+    console.log('Payment method selected:', paymentSelected);
+
+    if (!paymentSelected) {
+      console.log('❌ No payment method selected - PREVENTING SUBMISSION');
+
+      // Prevent the form from submitting
+      e.preventDefault();
+      e.stopPropagation();
+      e.stopImmediatePropagation();
+
+      // Show error toast
+      showToast('Please select a payment method to place your order', 'error');
+
+      // Shake the payment method section to draw attention
+      const paymentCards = document.querySelectorAll('.payment-option-card');
+      if (paymentCards.length > 0) {
+        const paymentSection = paymentCards[0].closest('.glass-card');
+        if (paymentSection) {
+          paymentSection.style.animation = 'shake 0.5s ease-in-out';
+          paymentSection.classList.add('payment-section-error');
+
+          setTimeout(() => {
+            paymentSection.style.animation = '';
+            paymentSection.classList.remove('payment-section-error');
+          }, 2000);
+
+          // Scroll to payment section
+          paymentSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }
+
+      return false;
+    }
+
+    console.log('✅ Form is valid, allowing submission');
+
     // Show loading state
     submitBtn.disabled = true;
     submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Processing...';
-  });
+
+    // Allow the form to submit naturally
+    return true;
+  }, false); // Use capture phase = false
+
+  console.log('✅ Form validation setup complete');
 }
 
 // Apply coupon code in checkout
@@ -571,6 +597,19 @@ function applyCheckoutCoupon() {
     color: rgba(245,230,204,0.8);
     font-size: 0.9rem;
     margin-bottom: 0.5rem;
+  }
+
+  /* Shake animation for validation */
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-10px); }
+    20%, 40%, 60%, 80% { transform: translateX(10px); }
+  }
+
+  /* Payment section highlight */
+  .payment-section-error {
+    border: 2px solid #f43f5e !important;
+    box-shadow: 0 0 20px rgba(244, 63, 94, 0.3);
   }
 </style>
 @endpush
