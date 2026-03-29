@@ -474,9 +474,21 @@
 <section class="section-gap" id="new-arrivals">
   <div class="container">
     <div class="text-center mb-5">
-      <span class="section-badge animate-on-scroll"><i class="fas fa-sparkles me-2"></i>Just Launched</span>
-      <h2 class="section-title mt-3 animate-on-scroll">New <span class="gradient-text">Arrivals</span></h2>
-      <p class="mt-3 animate-on-scroll" style="color:rgba(245,230,204,0.6);max-width:600px;margin:0 auto;">Discover our latest creations - fresh from the oven and ready to delight your taste buds</p>
+      @if($cmsSections && isset($cmsSections['new-arrivals']))
+        <span class="section-badge animate-on-scroll"><i class="fas fa-sparkles me-2"></i>{{ $cmsSections['new-arrivals']->title_en ?? 'Just Launched' }}</span>
+        <h2 class="section-title mt-3 animate-on-scroll">
+          {!! $cmsSections['new-arrivals']->subtitle_en ?? 'New <span class="gradient-text">Arrivals</span>' !!}
+        </h2>
+        @if($cmsSections['new-arrivals']->content_en)
+        <p class="mt-3 animate-on-scroll" style="color:rgba(245,230,204,0.6);max-width:600px;margin:0 auto;">
+          {!! $cmsSections['new-arrivals']->content_en !!}
+        </p>
+        @endif
+      @else
+        <span class="section-badge animate-on-scroll"><i class="fas fa-sparkles me-2"></i>Just Launched</span>
+        <h2 class="section-title mt-3 animate-on-scroll">New <span class="gradient-text">Arrivals</span></h2>
+        <p class="mt-3 animate-on-scroll" style="color:rgba(245,230,204,0.6);max-width:600px;margin:0 auto;">Discover our latest creations - fresh from the oven and ready to delight your taste buds</p>
+      @endif
     </div>
 
     <div class="row g-4">
@@ -524,9 +536,15 @@
     </div>
 
     <div class="text-center mt-5">
+      @if($cmsSections && isset($cmsSections['new-arrivals']) && $cmsSections['new-arrivals']->button_url)
+      <a href="{{ $cmsSections['new-arrivals']->button_url }}" class="btn btn-glow">
+        <i class="fas fa-arrow-right me-2"></i>{{ $cmsSections['new-arrivals']->button_text_en ?? 'View All New Arrivals' }}
+      </a>
+      @else
       <a href="{{ route('shop') }}" class="btn btn-glow">
         <i class="fas fa-arrow-right me-2"></i>View All New Arrivals
       </a>
+      @endif
     </div>
   </div>
 </section>
