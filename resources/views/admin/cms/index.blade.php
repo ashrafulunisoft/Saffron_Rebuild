@@ -59,7 +59,7 @@
                                 </div>
                                 <div>
                                     <div style="color: white; font-weight: 600;">{{ $page->title_en }}</div>
-                                    <div style="color: rgba(255,255,255,0.5); font-size: 0.85rem;">{{ $page->title_bn ?? 'N/A' }}</div>
+                                    {{-- <div style="color: rgba(255,255,255,0.5); font-size: 0.85rem;">{{ $page->title_bn ?? 'N/A' }}</div> --}}
                                 </div>
                             </div>
                         </td>
@@ -93,13 +93,13 @@
                                 <a href="{{ route('admin.ecommerce.cms.edit', $page) }}" class="btn btn-sm" style="background: rgba(59, 130, 246, 0.2); color: var(--accent-blue); border: 1px solid rgba(59, 130, 246, 0.3); padding: 0.4rem 0.8rem; border-radius: 8px; text-decoration: none;">
                                     <i class="fas fa-edit"></i>
                                 </a>
-                                <form action="{{ route('admin.ecommerce.cms.destroy', $page) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this page?');">
+                                {{-- <form action="{{ route('admin.ecommerce.cms.destroy', $page) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this page?');">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-sm" style="background: rgba(239, 68, 68, 0.2); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3); padding: 0.4rem 0.8rem; border-radius: 8px;">
                                         <i class="fas fa-trash"></i>
                                     </button>
-                                </form>
+                                </form> --}}
                             </div>
                         </td>
                     </tr>

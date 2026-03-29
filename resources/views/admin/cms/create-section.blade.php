@@ -94,7 +94,7 @@
                 </div>
             </div>
 
-            <!-- Bangla Content -->
+            {{-- <!-- Bangla Content -->
             <div class="row g-4 mb-4" style="background: rgba(139, 92, 246, 0.05); padding: 1.5rem; border-radius: 16px; border: 1px solid rgba(139, 92, 246, 0.2);">
                 <div class="col-12">
                     <h5 style="color: #a855f7;"><i class="fas fa-language me-2"></i>বাংলা বিষয়বস্তু (Bangla Content)</h5>
@@ -114,7 +114,7 @@
                     <label class="form-label" style="color: rgba(255,255,255,0.7);">বিষয়বস্তু (Content)</label>
                     <textarea name="content_bn" class="input-dark input-custom" rows="4"></textarea>
                 </div>
-            </div>
+            </div> --}}
 
             <!-- Buttons & Links -->
             <div class="row g-4 mb-4">
@@ -127,10 +127,10 @@
                     <input type="text" name="button_text_en" class="input-dark input-custom" placeholder="e.g., Shop Now">
                 </div>
 
-                <div class="col-md-4">
+                {{-- <div class="col-md-4">
                     <label class="form-label" style="color: rgba(255,255,255,0.7);">Button Text (BN)</label>
                     <input type="text" name="button_text_bn" class="input-dark input-custom" placeholder="যেমন: এখনই কিনুন">
-                </div>
+                </div> --}}
 
                 <div class="col-md-4">
                     <label class="form-label" style="color: rgba(255,255,255,0.7);">Button URL</label>

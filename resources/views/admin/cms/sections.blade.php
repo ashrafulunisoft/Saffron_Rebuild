@@ -45,7 +45,7 @@
                     <tr style="border-bottom: 2px solid rgba(255,255,255,0.1);">
                         <th style="color: rgba(255,255,255,0.7); font-weight: 600;">Section Key</th>
                         <th style="color: rgba(255,255,255,0.7); font-weight: 600;">Title (EN)</th>
-                        <th style="color: rgba(255,255,255,0.7); font-weight: 600;">Title (BN)</th>
+                        {{-- <th style="color: rgba(255,255,255,0.7); font-weight: 600;">Title (BN)</th> --}}
                         <th style="color: rgba(255,255,255,0.7); font-weight: 600;">Content</th>
                         <th style="color: rgba(255,255,255,0.7); font-weight: 600;">Status</th>
                         <th style="color: rgba(255,255,255,0.7); font-weight: 600;">Order</th>
@@ -59,7 +59,7 @@
                             <code style="background: rgba(59, 130, 246, 0.2); color: var(--accent-blue); padding: 0.25rem 0.5rem; border-radius: 6px; font-size: 0.9rem;">{{ $section->section_key }}</code>
                         </td>
                         <td style="color: white; font-weight: 500;">{{ $section->title_en }}</td>
-                        <td style="color: rgba(255,255,255,0.6);">{{ $section->title_bn ?? 'N/A' }}</td>
+                        {{-- <td style="color: rgba(255,255,255,0.6);">{{ $section->title_bn ?? 'N/A' }}</td> --}}
                         <td>
                             <div style="max-width: 300px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: rgba(255,255,255,0.6);">
                                 {{ \Illuminate\Support\Str::limit(strip_tags($section->content_en ?? ''), 100) }}
@@ -82,13 +82,13 @@
                                 <a href="{{ route('admin.ecommerce.cms.sections.edit', [$cms, $section]) }}" class="btn btn-sm" style="background: rgba(59, 130, 246, 0.2); color: var(--accent-blue); border: 1px solid rgba(59, 130, 246, 0.3); padding: 0.4rem 0.8rem; border-radius: 8px; text-decoration: none;">
                                     <i class="fas fa-edit"></i>
                                 </a>
-                                <form action="{{ route('admin.ecommerce.cms.sections.destroy', [$cms, $section]) }}" method="POST" onsubmit="return confirm('Are you sure?');" style="display: inline;">
+                                {{-- <form action="{{ route('admin.ecommerce.cms.sections.destroy', [$cms, $section]) }}" method="POST" onsubmit="return confirm('Are you sure?');" style="display: inline;">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-sm" style="background: rgba(239, 68, 68, 0.2); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3); padding: 0.4rem 0.8rem; border-radius: 8px;">
                                         <i class="fas fa-trash"></i>
                                     </button>
-                                </form>
+                                </form> --}}
                             </div>
                         </td>
                     </tr>
