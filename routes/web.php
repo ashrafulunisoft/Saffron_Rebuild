@@ -563,7 +563,16 @@ Route::get('/faq', function() {
 
     return view('frontend.pages.faq', compact('cmsSections'));
 })->name('faq');
-Route::get('/return', function() { return view('frontend.pages.return'); })->name('return');
+Route::get('/return', function() {
+    // Load CMS sections for Return Policy page
+    $cmsSections = \App\Models\CmsSection::where('cms_page_id', 4)
+        ->where('is_active', true)
+        ->orderBy('sort_order')
+        ->get()
+        ->keyBy('section_key');
+
+    return view('frontend.pages.return', compact('cmsSections'));
+})->name('return');
 Route::get('/privacy', function() { return view('frontend.pages.privacy'); })->name('privacy');
 Route::get('/terms', [App\Http\Controllers\Frontend\PageController::class, 'terms'])->name('terms');
 Route::get('/policy', function() { return view('policy'); })->name('policy');

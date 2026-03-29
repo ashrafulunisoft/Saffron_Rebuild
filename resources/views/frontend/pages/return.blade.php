@@ -121,6 +121,19 @@
       <div class="col-lg-8 mx-auto">
 
         <!-- Important Notice -->
+        @if($cmsSections && isset($cmsSections['important_notice']))
+        <div class="highlight-box">
+          <h5 style="color: #fbbf24; margin-bottom: 0.75rem;">
+            @if($cmsSections['important_notice']->icon)
+            <span style="margin-right: 0.5rem;">{{ $cmsSections['important_notice']->icon }}</span>
+            @endif
+            {!! $cmsSections['important_notice']->title_en !!}
+          </h5>
+          <p style="color: rgba(245,230,204,0.9); margin: 0; line-height: 1.7;">
+            {!! $cmsSections['important_notice']->content_en !!}
+          </p>
+        </div>
+        @else
         <div class="highlight-box">
           <h5 style="color: #fbbf24; margin-bottom: 0.75rem;">
             <i class="fas fa-exclamation-triangle me-2"></i>Important Notice
@@ -129,8 +142,32 @@
             Due to the perishable nature of our sweets and bakery products, we have specific return policies to ensure product quality and food safety. Please read this policy carefully before making a purchase.
           </p>
         </div>
+        @endif
 
         <!-- Return Eligibility -->
+        @if($cmsSections && isset($cmsSections['return_eligibility']))
+        <div class="policy-section">
+          <h4>
+            @if($cmsSections['return_eligibility']->icon)
+            <span style="margin-right: 0.5rem;">{{ $cmsSections['return_eligibility']->icon }}</span>
+            @else
+            <i class="fas fa-check-circle me-2"></i>
+            @endif
+            {!! $cmsSections['return_eligibility']->title_en !!}
+          </h4>
+          @php
+            $content = $cmsSections['return_eligibility']->content_en;
+            $lines = explode("\n", trim($content));
+          @endphp
+          <ul>
+            @foreach($lines as $line)
+              @if(trim($line))
+                <li>{{ trim($line) }}</li>
+              @endif
+            @endforeach
+          </ul>
+        </div>
+        @else
         <div class="policy-section">
           <h4><i class="fas fa-check-circle me-2"></i>Return Eligibility</h4>
           <p style="color: rgba(245,230,204,0.8); margin-bottom: 1rem; line-height: 1.7;">
@@ -144,8 +181,49 @@
             <li>Manufacturing defects or foreign objects in products</li>
           </ul>
         </div>
+        @endif
 
         <!-- Time Frame -->
+        @if($cmsSections && isset($cmsSections['time_frame_returns']))
+        <div class="policy-section">
+          <h4>
+            @if($cmsSections['time_frame_returns']->icon)
+            <span style="margin-right: 0.5rem;">{{ $cmsSections['time_frame_returns']->icon }}</span>
+            @else
+            <i class="fas fa-clock me-2"></i>
+            @endif
+            {!! $cmsSections['time_frame_returns']->title_en !!}
+          </h4>
+          @php
+            $content = $cmsSections['time_frame_returns']->content_en;
+            $parts = explode("\n\n", trim($content));
+          @endphp
+          @if(count($parts) > 1)
+            <ul>
+              @foreach(array_slice($parts, 0, count($parts) - 1) as $item)
+                @if(trim($item))
+                  <li>{!! nl2br(trim($item)) !!}</li>
+                @endif
+              @endforeach
+            </ul>
+            @if(isset($parts[count($parts) - 1]) && trim($parts[count($parts) - 1]))
+            <div class="highlight-box" style="margin-top: 1.5rem;">
+              <p style="color: rgba(245,230,204,0.85); margin: 0; font-size: 0.95rem;">
+                <strong>Note:</strong> {!! trim($parts[count($parts) - 1]) !!}
+              </p>
+            </div>
+            @endif
+          @else
+            <ul>
+              @foreach(explode("\n", trim($content)) as $line)
+                @if(trim($line))
+                  <li>{!! nl2br(trim($line)) !!}</li>
+                @endif
+              @endforeach
+            </ul>
+          @endif
+        </div>
+        @else
         <div class="policy-section">
           <h4><i class="fas fa-clock me-2"></i>Time Frame for Returns</h4>
           <ul>
@@ -160,8 +238,39 @@
             </p>
           </div>
         </div>
+        @endif
 
         <!-- Non-Returnable Items -->
+        @if($cmsSections && isset($cmsSections['non_returnable_items']))
+        <div class="policy-section">
+          <h4>
+            @if($cmsSections['non_returnable_items']->icon)
+            <span style="margin-right: 0.5rem;">{{ $cmsSections['non_returnable_items']->icon }}</span>
+            @else
+            <i class="fas fa-ban me-2"></i>
+            @endif
+            {!! $cmsSections['non_returnable_items']->title_en !!}
+          </h4>
+          @php
+            $content = $cmsSections['non_returnable_items']->content_en;
+            $parts = explode("\n", trim($content), 2);
+          @endphp
+          @if(isset($parts[0]) && trim($parts[0]))
+          <p style="color: rgba(245,230,204,0.8); margin-bottom: 1rem; line-height: 1.7;">
+            {!! trim($parts[0]) !!}
+          </p>
+          @endif
+          @if(isset($parts[1]))
+          <ul>
+            @foreach(explode("\n", trim($parts[1])) as $line)
+              @if(trim($line))
+                <li>{{ trim($line) }}</li>
+              @endif
+            @endforeach
+          </ul>
+          @endif
+        </div>
+        @else
         <div class="policy-section">
           <h4><i class="fas fa-ban me-2"></i>Non-Returnable Items</h4>
           <p style="color: rgba(245,230,204,0.8); margin-bottom: 1rem; line-height: 1.7;">
@@ -177,8 +286,39 @@
             <li>Temperature-sensitive products that were not properly stored after delivery</li>
           </ul>
         </div>
+        @endif
 
         <!-- Return Process -->
+        @if($cmsSections && isset($cmsSections['how_to_request_return']))
+        <div class="policy-section">
+          <h4>
+            @if($cmsSections['how_to_request_return']->icon)
+            <span style="margin-right: 0.5rem;">{{ $cmsSections['how_to_request_return']->icon }}</span>
+            @else
+            <i class="fas fa-list-ol me-2"></i>
+            @endif
+            {!! $cmsSections['how_to_request_return']->title_en !!}
+          </h4>
+          @php
+            $content = $cmsSections['how_to_request_return']->content_en;
+            $parts = explode("\n", trim($content), 2);
+          @endphp
+          @if(isset($parts[0]) && trim($parts[0]))
+          <p style="color: rgba(245,230,204,0.8); margin-bottom: 1rem; line-height: 1.7;">
+            {!! trim($parts[0]) !!}
+          </p>
+          @endif
+          @if(isset($parts[1]))
+          <ul>
+            @foreach(explode("\n", trim($parts[1])) as $line)
+              @if(trim($line))
+                <li>{!! nl2br(trim($line)) !!}</li>
+              @endif
+            @endforeach
+          </ul>
+          @endif
+        </div>
+        @else
         <div class="policy-section">
           <h4><i class="fas fa-list-ol me-2"></i>How to Request a Return</h4>
           <p style="color: rgba(245,230,204,0.8); margin-bottom: 1rem; line-height: 1.7;">
@@ -192,8 +332,39 @@
             <li><strong>Step 5:</strong> If approved, we'll arrange replacement or process refund</li>
           </ul>
         </div>
+        @endif
 
         <!-- Refund Policy -->
+        @if($cmsSections && isset($cmsSections['refund_policy']))
+        <div class="policy-section">
+          <h4>
+            @if($cmsSections['refund_policy']->icon)
+            <span style="margin-right: 0.5rem;">{{ $cmsSections['refund_policy']->icon }}</span>
+            @else
+            <i class="fas fa-money-bill-wave me-2"></i>
+            @endif
+            {!! $cmsSections['refund_policy']->title_en !!}
+          </h4>
+          @php
+            $content = $cmsSections['refund_policy']->content_en;
+            $parts = explode("\n", trim($content), 2);
+          @endphp
+          @if(isset($parts[0]) && trim($parts[0]))
+          <p style="color: rgba(245,230,204,0.8); margin-bottom: 1rem; line-height: 1.7;">
+            {!! trim($parts[0]) !!}
+          </p>
+          @endif
+          @if(isset($parts[1]))
+          <ul style="list-style: disc; padding-left: 1.5rem;">
+            @foreach(explode("\n", trim($parts[1])) as $line)
+              @if(trim($line))
+                <li style="padding-left: 0;">{!! nl2br(trim($line)) !!}</li>
+              @endif
+            @endforeach
+          </ul>
+          @endif
+        </div>
+        @else
         <div class="policy-section">
           <h4><i class="fas fa-money-bill-wave me-2"></i>Refund Policy</h4>
           <p style="color: rgba(245,230,204,0.8); margin-bottom: 1rem; line-height: 1.7;">
@@ -206,8 +377,28 @@
             <li style="padding-left: 0;"><strong>Replacement:</strong> Free replacement will be delivered within 24-48 hours (depending on product availability)</li>
           </ul>
         </div>
+        @endif
 
         <!-- Delivery Charges -->
+        @if($cmsSections && isset($cmsSections['delivery_charges_returns']))
+        <div class="policy-section">
+          <h4>
+            @if($cmsSections['delivery_charges_returns']->icon)
+            <span style="margin-right: 0.5rem;">{{ $cmsSections['delivery_charges_returns']->icon }}</span>
+            @else
+            <i class="fas fa-truck me-2"></i>
+            @endif
+            {!! $cmsSections['delivery_charges_returns']->title_en !!}
+          </h4>
+          <ul>
+            @foreach(explode("\n", trim($cmsSections['delivery_charges_returns']->content_en)) as $line)
+              @if(trim($line))
+                <li>{!! nl2br(trim($line)) !!}</li>
+              @endif
+            @endforeach
+          </ul>
+        </div>
+        @else
         <div class="policy-section">
           <h4><i class="fas fa-truck me-2"></i>Delivery Charges for Returns</h4>
           <ul>
@@ -216,8 +407,28 @@
             <li><strong>Refund only cases:</strong> Original delivery charges are non-refundable</li>
           </ul>
         </div>
+        @endif
 
         <!-- Cancellations -->
+        @if($cmsSections && isset($cmsSections['order_cancellations']))
+        <div class="policy-section">
+          <h4>
+            @if($cmsSections['order_cancellations']->icon)
+            <span style="margin-right: 0.5rem;">{{ $cmsSections['order_cancellations']->icon }}</span>
+            @else
+            <i class="fas fa-times-circle me-2"></i>
+            @endif
+            {!! $cmsSections['order_cancellations']->title_en !!}
+          </h4>
+          <ul>
+            @foreach(explode("\n", trim($cmsSections['order_cancellations']->content_en)) as $line)
+              @if(trim($line))
+                <li>{!! nl2br(trim($line)) !!}</li>
+              @endif
+            @endforeach
+          </ul>
+        </div>
+        @else
         <div class="policy-section">
           <h4><i class="fas fa-times-circle me-2"></i>Order Cancellations</h4>
           <ul>
@@ -227,6 +438,7 @@
             <li><strong>Custom orders:</strong> Cannot be cancelled once production has started</li>
           </ul>
         </div>
+        @endif
 
         <!-- Contact for Returns -->
         <div class="contact-box">

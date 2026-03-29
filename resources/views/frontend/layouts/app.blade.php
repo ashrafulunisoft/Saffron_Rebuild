@@ -2603,12 +2603,14 @@ section {
     <div class="orb orb-3"></div>
 
     <!-- Main Wrapper with proper z-index -->
-    <div style="position: relative; z-index: 1; min-height: 100vh;">
+    <div style="position: relative; z-index: 1; min-height: 100vh; display: flex; flex-direction: column;">
         <!-- Navigation -->
         @include('frontend.partials.navigation')
 
         <!-- Main Content -->
-        @yield('content')
+        <div style="flex: 1;">
+            @yield('content')
+        </div>
 
         <!-- Footer -->
         @include('frontend.partials.footer')
