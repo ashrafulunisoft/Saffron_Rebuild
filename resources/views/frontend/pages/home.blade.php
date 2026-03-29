@@ -32,7 +32,7 @@
       <div class="col-lg-6 hero-content">
         @if($cmsSections && isset($cmsSections['hero']))
           <div class="section-badge mb-3 animate-on-scroll">
-            <i class="fas fa-star text-warning me-2"></i>{{ $cmsSections['hero']->subtitle_en ?? 'Premium Quality Since 1995' }}
+            🎂 <i class="fas fa-star text-warning me-2"></i>{{ $cmsSections['hero']->subtitle_en ?? 'Premium Quality Since 1995' }}
           </div>
           <h1 class="hero-title animate-on-scroll">
             {!! $cmsSections['hero']->title_en !!}
@@ -409,14 +409,14 @@
 
     <!-- Category Filters -->
     <div class="d-flex justify-content-center gap-2 mb-4 flex-wrap">
-      <button class="filter-btn active" onclick="filterProd(this, 'all')">All Products</button>
+      <button class="filter-btn active" onclick="filterFeaturedProd(this, 'all')">All Products</button>
       @foreach($categories as $category)
-        <button class="filter-btn" onclick="filterProd(this, '{{ $category->slug }}')">{{ $category->name_en }}</button>
+        <button class="filter-btn" onclick="filterFeaturedProd(this, '{{ $category->slug }}')">{{ $category->name_en }}</button>
       @endforeach
     </div>
 
     <!-- Products Grid -->
-    <div class="row g-4">
+    <div class="row g-4" id="featured-products-grid">
       @if(isset($featuredProducts) && $featuredProducts->count() > 0)
         @foreach($featuredProducts as $product)
         <div class="col-6 col-md-4 col-lg-3">
@@ -940,21 +940,26 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 <script>
-// Product filter
-function filterProd(btn, cat) {
+// Featured Products filter (only filters within Featured Products section)
+function filterFeaturedProd(btn, cat) {
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-    document.querySelectorAll('.prod-item').forEach(item => {
-        const column = item.closest('.col-6, .col-md-4, .col-lg-3');
-        if (cat === 'all' || item.dataset.cat === cat) {
-            item.style.display = 'block';
-            if (column) column.style.display = 'block';
-            item.style.animation = 'fadeIn .5s ease';
-        } else {
-            item.style.display = 'none';
-            if (column) column.style.display = 'none';
-        }
-    });
+
+    // Only filter products within the featured products grid
+    const featuredGrid = document.getElementById('featured-products-grid');
+    if (featuredGrid) {
+        featuredGrid.querySelectorAll('.prod-item').forEach(item => {
+            const column = item.closest('.col-6, .col-md-4, .col-lg-3');
+            if (cat === 'all' || item.dataset.cat === cat) {
+                item.style.display = 'block';
+                if (column) column.style.display = 'block';
+                item.style.animation = 'fadeIn .5s ease';
+            } else {
+                item.style.display = 'none';
+                if (column) column.style.display = 'none';
+            }
+        });
+    }
 }
 
 // Scroll animation

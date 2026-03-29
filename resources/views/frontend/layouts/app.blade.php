@@ -2023,10 +2023,10 @@ section {
   animation:float 6s ease-in-out infinite;
   box-shadow:0 10px 40px rgba(0,0,0,0.2); z-index: 3;
 }
-.floating-card.fc-1 { top:15%; left:5%; animation-delay:0s; }
-.floating-card.fc-2 { top:25%; right:8%; animation-delay:1.5s; }
-.floating-card.fc-3 { bottom:20%; left:3%; animation-delay:3s; animation:floatSlideLeft 6s ease-in-out infinite; }
-.floating-card.fc-4 { bottom:15%; right:5%; animation-delay:4.5s; }
+.floating-card.fc-1 { top:18%; right:8%; animation-delay:0s; }
+.floating-card.fc-2 { top:38%; right:8%; animation-delay:1.5s; }
+.floating-card.fc-3 { top:58%; right:8%; animation-delay:3s; animation:float 6s ease-in-out infinite; }
+.floating-card.fc-4 { top:78%; right:8%; animation-delay:4.5s; }
 @keyframes float {
   0%,100% { transform:translateY(0) rotate(0deg); }
   50% { transform:translateY(-20px) rotate(2deg); }
