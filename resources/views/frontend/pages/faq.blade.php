@@ -138,59 +138,72 @@
     <div class="row g-4">
       <div class="col-lg-8 mx-auto">
 
-        <!-- Ordering & Payment -->
-        <div class="mb-4">
-          <h3 style="color: #f59e0b; margin-bottom: 1rem; font-size: 1.3rem;">
-            <i class="fas fa-shopping-cart me-2"></i>Ordering & Payment
-          </h3>
+        @if($cmsSections && count($cmsSections) > 0)
+          @foreach($cmsSections->sortBy('sort_order') as $section)
+          <div class="mb-4">
+            <h3 style="color: #f59e0b; margin-bottom: 1rem; font-size: 1.3rem;">
+              @if($section->icon)
+              <span style="margin-right: 0.5rem;">{{ $section->icon }}</span>
+              @endif
+              {{ $section->title_en }}
+            </h3>
 
-          <div class="faq-accordion">
-            <div class="faq-item">
-              <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false">
-                <div>
-                  <div class="faq-category">Ordering</div>
-                  How do I place an order?
-                </div>
-                <i class="fas fa-chevron-down"></i>
-              </button>
-              <div class="faq-answer" aria-hidden="true">
-                <div class="faq-answer-inner">
-                  Browse our products, add items to your cart, and proceed to checkout. You'll need to create an account or log in to complete your purchase. Follow the step-by-step instructions to enter your delivery address and payment information.
+            @if($section->content_en)
+            @php
+              // Parse the content to extract questions and answers
+              $content = $section->content_en;
+              $parts = preg_split('/\n(?=How |What |Where |When |Why |Do |Is |Are |Can)/', $content, -1, PREG_SPLIT_NO_EMPTY);
+              $faqs = [];
+
+              foreach($parts as $part) {
+                $part = trim($part);
+                if(empty($part)) continue;
+
+                $lines = explode("\n", $part);
+                if(count($lines) >= 2) {
+                  $question = trim($lines[0]);
+                  $answer = trim(implode("\n", array_slice($lines, 1)));
+
+                  // Extract category from question or use default
+                  $category = $section->title_en;
+                  if(strpos($question, ':') !== false) {
+                    $category = trim(substr($question, 0, strpos($question, ':')));
+                    $question = trim(substr($question, strpos($question, ':') + 1));
+                  }
+
+                  $faqs[] = [
+                    'question' => $question,
+                    'answer' => $answer,
+                    'category' => $category
+                  ];
+                }
+              }
+            @endphp
+
+            <div class="faq-accordion">
+              @foreach($faqs as $index => $faq)
+              <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false">
+                  <div>
+                    @if($index == 0)
+                    <div class="faq-category">{{ $section->title_en }}</div>
+                    @endif
+                    {{ $faq['question'] }}
+                  </div>
+                  <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer" aria-hidden="true">
+                  <div class="faq-answer-inner">
+                    {!! nl2br($faq['answer']) !!}
+                  </div>
                 </div>
               </div>
+              @endforeach
             </div>
-
-            <div class="faq-item">
-              <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false">
-                <div>
-                  <div class="faq-category">Payment</div>
-                  What payment methods do you accept?
-                </div>
-                <i class="fas fa-chevron-down"></i>
-              </button>
-              <div class="faq-answer" aria-hidden="true">
-                <div class="faq-answer-inner">
-                  We accept cash on delivery (COD), bKash, Nagad, Rocket, and all major credit/debit cards. For online payments, you'll be redirected to a secure payment gateway.
-                </div>
-              </div>
-            </div>
-
-            <div class="faq-item">
-              <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false">
-                <div>
-                  <div class="faq-category">Payment</div>
-                  Is my payment information secure?
-                </div>
-                <i class="fas fa-chevron-down"></i>
-              </button>
-              <div class="faq-answer" aria-hidden="true">
-                <div class="faq-answer-inner">
-                  Absolutely! We use industry-standard SSL encryption and secure payment gateways to ensure your payment information is protected. We never store your complete credit card details on our servers.
-                </div>
-              </div>
-            </div>
+            @endif
           </div>
-        </div>
+          @endforeach
+        @else
 
         <!-- Delivery & Shipping -->
         <div class="mb-4">
@@ -403,6 +416,7 @@
             <i class="fas fa-envelope me-2"></i>Contact Us
           </a>
         </div>
+        @endif
 
       </div>
     </div>

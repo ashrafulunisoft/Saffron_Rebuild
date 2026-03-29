@@ -553,7 +553,16 @@ Route::get('/contact', function() {
     return view('frontend.pages.contact', compact('cmsSections'));
 })->name('contact');
 Route::post('/contact', [App\Http\Controllers\Frontend\ContactController::class, 'submit'])->name('contact.submit');
-Route::get('/faq', function() { return view('frontend.pages.faq'); })->name('faq');
+Route::get('/faq', function() {
+    // Load CMS sections for FAQ page
+    $cmsSections = \App\Models\CmsSection::where('cms_page_id', 5)
+        ->where('is_active', true)
+        ->orderBy('sort_order')
+        ->get()
+        ->keyBy('section_key');
+
+    return view('frontend.pages.faq', compact('cmsSections'));
+})->name('faq');
 Route::get('/return', function() { return view('frontend.pages.return'); })->name('return');
 Route::get('/privacy', function() { return view('frontend.pages.privacy'); })->name('privacy');
 Route::get('/terms', [App\Http\Controllers\Frontend\PageController::class, 'terms'])->name('terms');
