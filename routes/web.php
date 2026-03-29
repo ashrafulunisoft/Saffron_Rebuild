@@ -376,12 +376,13 @@ Route::middleware(['auth', 'role:receptionist|visitor'])->group(function () {
 Route::get('/', function(){
     $categories = \App\Models\Category::withCount('products')->where('is_active', true)->get();
 
-    // Get ALL featured products to ensure all categories are represented
+    // Get featured products (limited to 12)
     $featuredProducts = \App\Models\Product::where('is_active', true)
         ->where('is_featured', true)
         ->with(['category', 'primaryImage'])
         ->orderBy('id', 'desc')
-        ->get();  // Load all featured products
+        ->take(12)
+        ->get();
 
     // Get new arrivals (latest 8 products)
     $newArrivals = \App\Models\Product::where('is_active', true)
