@@ -338,8 +338,20 @@
 <section class="section-gap">
   <div class="container">
     <div class="text-center mb-5">
-      <span class="section-badge animate-on-scroll">Browse Categories</span>
-      <h2 class="section-title mt-3 animate-on-scroll">Explore Our <span class="gradient-text">Delicious</span> Collection</h2>
+      @if($cmsSections && isset($cmsSections['browse-categories']))
+        <span class="section-badge animate-on-scroll">{{ $cmsSections['browse-categories']->title_en ?? 'Browse Categories' }}</span>
+        <h2 class="section-title mt-3 animate-on-scroll">
+          {!! $cmsSections['browse-categories']->subtitle_en ?? 'Explore Our <span class="gradient-text">Delicious</span> Collection' !!}
+        </h2>
+        @if($cmsSections['browse-categories']->content_en)
+        <p class="mt-3 animate-on-scroll" style="color:rgba(245,230,204,0.7);max-width:700px;margin-left:auto;margin-right:auto;">
+          {!! $cmsSections['browse-categories']->content_en !!}
+        </p>
+        @endif
+      @else
+        <span class="section-badge animate-on-scroll">Browse Categories</span>
+        <h2 class="section-title mt-3 animate-on-scroll">Explore Our <span class="gradient-text">Delicious</span> Collection</h2>
+      @endif
     </div>
     <div class="category-grid animate-on-scroll">
       @foreach($categories as $category)
