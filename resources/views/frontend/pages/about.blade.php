@@ -21,58 +21,106 @@
 
     <!-- Hero Section -->
     <div class="text-center mb-5">
-      <span class="section-badge">Our Story</span>
-      <h1 class="hero-title mt-3">
-        About <span class="gradient-text">Saffron</span>
-      </h1>
-      <p style="color: rgba(245,230,204,0.7); max-width: 600px; margin: 0 auto;">
-        Three generations of handcrafted sweetness, made with love and served with joy since 1995.
-      </p>
+      @if($cmsSections && isset($cmsSections['our_story']))
+        <span class="section-badge">{{ $cmsSections['our_story']->title_en ?? 'Our Story' }}</span>
+        <h1 class="hero-title mt-3">
+          {!! $cmsSections['our_story']->subtitle_en ?? 'About <span class="gradient-text">Saffron</span>' !!}
+        </h1>
+        @if($cmsSections['our_story']->content_en)
+        <p style="color: rgba(245,230,204,0.7); max-width: 600px; margin: 0 auto;">
+          {!! Str::limit(strip_tags($cmsSections['our_story']->content_en), 150) !!}
+        </p>
+        @endif
+      @endif
     </div>
 
-    <!-- Story Section -->
+    <!-- Our Beginning Section -->
+    @if($cmsSections && isset($cmsSections['our_beginning']))
     <div class="row g-5 align-items-center mb-5">
       <div class="col-lg-6">
-        <div class="glass-card-glow p-3 text-center" style="height: 100%;">
-          <div style="font-size: 10rem;">🏪</div>
+        <div class="glass-card-glow p-3 text-center animate-on-scroll" style="height: 100%;">
+          <div style="font-size: 10rem;" class="animate-on-scroll">
+            {{ $cmsSections['our_beginning']->icon ?? '🏠' }}
+          </div>
         </div>
       </div>
       <div class="col-lg-6">
-        <h3 style="color: #f5e6cc; margin-bottom: 1.5rem;">Our Heritage</h3>
+        <h3 class="animate-on-scroll" style="color: #f5e6cc; margin-bottom: 1.5rem;">
+          {!! $cmsSections['our_beginning']->title_en ?? 'Our Beginning' !!}
+        </h3>
         <p style="color: rgba(245,230,204,0.75); line-height: 1.9; margin-bottom: 1rem;">
-          Welcome to Saffron, where tradition meets excellence. Founded in 1995, we've been serving the finest authentic Bengali sweets and premium bakery items for over three decades.
+          {!! $cmsSections['our_beginning']->subtitle_en ?? 'Where Tradition Meets Excellence' !!}
         </p>
-        <p style="color: rgba(245,230,204,0.7); line-height: 1.9;">
-          What started as a small family business has grown into one of the most beloved sweet shops in Bangladesh. Our skilled artisans use time-honored recipes passed down through generations to create treats that bring joy to thousands of customers every day.
+        <p class="animate-on-scroll" style="color: rgba(245,230,204,0.75); line-height: 1.9; margin-bottom: 1rem;">
+          {!! $cmsSections['our_beginning']->content_en !!}
         </p>
       </div>
     </div>
+    @endif
 
-    <!-- Values -->
+    <!-- Heritage Section -->
+    @if($cmsSections && isset($cmsSections['our_heritage']))
+    <div class="row g-5 align-items-center mb-5">
+      <div class="col-lg-6 order-lg-2">
+        <div class="glass-card-glow p-3 text-center animate-on-scroll" style="height: 100%;">
+          <div style="font-size: 10rem;" class="animate-on-scroll">
+            {{ $cmsSections['our_heritage']->icon ?? '🏛️' }}
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 order-lg-1">
+        <h3 class="animate-on-scroll" style="color: #f5e6cc; margin-bottom: 1.5rem;">
+          {!! $cmsSections['our_heritage']->title_en ?? 'Our Heritage' !!}
+        </h3>
+        <p style="color: rgba(245,230,204,0.75); line-height: 1.9; margin-bottom: 1rem;">
+          {!! $cmsSections['our_heritage']->subtitle_en ?? 'Three Generations of Excellence' !!}
+        </p>
+        <p class="animate-on-scroll" style="color: rgba(245,230,204,0.7); line-height: 1.9;">
+          {!! $cmsSections['our_heritage']->content_en ?? 'Our heritage content.' !!}
+        </p>
+      </div>
+    </div>
+    @endif
+
+    <!-- Core Values Section -->
+    @if($cmsSections && isset($cmsSections['our_core_values']))
+    <div class="text-center mb-5 animate-on-scroll">
+      <h2 style="color: #f5e6cc; margin-bottom: 1rem;">
+        {!! $cmsSections['our_core_values']->title_en ?? 'Our Core Values' !!}
+      </h2>
+      @if($cmsSections['our_core_values']->subtitle_en)
+      <p style="color: rgba(245,230,204,0.75); max-width: 700px; margin: 0 auto 2rem auto;">
+        {!! $cmsSections['our_core_values']->subtitle_en !!}
+      </p>
+      @endif
+    </div>
+    @endif
+
+    <!-- Value Cards -->
     <div class="row g-4 mb-5">
       <div class="col-md-3">
-        <div class="glass-card p-4 text-center">
+        <div class="glass-card p-4 text-center animate-on-scroll">
           <div style="font-size: 3rem; margin-bottom: 1rem;">✨</div>
           <h5 style="color: #fbbf24;">Quality</h5>
           <p style="color: rgba(245,230,204,0.7); font-size: 0.9rem;">Only the finest ingredients</p>
         </div>
       </div>
       <div class="col-md-3">
-        <div class="glass-card p-4 text-center">
+        <div class="glass-card p-4 text-center animate-on-scroll">
           <div style="font-size: 3rem; margin-bottom: 1rem;">👨‍🍳</div>
           <h5 style="color: #fbbf24;">Tradition</h5>
           <p style="color: rgba(245,230,204,0.7); font-size: 0.9rem;">Authentic recipes</p>
         </div>
       </div>
       <div class="col-md-3">
-        <div class="glass-card p-4 text-center">
+        <div class="glass-card p-4 text-center animate-on-scroll">
           <div style="font-size: 3rem; margin-bottom: 1rem;">💝</div>
           <h5 style="color: #fbbf24;">Passion</h5>
           <p style="color: rgba(245,230,204,0.7); font-size: 0.9rem;">Made with love</p>
         </div>
       </div>
       <div class="col-md-3">
-        <div class="glass-card p-4 text-center">
+        <div class="glass-card p-4 text-center animate-on-scroll">
           <div style="font-size: 3rem; margin-bottom: 1rem;">🏆</div>
           <h5 style="color: #fbbf24;">Excellence</h5>
           <p style="color: rgba(245,230,204,0.7); font-size: 0.9rem;">30+ years of trust</p>
