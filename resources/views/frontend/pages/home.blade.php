@@ -266,23 +266,42 @@
     <div class="row g-5 align-items-center">
       <div class="col-lg-6">
         <div class="specialty-card animate-on-scroll" style="background:linear-gradient(135deg, rgba(244,63,94,0.1), rgba(168,85,247,0.1));">
-          <div style="font-size:8rem;text-align:center;margin-bottom:1rem;">🍫</div>
+          <div style="font-size:8rem;text-align:center;margin-bottom:1rem;">
+            @if($cmsSections && isset($cmsSections['chocolate-paradise']) && $cmsSections['chocolate-paradise']->icon)
+              {{ $cmsSections['chocolate-paradise']->icon }}
+            @else
+              🍫
+            @endif
+          </div>
+          @if($cmsSections && isset($cmsSections['chocolate-paradise']))
           <h3 class="text-center" style="font-family:'Playfair Display',serif;color:#fbbf24;">Premium Chocolates</h3>
-          <p class="text-center" style="color:rgba(245,230,204,0.7);">Experience chocolate paradise</p>
+          @else
+          <h3 class="text-center" style="font-family:'Playfair Display',serif;color:#fbbf24;">Premium Chocolates</h3>
+          @endif
         </div>
       </div>
       <div class="col-lg-6">
-        <span class="section-badge animate-on-scroll" style="background:linear-gradient(135deg, rgba(244,63,94,0.2), rgba(168,85,247,0.2));border-color:rgba(244,63,94,0.3);">Chocolate Paradise</span>
-        <h2 class="section-title mt-3 animate-on-scroll">
-          Premium Chocolate &<br/>
-          <span class="gradient-text">Cocoa Delights</span>
-        </h2>
-        <p class="mt-4 animate-on-scroll" style="color:rgba(245,230,204,0.75);line-height:1.9;">
-          Experience the ultimate indulgence with our exquisite collection of handcrafted chocolates, made from the finest cocoa beans sourced from around the world.
-        </p>
-        <p class="animate-on-scroll" style="color:rgba(245,230,204,0.7);line-height:1.9;">
-          From silky smooth dark chocolate to creamy milk chocolate truffles, our master chocolatiers create artisanal pieces that will delight your senses. Each chocolate is carefully crafted to deliver an unforgettable taste experience.
-        </p>
+        @if($cmsSections && isset($cmsSections['chocolate-paradise']))
+          <span class="section-badge animate-on-scroll" style="background:linear-gradient(135deg, rgba(244,63,94,0.2), rgba(168,85,247,0.2));border-color:rgba(244,63,94,0.3);">{{ $cmsSections['chocolate-paradise']->title_en ?? 'Chocolate Paradise' }}</span>
+          <h2 class="section-title mt-3 animate-on-scroll">
+            {!! $cmsSections['chocolate-paradise']->subtitle_en ?? 'Premium Chocolate &<br/><span class="gradient-text">Cocoa Delights</span>' !!}
+          </h2>
+          <p class="mt-4 animate-on-scroll" style="color:rgba(245,230,204,0.75);line-height:1.9;">
+            {!! $cmsSections['chocolate-paradise']->content_en ?? 'Experience the ultimate indulgence.' !!}
+          </p>
+        @else
+          <span class="section-badge animate-on-scroll" style="background:linear-gradient(135deg, rgba(244,63,94,0.2), rgba(168,85,247,0.2));border-color:rgba(244,63,94,0.3);">Chocolate Paradise</span>
+          <h2 class="section-title mt-3 animate-on-scroll">
+            Premium Chocolate &<br/>
+            <span class="gradient-text">Cocoa Delights</span>
+          </h2>
+          <p class="mt-4 animate-on-scroll" style="color:rgba(245,230,204,0.75);line-height:1.9;">
+            Experience the ultimate indulgence with our exquisite collection of handcrafted chocolates, made from the finest cocoa beans sourced from around the world.
+          </p>
+          <p class="animate-on-scroll" style="color:rgba(245,230,204,0.7);line-height:1.9;">
+            From silky smooth dark chocolate to creamy milk chocolate truffles, our master chocolatiers create artisanal pieces that will delight your senses. Each chocolate is carefully crafted to deliver an unforgettable taste experience.
+          </p>
+        @endif
         <div class="specialty-features animate-on-scroll">
           <div class="sf-item">
             <div class="sf-icon">🍫</div>
@@ -301,9 +320,15 @@
             <div><div class="sf-title">Artisan Crafted</div><div class="sf-desc">Made with love</div></div>
           </div>
         </div>
+        @if($cmsSections && isset($cmsSections['chocolate-paradise']) && $cmsSections['chocolate-paradise']->button_url)
+        <a href="{{ $cmsSections['chocolate-paradise']->button_url }}" class="btn btn-glow mt-4 animate-on-scroll" style="background:linear-gradient(135deg, #f43f5e, #a855f7);">
+          {{ $cmsSections['chocolate-paradise']->button_text_en ?? 'Discover Chocolates' }} <i class="fas fa-arrow-right ms-2"></i>
+        </a>
+        @else
         <a href="{{ route('shop') }}" class="btn btn-glow mt-4 animate-on-scroll" style="background:linear-gradient(135deg, #f43f5e, #a855f7);">
           Discover Chocolates <i class="fas fa-arrow-right ms-2"></i>
         </a>
+        @endif
       </div>
     </div>
   </div>
