@@ -40,17 +40,10 @@ class PasswordResetController extends Controller
     // Show reset password form
     public function reset(string $token, Request $request)
     {
-
-         return view('auth_custom.reset_password', [
+        return view('auth_custom.reset_password', [
             'token' => $token,
             'email' => $request->query('email'),
-            ]);
-        // return view('auth.reset-password', [
-        //     'token' => $token,
-        //     'email' => $request->email,
-        // ]);
-
-        return view('auth_custom/reset_password.blade.php',['token' => $token, 'email' => $request->email]);
+        ]);
     }
 
     // Update password
@@ -62,6 +55,10 @@ class PasswordResetController extends Controller
             'password' => 'required|confirmed|min:8',
         ]);
 
+        // Find the user to check their role
+        $user = \App\Models\User::where('email', $request->email)->first();
+        $isCustomer = $user && $user->hasRole('customer');
+
         $status = Password::reset(
             $request->only('email', 'password', 'password_confirmation', 'token'),
             function ($user, $password) {
@@ -72,9 +69,15 @@ class PasswordResetController extends Controller
             }
         );
 
-        return $status === Password::PASSWORD_RESET
-            ? redirect()->route('login')->with('status', __($status))
-            : back()->withErrors(['email' => __($status)]);
+        if ($status === Password::PASSWORD_RESET) {
+            // Redirect customers to homepage, others to login page
+            if ($isCustomer) {
+                return redirect()->route('home')->with('status', 'Your password has been reset successfully. You can now log in.');
+            }
+            return redirect()->route('login')->with('status', __($status));
+        }
+
+        return back()->withErrors(['email' => __($status)]);
     }
 
 

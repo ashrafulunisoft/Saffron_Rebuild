@@ -39,7 +39,7 @@
               <span>Remember me</span>
             </label>
             @if(Route::has('password.request'))
-            <a href="{{ route('password.request') }}" class="auth-link" data-bs-dismiss="modal">Forgot password?</a>
+            <a href="{{ route('password.request') }}" class="auth-link">Forgot password?</a>
             @endif
           </div>
           <button type="submit" class="btn btn-glow w-100 py-3">

@@ -187,7 +187,7 @@
               <div class="col-md-4 text-center">
                 <div class="review-average">{{ number_format($product->averageRating, 1) }}</div>
                 <div class="review-stars">{{ str_repeat('★', round($product->averageRating)) }}{{ str_repeat('☆', 5 - round($product->averageRating)) }}</div>
-                <small class="text-muted">Based on {{ $product->reviews->count() ?? 0 }} reviews</small>
+                <small style="color:rgba(245,230,204,0.7);">Based on {{ $product->reviews->count() ?? 0 }} reviews</small>
               </div>
               <div class="col-md-8">
                 @php
