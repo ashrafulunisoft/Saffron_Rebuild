@@ -2564,6 +2564,10 @@ section {
   .footer-contact-item { font-size:.85rem; }
   .footer-contact-item i { font-size:.85rem; }
   .footer-text { font-size:.9rem; margin-bottom:1rem; }
+
+  /* Global Mobile Pagination */
+  .pagination { flex-wrap:wrap; justify-content:center; gap:.35rem; }
+  .pagination .page-link { padding:.4rem .65rem; font-size:.8rem; min-width:34px; text-align:center; }
 }
 
 /* TESTIMONIALS */

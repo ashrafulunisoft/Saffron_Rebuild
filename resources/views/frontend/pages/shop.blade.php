@@ -582,6 +582,22 @@
     .sort-select {
       max-width: 100%;
     }
+
+    /* Mobile Pagination Fix */
+    .pagination {
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.35rem;
+    }
+    .pagination .page-link {
+      padding: 0.4rem 0.65rem;
+      font-size: 0.8rem;
+      min-width: 34px;
+      text-align: center;
+    }
+    .pagination .page-item.active .page-link {
+      padding: 0.4rem 0.65rem;
+    }
   }
 </style>
 @endpush
