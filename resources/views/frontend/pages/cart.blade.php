@@ -219,7 +219,7 @@
                 <i class="fas fa-tag me-2" style="color: #fbbf24;"></i>Coupon Code
               </label>
               <div class="input-group">
-                <input type="text" id="couponInput" class="form-control" placeholder="Enter coupon code" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #f5e6cc; placeholder-color: rgba(245,230,204,0.5);">
+                <input type="text" id="couponInput" class="form-control coupon-input" placeholder="Enter coupon code" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #ffffff;">
                 <button class="btn btn-glow" type="button" id="applyCouponBtn" onclick="applyCoupon()">
                   Apply
                 </button>
@@ -856,6 +856,27 @@ body.modal-open .modal-backdrop {
 /* Fix sticky element stacking context */
 .glass-card[style*="position: sticky"] {
   z-index: 1 !important;
+}
+
+/* Coupon input placeholder */
+.coupon-input::placeholder {
+  color: #ffffff;
+  opacity: 0.7;
+}
+
+.coupon-input::-webkit-input-placeholder {
+  color: #ffffff;
+  opacity: 0.7;
+}
+
+.coupon-input::-moz-placeholder {
+  color: #ffffff;
+  opacity: 0.7;
+}
+
+.coupon-input:-ms-input-placeholder {
+  color: #ffffff;
+  opacity: 0.7;
 }
 </style>
 @endpush
