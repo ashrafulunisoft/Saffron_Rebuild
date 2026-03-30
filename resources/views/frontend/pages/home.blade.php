@@ -945,22 +945,46 @@ function filterFeaturedProd(btn, cat) {
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
 
-    // Only filter products within the featured products grid
     const featuredGrid = document.getElementById('featured-products-grid');
     if (featuredGrid) {
+        let shown = 0;
+        const maxAll = 12;
+
         featuredGrid.querySelectorAll('.prod-item').forEach(item => {
             const column = item.closest('.col-6, .col-md-4, .col-lg-3');
-            if (cat === 'all' || item.dataset.cat === cat) {
-                item.style.display = 'block';
-                if (column) column.style.display = 'block';
-                item.style.animation = 'fadeIn .5s ease';
+            if (cat === 'all') {
+                // "All Products": show only first 12
+                if (shown < maxAll) {
+                    item.style.display = 'block';
+                    if (column) column.style.display = 'block';
+                    item.style.animation = 'fadeIn .5s ease';
+                    shown++;
+                } else {
+                    item.style.display = 'none';
+                    if (column) column.style.display = 'none';
+                }
             } else {
-                item.style.display = 'none';
-                if (column) column.style.display = 'none';
+                // Category filter: show all matching products
+                if (item.dataset.cat === cat) {
+                    item.style.display = 'block';
+                    if (column) column.style.display = 'block';
+                    item.style.animation = 'fadeIn .5s ease';
+                } else {
+                    item.style.display = 'none';
+                    if (column) column.style.display = 'none';
+                }
             }
         });
     }
 }
+
+// On page load: show only 12 products for "All Products"
+(function() {
+    const allBtn = document.querySelector('.filter-btn.active');
+    if (allBtn) {
+        filterFeaturedProd(allBtn, 'all');
+    }
+})();
 
 // Scroll animation
 const observer = new IntersectionObserver((entries) => {

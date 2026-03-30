@@ -88,7 +88,7 @@ Saffron Next Task List :
 44. fix the search option for the mobile view ; 
 45. fix the product details unique contents ; 
 46. fix the mobile search bar placeholder text color
-47. use 'buy now ' alternative to 'add to cart / + ' 
+47. use 'buy now ' alternative to 'add to cart / + to buy Icon' 
 48. fix the pagination for the mobile view responsive issue ; 
 
 
