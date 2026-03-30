@@ -448,7 +448,7 @@
                       <span class="price-old">৳{{ number_format($product->compare_price) }}</span>
                     @endif
                   </div>
-                  <button class="add-btn" onclick="addToCart({{ $product->id }}, '{{ $product->name }}', {{ $product->sale_price ?? $product->price }}, '{{ $product->image ?? '' }}', event)"><i class="fas fa-plus"></i></button>
+                  <button class="add-btn" onclick="addToCart({{ $product->id }}, '{{ $product->name }}', {{ $product->sale_price ?? $product->price }}, '{{ $product->image ?? '' }}', event)"><i class="fas fa-shopping-bag"></i></button>
                 </div>
               </div>
             </div>
@@ -521,7 +521,7 @@
                       <span class="price-old">৳{{ number_format($product->sale_price) }}</span>
                     @endif
                   </div>
-                  <button class="add-btn" onclick="addToCart({{ $product->id }}, '{{ $product->name }}', {{ $product->sale_price ?? $product->price }}, '{{ $product->image ?? '' }}', event)"><i class="fas fa-plus"></i></button>
+                  <button class="add-btn" onclick="addToCart({{ $product->id }}, '{{ $product->name }}', {{ $product->sale_price ?? $product->price }}, '{{ $product->image ?? '' }}', event)"><i class="fas fa-shopping-bag"></i></button>
                 </div>
               </div>
             </div>
@@ -600,7 +600,7 @@
                         <span class="price-old">৳{{ number_format($product->sale_price) }}</span>
                       @endif
                     </div>
-                    <button class="add-btn" onclick="addToCart({{ $product->id }}, '{{ $product->name }}', {{ $product->sale_price ?? $product->price }}, '{{ $product->image ?? '' }}', event)"><i class="fas fa-plus"></i></button>
+                    <button class="add-btn" onclick="addToCart({{ $product->id }}, '{{ $product->name }}', {{ $product->sale_price ?? $product->price }}, '{{ $product->image ?? '' }}', event)"><i class="fas fa-shopping-bag"></i></button>
                   </div>
                 </div>
                 <div class="bestseller-stats">

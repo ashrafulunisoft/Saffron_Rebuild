@@ -316,7 +316,7 @@
               <div class="d-flex justify-content-between align-items-center">
                 <span class="prod-price">৳{{ number_format($related->price) }}</span>
                 <button class="prod-cart-btn" onclick="addToCart({{ $related->id }}, '{{ $related->name }}', {{ $related->sale_price ?? $related->price }}, '{{ $related->image ?? '' }}', event)">
-                  <i class="fas fa-plus"></i>
+                  <i class="fas fa-shopping-bag"></i>
                 </button>
               </div>
             </div>
