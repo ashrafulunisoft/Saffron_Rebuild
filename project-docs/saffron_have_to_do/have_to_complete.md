@@ -77,13 +77,14 @@ Saffron Next Task List :
 33. fix : mobile pagination . ()
 34. -----------------------------------------------------------
 35. Fix the footer link
-36. 
-37. -----------------------------------------------------------
-38. password rest for the user (later)
-39. CMS section with  Bangla.
-40. contact mail admin can see(later)
-41. login or register with google / Facebook. (later)
-42. add pathoa integration ; (later)
+36. Fix the feature product rendering according to the category ways update the db; 
+37. fix the footer mobile responsive issue ; 
+38. -----------------------------------------------------------
+39. password rest for the user (later)
+40. CMS section with  Bangla.
+41. contact mail admin can see(later)
+42. login or register with google / Facebook. (later)
+43. add pathoa integration ; (later)
 
 
 ------------------------------------------------

@@ -1,7 +1,8 @@
 <footer class="footer-section" id="contact">
   <div class="container">
-    <div class="row g-5">
-      <div class="col-6 col-lg">
+    <div class="row g-4 g-lg-5">
+      <!-- Row 1: Brand Section - Full width on mobile -->
+      <div class="col-12 col-lg">
         <div class="footer-brand d-flex align-items-center gap-3">
           <div class="brand-icon"><i class="fas fa-cookie-bite"></i></div>
           <div>
@@ -51,6 +52,7 @@
         </div>
         @endif
       </div>
+      <!-- Row 2: Quick Links - 50% on mobile -->
       <div class="col-6 col-lg">
         @if($footerSections && isset($footerSections['footer_quick_links']))
         <h5 class="footer-title">{!! $footerSections['footer_quick_links']->title_en !!}</h5>
@@ -82,6 +84,7 @@
         </ul>
         @endif
       </div>
+      <!-- Row 2: Customer Service - 50% on mobile -->
       <div class="col-6 col-lg">
         @if($footerSections && isset($footerSections['footer_customer_service']))
         <h5 class="footer-title">{!! $footerSections['footer_customer_service']->title_en !!}</h5>
@@ -112,7 +115,8 @@
         </ul>
         @endif
       </div>
-      <div class="col-6 col-lg">
+      <!-- Row 3: Contact Us - Full width on mobile -->
+      <div class="col-12 col-lg">
         @if($footerSections && isset($footerSections['footer_contact']))
         <h5 class="footer-title">{!! $footerSections['footer_contact']->title_en !!}</h5>
         @php
