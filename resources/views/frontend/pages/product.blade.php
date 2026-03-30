@@ -105,10 +105,6 @@
           @endif
         </div>
 
-        <div class="product-description">
-          <p>{{ $product->description ?? 'Experience the rich taste of our premium ' . $product->name . '. Made with the finest ingredients and traditional recipes, this delight is perfect for any occasion.' }}</p>
-        </div>
-
         <!-- Quantity & Add to Cart -->
         <div class="product-actions">
           <div class="qty-selector-modern">

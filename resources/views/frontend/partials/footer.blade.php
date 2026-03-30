@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row g-4 g-lg-5">
       <!-- Row 1: Brand Section - Full width on mobile -->
-      <div class="col-12 col-lg">
+      <div class="col-12 col-lg-3">
         <div class="footer-brand d-flex align-items-center gap-3">
           <div class="brand-icon"><i class="fas fa-cookie-bite"></i></div>
           <div>
@@ -52,8 +52,9 @@
         </div>
         @endif
       </div>
-      <!-- Row 2: Quick Links - 50% on mobile -->
-      <div class="col-6 col-lg">
+
+      <!-- Row 2: Quick Links - col-md-6 for side by side on mobile -->
+      <div class="col-md-6 col-lg-3">
         @if($footerSections && isset($footerSections['footer_quick_links']))
         <h5 class="footer-title">{!! $footerSections['footer_quick_links']->title_en !!}</h5>
         <ul class="footer-links">
@@ -84,8 +85,8 @@
         </ul>
         @endif
       </div>
-      <!-- Row 2: Customer Service - 50% on mobile -->
-      <div class="col-6 col-lg">
+      <!-- Row 2: Customer Service - Side by side with Quick Links on mobile -->
+      <div class="col-md-6 col-lg-3">
         @if($footerSections && isset($footerSections['footer_customer_service']))
         <h5 class="footer-title">{!! $footerSections['footer_customer_service']->title_en !!}</h5>
         <ul class="footer-links">
