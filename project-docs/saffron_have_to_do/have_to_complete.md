@@ -65,22 +65,25 @@ Saffron Next Task List :
 21. Admin can't change the password fix it (done);  
 22. add the delivery fee from the admin page inside / out side dhaka; (done)
 23. sms & email for notification;(done)
-24. CMS section with  Bangla.
-25. Blog check (done)
-26. cms : faq, privacy, return , terms, contact , about, homepage, footer. 
-27. have to fix the mobile design (done- cart , blog , header , footer)
-28. fix the frontend theme and connect with the admin cms content.  
-29. password rest for the user (later)
-30. user role ways check the redirection 
-31. subcription fix (later)
-32. fix : when click feature product => all product then can't show the new arrival and best product . 
-33. remove the bangla option from admin cms section . (done)
-34. fix : mobile pagination . 
-35. done the subscrib option for the customer ; 
-36. -----------------------------------------------------------
-37. contact mail admin can see(later)
-38. login or register with google / Facebook. (later)
-39. add pathoa integration ; (later)
+24. Blog check (done)
+25. cms : faq, privacy, return , terms, contact , about, homepage, footer. 
+26. have to fix the mobile design (done- cart , blog , header , footer)
+27. fix the frontend theme and connect with the admin cms content.  
+28. user role ways check the redirection 
+29. subcription fix (done)
+30. fix : when click feature product => all product then can't show the new arrival and best product . (done)
+31. remove the bangla option from admin cms section . (done)
+32. done the subscrib option for the customer ; (done)
+33. fix : mobile pagination . ()
+34. -----------------------------------------------------------
+35. Fix the footer link
+36. 
+37. -----------------------------------------------------------
+38. password rest for the user (later)
+39. CMS section with  Bangla.
+40. contact mail admin can see(later)
+41. login or register with google / Facebook. (later)
+42. add pathoa integration ; (later)
 
 
 ------------------------------------------------
