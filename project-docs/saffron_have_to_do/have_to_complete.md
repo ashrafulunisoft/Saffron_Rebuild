@@ -93,8 +93,8 @@ Saffron Next Task List :
 49. fix the pagination for the mobile view responsive issue ; (done)
 50. ---------------------
 51. fix transparent issue for the mega menu (done)
-52. fix the null search issue for the mobile or shop
-53. blog page with the header space issue fix 
+52. blog page with the header space issue fix (done)
+53. fix the null search issue for the mobile or shop
 54. forget password issue have to fix ; 
 55. show the review page some of text; 
 56. fix desktop menu search place holder text; 
