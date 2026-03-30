@@ -85,16 +85,17 @@ Saffron Next Task List :
 41. Fix the footer link (done)
 42. Fix the feature product rendering according to the category ways update the db; (done)
 43. fix the footer mobile responsive issue ; (done)
-44. fix the search option for the mobile view ; 
-45. fix the product details unique contents ; 
-46. fix the mobile search bar placeholder text color
-47. use 'buy now ' alternative to 'add to cart / + to buy Icon' 
-48. fix the pagination for the mobile view responsive issue ; 
-49. ---------------------
-50. fix transparent issue for the mega menu
-51. fix the null search issue for the mobile or shop
-52. blog page with the header space issue fix 
-53. forget password issue have to fix ; 
-54. show the review page some of text; 
-55. fix desktop menu search place holder text; 
+44. fix the search option for the mobile view ; (done)
+45. fix the product details unique contents ; (done)
+46. fix the mobile search bar placeholder text color (done)
+47. fix the desktop search bar placeholder text color (done)
+48. use 'buy now ' alternative to 'add to cart / + to buy Icon' (done)
+49. fix the pagination for the mobile view responsive issue ; (done)
+50. ---------------------
+51. fix transparent issue for the mega menu (done)
+52. fix the null search issue for the mobile or shop
+53. blog page with the header space issue fix 
+54. forget password issue have to fix ; 
+55. show the review page some of text; 
+56. fix desktop menu search place holder text; 
 ------------------------------------------------
