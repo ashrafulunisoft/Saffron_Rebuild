@@ -475,7 +475,7 @@ input[type="password"].input-dark:-webkit-autofill::first-line {
   width: 100%;
   padding: 2.5rem 0;
   margin-top: 0;
-  background: rgba(15, 10, 0, 0.65);
+  background: rgba(15, 10, 0, 0.92);
   backdrop-filter: blur(30px);
   -webkit-backdrop-filter: blur(30px);
   border: none;

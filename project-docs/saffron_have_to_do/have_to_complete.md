@@ -90,6 +90,11 @@ Saffron Next Task List :
 46. fix the mobile search bar placeholder text color
 47. use 'buy now ' alternative to 'add to cart / + to buy Icon' 
 48. fix the pagination for the mobile view responsive issue ; 
-
-
+49. ---------------------
+50. fix transparent issue for the mega menu
+51. fix the null search issue for the mobile or shop
+52. blog page with the header space issue fix 
+53. forget password issue have to fix ; 
+54. show the review page some of text; 
+55. fix desktop menu search place holder text; 
 ------------------------------------------------
