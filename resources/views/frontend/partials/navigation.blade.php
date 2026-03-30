@@ -18,6 +18,16 @@
           <i class="fas fa-times"></i>
         </button>
       </div>
+
+      <!-- Mobile Search Bar -->
+      <div class="d-lg-none w-100 mb-3">
+        <form action="{{ route('search') }}" method="GET" class="position-relative">
+          <input type="text" name="q" class="form-control mobile-search-input" placeholder="Search products..." value="{{ request('q') }}" style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:12px;color:#f5e6cc;padding:.75rem 2.5rem .75rem 1rem;font-size:.95rem;" onfocus="this.style.borderColor='#f59e0b'" onblur="this.style.borderColor='rgba(255,255,255,0.15)'">
+          <button type="submit" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);background:none;border:none;color:#fbbf24;font-size:1rem;cursor:pointer;padding:8px;">
+            <i class="fas fa-search"></i>
+          </button>
+        </form>
+      </div>
       <ul class="navbar-nav mx-auto gap-2">
         <li class="nav-item">
           <a class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" href="{{ route('home') }}">Home</a>

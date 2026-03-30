@@ -82,10 +82,14 @@ Saffron Next Task List :
 38. login or register with google / Facebook. (later)
 39. add pathoa integration ; (later)
 40. -----------------------------------------------------------
-41. Fix the footer link
-42. Fix the feature product rendering according to the category ways update the db; 
-43. fix the footer mobile responsive issue ; 
+41. Fix the footer link (done)
+42. Fix the feature product rendering according to the category ways update the db; (done)
+43. fix the footer mobile responsive issue ; (done)
 44. fix the search option for the mobile view ; 
+45. fix the product details unique content ; 
+46. 
+47. use 'buy now ' alternative to 'add to cart / + ' 
+48. 
 
 
 ------------------------------------------------

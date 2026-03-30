@@ -248,6 +248,9 @@ body {
 .search-input::placeholder {
   color: rgba(245,230,204,0.5);
 }
+.mobile-search-input::placeholder {
+  color: rgba(245,230,204,0.4);
+}
 
 .search-icon-btn {
   position: absolute;
