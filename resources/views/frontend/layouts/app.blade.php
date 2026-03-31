@@ -274,6 +274,127 @@ body {
   transform: translateY(-50%) scale(0.95);
 }
 
+/* Search Autocomplete Dropdown */
+.search-suggest-dropdown {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: rgba(15, 10, 0, 0.97);
+  backdrop-filter: blur(25px);
+  border: 1px solid rgba(245, 158, 11, 0.2);
+  border-radius: 12px;
+  margin-top: 4px;
+  max-height: 400px;
+  overflow-y: auto;
+  z-index: 9999;
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5);
+}
+.search-suggest-dropdown.show {
+  display: block;
+}
+.search-suggest-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 0.75rem;
+  text-decoration: none;
+  color: rgba(245, 230, 204, 0.85);
+  transition: all 0.2s ease;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+.search-suggest-item:hover {
+  background: rgba(245, 158, 11, 0.1);
+}
+.search-suggest-item:last-of-type {
+  border-bottom: none;
+}
+.suggest-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: rgba(245, 230, 204, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.suggest-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.suggest-img i {
+  color: rgba(245, 230, 204, 0.3);
+  font-size: 1.2rem;
+}
+.suggest-info {
+  flex: 1;
+  min-width: 0;
+}
+.suggest-name {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #f5e6cc;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.suggest-name mark {
+  background: rgba(245, 158, 11, 0.3);
+  color: #fbbf24;
+  border-radius: 2px;
+  padding: 0 2px;
+}
+.suggest-cat {
+  font-size: 0.7rem;
+  color: rgba(245, 230, 204, 0.4);
+  margin-top: 1px;
+}
+.suggest-price {
+  text-align: right;
+  flex-shrink: 0;
+}
+.suggest-price span {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #fbbf24;
+}
+.suggest-price small {
+  font-size: 0.7rem;
+  color: rgba(245, 230, 204, 0.35);
+  text-decoration: line-through;
+}
+.search-suggest-empty {
+  padding: 1.5rem;
+  text-align: center;
+  color: rgba(245, 230, 204, 0.4);
+  font-size: 0.9rem;
+}
+.search-suggest-empty i {
+  margin-right: 0.5rem;
+}
+.search-suggest-footer {
+  padding: 0.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  text-align: center;
+}
+.search-suggest-footer a {
+  display: block;
+  padding: 0.5rem;
+  color: #fbbf24;
+  text-decoration: none;
+  font-size: 0.8rem;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+.search-suggest-footer a:hover {
+  background: rgba(245, 158, 11, 0.1);
+}
+
 /* Glassmorphism Input Fields */
 .input-dark,
 .form-control.input-dark,

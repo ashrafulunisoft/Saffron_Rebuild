@@ -21,11 +21,12 @@
 
       <!-- Mobile Search Bar -->
       <div class="d-lg-none w-100 mb-3">
-        <form action="{{ route('search') }}" method="GET" class="position-relative">
-          <input type="text" name="q" class="form-control mobile-search-input" placeholder="Search products..." value="{{ request('q') }}" style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:12px;color:#f5e6cc;padding:.75rem 2.5rem .75rem 1rem;font-size:.95rem;" onfocus="this.style.borderColor='#f59e0b'" onblur="this.style.borderColor='rgba(255,255,255,0.15)'">
+        <form action="{{ route('search') }}" method="GET" class="position-relative" autocomplete="off">
+          <input type="text" name="q" class="form-control mobile-search-input search-suggest-input" placeholder="Search products..." value="{{ request('q') }}" style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:12px;color:#f5e6cc;padding:.75rem 2.5rem .75rem 1rem;font-size:.95rem;" onfocus="this.style.borderColor='#f59e0b'" onblur="this.style.borderColor='rgba(255,255,255,0.15)'">
           <button type="submit" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);background:none;border:none;color:#fbbf24;font-size:1rem;cursor:pointer;padding:8px;">
             <i class="fas fa-search"></i>
           </button>
+          <div class="search-suggest-dropdown"></div>
         </form>
       </div>
       <ul class="navbar-nav mx-auto gap-2">
@@ -202,11 +203,12 @@
 
       <div class="d-flex align-items-center gap-2">
         <!-- Search Bar with Icon -->
-        <form action="{{ route('search') }}" method="GET" class="d-none d-lg-flex position-relative">
-          <input type="text" name="q" class="form-control search-input" placeholder="Search treats..." value="{{ request('q') }}">
+        <form action="{{ route('search') }}" method="GET" class="d-none d-lg-flex position-relative" autocomplete="off">
+          <input type="text" name="q" class="form-control search-input search-suggest-input" placeholder="Search treats..." value="{{ request('q') }}">
           <button type="submit" class="search-icon-btn" title="Search">
             <i class="fas fa-search"></i>
           </button>
+          <div class="search-suggest-dropdown"></div>
         </form>
 
         <a href="{{ route('search') }}" class="nav-icon-btn d-lg-none" title="Search">
@@ -320,4 +322,105 @@ function updateWishlistCountBadge(count) {
     }
   });
 }
+
+// ===== Search Autocomplete =====
+(function() {
+  let searchTimer = null;
+  const allInputs = document.querySelectorAll('.search-suggest-input');
+
+  allInputs.forEach(function(input) {
+    const dropdown = input.closest('form').querySelector('.search-suggest-dropdown');
+
+    input.addEventListener('input', function() {
+      const query = this.value.trim();
+      clearTimeout(searchTimer);
+
+      if (query.length < 2) {
+        dropdown.classList.remove('show');
+        dropdown.innerHTML = '';
+        return;
+      }
+
+      searchTimer = setTimeout(function() {
+        fetch('/search/suggest?q=' + encodeURIComponent(query))
+          .then(function(res) { return res.json(); })
+          .then(function(data) {
+            if (data.length === 0) {
+              dropdown.innerHTML = '<div class="search-suggest-empty"><i class="fas fa-search"></i> No products found</div>';
+              dropdown.classList.add('show');
+              return;
+            }
+
+            let html = '';
+            data.forEach(function(item) {
+              html += '<a href="' + item.url + '" class="search-suggest-item">';
+              html += '  <div class="suggest-img">';
+              if (item.image) {
+                html += '    <img src="' + item.image + '" alt="' + item.name + '">';
+              } else {
+                html += '    <i class="fas fa-cookie-bite"></i>';
+              }
+              html += '  </div>';
+              html += '  <div class="suggest-info">';
+              html += '    <div class="suggest-name">' + highlightMatch(item.name, query) + '</div>';
+              if (item.category) {
+                html += '    <div class="suggest-cat">' + item.category + '</div>';
+              }
+              html += '  </div>';
+              html += '  <div class="suggest-price">';
+              html += '    <span>৳' + Number(item.price).toLocaleString() + '</span>';
+              if (item.original_price) {
+                html += '    <small>৳' + Number(item.original_price).toLocaleString() + '</small>';
+              }
+              html += '  </div>';
+              html += '</a>';
+            });
+
+            html += '<div class="search-suggest-footer"><a href="/search?q=' + encodeURIComponent(query) + '"><i class="fas fa-search me-1"></i>View all results for "' + escapeHtml(query) + '"</a></div>';
+
+            dropdown.innerHTML = html;
+            dropdown.classList.add('show');
+          })
+          .catch(function() {});
+      }, 300);
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(e) {
+      if (!input.contains(e.target) && !dropdown.contains(e.target)) {
+        dropdown.classList.remove('show');
+      }
+    });
+
+    // Close on Escape
+    input.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        dropdown.classList.remove('show');
+      }
+    });
+
+    // Show dropdown on focus if there's already text
+    input.addEventListener('focus', function() {
+      if (this.value.trim().length >= 2 && dropdown.innerHTML) {
+        dropdown.classList.add('show');
+      }
+    });
+  });
+
+  function highlightMatch(text, query) {
+    if (!query) return escapeHtml(text);
+    var regex = new RegExp('(' + escapeRegex(query) + ')', 'gi');
+    return escapeHtml(text).replace(regex, '<mark>$1</mark>');
+  }
+
+  function escapeHtml(str) {
+    var div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  function escapeRegex(str) {
+    return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  }
+})();
 </script>

@@ -594,6 +594,7 @@ Route::get('/policy', function() { return view('policy'); })->name('policy');
 
 // Search route
 Route::get('/search', [App\Http\Controllers\Frontend\SearchController::class, 'index'])->name('search');
+Route::get('/search/suggest', [App\Http\Controllers\Frontend\SearchController::class, 'suggest'])->name('search.suggest');
 
 // Blog routes
 Route::prefix('blog')->name('blog.')->group(function () {
