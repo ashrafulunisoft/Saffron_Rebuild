@@ -53,9 +53,36 @@
         </div> --}}
         <p class="auth-footer mt-4">
           Don't have an account?
-          <a href="#" class="auth-link" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#registerModal">Create Account</a>
+          <button type="button" class="btn btn-glow btn-sm" id="switchToRegisterBtn">Create Account</button>
         </p>
       </div>
     </div>
   </div>
 </div>
+
+<script>
+// Handle switching from login modal to register modal
+document.addEventListener('DOMContentLoaded', function() {
+    const switchBtn = document.getElementById('switchToRegisterBtn');
+    if (switchBtn) {
+        switchBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const loginModalEl = document.getElementById('loginModal');
+            const loginModal = bootstrap.Modal.getInstance(loginModalEl);
+
+            // When login modal is fully hidden, open register modal
+            loginModalEl.addEventListener('hidden.bs.modal', function handler() {
+                loginModalEl.removeEventListener('hidden.bs.modal', handler);
+                const registerModalEl = document.getElementById('registerModal');
+                const registerModal = new bootstrap.Modal(registerModalEl);
+                registerModal.show();
+            });
+
+            // Hide login modal
+            if (loginModal) {
+                loginModal.hide();
+            }
+        });
+    }
+});
+</script>

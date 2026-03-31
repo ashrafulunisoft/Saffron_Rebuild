@@ -101,3 +101,7 @@ Saffron Next Task List :
 57. fix the co
 58. fix desktop menu search place holder text; 
 ------------------------------------------------
+1.  register modal disable mouse hover while in the checkout page ; (done)
+2.  optimized the product images
+3.  fix the feature product section 
+
