@@ -3,7 +3,7 @@
   <div class="prod-card prod-item {{ $animate ?? '' }}" {{ ($style ?? null) ? 'style="' . $style . '"' : '' }}>
     <div class="prod-img-wrapper">
       @if($product->image)
-        <img src="{{ asset("storage/{$product->image}") }}" alt="{{ $product->name }}">
+        <img src="{{ asset("storage/{$product->image}") }}" alt="{{ $product->name }}" loading="lazy" decoding="async">
       @else
         <div class="prod-img-placeholder">
           <i class="fas fa-cookie-bite"></i>

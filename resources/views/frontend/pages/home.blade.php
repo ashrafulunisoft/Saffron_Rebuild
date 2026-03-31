@@ -424,7 +424,7 @@
             <div class="prod-card prod-item" data-cat="{{ $product->category->slug ?? 'breads' }}">
               <div class="prod-img-wrapper">
                 @if($product->image)
-                  <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}">
+                  <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" loading="lazy" decoding="async">
                 @else
                   <div class="prod-img-placeholder">
                     <i class="fas fa-cookie-bite"></i>
@@ -499,7 +499,7 @@
             <div class="prod-card prod-item animate-on-scroll">
               <div class="prod-img-wrapper">
                 @if($product->image)
-                  <img src="{{ asset("storage/{$product->image}") }}" alt="{{ $product->name_en }}">
+                  <img src="{{ asset("storage/{$product->image}") }}" alt="{{ $product->name_en }}" loading="lazy" decoding="async">
                 @else
                   <div class="prod-img-placeholder">
                     <i class="fas fa-cookie-bite"></i>
@@ -578,7 +578,7 @@
               <div class="prod-card prod-item animate-on-scroll" style="border:1px solid rgba(245,158,11,{{ $index === 0 ? '0.3' : '0.2' }});">
                 <div class="prod-img-wrapper">
                   @if($product->image)
-                    <img src="{{ asset("storage/{$product->image}") }}" alt="{{ $product->name }}">
+                    <img src="{{ asset("storage/{$product->image}") }}" alt="{{ $product->name }}" loading="lazy" decoding="async">
                   @else
                     <div class="prod-img-placeholder">
                       <i class="fas fa-cookie-bite"></i>
@@ -771,7 +771,7 @@
             <div class="blog-card glass-card animate-on-scroll h-100">
               @if($post->featured_image)
                 <div class="blog-img">
-                  <img src="{{ asset('storage/' . $post->featured_image) }}" alt="{{ $post->title }}">
+                  <img src="{{ asset('storage/' . $post->featured_image) }}" alt="{{ $post->title }}" loading="lazy" decoding="async">
                   @if($post->is_featured)
                     <span class="blog-badge badge-featured">⭐ Featured</span>
                   @endif
