@@ -27,7 +27,7 @@
     </nav>
 
     <div class="row justify-content-center">
-      <div class="col-lg-10">
+      <div class="col-lg-5">
         <div class="glass-card" style="padding:1.5rem;border-radius:16px;box-shadow:0 10px 40px rgba(0,0,0,0.3);">
           <!-- Blog Image Container -->
           <div style="position:relative;width:100%;border-radius:12px;background:rgba(245,230,204,0.02);margin-bottom:1.5rem;">
