@@ -9,44 +9,7 @@
       <!-- Sidebar -->
       <div class="col-lg-3">
         <div class="glass-card p-4">
-          <!-- User Profile Card -->
-          <div class="text-center mb-4">
-            <div class="customer-avatar">
-              @if(auth()->user()->avatar)
-                <img src="{{ asset('storage/avatars/' . auth()->user()->avatar) }}" alt="{{ auth()->user()->name }}">
-              @else
-                <span>{{ strtoupper(substr(auth()->user()->name, 0, 1)) }}</span>
-              @endif
-            </div>
-            <h5 class="mt-3" style="color: #f5e6cc;">{{ auth()->user()->name }}</h5>
-            <p style="color: rgba(245,230,204,0.6); font-size: 0.9rem;">{{ auth()->user()->email }}</p>
-          </div>
-
-          <!-- Navigation Menu -->
-          <nav class="customer-nav">
-            <a href="{{ route('customer.dashboard') }}" class="customer-nav-item">
-              <i class="fas fa-tachometer-alt me-2"></i> Dashboard
-            </a>
-            <a href="{{ route('customer.orders') }}" class="customer-nav-item">
-              <i class="fas fa-shopping-bag me-2"></i> My Orders
-            </a>
-            <a href="{{ route('customer.wishlist') }}" class="customer-nav-item">
-              <i class="fas fa-heart me-2"></i> Wishlist
-            </a>
-            <a href="{{ route('customer.addresses') }}" class="customer-nav-item active">
-              <i class="fas fa-map-marker-alt me-2"></i> Addresses
-            </a>
-            <a href="{{ route('customer.profile') }}" class="customer-nav-item">
-              <i class="fas fa-user-edit me-2"></i> Profile Settings
-            </a>
-            <hr style="border-color: rgba(255,255,255,0.1); margin: 1rem 0;">
-            <form method="POST" action="{{ route('logout') }}">
-              @csrf
-              <button type="submit" class="customer-nav-item w-100" style="color: #f43f5e;">
-                <i class="fas fa-sign-out-alt me-2"></i> Logout
-              </button>
-            </form>
-          </nav>
+          @include('frontend.customer.partials.sidebar')
         </div>
       </div>
 

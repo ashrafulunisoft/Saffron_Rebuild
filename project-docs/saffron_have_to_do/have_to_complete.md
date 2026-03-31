@@ -104,4 +104,7 @@ Saffron Next Task List :
 1.  register modal disable mouse hover while in the checkout page ; (done)
 2.  optimized the product images
 3.  fix the feature product section 
+4.  fix the coupon list for the customer dashboard; 
+5.  show the total coupon used in the orders . 
+6.  in the search box add the auto 'recommandation while type. 
 

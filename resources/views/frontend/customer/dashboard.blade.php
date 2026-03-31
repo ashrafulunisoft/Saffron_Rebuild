@@ -9,54 +9,8 @@
       <!-- Sidebar -->
       <div class="col-lg-3">
         <div class="glass-card p-4">
-          <!-- User Profile Card -->
-          <div class="text-center mb-4">
-            <div class="customer-avatar">
-              @if(auth()->user()->avatar)
-                <img src="{{ asset('storage/avatars/' . auth()->user()->avatar) }}" alt="{{ auth()->user()->name }}">
-              @else
-                <span>{{ strtoupper(substr(auth()->user()->name, 0, 1)) }}</span>
-              @endif
-            </div>
-            <h5 class="mt-3" style="color: #f5e6cc;">{{ auth()->user()->name }}</h5>
-            <p style="color: rgba(245,230,204,0.6); font-size: 0.9rem;">{{ auth()->user()->email }}</p>
-            <span class="badge" style="background: rgba(245,158,11,0.2); color: #fbbf24; border: 1px solid rgba(245,158,11,0.3);">
-              {{ ucfirst(auth()->user()->roles->first()?->name ?? 'Customer') }}
-            </span>
-          </div>
-
-          <!-- Navigation Menu -->
-          <nav class="customer-nav">
-            <a href="{{ route('customer.dashboard') }}" class="customer-nav-item {{ request()->routeIs('customer.dashboard') ? 'active' : '' }}">
-              <i class="fas fa-tachometer-alt me-2"></i> Dashboard
-            </a>
-            <a href="{{ route('customer.orders') }}" class="customer-nav-item {{ request()->routeIs('customer.orders*') ? 'active' : '' }}">
-              <i class="fas fa-shopping-bag me-2"></i> My Orders
-              @if(auth()->user()->orders()->count() > 0)
-                <span class="nav-badge">{{ auth()->user()->orders()->count() }}</span>
-              @endif
-            </a>
-            <a href="{{ route('customer.wishlist') }}" class="customer-nav-item {{ request()->routeIs('customer.wishlist') ? 'active' : '' }}">
-              <i class="fas fa-heart me-2"></i> Wishlist
-              @if(auth()->user()->wishlist_count > 0)
-                <span class="nav-badge">{{ auth()->user()->wishlist_count }}</span>
-              @endif
-            </a>
-            <a href="{{ route('customer.addresses') }}" class="customer-nav-item {{ request()->routeIs('customer.addresses*') ? 'active' : '' }}">
-              <i class="fas fa-map-marker-alt me-2"></i> Addresses
-            </a>
-            <a href="{{ route('customer.profile') }}" class="customer-nav-item {{ request()->routeIs('customer.profile') ? 'active' : '' }}">
-              <i class="fas fa-user-edit me-2"></i> Profile Settings
-            </a>
-            <hr style="border-color: rgba(255,255,255,0.1); margin: 1rem 0;">
-            <form method="POST" action="{{ route('logout') }}">
-              @csrf
-              <button type="submit" class="customer-nav-item w-100" style="color: #f43f5e;">
-                <i class="fas fa-sign-out-alt me-2"></i> Logout
-              </button>
-            </form>
-          </nav>
-        </div>
+          @include('frontend.customer.partials.sidebar')
+      </div>
       </div>
 
       <!-- Main Content -->
@@ -121,6 +75,74 @@
               </div>
             </div>
           </div>
+
+          <!-- Available Coupons -->
+          <div id="coupons"></div>
+          @php
+            $availableCoupons = \App\Models\Coupon::where(function($q) {
+                $q->whereNull('expires_at')->orWhere('expires_at', '>', now());
+            })->where(function($q) {
+                $q->whereNull('usage_limit')->orWhereRaw('usage_count < usage_limit');
+            })->orderBy('created_at', 'desc')->get();
+          @endphp
+          @if($availableCoupons->count() > 0)
+          <div class="glass-card p-4 mb-4">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+              <h5 style="color: #f5e6cc; margin: 0;">
+                <i class="fas fa-ticket-alt me-2" style="color: #fbbf24;"></i>Available Coupons
+              </h5>
+              <span class="badge" style="background: rgba(34, 197, 94, 0.2); color: #22c55e; border: 1px solid rgba(34, 197, 94, 0.3);">
+                {{ $availableCoupons->count() }} Active
+              </span>
+            </div>
+
+            <div class="row g-3">
+              @foreach($availableCoupons as $coupon)
+                @php
+                  $customerUsage = $coupon->getCustomerUsageCount(auth()->id());
+                @endphp
+                <div class="col-md-6 col-lg-4">
+                  <div class="coupon-card">
+                    <div class="coupon-discount">
+                      @if($coupon->type === 'percent')
+                        <span class="discount-value">{{ $coupon->value }}%</span>
+                        <span class="discount-label">OFF</span>
+                        @if($coupon->max_discount)
+                          <small class="max-discount">Max ৳{{ number_format($coupon->max_discount) }}</small>
+                        @endif
+                      @else
+                        <span class="discount-value">৳{{ number_format($coupon->value) }}</span>
+                        <span class="discount-label">FLAT</span>
+                      @endif
+                    </div>
+                    <div class="coupon-details">
+                      <div class="coupon-code" onclick="copyCouponCode('{{ $coupon->code }}')">
+                        <span>{{ $coupon->code }}</span>
+                        <i class="fas fa-copy"></i>
+                      </div>
+                      <div class="coupon-meta">
+                        @if($coupon->expires_at)
+                          <small><i class="far fa-calendar me-1"></i>Expires: {{ $coupon->expires_at->format('M d, Y') }}</small>
+                        @else
+                          <small><i class="far fa-calendar me-1"></i>No expiry</small>
+                        @endif
+                        <small class="mt-1 d-block">
+                          <i class="fas fa-user-check me-1"></i>You used: {{ $customerUsage }} time(s)
+                        </small>
+                        @if($coupon->usage_limit)
+                          @php $remaining = $coupon->usage_limit - $coupon->usage_count; @endphp
+                          <small class="mt-1 d-block {{ $remaining <= 5 ? 'text-warning' : '' }}">
+                            <i class="fas fa-fire me-1"></i>{{ $remaining }} left for everyone
+                          </small>
+                        @endif
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              @endforeach
+            </div>
+          </div>
+          @endif
 
           <!-- Recent Orders -->
           <div class="glass-card p-4">
@@ -352,5 +374,169 @@
   .btn-link:hover {
     color: #f59e0b;
   }
+
+  /* Coupon Card Styles */
+  .coupon-card {
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.8), rgba(30, 41, 59, 0.6));
+    border: 1px dashed rgba(245, 158, 11, 0.4);
+    border-radius: 16px;
+    padding: 1.25rem;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+  .coupon-card::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: -10px;
+    width: 20px;
+    height: 20px;
+    background: #0f172a;
+    border-radius: 50%;
+    transform: translateY(-50%);
+  }
+  .coupon-card::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: -10px;
+    width: 20px;
+    height: 20px;
+    background: #0f172a;
+    border-radius: 50%;
+    transform: translateY(-50%);
+  }
+  .coupon-card:hover {
+    border-color: rgba(245, 158, 11, 0.8);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(245, 158, 11, 0.2);
+  }
+  .coupon-discount {
+    text-align: center;
+    padding: 0.5rem 0;
+  }
+  .discount-value {
+    display: block;
+    font-size: 2rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .discount-label {
+    font-size: 0.75rem;
+    color: rgba(245, 230, 204, 0.6);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+  .max-discount {
+    display: block;
+    color: rgba(245, 230, 204, 0.5);
+    font-size: 0.75rem;
+    margin-top: 0.25rem;
+  }
+  .coupon-code {
+    background: rgba(245, 158, 11, 0.15);
+    border: 1px solid rgba(245, 158, 11, 0.3);
+    border-radius: 8px;
+    padding: 0.5rem 0.75rem;
+    margin: 1rem 0;
+    font-family: 'Courier New', monospace;
+    font-weight: 700;
+    color: #fbbf24;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s ease;
+  }
+  .coupon-code:hover {
+    background: rgba(245, 158, 11, 0.25);
+  }
+  .coupon-code i {
+    opacity: 0.6;
+    transition: opacity 0.3s ease;
+  }
+  .coupon-code:hover i {
+    opacity: 1;
+  }
+  .coupon-meta {
+    border-top: 1px dashed rgba(255, 255, 255, 0.1);
+    padding-top: 0.75rem;
+    margin-top: 0.75rem;
+  }
+  .coupon-meta small {
+    color: rgba(245, 230, 204, 0.5);
+    display: block;
+    font-size: 0.75rem;
+  }
+  .coupon-meta small i {
+    width: 16px;
+    text-align: center;
+  }
+  .text-warning {
+    color: #fbbf24 !important;
+  }
+</style>
+@endpush
+
+@push('scripts')
+<script>
+function copyCouponCode(code) {
+  navigator.clipboard.writeText(code).then(function() {
+    // Show toast notification
+    const toast = document.createElement('div');
+    toast.className = 'coupon-toast';
+    toast.innerHTML = '<i class="fas fa-check-circle"></i> Coupon code copied: <strong>' + code + '</strong>';
+    document.body.appendChild(toast);
+
+    setTimeout(function() {
+      toast.classList.add('show');
+    }, 10);
+
+    setTimeout(function() {
+      toast.classList.remove('show');
+      setTimeout(function() {
+        toast.remove();
+      }, 300);
+    }, 3000);
+  }).catch(function(err) {
+    console.error('Failed to copy:', err);
+  });
+}
+</script>
+<style>
+.coupon-toast {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(34, 197, 94, 0.4);
+  z-index: 10000;
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+.coupon-toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+.coupon-toast i {
+  margin-right: 0.5rem;
+}
+.coupon-toast strong {
+  background: rgba(255,255,255,0.2);
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  margin-left: 0.5rem;
+}
 </style>
 @endpush
