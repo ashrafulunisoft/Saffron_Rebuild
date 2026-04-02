@@ -158,12 +158,12 @@
           <div class="about-image-float aif-1 glass-card text-center p-3">
             <div class="about-badge">👨‍🍳</div>
             <div class="about-counter">50+</div>
-            <div style="font-size:.8rem;color:rgba(245,230,204,0.6);">Expert Chefs</div>
+            <div style="font-size:.8rem;color:rgba(var(--theme-text-primary-rgb),0.6);">Expert Chefs</div>
           </div>
           <div class="about-image-float aif-2 glass-card text-center p-3">
             <div class="about-badge">🏆</div>
             <div class="about-counter">30+</div>
-            <div style="font-size:.8rem;color:rgba(245,230,204,0.6);">Awards Won</div>
+            <div style="font-size:.8rem;color:rgba(var(--theme-text-primary-rgb),0.6);">Awards Won</div>
           </div>
         </div>
       </div>
@@ -173,7 +173,7 @@
           {!! $whoWeAre->title !!}<br/>
           <span class="gradient-text">{{ $whoWeAre->subtitle }}</span>
         </h2>
-        <p class="mt-4 animate-on-scroll" style="color:rgba(245,230,204,0.75);line-height:1.9;font-size:1.05rem;">
+        <p class="mt-4 animate-on-scroll" style="color:rgba(var(--theme-text-primary-rgb),0.75);line-height:1.9;font-size:1.05rem;">
           {!! $whoWeAre->content !!}
         </p>
         @if($whoWeAre->button_url)
@@ -205,7 +205,7 @@
       @endif
       
       <h2 class="section-title mt-3 animate-on-scroll">{{ $specialty->title }}</h2>
-      <p class="mt-3 animate-on-scroll" style="color:rgba(245,230,204,0.6);max-width:600px;margin:0 auto;">
+      <p class="mt-3 animate-on-scroll" style="color:rgba(var(--theme-text-primary-rgb),0.6);max-width:600px;margin:0 auto;">
         {!! $specialty->content !!}
       </p>
     </div>
@@ -214,29 +214,29 @@
       <div class="col-md-3 col-sm-6">
         <div class="glass-card p-4 text-center specialty-card animate-on-scroll">
           <div class="specialty-icon">🥛</div>
-          <h6 style="color:#f5e6cc;margin:1rem 0 0.5rem;">Pure Milk</h6>
-          <p style="color:rgba(245,230,204,0.6);font-size:0.9rem;">Farm fresh daily</p>
+          <h6 style="color:var(--theme-text-primary);margin:1rem 0 0.5rem;">Pure Milk</h6>
+          <p style="color:rgba(var(--theme-text-primary-rgb),0.6);font-size:0.9rem;">Farm fresh daily</p>
         </div>
       </div>
       <div class="col-md-3 col-sm-6">
         <div class="glass-card p-4 text-center specialty-card animate-on-scroll">
           <div class="specialty-icon">🌸</div>
-          <h6 style="color:#f5e6cc;margin:1rem 0 0.5rem;">Real Saffron</h6>
-          <p style="color:rgba(245,230,204,0.6);font-size:0.9rem;">Kashmiri premium</p>
+          <h6 style="color:var(--theme-text-primary);margin:1rem 0 0.5rem;">Real Saffron</h6>
+          <p style="color:rgba(var(--theme-text-primary-rgb),0.6);font-size:0.9rem;">Kashmiri premium</p>
         </div>
       </div>
       <div class="col-md-3 col-sm-6">
         <div class="glass-card p-4 text-center specialty-card animate-on-scroll">
           <div class="specialty-icon">♨️</div>
-          <h6 style="color:#f5e6cc;margin:1rem 0 0.5rem;">Fresh Daily</h6>
-          <p style="color:rgba(245,230,204,0.6);font-size:0.9rem;">Made every morning</p>
+          <h6 style="color:var(--theme-text-primary);margin:1rem 0 0.5rem;">Fresh Daily</h6>
+          <p style="color:rgba(var(--theme-text-primary-rgb),0.6);font-size:0.9rem;">Made every morning</p>
         </div>
       </div>
       <div class="col-md-3 col-sm-6">
         <div class="glass-card p-4 text-center specialty-card animate-on-scroll">
           <div class="specialty-icon">📜</div>
-          <h6 style="color:#f5e6cc;margin:1rem 0 0.5rem;">Traditional</h6>
-          <p style="color:rgba(245,230,204,0.6);font-size:0.9rem;">Ancient recipes</p>
+          <h6 style="color:var(--theme-text-primary);margin:1rem 0 0.5rem;">Traditional</h6>
+          <p style="color:rgba(var(--theme-text-primary-rgb),0.6);font-size:0.9rem;">Ancient recipes</p>
         </div>
       </div>
     </div>
@@ -261,8 +261,8 @@
       <div class="col-lg-6">
         <div class="specialty-card animate-on-scroll" style="background:linear-gradient(135deg, rgba(244,63,94,0.1), rgba(168,85,247,0.1));">
           <div style="font-size:8rem;text-align:center;margin-bottom:1rem;">🍫</div>
-          <h3 class="text-center" style="font-family:'Playfair Display',serif;color:#fbbf24;">{{ $chocolate->title }}</h3>
-          <p class="text-center" style="color:rgba(245,230,204,0.7);">{{ $chocolate->subtitle }}</p>
+          <h3 class="text-center" style="font-family:'Playfair Display',serif;color:var(--theme-text-secondary);">{{ $chocolate->title }}</h3>
+          <p class="text-center" style="color:rgba(var(--theme-text-primary-rgb),0.7);">{{ $chocolate->subtitle }}</p>
         </div>
       </div>
       <div class="col-lg-6">
@@ -271,7 +271,7 @@
           {{ $chocolate->title }}<br/>
           <span class="gradient-text">{{ $chocolate->subtitle }}</span>
         </h2>
-        <p class="mt-4 animate-on-scroll" style="color:rgba(245,230,204,0.75);line-height:1.9;font-size:1.05rem;">
+        <p class="mt-4 animate-on-scroll" style="color:rgba(var(--theme-text-primary-rgb),0.75);line-height:1.9;font-size:1.05rem;">
           {!! $chocolate->content !!}
         </p>
         <div class="specialty-features animate-on-scroll">
@@ -313,7 +313,7 @@
         <i class="fas {{ $browseCategories->icon ?? 'fa-th-large' }} me-2"></i>Categories
       </span>
       <h2 class="section-title mt-3 animate-on-scroll">{{ $browseCategories->title }}</h2>
-      <p class="mt-3 animate-on-scroll" style="color:rgba(245,230,204,0.6);max-width:600px;margin:0 auto;">
+      <p class="mt-3 animate-on-scroll" style="color:rgba(var(--theme-text-primary-rgb),0.6);max-width:600px;margin:0 auto;">
         {!! $browseCategories->content !!}
       </p>
     </div>
@@ -357,7 +357,7 @@
         <i class="fas fa-star text-warning me-2"></i>Featured
       </span>
       <h2 class="section-title mt-3 animate-on-scroll">{{ $featuredTitle->title }}</h2>
-      <p class="mt-3 animate-on-scroll" style="color:rgba(245,230,204,0.6);max-width:600px;margin:0-auto;">
+      <p class="mt-3 animate-on-scroll" style="color:rgba(var(--theme-text-primary-rgb),0.6);max-width:600px;margin:0-auto;">
         {!! $featuredTitle->subtitle ?? 'Our most popular items' !!}
       </p>
     </div>
@@ -391,7 +391,7 @@
         <i class="fas fa-sparkles me-2"></i>New
       </span>
       <h2 class="section-title mt-3 animate-on-scroll">{{ $newArrivalsTitle->title }}</h2>
-      <p class="mt-3 animate-on-scroll" style="color:rgba(245,230,204,0.6);max-width:600px;margin:0_auto;">
+      <p class="mt-3 animate-on-scroll" style="color:rgba(var(--theme-text-primary-rgb),0.6);max-width:600px;margin:0_auto;">
         {!! $newArrivalsTitle->subtitle ?? 'Just added to our menu' !!}
       </p>
     </div>
@@ -433,7 +433,7 @@
         @endif
         <span id="sellers-text"></span>
       </h2>
-      <p class="mt-3 animate-on-scroll" style="color:rgba(245,230,204,0.6);max-width:600px;margin:0 auto;">
+      <p class="mt-3 animate-on-scroll" style="color:rgba(var(--theme-text-primary-rgb),0.6);max-width:600px;margin:0 auto;">
         Our most loved products that customers keep coming back for
       </p>
     </div>
@@ -501,7 +501,7 @@
         <i class="fas {{ $testimonialsTitle->icon ?? 'fa-comments' }} me-2"></i>Reviews
       </span>
       <h2 class="section-title mt-3 animate-on-scroll">{{ $testimonialsTitle->title }}</h2>
-      <p class="mt-3 animate-on-scroll" style="color:rgba(245,230,204,0.6);max-width:600px;margin:0 auto;">
+      <p class="mt-3 animate-on-scroll" style="color:rgba(var(--theme-text-primary-rgb),0.6);max-width:600px;margin:0 auto;">
         {!! $testimonialsTitle->content !!}
       </p>
     </div>

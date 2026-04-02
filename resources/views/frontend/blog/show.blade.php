@@ -11,18 +11,18 @@
     <nav aria-label="breadcrumb" class="mb-4">
       <ol style="list-style:none;display:flex;gap:0.5rem;flex-wrap:wrap;font-size:0.9rem;">
         <li>
-          <a href="{{ route('home') }}" style="color:rgba(245,230,204,0.6);text-decoration:none;">
+          <a href="{{ route('home') }}" style="color:rgba(var(--theme-text-primary-rgb),0.6);text-decoration:none;">
             <i class="fas fa-home"></i>
           </a>
         </li>
-        <li style="color:rgba(245,230,204,0.4);">/</li>
+        <li style="color:rgba(var(--theme-text-primary-rgb),0.4);">/</li>
         <li>
-          <a href="{{ route('blog.index') }}" style="color:rgba(245,230,204,0.6);text-decoration:none;">
+          <a href="{{ route('blog.index') }}" style="color:rgba(var(--theme-text-primary-rgb),0.6);text-decoration:none;">
             Blog
           </a>
         </li>
-        <li style="color:rgba(245,230,204,0.4);">/</li>
-        <li style="color:rgba(245,230,204,0.8);">{{ Str::limit($post->title, 35) }}</li>
+        <li style="color:rgba(var(--theme-text-primary-rgb),0.4);">/</li>
+        <li style="color:rgba(var(--theme-text-primary-rgb),0.8);">{{ Str::limit($post->title, 35) }}</li>
       </ol>
     </nav>
 
@@ -54,9 +54,9 @@
             @if($post->category)
               <span class="blog-category-badge">{{ $post->category }}</span>
             @endif
-            <h1 style="color:#f5e6cc;font-family:'Playfair Display',serif;font-size:2.5rem;line-height:1.2;margin-top:1rem;">{{ $post->title }}</h1>
+            <h1 style="color:var(--theme-text-primary);font-family:'Playfair Display',serif;font-size:2.5rem;line-height:1.2;margin-top:1rem;">{{ $post->title }}</h1>
 
-            <div class="d-flex flex-wrap gap-3 mt-3" style="color:rgba(245,230,204,0.6);font-size:0.9rem;padding-bottom:1rem;border-bottom:1px solid rgba(245,230,204,0.1);">
+            <div class="d-flex flex-wrap gap-3 mt-3" style="color:rgba(var(--theme-text-primary-rgb),0.6);font-size:0.9rem;padding-bottom:1rem;border-bottom:1px solid rgba(245,230,204,0.1);">
               @if($post->user)
                 <span><i class="far fa-user"></i> {{ $post->user->name }}</span>
               @endif
@@ -69,23 +69,23 @@
 
           <!-- Post Excerpt -->
           @if($post->excerpt)
-            <div style="background:linear-gradient(135deg,rgba(245,158,11,0.12),rgba(244,63,94,0.08));padding:1.5rem;border-left:4px solid #f59e0b;margin-bottom:2rem;border-radius:0 12px 12px 0;font-size:1.05rem;color:rgba(245,230,204,0.85);font-style:italic;">
+            <div style="background:linear-gradient(135deg,rgba(245,158,11,0.12),rgba(244,63,94,0.08));padding:1.5rem;border-left:4px solid #f59e0b;margin-bottom:2rem;border-radius:0 12px 12px 0;font-size:1.05rem;color:rgba(var(--theme-text-primary-rgb),0.85);font-style:italic;">
               {{ $post->excerpt }}
             </div>
           @endif
 
           <!-- Post Content -->
-          <div class="blog-content" style="color:rgba(245,230,204,0.85);line-height:1.9;font-size:1.05rem;">
+          <div class="blog-content" style="color:rgba(var(--theme-text-primary-rgb),0.85);line-height:1.9;font-size:1.05rem;">
             {!! $post->content !!}
           </div>
 
           <!-- Tags -->
           @if($post->tags)
             <div class="mt-5 pt-4" style="border-top:1px solid rgba(245,230,204,0.1);">
-              <strong style="color:#f5e6cc;font-size:0.9rem;">Tags:</strong>
+              <strong style="color:var(--theme-text-primary);font-size:0.9rem;">Tags:</strong>
               <div class="d-flex flex-wrap gap-2 mt-2">
                 @foreach(explode(',', $post->tags) as $tag)
-                  <span style="background:rgba(245,230,204,0.1);color:rgba(245,230,204,0.7);padding:6px 14px;border-radius:20px;font-size:0.85rem;">{{ trim($tag) }}</span>
+                  <span style="background:rgba(245,230,204,0.1);color:rgba(var(--theme-text-primary-rgb),0.7);padding:6px 14px;border-radius:20px;font-size:0.85rem;">{{ trim($tag) }}</span>
                 @endforeach
               </div>
             </div>
@@ -93,7 +93,7 @@
 
           <!-- Share Section -->
           <div class="mt-5 pt-4" style="border-top:1px solid rgba(245,230,204,0.1);">
-            <strong style="color:#f5e6cc;font-size:0.9rem;">Share this post:</strong>
+            <strong style="color:var(--theme-text-primary);font-size:0.9rem;">Share this post:</strong>
             <div class="d-flex gap-2 mt-2">
               <a href="https://www.facebook.com/sharer/sharer.php?u={{ url()->current() }}" target="_blank" class="btn-share" style="background:#1877f2;">
                 <i class="fab fa-facebook-f"></i> Facebook
@@ -118,14 +118,14 @@
         <!-- Author Card -->
         @if($post->user)
           <div class="glass-card" style="padding:1.5rem;margin-bottom:1.5rem;border-radius:16px;">
-            <h5 style="color:#f5e6cc;margin-bottom:1rem;font-size:1.1rem;">About the Author</h5>
+            <h5 style="color:var(--theme-text-primary);margin-bottom:1rem;font-size:1.1rem;">About the Author</h5>
             <div class="d-flex align-items-center gap-3">
               <div style="width:60px;height:60px;background:linear-gradient(135deg,#f59e0b,#f43f5e);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.5rem;color:white;font-weight:700;">
                 {{ substr($post->user->name, 0, 1) }}
               </div>
               <div>
-                <h6 style="color:#f5e6cc;margin:0;font-size:1rem;">{{ $post->user->name }}</h6>
-                <small style="color:rgba(245,230,204,0.6);">Author</small>
+                <h6 style="color:var(--theme-text-primary);margin:0;font-size:1rem;">{{ $post->user->name }}</h6>
+                <small style="color:rgba(var(--theme-text-primary-rgb),0.6);">Author</small>
               </div>
             </div>
           </div>
@@ -134,7 +134,7 @@
         <!-- Related Posts -->
         @if(isset($relatedPosts) && $relatedPosts->count() > 0)
           <div class="glass-card" style="padding:1.5rem;border-radius:16px;">
-            <h5 style="color:#f5e6cc;margin-bottom:1rem;font-size:1.1rem;">Related Posts</h5>
+            <h5 style="color:var(--theme-text-primary);margin-bottom:1rem;font-size:1.1rem;">Related Posts</h5>
             <div class="d-flex flex-column gap-3">
               @foreach($relatedPosts as $related)
                 <a href="{{ route('blog.show', $related->slug) }}" class="text-decoration-none">
@@ -147,8 +147,8 @@
                       <div style="width:80px;height:60px;background:linear-gradient(135deg,rgba(245,158,11,0.1),rgba(244,63,94,0.1));border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:2rem;">📝</div>
                     @endif
                     <div style="flex:1;">
-                      <h6 style="color:#f5e6cc;font-size:0.9rem;margin:0 0 0.25rem 0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">{{ $related->title }}</h6>
-                      <small style="color:rgba(245,230,204,0.5);">{{ $related->published_at ? $related->published_at->format('M d') : '' }}</small>
+                      <h6 style="color:var(--theme-text-primary);font-size:0.9rem;margin:0 0 0.25rem 0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">{{ $related->title }}</h6>
+                      <small style="color:rgba(var(--theme-text-primary-rgb),0.5);">{{ $related->published_at ? $related->published_at->format('M d') : '' }}</small>
                     </div>
                   </div>
                 </a>

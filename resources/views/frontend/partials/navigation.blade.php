@@ -22,8 +22,8 @@
       <!-- Mobile Search Bar -->
       <div class="d-lg-none w-100 mb-3">
         <form action="{{ route('search') }}" method="GET" class="position-relative" autocomplete="off">
-          <input type="text" name="q" class="form-control mobile-search-input search-suggest-input" placeholder="Search products..." value="{{ request('q') }}" style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:12px;color:#f5e6cc;padding:.75rem 2.5rem .75rem 1rem;font-size:.95rem;" onfocus="this.style.borderColor='#f59e0b'" onblur="this.style.borderColor='rgba(255,255,255,0.15)'">
-          <button type="submit" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);background:none;border:none;color:#fbbf24;font-size:1rem;cursor:pointer;padding:8px;">
+          <input type="text" name="q" class="form-control mobile-search-input search-suggest-input" placeholder="Search products..." value="{{ request('q') }}" style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:12px;color:var(--theme-text-primary);padding:.75rem 2.5rem .75rem 1rem;font-size:.95rem;" onfocus="this.style.borderColor='#f59e0b'" onblur="this.style.borderColor='rgba(255,255,255,0.15)'">
+          <button type="submit" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--theme-text-secondary);font-size:1rem;cursor:pointer;padding:8px;">
             <i class="fas fa-search"></i>
           </button>
           <div class="search-suggest-dropdown"></div>

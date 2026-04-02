@@ -12,7 +12,7 @@
       <h1 class="section-title mt-3 animate-on-scroll" style="font-size:3rem;">
         Latest <span class="gradient-text">News & Stories</span>
       </h1>
-      <p class="mt-3 animate-on-scroll" style="color:rgba(245,230,204,0.8);max-width:600px;margin:0 auto;font-size:1.1rem;line-height:1.7;">
+      <p class="mt-3 animate-on-scroll" style="color:rgba(var(--theme-text-primary-rgb),0.8);max-width:600px;margin:0 auto;font-size:1.1rem;line-height:1.7;">
         Discover authentic Bengali recipes, baking tips, and sweet stories from our kitchen
       </p>
     </div>
@@ -134,8 +134,8 @@
       @else
         <div class="col-12 text-center py-5">
           <div style="font-size:4rem;margin-bottom:1rem;opacity:0.5;">📝</div>
-          <h4 style="color:#f5e6cc;font-family:'Playfair Display',serif;">No Blog Posts Yet</h4>
-          <p style="color:rgba(245,230,204,0.6);">Check back soon for exciting stories and recipes!</p>
+          <h4 style="color:var(--theme-text-primary);font-family:'Playfair Display',serif;">No Blog Posts Yet</h4>
+          <p style="color:rgba(var(--theme-text-primary-rgb),0.6);">Check back soon for exciting stories and recipes!</p>
         </div>
       @endif
     </div>

@@ -34,7 +34,7 @@
             </div>
           </div>
           <div class="d-flex justify-content-between align-items-center mb-4">
-            <label class="auth-checkbox" style="display:flex;align-items:center;gap:0.5rem;color:rgba(245,230,204,0.7);font-size:0.9rem;cursor:pointer;">
+            <label class="auth-checkbox" style="display:flex;align-items:center;gap:0.5rem;color:rgba(var(--theme-text-primary-rgb),0.7);font-size:0.9rem;cursor:pointer;">
               <input type="checkbox" name="remember" style="width:auto;">
               <span>Remember me</span>
             </label>

@@ -131,12 +131,12 @@
           <div class="about-image-float aif-1 glass-card text-center p-3">
             <div class="about-badge">👨‍🍳</div>
             <div class="about-counter">50+</div>
-            <div style="font-size:.8rem;color:rgba(245,230,204,0.6);">Expert Chefs</div>
+            <div style="font-size:.8rem;color:var(--text-60);">Expert Chefs</div>
           </div>
           <div class="about-image-float aif-2 glass-card text-center p-3">
             <div class="about-badge">🏆</div>
             <div class="about-counter">30+</div>
-            <div style="font-size:.8rem;color:rgba(245,230,204,0.6);">Awards Won</div>
+            <div style="font-size:.8rem;color:var(--text-60);">Awards Won</div>
           </div>
         </div>
       </div>
@@ -146,7 +146,7 @@
           <h2 class="section-title mt-3 animate-on-scroll">
             {!! $cmsSections['who-we-are']->subtitle_en ?? 'Authentic Saffron<br/><span class="gradient-text">Sweets & Traditional Bakery</span>' !!}
           </h2>
-          <p class="mt-4 animate-on-scroll" style="color:rgba(245,230,204,0.75);line-height:1.9;font-size:1.05rem;">
+          <p class="mt-4 animate-on-scroll" style="color:var(--text-75);line-height:1.9;font-size:1.05rem;">
             {!! $cmsSections['who-we-are']->content_en ?? 'Welcome to Saffron, where tradition meets excellence.' !!}
           </p>
         @else
@@ -155,29 +155,29 @@
             Authentic Saffron<br/>
             <span class="gradient-text">Sweets & Traditional Bakery</span>
           </h2>
-          <p class="mt-4 animate-on-scroll" style="color:rgba(245,230,204,0.75);line-height:1.9;font-size:1.05rem;">
+          <p class="mt-4 animate-on-scroll" style="color:var(--text-75);line-height:1.9;font-size:1.05rem;">
             Welcome to Saffron, where tradition meets excellence. We bring you the finest collection of authentic Bengali sweets and premium bakery items, crafted with love and the purest saffron.
           </p>
-          <p class="animate-on-scroll" style="color:rgba(245,230,204,0.7);line-height:1.9;">
+          <p class="animate-on-scroll" style="color:var(--text-70);line-height:1.9;">
             Our skilled artisans use time-honored recipes passed down through generations to create mouth-watering treats that will transport you to the streets of Bangladesh. From roshogolla to sandesh, from freshly baked cakes to artisan cookies – every bite is a celebration of flavor.
           </p>
         @endif
         <div class="feature-list animate-on-scroll">
           <div class="feature-item">
             <div class="feature-icon-box">✓</div>
-            <div><strong style="color:#f5e6cc;">100% Natural Ingredients</strong><br/><small style="color:rgba(245,230,204,0.5);">No preservatives, no artificial colors</small></div>
+            <div><strong style="color:var(--theme-text-primary);">100% Natural Ingredients</strong><br/><small style="color:var(--text-50);">No preservatives, no artificial colors</small></div>
           </div>
           <div class="feature-item">
             <div class="feature-icon-box">👨‍🍳</div>
-            <div><strong style="color:#f5e6cc;">Expert Chefs</strong><br/><small style="color:rgba(245,230,204,0.5);">Skilled artisans with decades of experience</small></div>
+            <div><strong style="color:var(--theme-text-primary);">Expert Chefs</strong><br/><small style="color:var(--text-50);">Skilled artisans with decades of experience</small></div>
           </div>
           <div class="feature-item">
             <div class="feature-icon-box">🚚</div>
-            <div><strong style="color:#f5e6cc;">Fast Delivery</strong><br/><small style="color:rgba(245,230,204,0.5);">Quick & safe delivery to your doorstep</small></div>
+            <div><strong style="color:var(--theme-text-primary);">Fast Delivery</strong><br/><small style="color:var(--text-50);">Quick & safe delivery to your doorstep</small></div>
           </div>
           <div class="feature-item">
             <div class="feature-icon-box">💝</div>
-            <div><strong style="color:#f5e6cc;">Made with Love</strong><br/><small style="color:rgba(245,230,204,0.5);">Crafted with passion and care</small></div>
+            <div><strong style="color:var(--theme-text-primary);">Made with Love</strong><br/><small style="color:var(--text-50);">Crafted with passion and care</small></div>
           </div>
         </div>
       </div>
@@ -200,9 +200,9 @@
             @endif
           </div>
           @if($cmsSections && isset($cmsSections['specialty']))
-          <h3 class="text-center" style="font-family:'Playfair Display',serif;color:#fbbf24;">Authentic Bengali Sweets</h3>
+          <h3 class="text-center" style="font-family:'Playfair Display',serif;color:var(--theme-text-secondary);">Authentic Bengali Sweets</h3>
           @else
-          <h3 class="text-center" style="font-family:'Playfair Display',serif;color:#fbbf24;">Authentic Bengali Sweets</h3>
+          <h3 class="text-center" style="font-family:'Playfair Display',serif;color:var(--theme-text-secondary);">Authentic Bengali Sweets</h3>
           @endif
         </div>
       </div>
@@ -212,7 +212,7 @@
           <h2 class="section-title mt-3 animate-on-scroll">
             {!! $cmsSections['specialty']->subtitle_en ?? 'Authentic Bengali<br/><span class="gradient-text">Sweets Collection</span>' !!}
           </h2>
-          <p class="mt-4 animate-on-scroll" style="color:rgba(245,230,204,0.75);line-height:1.9;">
+          <p class="mt-4 animate-on-scroll" style="color:var(--text-75);line-height:1.9;">
             {!! $cmsSections['specialty']->content_en ?? 'Indulge in the rich heritage of Bengal.' !!}
           </p>
         @else
@@ -221,10 +221,10 @@
             Authentic Bengali<br/>
             <span class="gradient-text">Sweets Collection</span>
           </h2>
-          <p class="mt-4 animate-on-scroll" style="color:rgba(245,230,204,0.75);line-height:1.9;">
+          <p class="mt-4 animate-on-scroll" style="color:var(--text-75);line-height:1.9;">
             Indulge in the rich heritage of Bengal with our exquisite collection of traditional sweets, crafted with love and the finest ingredients.
           </p>
-          <p class="animate-on-scroll" style="color:rgba(245,230,204,0.7);line-height:1.9;">
+          <p class="animate-on-scroll" style="color:var(--text-70);line-height:1.9;">
             From the melt-in-your-mouth roshogolla to the delicate sandesh, our sweets are made using recipes passed down through generations. Each sweet is a celebration of authentic Bengali tradition, bringing you the true taste of home.
           </p>
         @endif
@@ -274,9 +274,9 @@
             @endif
           </div>
           @if($cmsSections && isset($cmsSections['chocolate-paradise']))
-          <h3 class="text-center" style="font-family:'Playfair Display',serif;color:#fbbf24;">Premium Chocolates</h3>
+          <h3 class="text-center" style="font-family:'Playfair Display',serif;color:var(--theme-text-secondary);">Premium Chocolates</h3>
           @else
-          <h3 class="text-center" style="font-family:'Playfair Display',serif;color:#fbbf24;">Premium Chocolates</h3>
+          <h3 class="text-center" style="font-family:'Playfair Display',serif;color:var(--theme-text-secondary);">Premium Chocolates</h3>
           @endif
         </div>
       </div>
@@ -286,7 +286,7 @@
           <h2 class="section-title mt-3 animate-on-scroll">
             {!! $cmsSections['chocolate-paradise']->subtitle_en ?? 'Premium Chocolate &<br/><span class="gradient-text">Cocoa Delights</span>' !!}
           </h2>
-          <p class="mt-4 animate-on-scroll" style="color:rgba(245,230,204,0.75);line-height:1.9;">
+          <p class="mt-4 animate-on-scroll" style="color:var(--text-75);line-height:1.9;">
             {!! $cmsSections['chocolate-paradise']->content_en ?? 'Experience the ultimate indulgence.' !!}
           </p>
         @else
@@ -295,10 +295,10 @@
             Premium Chocolate &<br/>
             <span class="gradient-text">Cocoa Delights</span>
           </h2>
-          <p class="mt-4 animate-on-scroll" style="color:rgba(245,230,204,0.75);line-height:1.9;">
+          <p class="mt-4 animate-on-scroll" style="color:var(--text-75);line-height:1.9;">
             Experience the ultimate indulgence with our exquisite collection of handcrafted chocolates, made from the finest cocoa beans sourced from around the world.
           </p>
-          <p class="animate-on-scroll" style="color:rgba(245,230,204,0.7);line-height:1.9;">
+          <p class="animate-on-scroll" style="color:var(--text-70);line-height:1.9;">
             From silky smooth dark chocolate to creamy milk chocolate truffles, our master chocolatiers create artisanal pieces that will delight your senses. Each chocolate is carefully crafted to deliver an unforgettable taste experience.
           </p>
         @endif
@@ -344,7 +344,7 @@
           {!! $cmsSections['browse-categories']->subtitle_en ?? 'Explore Our <span class="gradient-text">Delicious</span> Collection' !!}
         </h2>
         @if($cmsSections['browse-categories']->content_en)
-        <p class="mt-3 animate-on-scroll" style="color:rgba(245,230,204,0.7);max-width:700px;margin-left:auto;margin-right:auto;">
+        <p class="mt-3 animate-on-scroll" style="color:var(--text-70);max-width:700px;margin-left:auto;margin-right:auto;">
           {!! $cmsSections['browse-categories']->content_en !!}
         </p>
         @endif
@@ -396,14 +396,14 @@
           {!! $cmsSections['featured_products']->subtitle_en ?? 'Featured <span class="gradient-text">Products</span>' !!}
         </h2>
         @if($cmsSections['featured_products']->content_en)
-        <p style="color:rgba(245,230,204,0.7);">{!! $cmsSections['featured_products']->content_en !!}</p>
+        <p style="color:var(--text-70);">{!! $cmsSections['featured_products']->content_en !!}</p>
         @endif
       @else
         <span class="section-badge">Our Collection</span>
         <h2 class="section-title mt-3">
           Featured <span class="gradient-text">Products</span>
         </h2>
-        <p style="color:rgba(245,230,204,0.7);">Handpicked favorites from our extensive collection</p>
+        <p style="color:var(--text-70);">Handpicked favorites from our extensive collection</p>
       @endif
     </div>
 
@@ -457,7 +457,7 @@
         @endforeach
       @else
         <div class="col-12 text-center py-5">
-          <p style="color:rgba(245,230,204,0.6);">No products available at the moment.</p>
+          <p style="color:var(--text-60);">No products available at the moment.</p>
         </div>
       @endif
     </div>
@@ -480,14 +480,14 @@
           {!! $cmsSections['new-arrivals']->subtitle_en ?? 'New <span class="gradient-text">Arrivals</span>' !!}
         </h2>
         @if($cmsSections['new-arrivals']->content_en)
-        <p class="mt-3 animate-on-scroll" style="color:rgba(245,230,204,0.6);max-width:600px;margin:0 auto;">
+        <p class="mt-3 animate-on-scroll" style="color:var(--text-60);max-width:600px;margin:0 auto;">
           {!! $cmsSections['new-arrivals']->content_en !!}
         </p>
         @endif
       @else
         <span class="section-badge animate-on-scroll"><i class="fas fa-sparkles me-2"></i>Just Launched</span>
         <h2 class="section-title mt-3 animate-on-scroll">New <span class="gradient-text">Arrivals</span></h2>
-        <p class="mt-3 animate-on-scroll" style="color:rgba(245,230,204,0.6);max-width:600px;margin:0 auto;">Discover our latest creations - fresh from the oven and ready to delight your taste buds</p>
+        <p class="mt-3 animate-on-scroll" style="color:var(--text-60);max-width:600px;margin:0 auto;">Discover our latest creations - fresh from the oven and ready to delight your taste buds</p>
       @endif
     </div>
 
@@ -530,7 +530,7 @@
         @endforeach
       @else
         <div class="col-12 text-center py-5">
-          <p style="color:rgba(245,230,204,0.6);">No new arrivals available at the moment.</p>
+          <p style="color:var(--text-60);">No new arrivals available at the moment.</p>
         </div>
       @endif
     </div>
@@ -559,14 +559,14 @@
           {!! $cmsSections['best-offers']->subtitle_en ?? 'Best <span class="gradient-text">Offers</span>' !!}
         </h2>
         @if($cmsSections['best-offers']->content_en)
-        <p class="mt-3 animate-on-scroll" style="color:rgba(245,230,204,0.6);max-width:600px;margin:0 auto;">
+        <p class="mt-3 animate-on-scroll" style="color:var(--text-60);max-width:600px;margin:0 auto;">
           {!! $cmsSections['best-offers']->content_en !!}
         </p>
         @endif
       @else
         <span class="section-badge animate-on-scroll" style="background:linear-gradient(135deg,rgba(244,63,94,0.2),rgba(245,158,11,0.2));border-color:rgba(244,63,94,0.3);"><i class="fas fa-fire me-2"></i>Top Rated</span>
         <h2 class="section-title mt-3 animate-on-scroll">Best <span id="sellers-text" style="background:linear-gradient(135deg,#f43f5e,#f59e0b);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;"></span></h2>
-        <p class="mt-3 animate-on-scroll" style="color:rgba(245,230,204,0.6);max-width:600px;margin:0 auto;">Our most loved products that customers keep coming back for</p>
+        <p class="mt-3 animate-on-scroll" style="color:var(--text-60);max-width:600px;margin:0 auto;">Our most loved products that customers keep coming back for</p>
       @endif
     </div>
 
@@ -619,7 +619,7 @@
         @endforeach
       @else
         <div class="col-12 text-center py-5">
-          <p style="color:rgba(245,230,204,0.6);">No best-selling products available at the moment.</p>
+          <p style="color:var(--text-60);">No best-selling products available at the moment.</p>
         </div>
       @endif
     </div>
@@ -632,24 +632,24 @@
           <div class="d-flex align-items-center gap-4">
             <div style="font-size:5rem;">🏆</div>
             <div>
-              <h4 style="color:#f5e6cc;margin-bottom:0.5rem;font-family:'Playfair Display',serif;">Customer's Choice Award 2026</h4>
-              <p style="color:rgba(245,230,204,0.7);margin:0;">Our {{ $bestSellers->first()->name }} has been voted the best by our customers!</p>
+              <h4 style="color:var(--theme-text-primary);margin-bottom:0.5rem;font-family:'Playfair Display',serif;">Customer's Choice Award 2026</h4>
+              <p style="color:var(--text-70);margin:0;">Our {{ $bestSellers->first()->name }} has been voted the best by our customers!</p>
             </div>
           </div>
         </div>
         <div class="col-lg-6 text-lg-end mt-4 mt-lg-0">
           <div class="d-flex gap-4 justify-content-lg-end justify-content-center">
             <div class="text-center">
-              <div style="font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:#fbbf24;">{{ $bestSellers->sum('order_items_count') }}+</div>
-              <div style="font-size:0.85rem;color:rgba(245,230,204,0.6);">Total Orders</div>
+              <div style="font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:var(--theme-text-secondary);">{{ $bestSellers->sum('order_items_count') }}+</div>
+              <div style="font-size:0.85rem;color:var(--text-60);">Total Orders</div>
             </div>
             <div class="text-center">
-              <div style="font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:#fbbf24;">{{ $bestSellers->first()->order_items_count ?? 0 }}</div>
-              <div style="font-size:0.85rem;color:rgba(245,230,204,0.6);">Best Seller</div>
+              <div style="font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:var(--theme-text-secondary);">{{ $bestSellers->first()->order_items_count ?? 0 }}</div>
+              <div style="font-size:0.85rem;color:var(--text-60);">Best Seller</div>
             </div>
             <div class="text-center">
-              <div style="font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:#fbbf24;">#1</div>
-              <div style="font-size:0.85rem;color:rgba(245,230,204,0.6);">Top Rated</div>
+              <div style="font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:var(--theme-text-secondary);">#1</div>
+              <div style="font-size:0.85rem;color:var(--text-60);">Top Rated</div>
             </div>
           </div>
         </div>
@@ -753,14 +753,14 @@
           {!! $cmsSections['blog']->subtitle_en ?? 'From Our <span class="gradient-text">Blog</span>' !!}
         </h2>
         @if($cmsSections['blog']->content_en)
-        <p class="mt-3 animate-on-scroll" style="color:rgba(245,230,204,0.7);">
+        <p class="mt-3 animate-on-scroll" style="color:var(--text-70);">
           {!! $cmsSections['blog']->content_en !!}
         </p>
         @endif
       @else
         <span class="section-badge animate-on-scroll">Latest News</span>
         <h2 class="section-title mt-3 animate-on-scroll">From Our <span class="gradient-text">Blog</span></h2>
-        <p class="mt-3 animate-on-scroll" style="color:rgba(245,230,204,0.7);">Discover recipes, stories, and sweet updates from our kitchen</p>
+        <p class="mt-3 animate-on-scroll" style="color:var(--text-70);">Discover recipes, stories, and sweet updates from our kitchen</p>
       @endif
     </div>
 
@@ -828,8 +828,8 @@
           <div class="d-flex align-items-center gap-4">
             <div style="font-size:4rem;">🎂</div>
             <div>
-              <h4 style="color:#f5e6cc;font-family:'Playfair Display',serif;margin-bottom:0.5rem;">Custom Cakes</h4>
-              <p style="color:rgba(245,230,204,0.7);margin-bottom:1rem;">Personalize your celebration with our master bakers</p>
+              <h4 style="color:var(--theme-text-primary);font-family:'Playfair Display',serif;margin-bottom:0.5rem;">Custom Cakes</h4>
+              <p style="color:var(--text-70);margin-bottom:1rem;">Personalize your celebration with our master bakers</p>
               <a href="{{ route('shop') }}" class="btn btn-glow btn-sm">Order Custom Cake</a>
             </div>
           </div>
@@ -840,8 +840,8 @@
           <div class="d-flex align-items-center gap-4">
             <div style="font-size:4rem;">🎁</div>
             <div>
-              <h4 style="color:#f5e6cc;font-family:'Playfair Display',serif;margin-bottom:0.5rem;">Gift Hampers</h4>
-              <p style="color:rgba(245,230,204,0.7);margin-bottom:1rem;">Curated sweet boxes with premium packaging</p>
+              <h4 style="color:var(--theme-text-primary);font-family:'Playfair Display',serif;margin-bottom:0.5rem;">Gift Hampers</h4>
+              <p style="color:var(--text-70);margin-bottom:1rem;">Curated sweet boxes with premium packaging</p>
               <a href="{{ route('shop') }}" class="btn btn-glow btn-sm" style="background:linear-gradient(135deg, #f43f5e, #a855f7);">Send a Gift</a>
             </div>
           </div>
@@ -856,8 +856,8 @@
   <div class="container">
     <div class="newsletter-card glass-card-glow text-center">
       <div style="font-size: 3rem; margin-bottom: 1rem;">📧</div>
-      <h2 style="font-family:'Playfair Display',serif;color:#f5e6cc;">Stay Sweet with Updates</h2>
-      <p style="color:rgba(245,230,204,0.7);margin-bottom:2rem;">Subscribe to get exclusive offers, new arrivals, and sweet surprises!</p>
+      <h2 style="font-family:'Playfair Display',serif;color:var(--theme-text-primary);">Stay Sweet with Updates</h2>
+      <p style="color:var(--text-70);margin-bottom:2rem;">Subscribe to get exclusive offers, new arrivals, and sweet surprises!</p>
       <form id="newsletterForm" class="newsletter-form" style="max-width:500px;margin:0 auto;">
         @csrf
         <div class="input-group">
