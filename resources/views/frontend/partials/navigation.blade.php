@@ -248,10 +248,10 @@
               <i class="fas fa-user-circle me-2"></i>{{ auth()->user()->name }}
             </button>
             <ul class="dropdown-menu dropdown-menu-end" style="background: rgba(15, 10, 0, 0.95); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1);">
-              <li><a class="dropdown-item" href="{{ route('customer.dashboard') }}" style="color: #f5e6cc;"><i class="fas fa-tachometer-alt me-2"></i>Dashboard</a></li>
-              <li><a class="dropdown-item" href="{{ route('customer.orders') }}" style="color: #f5e6cc;"><i class="fas fa-shopping-bag me-2"></i>My Orders</a></li>
-              <li><a class="dropdown-item" href="{{ route('customer.wishlist') }}" style="color: #f5e6cc;"><i class="fas fa-heart me-2"></i>Wishlist</a></li>
-              <li><a class="dropdown-item" href="{{ route('customer.profile') }}" style="color: #f5e6cc;"><i class="fas fa-user-edit me-2"></i>Profile</a></li>
+              <li><a class="dropdown-item" href="{{ route('customer.dashboard') }}" style="color: var(--theme-text-primary);"><i class="fas fa-tachometer-alt me-2"></i>Dashboard</a></li>
+              <li><a class="dropdown-item" href="{{ route('customer.orders') }}" style="color: var(--theme-text-primary);"><i class="fas fa-shopping-bag me-2"></i>My Orders</a></li>
+              <li><a class="dropdown-item" href="{{ route('customer.wishlist') }}" style="color: var(--theme-text-primary);"><i class="fas fa-heart me-2"></i>Wishlist</a></li>
+              <li><a class="dropdown-item" href="{{ route('customer.profile') }}" style="color: var(--theme-text-primary);"><i class="fas fa-user-edit me-2"></i>Profile</a></li>
               <li><hr class="dropdown-divider" style="border-color: rgba(255,255,255,0.1);"></li>
               <li>
                 <form method="POST" action="{{ route('logout') }}">

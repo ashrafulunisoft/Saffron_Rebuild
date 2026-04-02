@@ -7,9 +7,9 @@
       <span>{{ strtoupper(substr(auth()->user()->name, 0, 1)) }}</span>
     @endif
   </div>
-  <h5 class="mt-3" style="color: #f5e6cc;">{{ auth()->user()->name }}</h5>
-  <p style="color: rgba(245,230,204,0.6); font-size: 0.9rem;">{{ auth()->user()->email }}</p>
-  <span class="badge" style="background: rgba(245,158,11,0.2); color: #fbbf24; border: 1px solid rgba(245,158,11,0.3);">
+  <h5 class="mt-3" style="color: var(--theme-text-primary);">{{ auth()->user()->name }}</h5>
+  <p style="color: var(--text-60); font-size: 0.9rem;">{{ auth()->user()->email }}</p>
+  <span class="badge" style="background: rgba(245,158,11,0.2); color: var(--theme-text-secondary); border: 1px solid rgba(245,158,11,0.3);">
     {{ ucfirst(auth()->user()->roles->first()?->name ?? 'Customer') }}
   </span>
 </div>
@@ -90,19 +90,19 @@
     align-items: center;
     padding: 0.75rem 1rem;
     border-radius: 12px;
-    color: rgba(245,230,204,0.8);
+    color: var(--text-80);
     text-decoration: none;
     transition: all 0.3s ease;
     position: relative;
   }
   .customer-nav-item:hover {
     background: rgba(245,158,11,0.1);
-    color: #fbbf24;
+    color: var(--theme-text-secondary);
     transform: translateX(5px);
   }
   .customer-nav-item.active {
     background: linear-gradient(135deg, rgba(245,158,11, 0.2), rgba(244,63,94, 0.1));
-    color: #fbbf24;
+    color: var(--theme-text-secondary);
     border: 1px solid rgba(245,158,11, 0.3);
   }
   .nav-badge {

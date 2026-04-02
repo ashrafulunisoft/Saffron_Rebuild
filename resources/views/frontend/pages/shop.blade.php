@@ -41,18 +41,18 @@
       <!-- Sidebar Filters -->
       <div class="col-lg-3">
         <div class="glass-card p-4">
-          <h5 class="mb-4" style="color: #f5e6cc;">
-            <i class="fas fa-filter me-2" style="color: #fbbf24;"></i>Filters
+          <h5 class="mb-4" style="color: var(--theme-text-primary);">
+            <i class="fas fa-filter me-2" style="color: var(--theme-text-secondary);"></i>Filters
           </h5>
 
           <!-- Categories -->
           <div class="mb-4">
-            <h6 style="color: #fbbf24; margin-bottom: 1rem;">Categories</h6>
+            <h6 style="color: var(--theme-text-secondary); margin-bottom: 1rem;">Categories</h6>
             <div class="category-list">
               @foreach($categories as $cat)
               <a href="{{ route('shop.category', $cat->slug) }}" class="category-link">
                 <span>{{ $cat->name_en }}</span>
-                <span class="badge" style="background: rgba(245,158,11,0.2); color: #fbbf24;">{{ $cat->products_count ?? 0 }}</span>
+                <span class="badge" style="background: rgba(245,158,11,0.2); color: var(--theme-text-secondary);">{{ $cat->products_count ?? 0 }}</span>
               </a>
               @endforeach
             </div>
@@ -60,7 +60,7 @@
 
           <!-- Price Range -->
           <div class="mb-4">
-            <h6 style="color: #fbbf24; margin-bottom: 1rem;">Price Range</h6>
+            <h6 style="color: var(--theme-text-secondary); margin-bottom: 1rem;">Price Range</h6>
             <form action="{{ route('shop') }}" method="GET">
               <div class="row g-2">
                 <div class="col-6">
@@ -128,8 +128,8 @@
         @else
           <div class="glass-card p-5 text-center">
             <i class="fas fa-search" style="font-size: 4rem; opacity: 0.3; margin-bottom: 1rem;"></i>
-            <h5 style="color: #f5e6cc; margin-bottom: 0.5rem;">No products found</h5>
-            <p style="color: rgba(245,230,204,0.6); margin-bottom: 1.5rem;">Try adjusting your filters or browse our categories</p>
+            <h5 style="color: var(--theme-text-primary); margin-bottom: 0.5rem;">No products found</h5>
+            <p style="color: var(--text-60); margin-bottom: 1.5rem;">Try adjusting your filters or browse our categories</p>
             <a href="{{ route('shop') }}" class="btn btn-glow">
               <i class="fas fa-redo me-2"></i>Clear Filters
             </a>
@@ -206,12 +206,12 @@
 
   .breadcrumb-modern .breadcrumb-item a:hover {
     background: rgba(245, 158, 11, 0.15);
-    color: #fbbf24;
+    color: var(--theme-text-secondary);
     transform: translateX(3px);
   }
 
   .breadcrumb-modern .breadcrumb-item.active {
-    color: #f5e6cc;
+    color: var(--theme-text-primary);
     font-weight: 600;
     display: flex;
     align-items: center;
@@ -264,16 +264,16 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    color: rgba(245,230,204,0.8);
+    color: var(--text-80);
     font-size: 0.9rem;
   }
 
   .product-count .count-label {
-    color: rgba(245,230,204,0.6);
+    color: var(--text-60);
   }
 
   .product-count .count-number {
-    color: #fbbf24;
+    color: var(--theme-text-secondary);
     font-weight: 700;
     font-size: 1.1rem;
   }
@@ -296,7 +296,7 @@
     align-items: center;
     padding: 0.6rem 0.75rem;
     border-radius: 8px;
-    color: rgba(245,230,204,0.8);
+    color: var(--text-80);
     text-decoration: none;
     transition: all 0.3s ease;
     border: 1px solid transparent;
@@ -304,7 +304,7 @@
 
   .category-link:hover {
     background: rgba(245,158,11,0.15);
-    color: #fbbf24;
+    color: var(--theme-text-secondary);
     border-color: rgba(245,158,11,0.2);
     transform: translateX(3px);
   }
@@ -359,7 +359,7 @@
     align-items: center;
     justify-content: center;
     font-size: 4rem;
-    color: rgba(245,230,204,0.5);
+    color: var(--text-50);
     background: linear-gradient(135deg, rgba(245,158,11,0.15), rgba(244,63,94,0.1));
     position: relative;
     overflow: hidden;
@@ -400,7 +400,7 @@
     background: rgba(15, 23, 42, 0.9);
     backdrop-filter: blur(12px);
     border: 1.5px solid rgba(255,255,255,0.15);
-    color: rgba(245,230,204,0.8);
+    color: var(--text-80);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -462,7 +462,7 @@
 
   .prod-cat {
     font-size: 0.7rem;
-    color: rgba(245,230,204,0.5);
+    color: var(--text-50);
     text-transform: uppercase;
     letter-spacing: 1px;
     margin-bottom: 0.25rem;
@@ -470,7 +470,7 @@
   }
 
   .prod-title {
-    color: #f5e6cc;
+    color: var(--theme-text-primary);
     font-size: 0.95rem;
     font-weight: 600;
     margin: 0;
@@ -486,7 +486,7 @@
     font-family: 'Playfair Display', serif;
     font-size: 1.1rem;
     font-weight: 700;
-    color: #fbbf24;
+    color: var(--theme-text-secondary);
   }
 
   .prod-cart-btn {
@@ -526,7 +526,7 @@
   .pagination .page-link {
     background: rgba(255,255,255,0.05);
     border: 1px solid rgba(255,255,255,0.1);
-    color: rgba(245,230,204,0.8);
+    color: var(--text-80);
     border-radius: 10px;
     padding: 0.5rem 1rem;
     transition: all 0.3s ease;
@@ -535,7 +535,7 @@
   .pagination .page-link:hover {
     background: rgba(245,158,11,0.15);
     border-color: rgba(245,158,11,0.3);
-    color: #fbbf24;
+    color: var(--theme-text-secondary);
   }
 
   .pagination .page-item.active .page-link {
@@ -545,7 +545,7 @@
   }
 
   .pagination .disabled .page-link {
-    color: rgba(245,230,204,0.3);
+    color: var(--text-30);
     pointer-events: none;
   }
 

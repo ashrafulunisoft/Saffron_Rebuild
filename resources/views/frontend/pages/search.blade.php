@@ -9,11 +9,11 @@
     <div class="glass-card p-4 mb-4">
       <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
         <div>
-          <h4 style="color: #f5e6cc; margin-bottom: 0.5rem;">
-            <i class="fas fa-search me-2" style="color: #fbbf24;"></i>
+          <h4 style="color: var(--theme-text-primary); margin-bottom: 0.5rem;">
+            <i class="fas fa-search me-2" style="color: var(--theme-text-secondary);"></i>
             Search Results for "{{ $query }}"
           </h4>
-          <p style="color: rgba(245,230,204,0.6); margin: 0;">Found {{ $products->total() }} products</p>
+          <p style="color: var(--text-60); margin: 0;">Found {{ $products->total() }} products</p>
         </div>
         <a href="{{ route('shop') }}" class="btn btn-glass">
           <i class="fas fa-arrow-left me-2"></i>Back to Shop
@@ -62,8 +62,8 @@
     @else
       <div class="text-center py-5 glass-card">
         <div style="font-size: 5rem; margin-bottom: 1.5rem; opacity: 0.4;">🔍</div>
-        <h4 style="color: #f5e6cc; margin-bottom: 0.5rem;">No products found</h4>
-        <p style="color: rgba(245,230,204,0.6); margin-bottom: 1.5rem;">Try searching for something else or browse our shop</p>
+        <h4 style="color: var(--theme-text-primary); margin-bottom: 0.5rem;">No products found</h4>
+        <p style="color: var(--text-60); margin-bottom: 1.5rem;">Try searching for something else or browse our shop</p>
         <a href="{{ route('shop') }}" class="btn btn-glow">
           <i class="fas fa-store me-2"></i>Browse Shop
         </a>
@@ -124,7 +124,7 @@
     align-items: center;
     justify-content: center;
     font-size: 4rem;
-    color: rgba(245,230,204,0.5);
+    color: var(--text-50);
     background: linear-gradient(135deg, rgba(245,158,11,0.15), rgba(244,63,94,0.1));
     position: relative;
     overflow: hidden;
@@ -165,7 +165,7 @@
     background: rgba(15, 23, 42, 0.9);
     backdrop-filter: blur(12px);
     border: 1.5px solid rgba(255,255,255,0.15);
-    color: rgba(245,230,204,0.8);
+    color: var(--text-80);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -200,7 +200,7 @@
   .prod-cat {
     display: block;
     font-size: 0.7rem;
-    color: rgba(245,230,204,0.5);
+    color: var(--text-50);
     text-transform: uppercase;
     letter-spacing: 0.5px;
     margin-bottom: 0.5rem;
@@ -209,7 +209,7 @@
   .prod-title {
     font-size: 0.95rem;
     font-weight: 600;
-    color: #f5e6cc;
+    color: var(--theme-text-primary);
     margin-bottom: 0.75rem;
     line-height: 1.4;
     display: -webkit-box;
@@ -220,13 +220,13 @@
   }
 
   .prod-card:hover .prod-title {
-    color: #fbbf24;
+    color: var(--theme-text-secondary);
   }
 
   .prod-price {
     font-size: 1.1rem;
     font-weight: 700;
-    color: #fbbf24;
+    color: var(--theme-text-secondary);
   }
 
   .prod-cart-btn {
@@ -235,7 +235,7 @@
     border-radius: 10px;
     background: linear-gradient(135deg, rgba(245,158,11,0.2), rgba(244,63,94,0.15));
     border: 1px solid rgba(245,158,11,0.3);
-    color: #fbbf24;
+    color: var(--theme-text-secondary);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -264,7 +264,7 @@
   .pagination-wrapper .page-link {
     background: rgba(255,255,255,0.05);
     border: 1px solid rgba(255,255,255,0.1);
-    color: rgba(245,230,204,0.8);
+    color: var(--text-80);
     padding: 0.6rem 1rem;
     border-radius: 10px;
     transition: all 0.3s ease;
@@ -273,7 +273,7 @@
   .pagination-wrapper .page-link:hover {
     background: rgba(245,158,11,0.2);
     border-color: rgba(245,158,11,0.3);
-    color: #fbbf24;
+    color: var(--theme-text-secondary);
     transform: translateY(-2px);
   }
 

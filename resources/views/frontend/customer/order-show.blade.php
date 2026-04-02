@@ -19,10 +19,10 @@
         <div class="glass-card p-4 mb-4">
           <div class="d-flex justify-content-between align-items-start flex-wrap gap-3">
             <div>
-              <h4 style="color: #f5e6cc; margin-bottom: 0.5rem;">
-                <i class="fas fa-receipt me-2" style="color: #fbbf24;"></i>Order #{{ $order->order_number }}
+              <h4 style="color: var(--theme-text-primary); margin-bottom: 0.5rem;">
+                <i class="fas fa-receipt me-2" style="color: var(--theme-text-secondary);"></i>Order #{{ $order->order_number }}
               </h4>
-              <p style="color: rgba(245,230,204,0.7); margin: 0;">
+              <p style="color: var(--text-70); margin: 0;">
                 Placed on {{ $order->created_at->format('M d, Y \a\t g:i A') }}
               </p>
             </div>
@@ -31,7 +31,7 @@
                 {{ ucfirst($order->status) }}
               </span>
               @if($order->payment_status === 'unpaid')
-                <span class="status-badge" style="background: rgba(245, 158, 11, 0.2); color: #fbbf24; font-size: 0.9rem; padding: 0.4rem 0.8rem;">
+                <span class="status-badge" style="background: rgba(245, 158, 11, 0.2); color: var(--theme-text-secondary); font-size: 0.9rem; padding: 0.4rem 0.8rem;">
                   <i class="fas fa-clock me-1"></i> Unpaid
                 </span>
               @elseif($order->payment_status === 'paid')
@@ -50,8 +50,8 @@
 
         <!-- Order Items -->
         <div class="glass-card p-4 mb-4">
-          <h5 style="color: #f5e6cc; margin-bottom: 1.5rem;">
-            <i class="fas fa-boxes me-2" style="color: #fbbf24;"></i>Order Items
+          <h5 style="color: var(--theme-text-primary); margin-bottom: 1.5rem;">
+            <i class="fas fa-boxes me-2" style="color: var(--theme-text-secondary);"></i>Order Items
           </h5>
           <div class="order-detail-items">
             @foreach($order->orderItems as $item)
@@ -61,18 +61,18 @@
                     <img src="{{ asset('storage/' . $item->product->image) }}" alt="{{ $item->product->name }}" style="width: 100%; height: 100%; object-fit: cover;">
                   @else
                     <div style="width: 100%; height: 100%; background: rgba(245,158,11,0.1); display: flex; align-items: center; justify-content: center;">
-                      <i class="fas fa-cookie" style="color: #fbbf24; font-size: 2rem;"></i>
+                      <i class="fas fa-cookie" style="color: var(--theme-text-secondary); font-size: 2rem;"></i>
                     </div>
                   @endif
                 </div>
                 <div style="flex: 1;">
-                  <h6 style="color: #f5e6cc; margin-bottom: 0.25rem;">{{ $item->product->name ?? 'N/A' }}</h6>
-                  <p style="color: rgba(245,230,204,0.6); font-size: 0.9rem; margin: 0;">
+                  <h6 style="color: var(--theme-text-primary); margin-bottom: 0.25rem;">{{ $item->product->name ?? 'N/A' }}</h6>
+                  <p style="color: var(--text-60); font-size: 0.9rem; margin: 0;">
                     Qty: {{ $item->quantity }} × ৳{{ number_format($item->price) }}
                   </p>
                 </div>
                 <div style="text-align: right;">
-                  <span style="color: #fbbf24; font-weight: 600;">৳{{ number_format($item->quantity * $item->price) }}</span>
+                  <span style="color: var(--theme-text-secondary); font-weight: 600;">৳{{ number_format($item->quantity * $item->price) }}</span>
                 </div>
               </div>
             @endforeach
@@ -84,19 +84,19 @@
           <!-- Shipping Address -->
           <div class="col-md-6">
             <div class="glass-card p-4 h-100">
-              <h5 style="color: #f5e6cc; margin-bottom: 1rem;">
-                <i class="fas fa-map-marker-alt me-2" style="color: #fbbf24;"></i>Shipping Address
+              <h5 style="color: var(--theme-text-primary); margin-bottom: 1rem;">
+                <i class="fas fa-map-marker-alt me-2" style="color: var(--theme-text-secondary);"></i>Shipping Address
               </h5>
               @if($order->shipping_address)
                 @php $address = json_decode($order->shipping_address, true); @endphp
-                <div style="color: rgba(245,230,204,0.8);">
-                  <p style="margin-bottom: 0.5rem; font-weight: 600; color: #f5e6cc;">{{ $address['first_name'] ?? '' }} {{ $address['last_name'] ?? '' }}</p>
+                <div style="color: var(--text-80);">
+                  <p style="margin-bottom: 0.5rem; font-weight: 600; color: var(--theme-text-primary);">{{ $address['first_name'] ?? '' }} {{ $address['last_name'] ?? '' }}</p>
                   <p style="margin-bottom: 0.25rem;">{{ $address['email'] ?? '' }}</p>
                   <p style="margin-bottom: 0.25rem;">{{ $address['phone'] ?? '' }}</p>
                   <p style="margin: 0;">{{ $address['address'] ?? '' }}, {{ $address['city'] ?? '' }}</p>
                 </div>
               @else
-                <p style="color: rgba(245,230,204,0.6);">No shipping address available</p>
+                <p style="color: var(--text-60);">No shipping address available</p>
               @endif
             </div>
           </div>
@@ -104,26 +104,26 @@
           <!-- Order Summary -->
           <div class="col-md-6">
             <div class="glass-card p-4 h-100">
-              <h5 style="color: #f5e6cc; margin-bottom: 1rem;">
-                <i class="fas fa-calculator me-2" style="color: #fbbf24;"></i>Order Summary
+              <h5 style="color: var(--theme-text-primary); margin-bottom: 1rem;">
+                <i class="fas fa-calculator me-2" style="color: var(--theme-text-secondary);"></i>Order Summary
               </h5>
               <div class="d-flex justify-content-between mb-2">
-                <span style="color: rgba(245,230,204,0.7);">Subtotal</span>
-                <span style="color: #f5e6cc;">৳{{ number_format($order->total_amount) }}</span>
+                <span style="color: var(--text-70);">Subtotal</span>
+                <span style="color: var(--theme-text-primary);">৳{{ number_format($order->total_amount) }}</span>
               </div>
               <div class="d-flex justify-content-between mb-2">
-                <span style="color: rgba(245,230,204,0.7);">Delivery</span>
-                <span style="color: #f5e6cc;">৳{{ number_format($order->final_amount - $order->total_amount + ($order->discount ?? 0)) }}</span>
+                <span style="color: var(--text-70);">Delivery</span>
+                <span style="color: var(--theme-text-primary);">৳{{ number_format($order->final_amount - $order->total_amount + ($order->discount ?? 0)) }}</span>
               </div>
               @if($order->discount > 0)
               <div class="d-flex justify-content-between mb-2">
-                <span style="color: rgba(245,230,204,0.7);">Discount</span>
+                <span style="color: var(--text-70);">Discount</span>
                 <span style="color: #22c55e;">-৳{{ number_format($order->discount) }}</span>
               </div>
               @if($order->coupon)
               <div class="d-flex justify-content-between mb-2" style="background: rgba(34, 197, 94, 0.1); padding: 0.5rem; border-radius: 8px; margin-top: 0.5rem;">
                 <div>
-                  <span style="color: rgba(245,230,204,0.7); font-size: 0.85rem;">
+                  <span style="color: var(--text-70); font-size: 0.85rem;">
                     <i class="fas fa-ticket-alt me-1" style="color: #22c55e;"></i>Coupon Applied
                   </span>
                   <div style="color: #22c55e; font-weight: 600; font-size: 1.1rem; margin-top: 0.25rem;">
@@ -133,12 +133,12 @@
                 @if($order->coupon->discount_type === 'percentage')
                 <div style="text-align: right;">
                   <span style="color: #22c55e; font-weight: 600;">{{ $order->coupon->value }}%</span>
-                  <div style="color: rgba(245,230,204,0.5); font-size: 0.75rem;">{{ $order->coupon->description ?? 'Discount' }}</div>
+                  <div style="color: var(--text-50); font-size: 0.75rem;">{{ $order->coupon->description ?? 'Discount' }}</div>
                 </div>
                 @else
                 <div style="text-align: right;">
                   <span style="color: #22c55e; font-weight: 600;">৳{{ number_format($order->coupon->value) }}</span>
-                  <div style="color: rgba(245,230,204,0.5); font-size: 0.75rem;">{{ $order->coupon->description ?? 'Flat Discount' }}</div>
+                  <div style="color: var(--text-50); font-size: 0.75rem;">{{ $order->coupon->description ?? 'Flat Discount' }}</div>
                 </div>
                 @endif
               </div>
@@ -146,20 +146,20 @@
               @endif
               <hr style="border-color: rgba(255,255,255,0.1); margin: 0.75rem 0;">
               <div class="d-flex justify-content-between mb-2">
-                <span style="color: rgba(245,230,204,0.7);">Payment Status</span>
+                <span style="color: var(--text-70);">Payment Status</span>
                 @if($order->payment_status === 'paid')
                   <span style="color: #22c55e; font-weight: 600;">
                     <i class="fas fa-check-circle me-1"></i> Paid
                   </span>
                 @else
-                  <span style="color: #fbbf24; font-weight: 600;">
+                  <span style="color: var(--theme-text-secondary); font-weight: 600;">
                     <i class="fas fa-clock me-1"></i> Unpaid
                   </span>
                 @endif
               </div>
               <div class="d-flex justify-content-between">
-                <span style="color: #fbbf24; font-weight: 600;">Total</span>
-                <span style="color: #fbbf24; font-weight: 600; font-size: 1.1rem;">৳{{ number_format($order->final_amount) }}</span>
+                <span style="color: var(--theme-text-secondary); font-weight: 600;">Total</span>
+                <span style="color: var(--theme-text-secondary); font-weight: 600; font-size: 1.1rem;">৳{{ number_format($order->final_amount) }}</span>
               </div>
             </div>
           </div>
@@ -170,14 +170,14 @@
           <div class="glass-card payment-pulse p-4 mb-4" style="border: 1px solid rgba(245,158,11,0.3); background: linear-gradient(135deg, rgba(245,158,11,0.05), rgba(244,63,94,0.02));">
             <div class="row align-items-center">
               <div class="col-md-9">
-                <h5 style="color: #fbbf24; margin-bottom: 0.5rem;">
+                <h5 style="color: var(--theme-text-secondary); margin-bottom: 0.5rem;">
                   <i class="fas fa-exclamation-circle me-2"></i>Payment Required
                 </h5>
-                <p style="color: rgba(245,230,204,0.7); margin: 0;">
-                  Complete your payment of <strong style="color: #fbbf24;">৳{{ number_format($order->final_amount) }}</strong> to proceed with order processing
+                <p style="color: var(--text-70); margin: 0;">
+                  Complete your payment of <strong style="color: var(--theme-text-secondary);">৳{{ number_format($order->final_amount) }}</strong> to proceed with order processing
                 </p>
                 <div class="mt-2">
-                  <small style="color: rgba(245,230,204,0.5);">
+                  <small style="color: var(--text-50);">
                     <i class="fas fa-shield-alt me-1"></i>Secure payment powered by SSLCommerz
                   </small>
                 </div>
@@ -236,7 +236,7 @@
     align-items: center;
     padding: 0.75rem 1rem;
     border-radius: 12px;
-    color: rgba(245,230,204,0.8);
+    color: var(--text-80);
     text-decoration: none;
     transition: all 0.3s ease;
     background: transparent;
@@ -247,17 +247,17 @@
   }
   .customer-nav-item:hover {
     background: rgba(245,158,11,0.1);
-    color: #fbbf24;
+    color: var(--theme-text-secondary);
     transform: translateX(5px);
   }
   .customer-nav-item.active {
     background: linear-gradient(135deg, rgba(245,158,11,0.2), rgba(244,63,94,0.1));
-    color: #fbbf24;
+    color: var(--theme-text-secondary);
     border: 1px solid rgba(245,158,11,0.3);
   }
   .nav-badge {
     background: rgba(245, 158, 11, 0.3);
-    color: #fbbf24;
+    color: var(--theme-text-secondary);
     padding: 0.2rem 0.5rem;
     border-radius: 20px;
     font-size: 0.75rem;
@@ -293,7 +293,7 @@
   }
   .status-pending {
     background: rgba(245, 158, 11, 0.2);
-    color: #fbbf24;
+    color: var(--theme-text-secondary);
   }
   .status-processing {
     background: rgba(59, 130, 246, 0.2);

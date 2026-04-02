@@ -17,10 +17,10 @@
       <div class="col-lg-9">
         <!-- Page Header -->
         <div class="glass-card p-4 mb-4">
-          <h4 style="color: #f5e6cc; margin-bottom: 0.5rem;">
-            <i class="fas fa-shopping-bag me-2" style="color: #fbbf24;"></i>My Orders
+          <h4 style="color: var(--theme-text-primary); margin-bottom: 0.5rem;">
+            <i class="fas fa-shopping-bag me-2" style="color: var(--theme-text-secondary);"></i>My Orders
           </h4>
-          <p style="color: rgba(245,230,204,0.7); margin: 0;">
+          <p style="color: var(--text-70); margin: 0;">
             Track and manage all your orders
           </p>
         </div>
@@ -38,8 +38,8 @@
                       </div>
                     </div>
                     <div class="col-md-3">
-                      <h6 style="color: #fbbf24; margin-bottom: 0.25rem;">#{{ $order->order_number }}</h6>
-                      <small style="color: rgba(245,230,204,0.6);">{{ $order->created_at->format('M d, Y') }}</small>
+                      <h6 style="color: var(--theme-text-secondary); margin-bottom: 0.25rem;">#{{ $order->order_number }}</h6>
+                      <small style="color: var(--text-60);">{{ $order->created_at->format('M d, Y') }}</small>
                     </div>
                     <div class="col-md-2">
                       <span class="status-badge status-{{ $order->status }}">
@@ -47,7 +47,7 @@
                       </span>
                     </div>
                     <div class="col-md-2">
-                      <span style="color: #f5e6cc; font-weight: 600;">৳{{ number_format($order->final_amount) }}</span>
+                      <span style="color: var(--theme-text-primary); font-weight: 600;">৳{{ number_format($order->final_amount) }}</span>
                     </div>
                     <div class="col-md-3 text-end">
                       <a href="{{ route('customer.orders.show', $order) }}" class="btn btn-glow btn-sm">
@@ -117,7 +117,7 @@
 
                 {{-- Showing Info --}}
                 <div class="text-center mt-3">
-                  <small style="color: rgba(245,230,204,0.6);">
+                  <small style="color: var(--text-60);">
                     Showing {{ ($orders->currentPage() - 1) * $orders->perPage() + 1 }}
                     to {{ min($orders->currentPage() * $orders->perPage(), $orders->total()) }}
                     of {{ $orders->total() }} orders
@@ -129,8 +129,8 @@
         @else
           <div class="glass-card p-5 text-center">
             <i class="fas fa-shopping-basket" style="font-size: 4rem; opacity: 0.3; margin-bottom: 1rem;"></i>
-            <h5 style="color: #f5e6cc; margin-bottom: 0.5rem;">No Orders Yet</h5>
-            <p style="color: rgba(245,230,204,0.6); margin-bottom: 1.5rem;">
+            <h5 style="color: var(--theme-text-primary); margin-bottom: 0.5rem;">No Orders Yet</h5>
+            <p style="color: var(--text-60); margin-bottom: 1.5rem;">
               Start exploring our delicious collection
             </p>
             <a href="{{ route('shop') }}" class="btn btn-glow">
@@ -175,7 +175,7 @@
     align-items: center;
     padding: 0.75rem 1rem;
     border-radius: 12px;
-    color: rgba(245,230,204,0.8);
+    color: var(--text-80);
     text-decoration: none;
     transition: all 0.3s ease;
     background: transparent;
@@ -186,12 +186,12 @@
   }
   .customer-nav-item:hover {
     background: rgba(245,158,11,0.1);
-    color: #fbbf24;
+    color: var(--theme-text-secondary);
     transform: translateX(5px);
   }
   .customer-nav-item.active {
     background: linear-gradient(135deg, rgba(245,158,11,0.2), rgba(244,63,94,0.1));
-    color: #fbbf24;
+    color: var(--theme-text-secondary);
     border: 1px solid rgba(245,158,11,0.3);
   }
   .nav-badge {
@@ -220,7 +220,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #fbbf24;
+    color: var(--theme-text-secondary);
     font-size: 1.25rem;
   }
   .status-badge {
@@ -233,7 +233,7 @@
   }
   .status-pending {
     background: rgba(245, 158, 11, 0.2);
-    color: #fbbf24;
+    color: var(--theme-text-secondary);
   }
   .status-processing {
     background: rgba(59, 130, 246, 0.2);
@@ -301,7 +301,7 @@
 
   .custom-glass-pagination .page-link:hover {
     border-color: rgba(245, 158, 11, 0.3);
-    color: #fbbf24;
+    color: var(--theme-text-secondary);
     transform: translateY(-2px);
     box-shadow: 0 8px 20px rgba(245, 158, 11, 0.2);
   }
@@ -309,7 +309,7 @@
   .custom-glass-pagination .page-item.active .page-link {
     background: linear-gradient(135deg, rgba(245, 158, 11, 0.3), rgba(244, 63, 94, 0.2));
     border-color: rgba(245, 158, 11, 0.4);
-    color: #fbbf24;
+    color: var(--theme-text-secondary);
     font-weight: 600;
     box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
   }

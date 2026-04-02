@@ -19,11 +19,11 @@
         @if(request()->routeIs('customer.dashboard'))
           <!-- Welcome Message -->
           <div class="glass-card p-4 mb-4">
-            <h4 style="color: #f5e6cc; margin-bottom: 0.5rem;">
-              <i class="fas fa-sun me-2" style="color: #fbbf24;"></i>
+            <h4 style="color: var(--theme-text-primary); margin-bottom: 0.5rem;">
+              <i class="fas fa-sun me-2" style="color: var(--theme-text-secondary);"></i>
               Welcome back, {{ auth()->user()->name }}!
             </h4>
-            <p style="color: rgba(245,230,204,0.7);">
+            <p style="color: var(--text-70);">
               Here's what's happening with your account today.
             </p>
           </div>
@@ -36,8 +36,8 @@
                   <i class="fas fa-shopping-bag" style="color: #3b82f6;"></i>
                 </div>
                 <div>
-                  <h3 style="color: #f5e6cc; margin: 0;">{{ auth()->user()->orders()->count() }}</h3>
-                  <small style="color: rgba(245,230,204,0.6);">Total Orders</small>
+                  <h3 style="color: var(--theme-text-primary); margin: 0;">{{ auth()->user()->orders()->count() }}</h3>
+                  <small style="color: var(--text-60);">Total Orders</small>
                 </div>
               </div>
             </div>
@@ -47,8 +47,8 @@
                   <i class="fas fa-check-circle" style="color: #22c55e;"></i>
                 </div>
                 <div>
-                  <h3 style="color: #f5e6cc; margin: 0;">{{ auth()->user()->orders()->where('status', 'delivered')->count() }}</h3>
-                  <small style="color: rgba(245,230,204,0.6);">Completed</small>
+                  <h3 style="color: var(--theme-text-primary); margin: 0;">{{ auth()->user()->orders()->where('status', 'delivered')->count() }}</h3>
+                  <small style="color: var(--text-60);">Completed</small>
                 </div>
               </div>
             </div>
@@ -58,8 +58,8 @@
                   <i class="fas fa-clock" style="color: #f59e0b;"></i>
                 </div>
                 <div>
-                  <h3 style="color: #f5e6cc; margin: 0;">{{ auth()->user()->orders()->where('status', 'pending')->count() }}</h3>
-                  <small style="color: rgba(245,230,204,0.6);">Pending</small>
+                  <h3 style="color: var(--theme-text-primary); margin: 0;">{{ auth()->user()->orders()->where('status', 'pending')->count() }}</h3>
+                  <small style="color: var(--text-60);">Pending</small>
                 </div>
               </div>
             </div>
@@ -69,8 +69,8 @@
                   <i class="fas fa-heart" style="color: #f43f5e;"></i>
                 </div>
                 <div>
-                  <h3 style="color: #f5e6cc; margin: 0;">{{ auth()->user()->wishlist_count ?? 0 }}</h3>
-                  <small style="color: rgba(245,230,204,0.6);">Wishlist</small>
+                  <h3 style="color: var(--theme-text-primary); margin: 0;">{{ auth()->user()->wishlist_count ?? 0 }}</h3>
+                  <small style="color: var(--text-60);">Wishlist</small>
                 </div>
               </div>
             </div>
@@ -88,8 +88,8 @@
           @if($availableCoupons->count() > 0)
           <div class="glass-card p-4 mb-4">
             <div class="d-flex justify-content-between align-items-center mb-4">
-              <h5 style="color: #f5e6cc; margin: 0;">
-                <i class="fas fa-ticket-alt me-2" style="color: #fbbf24;"></i>Available Coupons
+              <h5 style="color: var(--theme-text-primary); margin: 0;">
+                <i class="fas fa-ticket-alt me-2" style="color: var(--theme-text-secondary);"></i>Available Coupons
               </h5>
               <span class="badge" style="background: rgba(34, 197, 94, 0.2); color: #22c55e; border: 1px solid rgba(34, 197, 94, 0.3);">
                 {{ $availableCoupons->count() }} Active
@@ -147,8 +147,8 @@
           <!-- Recent Orders -->
           <div class="glass-card p-4">
             <div class="d-flex justify-content-between align-items-center mb-4">
-              <h5 style="color: #f5e6cc; margin: 0;">
-                <i class="fas fa-history me-2" style="color: #fbbf24;"></i>Recent Orders
+              <h5 style="color: var(--theme-text-primary); margin: 0;">
+                <i class="fas fa-history me-2" style="color: var(--theme-text-secondary);"></i>Recent Orders
               </h5>
               <a href="{{ route('customer.orders') }}" class="btn-link">View All <i class="fas fa-arrow-right ms-1"></i></a>
             </div>
@@ -170,7 +170,7 @@
                     @foreach(auth()->user()->orders()->latest()->limit(5)->get() as $order)
                     <tr>
                       <td>
-                        <span style="color: #fbbf24; font-weight: 600;">#{{ $order->order_number }}</span>
+                        <span style="color: var(--theme-text-secondary); font-weight: 600;">#{{ $order->order_number }}</span>
                       </td>
                       <td>{{ $order->created_at->format('M d, Y') }}</td>
                       <td>{{ $order->orderItems->count() }} items</td>
@@ -193,7 +193,7 @@
             @else
               <div class="text-center py-5">
                 <i class="fas fa-shopping-basket" style="font-size: 4rem; opacity: 0.3; margin-bottom: 1rem;"></i>
-                <p style="color: rgba(245,230,204,0.6);">No orders yet</p>
+                <p style="color: var(--text-60);">No orders yet</p>
                 <a href="{{ route('shop') }}" class="btn btn-glow btn-sm mt-3">
                   <i class="fas fa-shopping-bag me-2"></i>Start Shopping
                 </a>
@@ -253,19 +253,19 @@
     align-items: center;
     padding: 0.75rem 1rem;
     border-radius: 12px;
-    color: rgba(245,230,204,0.8);
+    color: var(--text-80);
     text-decoration: none;
     transition: all 0.3s ease;
     position: relative;
   }
   .customer-nav-item:hover {
     background: rgba(245,158,11,0.1);
-    color: #fbbf24;
+    color: var(--theme-text-secondary);
     transform: translateX(5px);
   }
   .customer-nav-item.active {
     background: linear-gradient(135deg, rgba(245,158,11,0.2), rgba(244,63,94,0.1));
-    color: #fbbf24;
+    color: var(--theme-text-secondary);
     border: 1px solid rgba(245,158,11,0.3);
   }
   .nav-badge {
@@ -309,7 +309,7 @@
   }
   .table-custom-dashboard thead th {
     background: rgba(15, 23, 42, 0.6);
-    color: #fbbf24;
+    color: var(--theme-text-secondary);
     padding: 1rem;
     text-align: left;
     font-weight: 600;
@@ -324,7 +324,7 @@
   }
   .table-custom-dashboard td {
     padding: 1rem;
-    color: rgba(245,230,204,0.8);
+    color: var(--text-80);
   }
   .status-badge {
     padding: 0.4rem 0.8rem;
@@ -335,7 +335,7 @@
   }
   .status-pending {
     background: rgba(245, 158, 11, 0.2);
-    color: #fbbf24;
+    color: var(--theme-text-secondary);
   }
   .status-processing {
     background: rgba(59, 130, 246, 0.2);
@@ -355,7 +355,7 @@
     border-radius: 8px;
     background: rgba(245,158,11,0.1);
     border: 1px solid rgba(245,158,11,0.3);
-    color: #fbbf24;
+    color: var(--theme-text-secondary);
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -366,7 +366,7 @@
     transform: scale(1.1);
   }
   .btn-link {
-    color: #fbbf24;
+    color: var(--theme-text-secondary);
     text-decoration: none;
     font-size: 0.9rem;
     transition: all 0.3s ease;
@@ -446,7 +446,7 @@
     margin: 1rem 0;
     font-family: 'Courier New', monospace;
     font-weight: 700;
-    color: #fbbf24;
+    color: var(--theme-text-secondary);
     font-size: 0.9rem;
     letter-spacing: 1px;
     cursor: pointer;
@@ -480,7 +480,7 @@
     text-align: center;
   }
   .text-warning {
-    color: #fbbf24 !important;
+    color: var(--theme-text-secondary) !important;
   }
 </style>
 @endpush

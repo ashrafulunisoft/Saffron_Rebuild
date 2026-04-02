@@ -17,10 +17,10 @@
       <div class="col-lg-9">
         <!-- Page Header -->
         <div class="glass-card p-4 mb-4">
-          <h4 style="color: #f5e6cc; margin-bottom: 0.5rem;">
+          <h4 style="color: var(--theme-text-primary); margin-bottom: 0.5rem;">
             <i class="fas fa-heart me-2" style="color: #f43f5e;"></i>My Wishlist
           </h4>
-          <p style="color: rgba(245,230,204,0.7); margin: 0;">
+          <p style="color: var(--text-70); margin: 0;">
             Items you've saved for later
           </p>
         </div>
@@ -68,8 +68,8 @@
         @else
           <div class="glass-card p-5 text-center">
             <i class="fas fa-heart" style="font-size: 4rem; opacity: 0.3; color: #f43f5e; margin-bottom: 1rem;"></i>
-            <h5 style="color: #f5e6cc; margin-bottom: 0.5rem;">Your wishlist is empty</h5>
-            <p style="color: rgba(245,230,204,0.6); margin-bottom: 1.5rem;">
+            <h5 style="color: var(--theme-text-primary); margin-bottom: 0.5rem;">Your wishlist is empty</h5>
+            <p style="color: var(--text-60); margin-bottom: 1.5rem;">
               Save your favorite treats for later
             </p>
             <a href="{{ route('shop') }}" class="btn btn-glow">
@@ -114,7 +114,7 @@
     align-items: center;
     padding: 0.75rem 1rem;
     border-radius: 12px;
-    color: rgba(245,230,204,0.8);
+    color: var(--text-80);
     text-decoration: none;
     transition: all 0.3s ease;
     background: transparent;
@@ -125,12 +125,12 @@
   }
   .customer-nav-item:hover {
     background: rgba(245,158,11,0.1);
-    color: #fbbf24;
+    color: var(--theme-text-secondary);
     transform: translateX(5px);
   }
   .customer-nav-item.active {
     background: linear-gradient(135deg, rgba(245,158,11,0.2), rgba(244,63,94,0.1));
-    color: #fbbf24;
+    color: var(--theme-text-secondary);
     border: 1px solid rgba(245,158,11,0.3);
   }
 
@@ -185,7 +185,7 @@
     align-items: center;
     justify-content: center;
     font-size: 4rem;
-    color: rgba(245,230,204,0.5);
+    color: var(--text-50);
     background: linear-gradient(135deg, rgba(245,158,11,0.15), rgba(244,63,94,0.1));
     position: relative;
     overflow: hidden;
@@ -226,7 +226,7 @@
     background: rgba(15, 23, 42, 0.9);
     backdrop-filter: blur(12px);
     border: 1.5px solid rgba(255,255,255,0.15);
-    color: rgba(245,230,204,0.8);
+    color: var(--text-80);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -288,7 +288,7 @@
 
   .prod-cat {
     font-size: 0.7rem;
-    color: rgba(245,230,204,0.5);
+    color: var(--text-50);
     text-transform: uppercase;
     letter-spacing: 1px;
     margin-bottom: 0.25rem;
@@ -296,7 +296,7 @@
   }
 
   .prod-title {
-    color: #f5e6cc;
+    color: var(--theme-text-primary);
     font-size: 0.95rem;
     font-weight: 600;
     margin: 0;
@@ -310,14 +310,14 @@
   }
 
   .prod-card:hover .prod-title {
-    color: #fbbf24;
+    color: var(--theme-text-secondary);
   }
 
   .prod-price {
     font-family: 'Playfair Display', serif;
     font-size: 1.1rem;
     font-weight: 700;
-    color: #fbbf24;
+    color: var(--theme-text-secondary);
   }
 
   .prod-cart-btn {

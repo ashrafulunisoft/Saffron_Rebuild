@@ -45,15 +45,28 @@
 
         /* Text color with opacity variations */
         --text-100: rgba({{ $textPrimaryRgbString }}, 1);
+        --text-95: rgba({{ $textPrimaryRgbString }}, 0.95);
         --text-90: rgba({{ $textPrimaryRgbString }}, 0.9);
         --text-85: rgba({{ $textPrimaryRgbString }}, 0.85);
         --text-80: rgba({{ $textPrimaryRgbString }}, 0.8);
         --text-75: rgba({{ $textPrimaryRgbString }}, 0.75);
         --text-70: rgba({{ $textPrimaryRgbString }}, 0.7);
+        --text-65: rgba({{ $textPrimaryRgbString }}, 0.65);
         --text-60: rgba({{ $textPrimaryRgbString }}, 0.6);
+        --text-55: rgba({{ $textPrimaryRgbString }}, 0.55);
         --text-50: rgba({{ $textPrimaryRgbString }}, 0.5);
+        --text-45: rgba({{ $textPrimaryRgbString }}, 0.45);
         --text-40: rgba({{ $textPrimaryRgbString }}, 0.4);
+        --text-35: rgba({{ $textPrimaryRgbString }}, 0.35);
         --text-30: rgba({{ $textPrimaryRgbString }}, 0.3);
+        --text-25: rgba({{ $textPrimaryRgbString }}, 0.25);
+        --text-20: rgba({{ $textPrimaryRgbString }}, 0.2);
+        --text-15: rgba({{ $textPrimaryRgbString }}, 0.15);
+        --text-10: rgba({{ $textPrimaryRgbString }}, 0.1);
+        --text-08: rgba({{ $textPrimaryRgbString }}, 0.08);
+        --text-05: rgba({{ $textPrimaryRgbString }}, 0.05);
+        --text-03: rgba({{ $textPrimaryRgbString }}, 0.03);
+        --text-02: rgba({{ $textPrimaryRgbString }}, 0.02);
 
         /* Legacy variables for backward compatibility */
         --amber: {{ $theme->primary_color }};

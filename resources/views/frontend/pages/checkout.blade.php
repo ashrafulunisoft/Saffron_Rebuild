@@ -30,8 +30,8 @@
         <!-- Billing Details -->
         <div class="col-lg-8">
           <div class="glass-card p-4 mb-4">
-            <h5 class="mb-4" style="color: #f5e6cc;">
-              <i class="fas fa-truck me-2" style="color: #fbbf24;"></i>Billing & Shipping Information
+            <h5 class="mb-4" style="color: var(--theme-text-primary);">
+              <i class="fas fa-truck me-2" style="color: var(--theme-text-secondary);"></i>Billing & Shipping Information
             </h5>
 
             <div class="row g-3">
@@ -86,8 +86,8 @@
 
           <!-- Payment Method -->
           <div class="glass-card p-4">
-            <h5 class="mb-4" style="color: #f5e6cc;">
-              <i class="fas fa-credit-card me-2" style="color: #fbbf24;"></i>Payment Method
+            <h5 class="mb-4" style="color: var(--theme-text-primary);">
+              <i class="fas fa-credit-card me-2" style="color: var(--theme-text-secondary);"></i>Payment Method
             </h5>
 
             <div class="row g-3">
@@ -97,8 +97,8 @@
                   <div class="d-flex align-items-center gap-3">
                     <div style="font-size: 2rem;">💵</div>
                     <div>
-                      <h6 class="mb-0" style="color: #f5e6cc;">Cash on Delivery</h6>
-                      <small style="color: rgba(245,230,204,0.6);">Pay when you receive</small>
+                      <h6 class="mb-0" style="color: var(--theme-text-primary);">Cash on Delivery</h6>
+                      <small style="color: var(--text-60);">Pay when you receive</small>
                     </div>
                   </div>
                 </label>
@@ -109,8 +109,8 @@
                   <div class="d-flex align-items-center gap-3">
                     <div style="font-size: 2rem;">📱</div>
                     <div>
-                      <h6 class="mb-0" style="color: #f5e6cc;">bKash</h6>
-                      <small style="color: rgba(245,230,204,0.6);">Mobile payment</small>
+                      <h6 class="mb-0" style="color: var(--theme-text-primary);">bKash</h6>
+                      <small style="color: var(--text-60);">Mobile payment</small>
                     </div>
                   </div>
                 </label>
@@ -121,8 +121,8 @@
                   <div class="d-flex align-items-center gap-3">
                     <div style="font-size: 2rem;">💳</div>
                     <div>
-                      <h6 class="mb-0" style="color: #f5e6cc;">Card Payment</h6>
-                      <small style="color: rgba(245,230,204,0.6);">Credit/Debit card</small>
+                      <h6 class="mb-0" style="color: var(--theme-text-primary);">Card Payment</h6>
+                      <small style="color: var(--text-60);">Credit/Debit card</small>
                     </div>
                   </div>
                 </label>
@@ -134,21 +134,21 @@
         <!-- Order Summary -->
         <div class="col-lg-4">
           <div class="glass-card p-4">
-            <h5 class="mb-4" style="color: #f5e6cc;">
-              <i class="fas fa-receipt me-2" style="color: #fbbf24;"></i>Order Summary
+            <h5 class="mb-4" style="color: var(--theme-text-primary);">
+              <i class="fas fa-receipt me-2" style="color: var(--theme-text-secondary);"></i>Order Summary
             </h5>
 
             <div class="cart-items mb-4">
-              <p class="text-center" style="color: rgba(245,230,204,0.6);">Your cart is empty</p>
+              <p class="text-center" style="color: var(--text-60);">Your cart is empty</p>
             </div>
 
             <!-- Coupon Code Section -->
             <div class="mb-4">
-              <label style="color: #f5e6cc; font-weight: 500; margin-bottom: 0.5rem; display: block;">
-                <i class="fas fa-tag me-2" style="color: #fbbf24;"></i>Coupon Code
+              <label style="color: var(--theme-text-primary); font-weight: 500; margin-bottom: 0.5rem; display: block;">
+                <i class="fas fa-tag me-2" style="color: var(--theme-text-secondary);"></i>Coupon Code
               </label>
               <div class="input-group">
-                <input type="text" id="checkoutCouponInput" class="form-control input-dark" placeholder="Enter coupon code" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #f5e6cc;">
+                <input type="text" id="checkoutCouponInput" class="form-control input-dark" placeholder="Enter coupon code" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: var(--theme-text-primary);">
                 <button class="btn btn-glow" type="button" id="checkoutApplyCouponBtn" onclick="applyCheckoutCoupon()">
                   Apply
                 </button>
@@ -158,24 +158,24 @@
 
             <div class="order-totals">
               <div class="d-flex justify-content-between mb-2">
-                <span style="color: rgba(245,230,204,0.7);">Subtotal:</span>
-                <span id="checkoutSubtotal" style="color: #f5e6cc;">৳{{ number_format($totalAmount) }}</span>
+                <span style="color: var(--text-70);">Subtotal:</span>
+                <span id="checkoutSubtotal" style="color: var(--theme-text-primary);">৳{{ number_format($totalAmount) }}</span>
               </div>
               <div class="d-flex justify-content-between mb-2" id="checkoutDiscountRow" style="display: none;">
-                <span style="color: rgba(245,230,204,0.7);">Discount:</span>
+                <span style="color: var(--text-70);">Discount:</span>
                 <span id="checkoutDiscount" style="color: #10b981;">-৳0</span>
               </div>
               <div class="d-flex justify-content-between mb-2" id="checkoutShippingRow">
-                <span style="color: rgba(245,230,204,0.7);">Shipping:</span>
-                <span id="checkoutShipping" style="color: #f5e6cc;">৳{{ number_format($shipping) }}</span>
+                <span style="color: var(--text-70);">Shipping:</span>
+                <span id="checkoutShipping" style="color: var(--theme-text-primary);">৳{{ number_format($shipping) }}</span>
               </div>
               <div class="d-flex justify-content-between mb-2">
-                <span style="color: rgba(245,230,204,0.7);">Tax:</span>
-                <span style="color: #f5e6cc;">৳0</span>
+                <span style="color: var(--text-70);">Tax:</span>
+                <span style="color: var(--theme-text-primary);">৳0</span>
               </div>
               <div class="d-flex justify-content-between mb-3 pt-3" style="border-top: 1px solid rgba(255,255,255,0.1);">
-                <span style="color: #f5e6cc; font-weight: 600;">Total:</span>
-                <span id="checkoutTotal" style="color: #fbbf24; font-weight: 700; font-size: 1.2rem;">৳{{ number_format($total) }}</span>
+                <span style="color: var(--theme-text-primary); font-weight: 600;">Total:</span>
+                <span id="checkoutTotal" style="color: var(--theme-text-secondary); font-weight: 700; font-size: 1.2rem;">৳{{ number_format($total) }}</span>
               </div>
             </div>
 
@@ -183,7 +183,7 @@
               <i class="fas fa-lock me-2"></i>Place Order
             </button>
 
-            <p class="text-center mt-3 mb-0" style="font-size: 0.8rem; color: rgba(245,230,204,0.5);">
+            <p class="text-center mt-3 mb-0" style="font-size: 0.8rem; color: var(--text-50);">
               <i class="fas fa-shield-alt me-1"></i>Your payment information is secure
             </p>
           </div>
@@ -307,10 +307,10 @@ function displayCartItems(doc) {
     itemsHTML += `
       <div class="d-flex justify-content-between align-items-center mb-3 pb-3" style="border-bottom: 1px solid rgba(255,255,255,0.05);">
         <div>
-          <h6 class="mb-1" style="color: #f5e6cc; font-size: 0.9rem;">${name}</h6>
-          <small style="color: rgba(245,230,204,0.6);">Qty: ${qty}</small>
+          <h6 class="mb-1" style="color: var(--theme-text-primary); font-size: 0.9rem;">${name}</h6>
+          <small style="color: var(--text-60);">Qty: ${qty}</small>
         </div>
-        <span style="color: #fbbf24; font-weight: 600;">${price}</span>
+        <span style="color: var(--theme-text-secondary); font-weight: 600;">${price}</span>
       </div>
     `;
   });
@@ -533,12 +533,12 @@ function applyCheckoutCoupon() {
 
   .breadcrumb-modern .breadcrumb-item a:hover {
     background: rgba(245, 158, 11, 0.15);
-    color: #fbbf24;
+    color: var(--theme-text-secondary);
     transform: translateX(3px);
   }
 
   .breadcrumb-modern .breadcrumb-item.active {
-    color: #f5e6cc;
+    color: var(--theme-text-primary);
     font-weight: 600;
     display: flex;
     align-items: center;
@@ -576,7 +576,7 @@ function applyCheckoutCoupon() {
     background: rgba(245,158,11,0.05);
   }
   .payment-option-card input:checked + div {
-    color: #fbbf24;
+    color: var(--theme-text-secondary);
   }
   .payment-option-card:has(input:checked) {
     border-color: #f59e0b !important;
@@ -585,16 +585,16 @@ function applyCheckoutCoupon() {
   .input-dark {
     background: rgba(255,255,255,0.05);
     border: 1px solid rgba(255,255,255,0.1);
-    color: #f5e6cc;
+    color: var(--theme-text-primary);
   }
   .input-dark:focus {
     background: rgba(255,255,255,0.08);
     border-color: rgba(245,158,11,0.4);
-    color: #f5e6cc;
+    color: var(--theme-text-primary);
     box-shadow: 0 0 0 3px rgba(245,158,11,0.1);
   }
   .form-label {
-    color: rgba(245,230,204,0.8);
+    color: var(--text-80);
     font-size: 0.9rem;
     margin-bottom: 0.5rem;
   }

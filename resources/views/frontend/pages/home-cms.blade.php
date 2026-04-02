@@ -326,8 +326,8 @@
           <div class="category-card animate-on-scroll">
             <div class="category-icon">{{ $category->name_en[0] }}</div>
             <div class="category-info">
-              <h5 style="color: #f5e6cc;">{{ $category->name_en }}</h5>
-              <p style="color: rgba(245,230,204,0.6); font-size: 0.85rem;">{{ $category->products_count ?? 0 }} products</p>
+              <h5 style="color: var(--theme-text-primary);">{{ $category->name_en }}</h5>
+              <p style="color: var(--text-60); font-size: 0.85rem;">{{ $category->products_count ?? 0 }} products</p>
             </div>
           </div>
         </a>
@@ -518,11 +518,11 @@
               <div class="testimonial-avatar">{{ strtoupper(substr($review->user->name ?? 'U', 0, 1)) }}</div>
             @endif
             <div class="testimonial-info">
-              <h6 style="color: #f5e6cc;">{{ $review->user->name }}</h6>
+              <h6 style="color: var(--theme-text-primary);">{{ $review->user->name }}</h6>
               <div class="testimonial-stars">{{ str_repeat('★', $review->rating) }}{{ str_repeat('☆', 5 - $review->rating) }}</div>
             </div>
           </div>
-          <p style="color: rgba(245,230,204,0.7); line-height: 1.8; font-style: italic;">
+          <p style="color: var(--text-70); line-height: 1.8; font-style: italic;">
             "{{ $review->comment }}"
           </p>
         </div>

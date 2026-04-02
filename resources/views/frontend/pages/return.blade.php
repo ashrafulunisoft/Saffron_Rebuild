@@ -20,7 +20,7 @@
 
   .breadcrumb-glass .breadcrumb-item + .breadcrumb-item::before {
     content: "›";
-    color: rgba(245,230,204,0.4);
+    color: var(--text-40);
     font-size: 0.8rem;
     margin: 0 0.75rem;
   }
@@ -32,12 +32,12 @@
   }
 
   .breadcrumb-glass .breadcrumb-item a:hover {
-    color: #fbbf24;
+    color: var(--theme-text-secondary);
     text-decoration: underline;
   }
 
   .breadcrumb-glass .breadcrumb-item.active {
-    color: #f5e6cc;
+    color: var(--theme-text-primary);
   }
 
   /* Policy Section Styles */
@@ -66,7 +66,7 @@
     position: relative;
     padding-left: 1.75rem;
     margin-bottom: 0.75rem;
-    color: rgba(245,230,204,0.85);
+    color: var(--text-85);
     line-height: 1.7;
   }
 
@@ -109,10 +109,10 @@
 
     <!-- Page Header -->
     <div class="text-center mb-5">
-      <h1 style="color: #f5e6cc; font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem;">
+      <h1 style="color: var(--theme-text-primary); font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem;">
         <i class="fas fa-undo me-2" style="color: #f59e0b;"></i>Return & Refund Policy
       </h1>
-      <p style="color: rgba(245,230,204,0.7); font-size: 1.1rem; max-width: 700px; margin: 0 auto;">
+      <p style="color: var(--text-70); font-size: 1.1rem; max-width: 700px; margin: 0 auto;">
         Your satisfaction is our priority. Learn about our return and refund policies.
       </p>
     </div>
@@ -123,22 +123,22 @@
         <!-- Important Notice -->
         @if($cmsSections && isset($cmsSections['important_notice']))
         <div class="highlight-box">
-          <h5 style="color: #fbbf24; margin-bottom: 0.75rem;">
+          <h5 style="color: var(--theme-text-secondary); margin-bottom: 0.75rem;">
             @if($cmsSections['important_notice']->icon)
             <span style="margin-right: 0.5rem;">{{ $cmsSections['important_notice']->icon }}</span>
             @endif
             {!! $cmsSections['important_notice']->title_en !!}
           </h5>
-          <p style="color: rgba(245,230,204,0.9); margin: 0; line-height: 1.7;">
+          <p style="color: var(--text-90); margin: 0; line-height: 1.7;">
             {!! $cmsSections['important_notice']->content_en !!}
           </p>
         </div>
         @else
         <div class="highlight-box">
-          <h5 style="color: #fbbf24; margin-bottom: 0.75rem;">
+          <h5 style="color: var(--theme-text-secondary); margin-bottom: 0.75rem;">
             <i class="fas fa-exclamation-triangle me-2"></i>Important Notice
           </h5>
-          <p style="color: rgba(245,230,204,0.9); margin: 0; line-height: 1.7;">
+          <p style="color: var(--text-90); margin: 0; line-height: 1.7;">
             Due to the perishable nature of our sweets and bakery products, we have specific return policies to ensure product quality and food safety. Please read this policy carefully before making a purchase.
           </p>
         </div>
@@ -170,7 +170,7 @@
         @else
         <div class="policy-section">
           <h4><i class="fas fa-check-circle me-2"></i>Return Eligibility</h4>
-          <p style="color: rgba(245,230,204,0.8); margin-bottom: 1rem; line-height: 1.7;">
+          <p style="color: var(--text-80); margin-bottom: 1rem; line-height: 1.7;">
             You may request a return or exchange in the following circumstances:
           </p>
           <ul>
@@ -208,7 +208,7 @@
             </ul>
             @if(isset($parts[count($parts) - 1]) && trim($parts[count($parts) - 1]))
             <div class="highlight-box" style="margin-top: 1.5rem;">
-              <p style="color: rgba(245,230,204,0.85); margin: 0; font-size: 0.95rem;">
+              <p style="color: var(--text-85); margin: 0; font-size: 0.95rem;">
                 <strong>Note:</strong> {!! trim($parts[count($parts) - 1]) !!}
               </p>
             </div>
@@ -233,7 +233,7 @@
             <li><strong>Missing items:</strong> Report within 2 hours of delivery</li>
           </ul>
           <div class="highlight-box" style="margin-top: 1.5rem;">
-            <p style="color: rgba(245,230,204,0.85); margin: 0; font-size: 0.95rem;">
+            <p style="color: var(--text-85); margin: 0; font-size: 0.95rem;">
               <strong>Note:</strong> No returns will be accepted after the specified time frames or if the products have been consumed partially.
             </p>
           </div>
@@ -256,7 +256,7 @@
             $parts = explode("\n", trim($content), 2);
           @endphp
           @if(isset($parts[0]) && trim($parts[0]))
-          <p style="color: rgba(245,230,204,0.8); margin-bottom: 1rem; line-height: 1.7;">
+          <p style="color: var(--text-80); margin-bottom: 1rem; line-height: 1.7;">
             {!! trim($parts[0]) !!}
           </p>
           @endif
@@ -273,7 +273,7 @@
         @else
         <div class="policy-section">
           <h4><i class="fas fa-ban me-2"></i>Non-Returnable Items</h4>
-          <p style="color: rgba(245,230,204,0.8); margin-bottom: 1rem; line-height: 1.7;">
+          <p style="color: var(--text-80); margin-bottom: 1rem; line-height: 1.7;">
             The following items cannot be returned or exchanged:
           </p>
           <ul>
@@ -304,7 +304,7 @@
             $parts = explode("\n", trim($content), 2);
           @endphp
           @if(isset($parts[0]) && trim($parts[0]))
-          <p style="color: rgba(245,230,204,0.8); margin-bottom: 1rem; line-height: 1.7;">
+          <p style="color: var(--text-80); margin-bottom: 1rem; line-height: 1.7;">
             {!! trim($parts[0]) !!}
           </p>
           @endif
@@ -321,7 +321,7 @@
         @else
         <div class="policy-section">
           <h4><i class="fas fa-list-ol me-2"></i>How to Request a Return</h4>
-          <p style="color: rgba(245,230,204,0.8); margin-bottom: 1rem; line-height: 1.7;">
+          <p style="color: var(--text-80); margin-bottom: 1rem; line-height: 1.7;">
             Follow these simple steps to request a return or refund:
           </p>
           <ul>
@@ -350,7 +350,7 @@
             $parts = explode("\n", trim($content), 2);
           @endphp
           @if(isset($parts[0]) && trim($parts[0]))
-          <p style="color: rgba(245,230,204,0.8); margin-bottom: 1rem; line-height: 1.7;">
+          <p style="color: var(--text-80); margin-bottom: 1rem; line-height: 1.7;">
             {!! trim($parts[0]) !!}
           </p>
           @endif
@@ -367,7 +367,7 @@
         @else
         <div class="policy-section">
           <h4><i class="fas fa-money-bill-wave me-2"></i>Refund Policy</h4>
-          <p style="color: rgba(245,230,204,0.8); margin-bottom: 1rem; line-height: 1.7;">
+          <p style="color: var(--text-80); margin-bottom: 1rem; line-height: 1.7;">
             Refunds are processed based on the payment method and circumstances:
           </p>
           <ul style="list-style: disc; padding-left: 1.5rem;">
@@ -442,8 +442,8 @@
 
         <!-- Contact for Returns -->
         <div class="contact-box">
-          <h4 style="color: #f5e6cc; margin-bottom: 1rem;">Need Help With a Return?</h4>
-          <p style="color: rgba(245,230,204,0.8); margin-bottom: 1.5rem;">
+          <h4 style="color: var(--theme-text-primary); margin-bottom: 1rem;">Need Help With a Return?</h4>
+          <p style="color: var(--text-80); margin-bottom: 1.5rem;">
             Our customer support team is here to assist you with any return or refund requests.
           </p>
           <div class="d-flex justify-content-center gap-3 flex-wrap">
@@ -454,7 +454,7 @@
               <i class="fas fa-envelope me-2"></i>Email Us
             </a>
           </div>
-          <div class="mt-4" style="color: rgba(245,230,204,0.7);">
+          <div class="mt-4" style="color: var(--text-70);">
             <small>
               <i class="fas fa-clock me-1"></i>Support Hours: Sat-Thu, 9AM-9PM
             </small>
@@ -463,7 +463,7 @@
 
         <!-- Policy Version -->
         <div class="text-center mt-4">
-          <p style="color: rgba(245,230,204,0.5); font-size: 0.85rem; margin: 0;">
+          <p style="color: var(--text-50); font-size: 0.85rem; margin: 0;">
             Last updated: March 2026 | Version 1.0
           </p>
         </div>

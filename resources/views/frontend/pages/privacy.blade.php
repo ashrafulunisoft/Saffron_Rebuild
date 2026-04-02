@@ -20,7 +20,7 @@
 
   .breadcrumb-glass .breadcrumb-item + .breadcrumb-item::before {
     content: "›";
-    color: rgba(245,230,204,0.4);
+    color: var(--text-40);
     font-size: 0.8rem;
     margin: 0 0.75rem;
   }
@@ -32,12 +32,12 @@
   }
 
   .breadcrumb-glass .breadcrumb-item a:hover {
-    color: #fbbf24;
+    color: var(--theme-text-secondary);
     text-decoration: underline;
   }
 
   .breadcrumb-glass .breadcrumb-item.active {
-    color: #f5e6cc;
+    color: var(--theme-text-primary);
   }
 
   /* Policy Section Styles */
@@ -58,7 +58,7 @@
   }
 
   .policy-section p {
-    color: rgba(245,230,204,0.85);
+    color: var(--text-85);
     line-height: 1.8;
     margin-bottom: 1rem;
   }
@@ -72,7 +72,7 @@
     position: relative;
     padding-left: 1.75rem;
     margin-bottom: 0.75rem;
-    color: rgba(245,230,204,0.85);
+    color: var(--text-85);
     line-height: 1.7;
   }
 
@@ -110,7 +110,7 @@
   .data-table td {
     padding: 1rem;
     border-bottom: 1px solid rgba(255,255,255,0.08);
-    color: rgba(245,230,204,0.85);
+    color: var(--text-85);
   }
 
   .data-table tr:hover td {
@@ -132,10 +132,10 @@
 
     <!-- Page Header -->
     <div class="text-center mb-5">
-      <h1 style="color: #f5e6cc; font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem;">
+      <h1 style="color: var(--theme-text-primary); font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem;">
         <i class="fas fa-shield-alt me-2" style="color: #f59e0b;"></i>Privacy Policy
       </h1>
-      <p style="color: rgba(245,230,204,0.7); font-size: 1.1rem; max-width: 700px; margin: 0 auto;">
+      <p style="color: var(--text-70); font-size: 1.1rem; max-width: 700px; margin: 0 auto;">
         Your privacy is important to us. Learn how we collect, use, and protect your personal information.
       </p>
     </div>
@@ -146,7 +146,7 @@
         <!-- Last Updated -->
         @if($cmsSections && isset($cmsSections['privacy_last_updated']))
         <div class="highlight-box">
-          <p style="color: rgba(245,230,204,0.85); margin: 0; font-size: 0.95rem;">
+          <p style="color: var(--text-85); margin: 0; font-size: 0.95rem;">
             @if($cmsSections['privacy_last_updated']->icon)
             <span style="margin-right: 0.5rem;">{{ $cmsSections['privacy_last_updated']->icon }}</span>
             @endif
@@ -155,7 +155,7 @@
         </div>
         @else
         <div class="highlight-box">
-          <p style="color: rgba(245,230,204,0.85); margin: 0; font-size: 0.95rem;">
+          <p style="color: var(--text-85); margin: 0; font-size: 0.95rem;">
             <strong>Last Updated:</strong> March 15, 2026 | <strong>Effective Date:</strong> March 15, 2026
           </p>
         </div>
@@ -196,7 +196,7 @@
           <h4><i class="fas fa-database me-2"></i>Information We Collect</h4>
           <p>We collect several types of information to provide and improve our services:</p>
 
-          <h5 style="color: #f5e6cc; margin: 1.5rem 0 0.75rem 0; font-size: 1.1rem;">
+          <h5 style="color: var(--theme-text-primary); margin: 1.5rem 0 0.75rem 0; font-size: 1.1rem;">
             @if($cmsSections['info_collect_personal']->icon)
             <span style="margin-right: 0.5rem;">{{ $cmsSections['info_collect_personal']->icon }}</span>
             @endif
@@ -210,7 +210,7 @@
             @endforeach
           </ul>
 
-          <h5 style="color: #f5e6cc; margin: 1.5rem 0 0.75rem 0; font-size: 1.1rem;">
+          <h5 style="color: var(--theme-text-primary); margin: 1.5rem 0 0.75rem 0; font-size: 1.1rem;">
             @if($cmsSections['info_collect_order']->icon)
             <span style="margin-right: 0.5rem;">{{ $cmsSections['info_collect_order']->icon }}</span>
             @endif
@@ -224,7 +224,7 @@
             @endforeach
           </ul>
 
-          <h5 style="color: #f5e6cc; margin: 1.5rem 0 0.75rem 0; font-size: 1.1rem;">
+          <h5 style="color: var(--theme-text-primary); margin: 1.5rem 0 0.75rem 0; font-size: 1.1rem;">
             @if($cmsSections['info_collect_technical']->icon)
             <span style="margin-right: 0.5rem;">{{ $cmsSections['info_collect_technical']->icon }}</span>
             @endif
@@ -243,7 +243,7 @@
           <h4><i class="fas fa-database me-2"></i>Information We Collect</h4>
           <p>We collect several types of information to provide and improve our services:</p>
 
-          <h5 style="color: #f5e6cc; margin: 1.5rem 0 0.75rem 0; font-size: 1.1rem;">Personal Information</h5>
+          <h5 style="color: var(--theme-text-primary); margin: 1.5rem 0 0.75rem 0; font-size: 1.1rem;">Personal Information</h5>
           <ul>
             <li>Name, email address, phone number</li>
             <li>Delivery address and billing information</li>
@@ -252,7 +252,7 @@
             <li>Payment information (processed securely through payment gateways)</li>
           </ul>
 
-          <h5 style="color: #f5e6cc; margin: 1.5rem 0 0.75rem 0; font-size: 1.1rem;">Order Information</h5>
+          <h5 style="color: var(--theme-text-primary); margin: 1.5rem 0 0.75rem 0; font-size: 1.1rem;">Order Information</h5>
           <ul>
             <li>Products viewed, added to cart, or purchased</li>
             <li>Order history and transaction details</li>
@@ -260,7 +260,7 @@
             <li>Delivery preferences and instructions</li>
           </ul>
 
-          <h5 style="color: #f5e6cc; margin: 1.5rem 0 0.75rem 0; font-size: 1.1rem;">Technical Information</h5>
+          <h5 style="color: var(--theme-text-primary); margin: 1.5rem 0 0.75rem 0; font-size: 1.1rem;">Technical Information</h5>
           <ul>
             <li>IP address, browser type, and device information</li>
             <li>Operating system and browsing behavior</li>
@@ -366,7 +366,7 @@
 
           @if($note && strpos($note, 'Note:') !== false)
           <div class="highlight-box" style="margin-top: 1.5rem;">
-            <p style="color: rgba(245,230,204,0.85); margin: 0; font-size: 0.95rem;">
+            <p style="color: var(--text-85); margin: 0; font-size: 0.95rem;">
               <strong>Note:</strong> {!! trim(str_replace('Note:', '', $note)) !!}
             </p>
           </div>
@@ -409,7 +409,7 @@
           </table>
 
           <div class="highlight-box" style="margin-top: 1.5rem;">
-            <p style="color: rgba(245,230,204,0.85); margin: 0; font-size: 0.95rem;">
+            <p style="color: var(--text-85); margin: 0; font-size: 0.95rem;">
               <strong>Note:</strong> We share only the minimum necessary information required for the specified purpose. All third parties are bound by confidentiality obligations.
             </p>
           </div>
@@ -451,7 +451,7 @@
             $lines = explode("\n", trim($cookieTypes));
             $tableLines = array_slice($lines, 1); // Skip the "Cookie Types:" heading
           @endphp
-          <h5 style="color: #f5e6cc; margin: 1.5rem 0 0.75rem 0; font-size: 1.1rem;">Types of Cookies We Use</h5>
+          <h5 style="color: var(--theme-text-primary); margin: 1.5rem 0 0.75rem 0; font-size: 1.1rem;">Types of Cookies We Use</h5>
           <table class="data-table">
             <thead>
               <tr>
@@ -497,7 +497,7 @@
             <li>Improve website functionality and performance</li>
           </ul>
 
-          <h5 style="color: #f5e6cc; margin: 1.5rem 0 0.75rem 0; font-size: 1.1rem;">Types of Cookies We Use</h5>
+          <h5 style="color: var(--theme-text-primary); margin: 1.5rem 0 0.75rem 0; font-size: 1.1rem;">Types of Cookies We Use</h5>
           <table class="data-table">
             <thead>
               <tr>
@@ -567,7 +567,7 @@
 
           @if($note && strpos($note, 'Important') !== false)
           <div class="highlight-box" style="margin-top: 1.5rem;">
-            <p style="color: rgba(245,230,204,0.85); margin: 0; font-size: 0.95rem;">
+            <p style="color: var(--text-85); margin: 0; font-size: 0.95rem;">
               <strong>Important:</strong> {!! trim(str_replace('Important:', '', $note)) !!}
             </p>
           </div>
@@ -587,7 +587,7 @@
           </ul>
 
           <div class="highlight-box" style="margin-top: 1.5rem;">
-            <p style="color: rgba(245,230,204,0.85); margin: 0; font-size: 0.95rem;">
+            <p style="color: var(--text-85); margin: 0; font-size: 0.95rem;">
               <strong>Important:</strong> While we take all reasonable measures to protect your data, no method of transmission over the internet is 100% secure. We cannot guarantee absolute security.
             </p>
           </div>
@@ -853,11 +853,11 @@
                 <div style="margin-bottom: 1rem;">
                   <strong style="color: #f59e0b;">{{ $label }}:</strong>
                   @if(strtolower($label) == 'email')
-                  <a href="mailto:{{ $value }}" style="color: rgba(245,230,204,0.85); margin-left: 0.5rem;">{{ $value }}</a>
+                  <a href="mailto:{{ $value }}" style="color: var(--text-85); margin-left: 0.5rem;">{{ $value }}</a>
                   @elseif(strtolower($label) == 'phone')
-                  <a href="tel:{{ $value }}" style="color: rgba(245,230,204,0.85); margin-left: 0.5rem;">{{ $value }}</a>
+                  <a href="tel:{{ $value }}" style="color: var(--text-85); margin-left: 0.5rem;">{{ $value }}</a>
                   @else
-                  <span style="color: rgba(245,230,204,0.85); margin-left: 0.5rem;">{{ $value }}</span>
+                  <span style="color: var(--text-85); margin-left: 0.5rem;">{{ $value }}</span>
                   @endif
                 </div>
                 @endif
@@ -880,15 +880,15 @@
           <div style="margin-top: 1.5rem;">
             <div style="margin-bottom: 1rem;">
               <strong style="color: #f59e0b;">Email:</strong>
-              <a href="mailto:privacy@saffronsweets.com.bd" style="color: rgba(245,230,204,0.85); margin-left: 0.5rem;">privacy@saffronsweets.com.bd</a>
+              <a href="mailto:privacy@saffronsweets.com.bd" style="color: var(--text-85); margin-left: 0.5rem;">privacy@saffronsweets.com.bd</a>
             </div>
             <div style="margin-bottom: 1rem;">
               <strong style="color: #f59e0b;">Phone:</strong>
-              <a href="tel:+8801730702000" style="color: rgba(245,230,204,0.85); margin-left: 0.5rem;">+880 1730 702000</a>
+              <a href="tel:+8801730702000" style="color: var(--text-85); margin-left: 0.5rem;">+880 1730 702000</a>
             </div>
             <div style="margin-bottom: 1rem;">
               <strong style="color: #f59e0b;">Address:</strong>
-              <span style="color: rgba(245,230,204,0.85); margin-left: 0.5rem;">Dhaka, Bangladesh</span>
+              <span style="color: var(--text-85); margin-left: 0.5rem;">Dhaka, Bangladesh</span>
             </div>
           </div>
 
@@ -900,7 +900,7 @@
 
         <!-- Policy Version -->
         <div class="text-center mt-4">
-          <p style="color: rgba(245,230,204,0.5); font-size: 0.85rem; margin: 0;">
+          <p style="color: var(--text-50); font-size: 0.85rem; margin: 0;">
             Version 1.0 | Effective Date: March 15, 2026
           </p>
         </div>

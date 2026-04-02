@@ -20,7 +20,7 @@
 
   .breadcrumb-glass .breadcrumb-item + .breadcrumb-item::before {
     content: "›";
-    color: rgba(245,230,204,0.4);
+    color: var(--text-40);
     font-size: 0.8rem;
     margin: 0 0.75rem;
   }
@@ -32,12 +32,12 @@
   }
 
   .breadcrumb-glass .breadcrumb-item a:hover {
-    color: #fbbf24;
+    color: var(--theme-text-secondary);
     text-decoration: underline;
   }
 
   .breadcrumb-glass .breadcrumb-item.active {
-    color: #f5e6cc;
+    color: var(--theme-text-primary);
   }
 
   /* FAQ Accordion Styles */
@@ -64,7 +64,7 @@
     border: none;
     padding: 1.25rem 1.5rem;
     text-align: left;
-    color: #f5e6cc;
+    color: var(--theme-text-primary);
     font-size: 1.05rem;
     font-weight: 500;
     display: flex;
@@ -99,7 +99,7 @@
 
   .faq-answer-inner {
     padding: 0 1.5rem 1.25rem 1.5rem;
-    color: rgba(245,230,204,0.8);
+    color: var(--text-80);
     line-height: 1.7;
   }
 
@@ -127,10 +127,10 @@
 
     <!-- Page Header -->
     <div class="text-center mb-5">
-      <h1 style="color: #f5e6cc; font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem;">
+      <h1 style="color: var(--theme-text-primary); font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem;">
         <i class="fas fa-question-circle me-2" style="color: #f59e0b;"></i>Frequently Asked Questions
       </h1>
-      <p style="color: rgba(245,230,204,0.7); font-size: 1.1rem; max-width: 700px; margin: 0 auto;">
+      <p style="color: var(--text-70); font-size: 1.1rem; max-width: 700px; margin: 0 auto;">
         Find answers to common questions about our products, ordering, delivery, and more.
       </p>
     </div>
@@ -408,8 +408,8 @@
 
         <!-- Still Have Questions -->
         <div class="glass-card p-4 text-center mt-4" style="background: rgba(245,158,11,0.08); border-color: rgba(245,158,11,0.2);">
-          <h4 style="color: #f5e6cc; margin-bottom: 1rem;">Still Have Questions?</h4>
-          <p style="color: rgba(245,230,204,0.7); margin-bottom: 1.5rem;">
+          <h4 style="color: var(--theme-text-primary); margin-bottom: 1rem;">Still Have Questions?</h4>
+          <p style="color: var(--text-70); margin-bottom: 1.5rem;">
             Can't find the answer you're looking for? Our friendly team is here to help!
           </p>
           <a href="{{ route('contact') }}" class="btn btn-glow">

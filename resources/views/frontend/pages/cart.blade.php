@@ -24,13 +24,13 @@
         <!-- Cart Items -->
         <div class="col-lg-8">
           <div class="glass-card" style="padding: 2rem;">
-            <h4 style="color: #f5e6cc; margin-bottom: 1.5rem;">
+            <h4 style="color: var(--theme-text-primary); margin-bottom: 1.5rem;">
               <i class="fas fa-shopping-basket me-2"></i>Cart Items ({{ $cartItems->count() }})
             </h4>
 
             <div class="cart-items">
               @foreach($cartItems as $item)
-                <div class="cart-item" data-cart-id="{{ $item->id }}" style="border-bottom: 1px solid rgba(245,230,204,0.1); padding-bottom: 1.5rem; margin-bottom: 1.5rem;">
+                <div class="cart-item" data-cart-id="{{ $item->id }}" style="border-bottom: 1px solid var(--text-10); padding-bottom: 1.5rem; margin-bottom: 1.5rem;">
                   <!-- Desktop Layout -->
                   <div class="d-none d-md-block">
                     <div class="row align-items-center g-3">
@@ -49,24 +49,24 @@
 
                       <!-- Product Info -->
                       <div class="col-md-5">
-                        <h6 class="cart-item-name" style="color: #f5e6cc; margin-bottom: 0.5rem;">
+                        <h6 class="cart-item-name" style="color: var(--theme-text-primary); margin-bottom: 0.5rem;">
                           <a href="{{ route('shop.product', $item->product->slug) }}" style="color: inherit; text-decoration: none;">
                             {{ $item->product->name }}
                           </a>
                         </h6>
-                        <p style="color: rgba(245,230,204,0.6); font-size: 0.9rem; margin: 0;">
+                        <p style="color: var(--text-60); font-size: 0.9rem; margin: 0;">
                           {{ $item->product->category->name_en ?? 'Sweets' }}
                         </p>
                         <div style="margin-top: 0.5rem;">
                           @if($item->product->sale_price)
-                            <span class="cart-item-price" style="color: #fbbf24; font-weight: 600; font-size: 1.1rem;">
+                            <span class="cart-item-price" style="color: var(--theme-text-secondary); font-weight: 600; font-size: 1.1rem;">
                               ৳{{ number_format($item->product->sale_price) }}
                             </span>
-                            <span style="color: rgba(245,230,204,0.4); text-decoration: line-through; margin-left: 0.5rem; font-size: 0.9rem;">
+                            <span style="color: var(--text-40); text-decoration: line-through; margin-left: 0.5rem; font-size: 0.9rem;">
                               ৳{{ number_format($item->product->price) }}
                             </span>
                           @else
-                            <span class="cart-item-price" style="color: #fbbf24; font-weight: 600; font-size: 1.1rem;">
+                            <span class="cart-item-price" style="color: var(--theme-text-secondary); font-weight: 600; font-size: 1.1rem;">
                               ৳{{ number_format($item->product->price) }}
                             </span>
                           @endif
@@ -77,19 +77,19 @@
                       <div class="col-md-5">
                         <div class="d-flex align-items-center justify-content-between">
                           <!-- Quantity Control -->
-                          <div class="quantity-control" style="display: flex; align-items: center; gap: 0.5rem; background: rgba(245,230,204,0.05); border-radius: 8px; padding: 0.25rem;">
+                          <div class="quantity-control" style="display: flex; align-items: center; gap: 0.5rem; background: var(--text-05); border-radius: 8px; padding: 0.25rem;">
                             <button class="qty-btn qty-minus" data-cart-id="{{ $item->id }}"
-                                    style="width: 32px; height: 32px; border: none; background: rgba(245,158,11,0.2); color: #fbbf24; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center;"
+                                    style="width: 32px; height: 32px; border: none; background: rgba(245,158,11,0.2); color: var(--theme-text-secondary); border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center;"
                                     {{ $item->quantity <= 1 ? 'disabled' : '' }}>
                               <i class="fas fa-minus" style="font-size: 0.75rem;"></i>
                             </button>
                             <input type="number" value="{{ $item->quantity }}" min="1" max="10"
                                    class="qty-input"
                                    data-cart-id="{{ $item->id }}"
-                                   style="width: 50px; text-align: center; border: none; background: transparent; color: #f5e6cc; font-weight: 600;"
+                                   style="width: 50px; text-align: center; border: none; background: transparent; color: var(--theme-text-primary); font-weight: 600;"
                                    readonly>
                             <button class="qty-btn qty-plus" data-cart-id="{{ $item->id }}"
-                                    style="width: 32px; height: 32px; border: none; background: rgba(245,158,11,0.2); color: #fbbf24; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center;"
+                                    style="width: 32px; height: 32px; border: none; background: rgba(245,158,11,0.2); color: var(--theme-text-secondary); border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center;"
                                     {{ $item->quantity >= 10 ? 'disabled' : '' }}>
                               <i class="fas fa-plus" style="font-size: 0.75rem;"></i>
                             </button>
@@ -106,8 +106,8 @@
 
                         <!-- Item Subtotal -->
                         <div style="text-align: right; margin-top: 0.5rem;">
-                          <span style="color: rgba(245,230,204,0.6); font-size: 0.85rem;">Subtotal:</span>
-                          <span class="item-subtotal" style="color: #fbbf24; font-weight: 600; margin-left: 0.5rem;">
+                          <span style="color: var(--text-60); font-size: 0.85rem;">Subtotal:</span>
+                          <span class="item-subtotal" style="color: var(--theme-text-secondary); font-weight: 600; margin-left: 0.5rem;">
                             ৳{{ number_format(($item->product->sale_price ?? $item->product->price) * $item->quantity) }}
                           </span>
                         </div>
@@ -133,24 +133,24 @@
 
                       <!-- Product Info -->
                       <div class="col-8">
-                        <h6 class="cart-item-name" style="color: #f5e6cc; margin-bottom: 0.25rem; font-size: 0.95rem; line-height: 1.3;">
+                        <h6 class="cart-item-name" style="color: var(--theme-text-primary); margin-bottom: 0.25rem; font-size: 0.95rem; line-height: 1.3;">
                           <a href="{{ route('shop.product', $item->product->slug) }}" style="color: inherit; text-decoration: none;">
                             {{ $item->product->name }}
                           </a>
                         </h6>
-                        <p style="color: rgba(245,230,204,0.6); font-size: 0.8rem; margin: 0;">
+                        <p style="color: var(--text-60); font-size: 0.8rem; margin: 0;">
                           {{ $item->product->category->name_en ?? 'Sweets' }}
                         </p>
                         <div style="margin-top: 0.25rem;">
                           @if($item->product->sale_price)
-                            <span class="cart-item-price" style="color: #fbbf24; font-weight: 600; font-size: 1rem;">
+                            <span class="cart-item-price" style="color: var(--theme-text-secondary); font-weight: 600; font-size: 1rem;">
                               ৳{{ number_format($item->product->sale_price) }}
                             </span>
-                            <span style="color: rgba(245,230,204,0.4); text-decoration: line-through; margin-left: 0.25rem; font-size: 0.8rem;">
+                            <span style="color: var(--text-40); text-decoration: line-through; margin-left: 0.25rem; font-size: 0.8rem;">
                               ৳{{ number_format($item->product->price) }}
                             </span>
                           @else
-                            <span class="cart-item-price" style="color: #fbbf24; font-weight: 600; font-size: 1rem;">
+                            <span class="cart-item-price" style="color: var(--theme-text-secondary); font-weight: 600; font-size: 1rem;">
                               ৳{{ number_format($item->product->price) }}
                             </span>
                           @endif
@@ -159,19 +159,19 @@
 
                       <!-- Quantity Row - Full Width -->
                       <div class="col-12">
-                        <div class="d-flex align-items-center justify-content-center gap-2" style="background: rgba(245,230,204,0.03); border-radius: 10px; padding: 0.75rem;">
+                        <div class="d-flex align-items-center justify-content-center gap-2" style="background: var(--text-03); border-radius: 10px; padding: 0.75rem;">
                           <button class="qty-btn qty-minus" data-cart-id="{{ $item->id }}"
-                                  style="width: 44px; height: 44px; min-width: 44px; border: none; background: rgba(245,158,11,0.2); color: #fbbf24; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"
+                                  style="width: 44px; height: 44px; min-width: 44px; border: none; background: rgba(245,158,11,0.2); color: var(--theme-text-secondary); border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"
                                   {{ $item->quantity <= 1 ? 'disabled' : '' }}>
                             <i class="fas fa-minus" style="font-size: 1.1rem;"></i>
                           </button>
                           <input type="number" value="{{ $item->quantity }}" min="1" max="10"
                                  class="qty-input"
                                  data-cart-id="{{ $item->id }}"
-                                 style="width: 60px; text-align: center; border: none; background: transparent; color: #f5e6cc; font-weight: 700; font-size: 1.4rem;"
+                                 style="width: 60px; text-align: center; border: none; background: transparent; color: var(--theme-text-primary); font-weight: 700; font-size: 1.4rem;"
                                  readonly>
                           <button class="qty-btn qty-plus" data-cart-id="{{ $item->id }}"
-                                  style="width: 44px; height: 44px; min-width: 44px; border: none; background: rgba(245,158,11,0.2); color: #fbbf24; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"
+                                  style="width: 44px; height: 44px; min-width: 44px; border: none; background: rgba(245,158,11,0.2); color: var(--theme-text-secondary); border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"
                                   {{ $item->quantity >= 10 ? 'disabled' : '' }}>
                             <i class="fas fa-plus" style="font-size: 1.1rem;"></i>
                           </button>
@@ -183,8 +183,8 @@
                         <div class="d-flex justify-content-between align-items-center gap-2">
                           <!-- Subtotal -->
                           <div style="flex: 1; background: rgba(245,158,11,0.08); border-radius: 8px; padding: 0.6rem 0.75rem; text-align: center;">
-                            <span style="color: rgba(245,230,204,0.7); font-size: 0.85rem; display: block; margin-bottom: 0.2rem;">Subtotal:</span>
-                            <span class="item-subtotal" style="color: #fbbf24; font-weight: 700; font-size: 1.2rem;">
+                            <span style="color: var(--text-70); font-size: 0.85rem; display: block; margin-bottom: 0.2rem;">Subtotal:</span>
+                            <span class="item-subtotal" style="color: var(--theme-text-secondary); font-weight: 700; font-size: 1.2rem;">
                               ৳{{ number_format(($item->product->sale_price ?? $item->product->price) * $item->quantity) }}
                             </span>
                           </div>
@@ -209,14 +209,14 @@
         <!-- Cart Summary -->
         <div class="col-lg-4">
           <div class="glass-card" style="padding: 2rem; position: sticky; top: 100px;">
-            <h4 style="color: #f5e6cc; margin-bottom: 1.5rem;">
+            <h4 style="color: var(--theme-text-primary); margin-bottom: 1.5rem;">
               <i class="fas fa-receipt me-2"></i>Order Summary
             </h4>
 
             <!-- Coupon Code Section -->
             <div style="margin-bottom: 1.5rem;">
-              <label style="color: #f5e6cc; font-weight: 500; margin-bottom: 0.5rem; display: block;">
-                <i class="fas fa-tag me-2" style="color: #fbbf24;"></i>Coupon Code
+              <label style="color: var(--theme-text-primary); font-weight: 500; margin-bottom: 0.5rem; display: block;">
+                <i class="fas fa-tag me-2" style="color: var(--theme-text-secondary);"></i>Coupon Code
               </label>
               <div class="input-group">
                 <input type="text" id="couponInput" class="form-control coupon-input" placeholder="Enter coupon code" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #ffffff;">
@@ -229,16 +229,16 @@
 
             <div class="cart-totals" style="margin-bottom: 1.5rem;" data-subtotal="{{ number_format($subtotal) }}" data-shipping="{{ number_format($shipping) }}" data-total="{{ number_format($total) }}">
               <div class="d-flex justify-content-between mb-2">
-                <span style="color: rgba(245,230,204,0.7);">Subtotal</span>
-                <span id="orderSubtotal" style="color: #f5e6cc; font-weight: 600;">৳{{ number_format($subtotal) }}</span>
+                <span style="color: var(--text-70);">Subtotal</span>
+                <span id="orderSubtotal" style="color: var(--theme-text-primary); font-weight: 600;">৳{{ number_format($subtotal) }}</span>
               </div>
               <div class="d-flex justify-content-between mb-2" id="discountRow" style="display: none;">
-                <span style="color: rgba(245,230,204,0.7);">Discount</span>
+                <span style="color: var(--text-70);">Discount</span>
                 <span id="discountAmount" style="color: #10b981; font-weight: 600;">-৳0</span>
               </div>
               <div class="d-flex justify-content-between mb-2">
-                <span style="color: rgba(245,230,204,0.7);">Shipping</span>
-                <span id="shippingCost" style="color: #f5e6cc; font-weight: 600;">
+                <span style="color: var(--text-70);">Shipping</span>
+                <span id="shippingCost" style="color: var(--theme-text-primary); font-weight: 600;">
                   @if($shipping === 0)
                     Free
                   @else
@@ -247,10 +247,10 @@
                 </span>
               </div>
               <div id="shippingMessage"></div>
-              <div style="border-top: 1px solid rgba(245,230,204,0.1); padding-top: 1.5rem; margin-bottom: 1.5rem;">
+              <div style="border-top: 1px solid var(--text-10); padding-top: 1.5rem; margin-bottom: 1.5rem;">
                 <div class="d-flex justify-content-between">
-                  <span style="color: #f5e6cc; font-size: 1.2rem; font-weight: 600;">Total</span>
-                  <span class="cart-total" style="color: #fbbf24; font-size: 1.5rem; font-weight: 700;">৳{{ number_format($total) }}</span>
+                  <span style="color: var(--theme-text-primary); font-size: 1.2rem; font-weight: 600;">Total</span>
+                  <span class="cart-total" style="color: var(--theme-text-secondary); font-size: 1.5rem; font-weight: 700;">৳{{ number_format($total) }}</span>
                 </div>
               </div>
 
@@ -274,8 +274,8 @@
       <!-- Empty Cart -->
       <div class="text-center py-5 glass-card">
         <div style="font-size: 5rem; margin-bottom: 1.5rem; opacity: 0.3;">🛒</div>
-        <h3 style="color: #f5e6cc; margin-bottom: 1rem;">Your cart is empty</h3>
-        <p style="color: rgba(245,230,204,0.6); margin-bottom: 2rem;">Looks like you haven't added anything to your cart yet.</p>
+        <h3 style="color: var(--theme-text-primary); margin-bottom: 1rem;">Your cart is empty</h3>
+        <p style="color: var(--text-60); margin-bottom: 2rem;">Looks like you haven't added anything to your cart yet.</p>
         <a href="{{ route('shop') }}" class="btn btn-glow btn-lg">
           <i class="fas fa-shopping-bag me-2"></i>Start Shopping
         </a>
@@ -396,7 +396,7 @@ function updateCartQty(cartId, newQuantity) {
         } else {
           const amountNeeded = data.shipping_threshold ? (data.shipping_threshold - data.subtotal) : 0;
           shippingMessage.innerHTML = `<div style="background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.3); border-radius: 8px; padding: 0.75rem; margin-top: 1rem;">
-            <small style="color: #fbbf24;">
+            <small style="color: var(--theme-text-secondary);">
               <i class="fas fa-info-circle me-1"></i>
               Add ৳${amountNeeded} more for free shipping!
             </small>
@@ -523,7 +523,7 @@ function removeFromCart(cartId) {
         } else {
           const amountNeeded = data.shipping_threshold ? (data.shipping_threshold - data.subtotal) : 0;
           shippingMessage.innerHTML = `<div style="background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.3); border-radius: 8px; padding: 0.75rem; margin-top: 1rem;">
-            <small style="color: #fbbf24;">
+            <small style="color: var(--theme-text-secondary);">
               <i class="fas fa-info-circle me-1"></i>
               Add ৳${amountNeeded} more for free shipping!
             </small>
@@ -765,12 +765,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
 .breadcrumb-modern .breadcrumb-item a:hover {
   background: rgba(245, 158, 11, 0.15);
-  color: #fbbf24;
+  color: var(--theme-text-secondary);
   transform: translateX(3px);
 }
 
 .breadcrumb-modern .breadcrumb-item.active {
-  color: #f5e6cc;
+  color: var(--theme-text-primary);
   font-weight: 600;
   display: flex;
   align-items: center;

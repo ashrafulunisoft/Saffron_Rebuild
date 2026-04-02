@@ -27,7 +27,7 @@
           {!! $cmsSections['our_story']->subtitle_en ?? 'About <span class="gradient-text">Saffron</span>' !!}
         </h1>
         @if($cmsSections['our_story']->content_en)
-        <p style="color: rgba(245,230,204,0.7); max-width: 600px; margin: 0 auto;">
+        <p style="color: var(--text-70); max-width: 600px; margin: 0 auto;">
           {!! Str::limit(strip_tags($cmsSections['our_story']->content_en), 150) !!}
         </p>
         @endif
@@ -45,13 +45,13 @@
         </div>
       </div>
       <div class="col-lg-6">
-        <h3 class="animate-on-scroll" style="color: #f5e6cc; margin-bottom: 1.5rem;">
+        <h3 class="animate-on-scroll" style="color: var(--theme-text-primary); margin-bottom: 1.5rem;">
           {!! $cmsSections['our_beginning']->title_en ?? 'Our Beginning' !!}
         </h3>
-        <p style="color: rgba(245,230,204,0.75); line-height: 1.9; margin-bottom: 1rem;">
+        <p style="color: var(--text-75); line-height: 1.9; margin-bottom: 1rem;">
           {!! $cmsSections['our_beginning']->subtitle_en ?? 'Where Tradition Meets Excellence' !!}
         </p>
-        <p class="animate-on-scroll" style="color: rgba(245,230,204,0.75); line-height: 1.9; margin-bottom: 1rem;">
+        <p class="animate-on-scroll" style="color: var(--text-75); line-height: 1.9; margin-bottom: 1rem;">
           {!! $cmsSections['our_beginning']->content_en !!}
         </p>
       </div>
@@ -69,13 +69,13 @@
         </div>
       </div>
       <div class="col-lg-6 order-lg-1">
-        <h3 class="animate-on-scroll" style="color: #f5e6cc; margin-bottom: 1.5rem;">
+        <h3 class="animate-on-scroll" style="color: var(--theme-text-primary); margin-bottom: 1.5rem;">
           {!! $cmsSections['our_heritage']->title_en ?? 'Our Heritage' !!}
         </h3>
-        <p style="color: rgba(245,230,204,0.75); line-height: 1.9; margin-bottom: 1rem;">
+        <p style="color: var(--text-75); line-height: 1.9; margin-bottom: 1rem;">
           {!! $cmsSections['our_heritage']->subtitle_en ?? 'Three Generations of Excellence' !!}
         </p>
-        <p class="animate-on-scroll" style="color: rgba(245,230,204,0.7); line-height: 1.9;">
+        <p class="animate-on-scroll" style="color: var(--text-70); line-height: 1.9;">
           {!! $cmsSections['our_heritage']->content_en ?? 'Our heritage content.' !!}
         </p>
       </div>
@@ -85,11 +85,11 @@
     <!-- Core Values Section -->
     @if($cmsSections && isset($cmsSections['our_core_values']))
     <div class="text-center mb-5 animate-on-scroll">
-      <h2 style="color: #f5e6cc; margin-bottom: 1rem;">
+      <h2 style="color: var(--theme-text-primary); margin-bottom: 1rem;">
         {!! $cmsSections['our_core_values']->title_en ?? 'Our Core Values' !!}
       </h2>
       @if($cmsSections['our_core_values']->subtitle_en)
-      <p style="color: rgba(245,230,204,0.75); max-width: 700px; margin: 0 auto 2rem auto;">
+      <p style="color: var(--text-75); max-width: 700px; margin: 0 auto 2rem auto;">
         {!! $cmsSections['our_core_values']->subtitle_en !!}
       </p>
       @endif
@@ -101,29 +101,29 @@
       <div class="col-md-3">
         <div class="glass-card p-4 text-center animate-on-scroll">
           <div style="font-size: 3rem; margin-bottom: 1rem;">✨</div>
-          <h5 style="color: #fbbf24;">Quality</h5>
-          <p style="color: rgba(245,230,204,0.7); font-size: 0.9rem;">Only the finest ingredients</p>
+          <h5 style="color: var(--theme-text-secondary);">Quality</h5>
+          <p style="color: var(--text-70); font-size: 0.9rem;">Only the finest ingredients</p>
         </div>
       </div>
       <div class="col-md-3">
         <div class="glass-card p-4 text-center animate-on-scroll">
           <div style="font-size: 3rem; margin-bottom: 1rem;">👨‍🍳</div>
-          <h5 style="color: #fbbf24;">Tradition</h5>
-          <p style="color: rgba(245,230,204,0.7); font-size: 0.9rem;">Authentic recipes</p>
+          <h5 style="color: var(--theme-text-secondary);">Tradition</h5>
+          <p style="color: var(--text-70); font-size: 0.9rem;">Authentic recipes</p>
         </div>
       </div>
       <div class="col-md-3">
         <div class="glass-card p-4 text-center animate-on-scroll">
           <div style="font-size: 3rem; margin-bottom: 1rem;">💝</div>
-          <h5 style="color: #fbbf24;">Passion</h5>
-          <p style="color: rgba(245,230,204,0.7); font-size: 0.9rem;">Made with love</p>
+          <h5 style="color: var(--theme-text-secondary);">Passion</h5>
+          <p style="color: var(--text-70); font-size: 0.9rem;">Made with love</p>
         </div>
       </div>
       <div class="col-md-3">
         <div class="glass-card p-4 text-center animate-on-scroll">
           <div style="font-size: 3rem; margin-bottom: 1rem;">🏆</div>
-          <h5 style="color: #fbbf24;">Excellence</h5>
-          <p style="color: rgba(245,230,204,0.7); font-size: 0.9rem;">30+ years of trust</p>
+          <h5 style="color: var(--theme-text-secondary);">Excellence</h5>
+          <p style="color: var(--text-70); font-size: 0.9rem;">30+ years of trust</p>
         </div>
       </div>
     </div>
@@ -196,12 +196,12 @@
 
 .breadcrumb-modern .breadcrumb-item a:hover {
   background: rgba(245, 158, 11, 0.15);
-  color: #fbbf24;
+  color: var(--theme-text-secondary);
   transform: translateX(3px);
 }
 
 .breadcrumb-modern .breadcrumb-item.active {
-  color: #f5e6cc;
+  color: var(--theme-text-primary);
   font-weight: 600;
   display: flex;
   align-items: center;

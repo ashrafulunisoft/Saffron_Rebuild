@@ -23,8 +23,8 @@
       <!-- Contact Form -->
       <div class="col-lg-6">
         <div class="glass-card p-4">
-          <h4 style="color: #f5e6cc; margin-bottom: 1.5rem;">
-            <i class="fas fa-envelope me-2" style="color: #fbbf24;"></i>Get in Touch
+          <h4 style="color: var(--theme-text-primary); margin-bottom: 1.5rem;">
+            <i class="fas fa-envelope me-2" style="color: var(--theme-text-secondary);"></i>Get in Touch
           </h4>
 
           @if(session('success'))
@@ -74,8 +74,8 @@
       <div class="col-lg-6">
         @if($cmsSections && isset($cmsSections['contact_info']))
         <div class="glass-card p-4 mb-4">
-          <h4 style="color: #f5e6cc; margin-bottom: 1.5rem;">
-            <i class="fas fa-map-marker-alt me-2" style="color: #fbbf24;"></i>{!! $cmsSections['contact_info']->title_en ?? 'Contact Information' !!}
+          <h4 style="color: var(--theme-text-primary); margin-bottom: 1.5rem;">
+            <i class="fas fa-map-marker-alt me-2" style="color: var(--theme-text-secondary);"></i>{!! $cmsSections['contact_info']->title_en ?? 'Contact Information' !!}
           </h4>
 
           @php
@@ -115,48 +115,48 @@
           @foreach($contactItems as $item)
           <div class="d-flex gap-3 mb-4">
             <div style="width: 50px; height: 50px; background: rgba(245,158,11,0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
-              <i class="fas {{ $item['icon'] }}" style="color: #fbbf24;"></i>
+              <i class="fas {{ $item['icon'] }}" style="color: var(--theme-text-secondary);"></i>
             </div>
             <div>
-              <h6 style="color: #f5e6cc; margin-bottom: 0.25rem;">{{ ucfirst($item['label']) }}</h6>
-              <p style="color: rgba(245,230,204,0.7); margin: 0;">{!! nl2br($item['value']) !!}</p>
+              <h6 style="color: var(--theme-text-primary); margin-bottom: 0.25rem;">{{ ucfirst($item['label']) }}</h6>
+              <p style="color: var(--text-70); margin: 0;">{!! nl2br($item['value']) !!}</p>
             </div>
           </div>
           @endforeach
         </div>
         @else
         <div class="glass-card p-4 mb-4">
-          <h4 style="color: #f5e6cc; margin-bottom: 1.5rem;">
-            <i class="fas fa-map-marker-alt me-2" style="color: #fbbf24;"></i>Contact Information
+          <h4 style="color: var(--theme-text-primary); margin-bottom: 1.5rem;">
+            <i class="fas fa-map-marker-alt me-2" style="color: var(--theme-text-secondary);"></i>Contact Information
           </h4>
 
           <div class="d-flex gap-3 mb-4">
             <div style="width: 50px; height: 50px; background: rgba(245,158,11,0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
-              <i class="fas fa-phone" style="color: #fbbf24;"></i>
+              <i class="fas fa-phone" style="color: var(--theme-text-secondary);"></i>
             </div>
             <div>
-              <h6 style="color: #f5e6cc; margin-bottom: 0.25rem;">Phone</h6>
-              <p style="color: rgba(245,230,204,0.7); margin: 0;">+880 1730 702000</p>
+              <h6 style="color: var(--theme-text-primary); margin-bottom: 0.25rem;">Phone</h6>
+              <p style="color: var(--text-70); margin: 0;">+880 1730 702000</p>
             </div>
           </div>
 
           <div class="d-flex gap-3 mb-4">
             <div style="width: 50px; height: 50px; background: rgba(245,158,11,0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
-              <i class="fas fa-envelope" style="color: #fbbf24;"></i>
+              <i class="fas fa-envelope" style="color: var(--theme-text-secondary);"></i>
             </div>
             <div>
-              <h6 style="color: #f5e6cc; margin-bottom: 0.25rem;">Email</h6>
-              <p style="color: rgba(245,230,204,0.7); margin: 0;">info@saffronsweets.com.bd</p>
+              <h6 style="color: var(--theme-text-primary); margin-bottom: 0.25rem;">Email</h6>
+              <p style="color: var(--text-70); margin: 0;">info@saffronsweets.com.bd</p>
             </div>
           </div>
 
           <div class="d-flex gap-3">
             <div style="width: 50px; height: 50px; background: rgba(245,158,11,0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
-              <i class="fas fa-clock" style="color: #fbbf24;"></i>
+              <i class="fas fa-clock" style="color: var(--theme-text-secondary);"></i>
             </div>
             <div>
-              <h6 style="color: #f5e6cc; margin-bottom: 0.25rem;">Business Hours</h6>
-              <p style="color: rgba(245,230,204,0.7); margin: 0;">Mon - Sat: 9AM - 9PM<br>Sunday: 10AM - 6PM</p>
+              <h6 style="color: var(--theme-text-primary); margin-bottom: 0.25rem;">Business Hours</h6>
+              <p style="color: var(--text-70); margin: 0;">Mon - Sat: 9AM - 9PM<br>Sunday: 10AM - 6PM</p>
             </div>
           </div>
         </div>
@@ -193,14 +193,14 @@
             ];
         @endphp
         <div class="glass-card p-4">
-          <h5 style="color: #f5e6cc; margin-bottom: 1rem;">{!! $cmsSections['social_links']->title_en ?? 'Follow Us' !!}</h5>
+          <h5 style="color: var(--theme-text-primary); margin-bottom: 1rem;">{!! $cmsSections['social_links']->title_en ?? 'Follow Us' !!}</h5>
           <div class="d-flex gap-2">
             @foreach($socialLinks as $social)
             @php
                 $platformLower = strtolower($social['platform']);
                 $iconClass = $iconMap[$platformLower] ?? 'fa-link';
             @endphp
-            <a href="{{ $social['url'] }}" target="_blank" class="btn btn-glass" style="color: #fbbf24;">
+            <a href="{{ $social['url'] }}" target="_blank" class="btn btn-glass" style="color: var(--theme-text-secondary);">
               <i class="fab {{ $iconClass }}"></i>
             </a>
             @endforeach
@@ -208,12 +208,12 @@
         </div>
         @else
         <div class="glass-card p-4">
-          <h5 style="color: #f5e6cc; margin-bottom: 1rem;">Follow Us</h5>
+          <h5 style="color: var(--theme-text-primary); margin-bottom: 1rem;">Follow Us</h5>
           <div class="d-flex gap-2">
-            <a href="#" class="btn btn-glass" style="color: #fbbf24;"><i class="fab fa-facebook-f"></i></a>
-            <a href="#" class="btn btn-glass" style="color: #fbbf24;"><i class="fab fa-instagram"></i></a>
-            <a href="#" class="btn btn-glass" style="color: #fbbf24;"><i class="fab fa-twitter"></i></a>
-            <a href="#" class="btn btn-glass" style="color: #fbbf24;"><i class="fab fa-youtube"></i></a>
+            <a href="#" class="btn btn-glass" style="color: var(--theme-text-secondary);"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="btn btn-glass" style="color: var(--theme-text-secondary);"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="btn btn-glass" style="color: var(--theme-text-secondary);"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="btn btn-glass" style="color: var(--theme-text-secondary);"><i class="fab fa-youtube"></i></a>
           </div>
         </div>
         @endif
@@ -288,12 +288,12 @@
 
 .breadcrumb-modern .breadcrumb-item a:hover {
   background: rgba(245, 158, 11, 0.15);
-  color: #fbbf24;
+  color: var(--theme-text-secondary);
   transform: translateX(3px);
 }
 
 .breadcrumb-modern .breadcrumb-item.active {
-  color: #f5e6cc;
+  color: var(--theme-text-primary);
   font-weight: 600;
   display: flex;
   align-items: center;

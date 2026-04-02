@@ -1401,12 +1401,12 @@ function toggleWishlist(productId, button) {
   background: linear-gradient(135deg, rgba(245,158,11,0.2), rgba(244,63,94,0.2));
   border-radius: 20px;
   font-size: 0.75rem;
-  color: #fbbf24;
+  color: var(--theme-text-secondary);
   margin-bottom: 0.75rem;
 }
 
 .blog-title {
-  color: #f5e6cc;
+  color: var(--theme-text-primary);
   font-weight: 600;
   margin-bottom: 0.75rem;
   display: -webkit-box;
@@ -1416,7 +1416,7 @@ function toggleWishlist(productId, button) {
 }
 
 .blog-excerpt {
-  color: rgba(245,230,204,0.7);
+  color: var(--text-70);
   font-size: 0.9rem;
   margin-bottom: 1rem;
   display: -webkit-box;
@@ -1430,9 +1430,9 @@ function toggleWishlist(productId, button) {
   flex-wrap: wrap;
   gap: 1rem;
   font-size: 0.8rem;
-  color: rgba(245,230,204,0.6);
+  color: var(--text-60);
   padding-top: 1rem;
-  border-top: 1px solid rgba(245,230,204,0.1);
+  border-top: 1px solid var(--text-10);
 }
 
 .blog-meta i {
@@ -1480,7 +1480,7 @@ function toggleWishlist(productId, button) {
   background: rgba(15, 23, 42, 0.8);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  color: #f5e6cc;
+  color: var(--theme-text-primary);
   display: flex;
   align-items: center;
   justify-content: center;

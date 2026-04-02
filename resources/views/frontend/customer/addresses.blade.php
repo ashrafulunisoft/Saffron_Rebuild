@@ -19,10 +19,10 @@
         <div class="glass-card p-4 mb-4">
           <div class="d-flex justify-content-between align-items-start flex-wrap gap-3">
             <div>
-              <h4 style="color: #f5e6cc; margin-bottom: 0.5rem;">
-                <i class="fas fa-map-marker-alt me-2" style="color: #fbbf24;"></i>My Addresses
+              <h4 style="color: var(--theme-text-primary); margin-bottom: 0.5rem;">
+                <i class="fas fa-map-marker-alt me-2" style="color: var(--theme-text-secondary);"></i>My Addresses
               </h4>
-              <p style="color: rgba(245,230,204,0.7); margin: 0;">
+              <p style="color: var(--text-70); margin: 0;">
                 Manage your delivery addresses
               </p>
             </div>
@@ -34,8 +34,8 @@
 
         <!-- Address Form (Hidden by default) -->
         <div id="addressFormContainer" class="glass-card p-4 mb-4" style="display: none;">
-          <h5 id="formTitle" style="color: #f5e6cc; margin-bottom: 1.5rem;">
-            <i class="fas fa-plus-circle me-2" style="color: #fbbf24;"></i>Add New Address
+          <h5 id="formTitle" style="color: var(--theme-text-primary); margin-bottom: 1.5rem;">
+            <i class="fas fa-plus-circle me-2" style="color: var(--theme-text-secondary);"></i>Add New Address
           </h5>
           <form id="addressForm" method="POST" action="{{ route('customer.addresses.store') }}">
             @csrf
@@ -71,7 +71,7 @@
               <div class="col-12">
                 <div class="form-check">
                   <input type="checkbox" name="is_default" class="form-check-input" id="defaultAddress" style="width: 1.2em; height: 1.2em; background-color: rgba(255,255,255,0.08); border: 2px solid rgba(245,158,11,0.4);">
-                  <label class="form-check-label ms-2" for="defaultAddress" style="color: rgba(245,230,204,0.8); cursor: pointer;">
+                  <label class="form-check-label ms-2" for="defaultAddress" style="color: var(--text-80); cursor: pointer;">
                     Set as default address
                   </label>
                 </div>
@@ -98,7 +98,7 @@
                 <div class="glass-card address-card-dashboard">
                   <div class="d-flex justify-content-between align-items-start mb-3">
                     @if($address->is_default)
-                      <span class="badge" style="background: rgba(245,158,11,0.2); color: #fbbf24; border: 1px solid rgba(245,158,11,0.3);">
+                      <span class="badge" style="background: rgba(245,158,11,0.2); color: var(--theme-text-secondary); border: 1px solid rgba(245,158,11,0.3);">
                         <i class="fas fa-star me-1"></i>Default
                       </span>
                     @endif
@@ -108,7 +108,7 @@
                       </button>
                       <ul class="dropdown-menu dropdown-menu-end">
                         <li>
-                          <a class="dropdown-item" href="#" onclick="editAddress({{ $address->id }}, '{{ $address->label ?? '' }}', '{{ $address->name }}', '{{ $address->phone }}', '{{ $address->address }}', '{{ $address->city }}', '{{ $address->state }}')" style="color: #f5e6cc;">
+                          <a class="dropdown-item" href="#" onclick="editAddress({{ $address->id }}, '{{ $address->label ?? '' }}', '{{ $address->name }}', '{{ $address->phone }}', '{{ $address->address }}', '{{ $address->city }}', '{{ $address->state }}')" style="color: var(--theme-text-primary);">
                             <i class="fas fa-edit me-2"></i>Edit
                           </a>
                         </li>
@@ -117,7 +117,7 @@
                           <form method="POST" action="{{ route('customer.addresses.set-default', $address) }}" id="setDefaultForm{{ $address->id }}" style="display: none;">
                             @csrf
                           </form>
-                          <a class="dropdown-item" href="#" onclick="document.getElementById('setDefaultForm{{ $address->id }}').submit(); return false;" style="color: #fbbf24;">
+                          <a class="dropdown-item" href="#" onclick="document.getElementById('setDefaultForm{{ $address->id }}').submit(); return false;" style="color: var(--theme-text-secondary);">
                             <i class="fas fa-star me-2"></i>Set Default
                           </a>
                         </li>
@@ -135,11 +135,11 @@
                       </ul>
                     </div>
                   </div>
-                  <h6 style="color: #f5e6cc; margin-bottom: 0.5rem;">{{ $address->label ?? 'Home' }}</h6>
-                  <p style="color: rgba(245,230,204,0.7); margin: 0; line-height: 1.6;">
-                    <i class="fas fa-user me-2" style="color: #fbbf24;"></i>{{ $address->name }}<br>
-                    <i class="fas fa-phone me-2" style="color: #fbbf24;"></i>{{ $address->phone }}<br>
-                    <i class="fas fa-map-pin me-2" style="color: #fbbf24;"></i>{{ $address->address }}, {{ $address->city }}
+                  <h6 style="color: var(--theme-text-primary); margin-bottom: 0.5rem;">{{ $address->label ?? 'Home' }}</h6>
+                  <p style="color: var(--text-70); margin: 0; line-height: 1.6;">
+                    <i class="fas fa-user me-2" style="color: var(--theme-text-secondary);"></i>{{ $address->name }}<br>
+                    <i class="fas fa-phone me-2" style="color: var(--theme-text-secondary);"></i>{{ $address->phone }}<br>
+                    <i class="fas fa-map-pin me-2" style="color: var(--theme-text-secondary);"></i>{{ $address->address }}, {{ $address->city }}
                   </p>
                 </div>
               </div>
@@ -148,8 +148,8 @@
         @else
           <div class="glass-card p-5 text-center">
             <i class="fas fa-map-marked-alt" style="font-size: 4rem; opacity: 0.3; margin-bottom: 1rem;"></i>
-            <h5 style="color: #f5e6cc; margin-bottom: 0.5rem;">No addresses saved</h5>
-            <p style="color: rgba(245,230,204,0.6); margin-bottom: 1.5rem;">
+            <h5 style="color: var(--theme-text-primary); margin-bottom: 0.5rem;">No addresses saved</h5>
+            <p style="color: var(--text-60); margin-bottom: 1.5rem;">
               Add your delivery address for faster checkout
             </p>
             <button class="btn btn-glow" onclick="showAddressForm()">
@@ -176,7 +176,7 @@ function hideAddressForm() {
 function resetAddressForm() {
   document.getElementById('addressForm').reset();
   document.getElementById('address_id').value = '';
-  document.getElementById('formTitle').innerHTML = '<i class="fas fa-plus-circle me-2" style="color: #fbbf24;"></i>Add New Address';
+  document.getElementById('formTitle').innerHTML = '<i class="fas fa-plus-circle me-2" style="color: var(--theme-text-secondary);"></i>Add New Address';
   document.getElementById('addressForm').action = '{{ route('customer.addresses.store') }}';
   document.getElementById('addressForm').method = 'POST';
 }
@@ -184,7 +184,7 @@ function resetAddressForm() {
 function editAddress(id, label, name, phone, address, city, state) {
   showAddressForm();
   document.getElementById('address_id').value = id;
-  document.getElementById('formTitle').innerHTML = '<i class="fas fa-edit me-2" style="color: #fbbf24;"></i>Edit Address';
+  document.getElementById('formTitle').innerHTML = '<i class="fas fa-edit me-2" style="color: var(--theme-text-secondary);"></i>Edit Address';
   document.getElementById('addressForm').action = '{{ route('customer.addresses.update', '__id__') }}'.replace('__id__', id);
   document.getElementById('addressForm').method = 'POST';
 
@@ -253,7 +253,7 @@ function setDefaultAddress(element) {
     align-items: center;
     padding: 0.75rem 1rem;
     border-radius: 12px;
-    color: rgba(245,230,204,0.8);
+    color: var(--text-80);
     text-decoration: none;
     transition: all 0.3s ease;
     background: transparent;
@@ -264,12 +264,12 @@ function setDefaultAddress(element) {
   }
   .customer-nav-item:hover {
     background: rgba(245,158,11,0.1);
-    color: #fbbf24;
+    color: var(--theme-text-secondary);
     transform: translateX(5px);
   }
   .customer-nav-item.active {
     background: linear-gradient(135deg, rgba(245,158,11,0.2), rgba(244,63,94,0.1));
-    color: #fbbf24;
+    color: var(--theme-text-secondary);
     border: 1px solid rgba(245,158,11,0.3);
   }
   .address-card-dashboard {

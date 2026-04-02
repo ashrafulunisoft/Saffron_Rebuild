@@ -30,7 +30,7 @@
       <div class="col-lg-5">
         <div class="glass-card" style="padding:1.5rem;border-radius:16px;box-shadow:0 10px 40px rgba(0,0,0,0.3);">
           <!-- Blog Image Container -->
-          <div style="position:relative;width:100%;border-radius:12px;background:rgba(245,230,204,0.02);margin-bottom:1.5rem;">
+          <div style="position:relative;width:100%;border-radius:12px;background:var(--text-02);margin-bottom:1.5rem;">
             @if($post->is_featured)
               <span style="position:absolute;top:15px;right:15px;background:linear-gradient(135deg,#f59e0b,#f43f5e);color:white;padding:6px 16px;border-radius:20px;font-size:0.75rem;font-weight:700;box-shadow:0 4px 12px rgba(245,158,11,0.4);z-index:2;">⭐ Featured</span>
             @endif
@@ -56,7 +56,7 @@
             @endif
             <h1 style="color:var(--theme-text-primary);font-family:'Playfair Display',serif;font-size:2.5rem;line-height:1.2;margin-top:1rem;">{{ $post->title }}</h1>
 
-            <div class="d-flex flex-wrap gap-3 mt-3" style="color:rgba(var(--theme-text-primary-rgb),0.6);font-size:0.9rem;padding-bottom:1rem;border-bottom:1px solid rgba(245,230,204,0.1);">
+            <div class="d-flex flex-wrap gap-3 mt-3" style="color:rgba(var(--theme-text-primary-rgb),0.6);font-size:0.9rem;padding-bottom:1rem;border-bottom:1px solid var(--text-10);">
               @if($post->user)
                 <span><i class="far fa-user"></i> {{ $post->user->name }}</span>
               @endif
@@ -81,18 +81,18 @@
 
           <!-- Tags -->
           @if($post->tags)
-            <div class="mt-5 pt-4" style="border-top:1px solid rgba(245,230,204,0.1);">
+            <div class="mt-5 pt-4" style="border-top:1px solid var(--text-10);">
               <strong style="color:var(--theme-text-primary);font-size:0.9rem;">Tags:</strong>
               <div class="d-flex flex-wrap gap-2 mt-2">
                 @foreach(explode(',', $post->tags) as $tag)
-                  <span style="background:rgba(245,230,204,0.1);color:rgba(var(--theme-text-primary-rgb),0.7);padding:6px 14px;border-radius:20px;font-size:0.85rem;">{{ trim($tag) }}</span>
+                  <span style="background:var(--text-10);color:rgba(var(--theme-text-primary-rgb),0.7);padding:6px 14px;border-radius:20px;font-size:0.85rem;">{{ trim($tag) }}</span>
                 @endforeach
               </div>
             </div>
           @endif
 
           <!-- Share Section -->
-          <div class="mt-5 pt-4" style="border-top:1px solid rgba(245,230,204,0.1);">
+          <div class="mt-5 pt-4" style="border-top:1px solid var(--text-10);">
             <strong style="color:var(--theme-text-primary);font-size:0.9rem;">Share this post:</strong>
             <div class="d-flex gap-2 mt-2">
               <a href="https://www.facebook.com/sharer/sharer.php?u={{ url()->current() }}" target="_blank" class="btn-share" style="background:#1877f2;">
@@ -138,9 +138,9 @@
             <div class="d-flex flex-column gap-3">
               @foreach($relatedPosts as $related)
                 <a href="{{ route('blog.show', $related->slug) }}" class="text-decoration-none">
-                  <div class="d-flex gap-3" style="padding:0.75rem;background:rgba(245,230,204,0.05);border-radius:12px;transition:all 0.3s ease;">
+                  <div class="d-flex gap-3" style="padding:0.75rem;background:var(--text-05);border-radius:12px;transition:all 0.3s ease;">
                     @if($related->featured_image)
-                      <div style="width:80px;height:60px;overflow:hidden;border-radius:8px;background:rgba(245,230,204,0.02);">
+                      <div style="width:80px;height:60px;overflow:hidden;border-radius:8px;background:var(--text-02);">
                         <img src="{{ asset('storage/' . $related->featured_image) }}" alt="{{ $related->title }}" style="width:100%;height:100%;object-fit:cover;">
                       </div>
                     @else
@@ -173,7 +173,7 @@
   border-radius: 25px;
   font-size: 0.75rem;
   font-weight: 600;
-  color: #fbbf24;
+  color: var(--theme-text-secondary);
   letter-spacing: 0.5px;
   text-transform: uppercase;
 }
@@ -200,7 +200,7 @@
 
 /* Blog Content Styles */
 .blog-content h2 {
-  color: #f5e6cc;
+  color: var(--theme-text-primary);
   font-family: 'Playfair Display', serif;
   margin-top: 2.5rem;
   margin-bottom: 1.25rem;
@@ -209,7 +209,7 @@
 }
 
 .blog-content h3 {
-  color: #f5e6cc;
+  color: var(--theme-text-primary);
   font-family: 'Playfair Display', serif;
   margin-top: 2rem;
   margin-bottom: 1rem;
@@ -246,14 +246,14 @@
   padding-left: 1.5rem;
   margin: 2rem 0;
   font-style: italic;
-  color: rgba(245,230,204,0.8);
+  color: var(--text-80);
   background: rgba(245,158,11,0.05);
   padding: 1.5rem;
   border-radius: 0 12px 12px 0;
 }
 
 .blog-content a {
-  color: #fbbf24;
+  color: var(--theme-text-secondary);
   text-decoration: underline;
   transition: color 0.3s ease;
 }
@@ -269,7 +269,7 @@ a[style*="padding:0.75rem"] {
 
 a[style*="padding:0.75rem"]:hover {
   transform: translateX(5px);
-  background: rgba(245,230,204,0.08) !important;
+  background: var(--text-08) !important;
 }
 </style>
 @endpush

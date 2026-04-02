@@ -215,7 +215,7 @@
             @auth
             <div class="review-form-section mt-5">
               <div class="glass-card p-4">
-                <h5 class="mb-4" style="color: #fbbf24;">
+                <h5 class="mb-4" style="color: var(--theme-text-secondary);">
                   <i class="fas fa-pen me-2"></i>Write Your Review
                 </h5>
                 <form id="reviewForm" method="POST" action="{{ route('product.review.store', $product) }}">
@@ -232,8 +232,8 @@
                     </div>
                     <div class="col-12">
                       <label for="comment" class="form-label">Your Review <span class="text-danger">*</span></label>
-                      <textarea class="form-control" id="comment" name="comment" rows="5" placeholder="Share your experience with this product..." required minlength="10" maxlength="1000" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #f5e6cc;"></textarea>
-                      <small class="text-muted" style="color: rgba(245,230,204,0.5);">Minimum 10 characters, maximum 1000 characters</small>
+                      <textarea class="form-control" id="comment" name="comment" rows="5" placeholder="Share your experience with this product..." required minlength="10" maxlength="1000" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: var(--theme-text-primary);"></textarea>
+                      <small class="text-muted" style="color: var(--text-50);">Minimum 10 characters, maximum 1000 characters</small>
                     </div>
                     <div class="col-12">
                       <button type="submit" class="btn btn-glow w-100">
@@ -246,14 +246,14 @@
             </div>
             @else
             <div class="text-center py-4 mb-4">
-              <p style="color: rgba(245,230,204,0.8); margin-bottom: 1rem;">
-                <i class="fas fa-sign-in-alt me-2" style="color: #fbbf24;"></i>
+              <p style="color: var(--text-80); margin-bottom: 1rem;">
+                <i class="fas fa-sign-in-alt me-2" style="color: var(--theme-text-secondary);"></i>
                 Please <a href="#" data-bs-toggle="modal" data-bs-target="#loginModal" style="color: #f59e0b; text-decoration: underline;">login</a> to write a review
               </p>
             </div>
             @endif
 
-            <h6 class="mt-5 mb-4" style="color: #fbbf24;">Recent Reviews</h6>
+            <h6 class="mt-5 mb-4" style="color: var(--theme-text-secondary);">Recent Reviews</h6>
             @if($product->reviews && $product->reviews->count() > 0)
               @foreach($product->reviews as $review)
               <div class="review-item">
@@ -274,13 +274,13 @@
                 </div>
                 <div class="review-stars">{{ str_repeat('★', $review->rating) }}{{ str_repeat('☆', 5 - $review->rating) }}</div>
               </div>
-              <p class="mt-3 mb-0" style="color: rgba(245,230,204,0.8);">{{ $review->comment }}</p>
+              <p class="mt-3 mb-0" style="color: var(--text-80);">{{ $review->comment }}</p>
             </div>
             @endforeach
             @else
               <div class="text-center py-5">
                 <i class="fas fa-star fa-3x mb-3" style="color: rgba(245,158,11,0.3);"></i>
-                <p style="color: rgba(245,230,204,0.7);">No reviews yet. Be the first to review this product!</p>
+                <p style="color: var(--text-70);">No reviews yet. Be the first to review this product!</p>
               </div>
             @endif
           </div>
@@ -396,12 +396,12 @@
 
   .breadcrumb-modern .breadcrumb-item a:hover {
     background: rgba(245, 158, 11, 0.15);
-    color: #fbbf24;
+    color: var(--theme-text-secondary);
     transform: translateX(3px);
   }
 
   .breadcrumb-modern .breadcrumb-item.active {
-    color: #f5e6cc;
+    color: var(--theme-text-primary);
     font-weight: 600;
     display: flex;
     align-items: center;
@@ -459,7 +459,7 @@
 
   .product-image-placeholder {
     font-size: 5rem;
-    color: rgba(245,230,204,0.3);
+    color: var(--text-30);
     background: linear-gradient(135deg, rgba(245,158,11,0.1), rgba(244,63,94,0.05));
   }
 
@@ -475,7 +475,7 @@
   }
 
   .product-thumb.active {
-    border-color: #fbbf24;
+    border-color: var(--theme-text-secondary);
     transform: scale(1.05);
   }
 
@@ -492,7 +492,7 @@
     width: 100%;
     height: 100%;
     font-size: 2rem;
-    color: rgba(245,230,204,0.5);
+    color: var(--text-50);
   }
 
   /* Feature Cards */
@@ -516,13 +516,13 @@
 
   .feature-card i {
     font-size: 1.5rem;
-    color: #fbbf24;
+    color: var(--theme-text-secondary);
     margin-bottom: 0.5rem;
   }
 
   .feature-card span {
     font-size: 0.8rem;
-    color: rgba(245,230,204,0.8);
+    color: var(--text-80);
     text-align: center;
   }
 
@@ -533,7 +533,7 @@
     background: rgba(245,158,11,0.15);
     border: 1px solid rgba(245,158,11,0.3);
     border-radius: 20px;
-    color: #fbbf24;
+    color: var(--theme-text-secondary);
     font-size: 0.8rem;
     font-weight: 600;
     text-transform: uppercase;
@@ -542,7 +542,7 @@
   }
 
   .product-detail-title {
-    color: #f5e6cc;
+    color: var(--theme-text-primary);
     font-size: 2.5rem;
     font-weight: 700;
     margin-bottom: 1rem;
@@ -558,12 +558,12 @@
   }
 
   .product-rating-row .stars {
-    color: #fbbf24;
+    color: var(--theme-text-secondary);
     font-size: 1.2rem;
   }
 
   .review-count {
-    color: rgba(245,230,204,0.6);
+    color: var(--text-60);
     font-size: 0.9rem;
   }
 
@@ -582,7 +582,7 @@
 
   .stock-badge.low-stock {
     background: rgba(245,158,11,0.2);
-    color: #fbbf24;
+    color: var(--theme-text-secondary);
     animation: pulse 2s infinite;
   }
 
@@ -609,12 +609,12 @@
     font-family: 'Playfair Display', serif;
     font-size: 3rem;
     font-weight: 700;
-    color: #fbbf24;
+    color: var(--theme-text-secondary);
   }
 
   .product-old-price {
     font-size: 1.5rem;
-    color: rgba(245,230,204,0.4);
+    color: var(--text-40);
     text-decoration: line-through;
   }
 
@@ -637,7 +637,7 @@
   }
 
   .product-description p {
-    color: rgba(245,230,204,0.8);
+    color: var(--text-80);
     line-height: 1.8;
     margin: 0;
   }
@@ -664,7 +664,7 @@
     height: 50px;
     background: transparent;
     border: none;
-    color: rgba(245,230,204,0.8);
+    color: var(--text-80);
     font-size: 1rem;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -672,7 +672,7 @@
 
   .qty-btn-modern:hover {
     background: rgba(245,158,11,0.15);
-    color: #fbbf24;
+    color: var(--theme-text-secondary);
   }
 
   .qty-value-modern {
@@ -680,7 +680,7 @@
     text-align: center;
     font-size: 1.2rem;
     font-weight: 700;
-    color: #f5e6cc;
+    color: var(--theme-text-primary);
   }
 
   .add-cart-btn {
@@ -722,14 +722,14 @@
   }
 
   .meta-label {
-    color: rgba(245,230,204,0.6);
+    color: var(--text-60);
     font-size: 0.8rem;
     text-transform: uppercase;
     letter-spacing: 0.5px;
   }
 
   .meta-value {
-    color: #f5e6cc;
+    color: var(--theme-text-primary);
     font-size: 1rem;
     font-weight: 500;
     margin-top: 0.25rem;
@@ -755,7 +755,7 @@
 
   .product-tabs-nav .nav-link {
     padding: 1.2rem 1.5rem;
-    color: rgba(245,230,204,0.7);
+    color: var(--text-70);
     background: transparent;
     border: none;
     border-bottom: 3px solid transparent;
@@ -764,14 +764,14 @@
   }
 
   .product-tabs-nav .nav-link:hover {
-    color: #fbbf24;
+    color: var(--theme-text-secondary);
     background: rgba(245,158,11,0.1);
   }
 
   .product-tabs-nav .nav-link.active {
-    color: #fbbf24;
+    color: var(--theme-text-secondary);
     background: transparent;
-    border-bottom-color: #fbbf24;
+    border-bottom-color: var(--theme-text-secondary);
   }
 
   .product-tab-content {
@@ -779,13 +779,13 @@
   }
 
   .product-tab-body h4 {
-    color: #f5e6cc;
+    color: var(--theme-text-primary);
     margin-bottom: 1.5rem;
     font-size: 1.5rem;
   }
 
   .product-tab-body p {
-    color: rgba(245,230,204,0.8);
+    color: var(--text-80);
     line-height: 1.8;
     margin-bottom: 1rem;
   }
@@ -794,12 +794,12 @@
   .review-average {
     font-size: 4rem;
     font-weight: 700;
-    color: #fbbf24;
+    color: var(--theme-text-secondary);
     line-height: 1;
   }
 
   .review-stars {
-    color: #fbbf24;
+    color: var(--theme-text-secondary);
     font-size: 1.5rem;
     margin: 0.5rem 0;
   }
@@ -815,7 +815,7 @@
     align-items: center;
     gap: 1rem;
     font-size: 0.85rem;
-    color: rgba(245,230,204,0.7);
+    color: var(--text-70);
   }
 
   .review-bar .bar-bg {
@@ -909,7 +909,7 @@
     align-items: center;
     justify-content: center;
     font-size: 3.5rem;
-    color: rgba(245,230,204,0.5);
+    color: var(--text-50);
     background: linear-gradient(135deg, rgba(245,158,11,0.15), rgba(244,63,94,0.1));
     position: relative;
     overflow: hidden;
@@ -950,7 +950,7 @@
     background: rgba(15, 23, 42, 0.9);
     backdrop-filter: blur(12px);
     border: 1.5px solid rgba(255,255,255,0.15);
-    color: rgba(245,230,204,0.8);
+    color: var(--text-80);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -975,7 +975,7 @@
   .prod-cat {
     display: block;
     font-size: 0.7rem;
-    color: rgba(245,230,204,0.5);
+    color: var(--text-50);
     text-transform: uppercase;
     letter-spacing: 0.5px;
     margin-bottom: 0.5rem;
@@ -984,7 +984,7 @@
   .prod-title {
     font-size: 0.95rem;
     font-weight: 600;
-    color: #f5e6cc;
+    color: var(--theme-text-primary);
     margin-bottom: 0.75rem;
     line-height: 1.4;
     display: -webkit-box;
@@ -995,13 +995,13 @@
   }
 
   .prod-card:hover .prod-title {
-    color: #fbbf24;
+    color: var(--theme-text-secondary);
   }
 
   .prod-price {
     font-size: 1.1rem;
     font-weight: 700;
-    color: #fbbf24;
+    color: var(--theme-text-secondary);
   }
 
   .prod-cart-btn {
@@ -1010,7 +1010,7 @@
     border-radius: 10px;
     background: linear-gradient(135deg, rgba(245,158,11,0.2), rgba(244,63,94,0.15));
     border: 1px solid rgba(245,158,11,0.3);
-    color: #fbbf24;
+    color: var(--theme-text-secondary);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1080,7 +1080,7 @@
 
   .breadcrumb-glass .breadcrumb-item + .breadcrumb-item::before {
     content: "›";
-    color: rgba(245,230,204,0.4);
+    color: var(--text-40);
     font-size: 0.8rem;
     margin: 0 0.75rem;
   }
@@ -1092,12 +1092,12 @@
   }
 
   .breadcrumb-glass .breadcrumb-item a:hover {
-    color: #fbbf24;
+    color: var(--theme-text-secondary);
     text-decoration: underline;
   }
 
   .breadcrumb-glass .breadcrumb-item.active {
-    color: #f5e6cc;
+    color: var(--theme-text-primary);
   }
 
   /* Star Rating Input Styles */
@@ -1114,19 +1114,19 @@
 
   .star-rating-input label {
     font-size: 2rem;
-    color: rgba(245,230,204,0.3);
+    color: var(--text-30);
     cursor: pointer;
     transition: all 0.2s ease;
   }
 
   .star-rating-input label:hover,
   .star-rating-input label:hover ~ label {
-    color: #fbbf24;
+    color: var(--theme-text-secondary);
     transform: scale(1.1);
   }
 
   .star-rating-input input:checked ~ label {
-    color: #fbbf24;
+    color: var(--theme-text-secondary);
   }
 
   .star-rating-input label:active {
@@ -1144,7 +1144,7 @@
   }
 
   .review-form-section .form-label {
-    color: #f5e6cc;
+    color: var(--theme-text-primary);
     font-weight: 500;
     margin-bottom: 0.5rem;
   }
@@ -1152,7 +1152,7 @@
   .review-form-section .form-control:focus {
     background: rgba(255, 255, 255, 0.08);
     border-color: #f59e0b;
-    color: #f5e6cc;
+    color: var(--theme-text-primary);
     box-shadow: 0 0 0 0.2rem rgba(245, 158, 11, 0.25);
   }
 
@@ -1637,7 +1637,7 @@ if (reviewForm) {
         const starInputs = document.querySelectorAll('.star-rating-input input');
         starInputs.forEach(input => {
           input.checked = false;
-          input.nextElementSibling.style.color = 'rgba(245,230,204,0.3)';
+          input.nextElementSibling.style.color = 'var(--text-30)';
         });
 
         // Refresh the page after a short delay to show the new review
@@ -1665,7 +1665,7 @@ starInputs.forEach(input => {
   input.addEventListener('change', function() {
     // Reset all stars
     starInputs.forEach(inp => {
-      inp.nextElementSibling.style.color = 'rgba(245,230,204,0.3)';
+      inp.nextElementSibling.style.color = 'var(--text-30)';
     });
 
     // Highlight selected and previous stars

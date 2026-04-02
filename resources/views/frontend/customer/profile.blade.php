@@ -17,10 +17,10 @@
       <div class="col-lg-9">
         <!-- Page Header -->
         <div class="glass-card p-4 mb-4">
-          <h4 style="color: #f5e6cc; margin-bottom: 0.5rem;">
-            <i class="fas fa-user-edit me-2" style="color: #fbbf24;"></i>Profile Settings
+          <h4 style="color: var(--theme-text-primary); margin-bottom: 0.5rem;">
+            <i class="fas fa-user-edit me-2" style="color: var(--theme-text-secondary);"></i>Profile Settings
           </h4>
-          <p style="color: rgba(245,230,204,0.7); margin: 0;">
+          <p style="color: var(--text-70); margin: 0;">
             Update your personal information
           </p>
         </div>
@@ -170,7 +170,7 @@
     align-items: center;
     padding: 0.75rem 1rem;
     border-radius: 12px;
-    color: rgba(245,230,204,0.8);
+    color: var(--text-80);
     text-decoration: none;
     transition: all 0.3s ease;
     background: transparent;
@@ -181,12 +181,12 @@
   }
   .customer-nav-item:hover {
     background: rgba(245,158,11,0.1);
-    color: #fbbf24;
+    color: var(--theme-text-secondary);
     transform: translateX(5px);
   }
   .customer-nav-item.active {
     background: linear-gradient(135deg, rgba(245,158,11,0.2), rgba(244,63,94,0.1));
-    color: #fbbf24;
+    color: var(--theme-text-secondary);
     border: 1px solid rgba(245,158,11,0.3);
   }
 </style>

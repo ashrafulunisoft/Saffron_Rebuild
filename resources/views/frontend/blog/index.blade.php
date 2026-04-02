@@ -218,14 +218,14 @@
   border-radius: 25px;
   font-size: 0.75rem;
   font-weight: 600;
-  color: #fbbf24;
+  color: var(--theme-text-secondary);
   margin-bottom: 1rem;
   letter-spacing: 0.5px;
   text-transform: uppercase;
 }
 
 .blog-title {
-  color: #f5e6cc;
+  color: var(--theme-text-primary);
   font-weight: 700;
   font-size: 1.15rem;
   margin-bottom: 0.75rem;
@@ -238,7 +238,7 @@
 }
 
 .blog-excerpt {
-  color: rgba(245,230,204,0.75);
+  color: var(--text-75);
   font-size: 0.9rem;
   margin-bottom: 1rem;
   line-height: 1.6;
@@ -253,14 +253,14 @@
   flex-wrap: wrap;
   gap: 1rem;
   font-size: 0.8rem;
-  color: rgba(245,230,204,0.6);
+  color: var(--text-60);
   padding-top: 1rem;
-  border-top: 1px solid rgba(245,230,204,0.1);
+  border-top: 1px solid var(--text-10);
 }
 
 .blog-meta i {
   margin-right: 4px;
-  color: #fbbf24;
+  color: var(--theme-text-secondary);
 }
 
 /* Animation for cards */
