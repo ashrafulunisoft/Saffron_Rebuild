@@ -19,22 +19,48 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 
     @stack('styles')
+    @php
+        // Get theme settings
+        $theme = \App\Models\ThemeSetting::getActive();
+    @endphp
     <style>
-  --glass-bg: rgba(255,255,255,0.08);
-  --glass-border: rgba(255,255,255,0.15);
-  --glass-blur: blur(20px);
-}
+    :root {
+        /* Theme Colors from Database */
+        --theme-primary: {{ $theme->primary_color }};
+        --theme-primary-light: {{ $theme->primary_color_light }};
+        --theme-primary-dark: {{ $theme->primary_color_dark }};
+        --theme-secondary: {{ $theme->secondary_color }};
+        --theme-secondary-dark: {{ $theme->secondary_color_dark }};
+        --theme-accent: {{ $theme->accent_color }};
+        --theme-text-primary: {{ $theme->text_primary }};
+        --theme-text-secondary: {{ $theme->text_secondary }};
+        --theme-btn-gradient: linear-gradient(135deg, {{ $theme->btn_gradient_start }}, {{ $theme->btn_gradient_end }});
+        --theme-menu-hover: linear-gradient(90deg, {{ $theme->menu_hover_start }}, {{ $theme->menu_hover_end }});
 
-* { margin:0; padding:0; box-sizing:border-box; }
-html { scroll-behavior:smooth; }
+        /* Legacy variables for backward compatibility */
+        --amber: {{ $theme->primary_color }};
+        --amber-dark: {{ $theme->primary_color_dark }};
+        --amber-light: {{ $theme->primary_color_light }};
+        --rose: {{ $theme->secondary_color }};
+        --rose-dark: {{ $theme->secondary_color_dark }};
+        --gold: {{ $theme->primary_color_light }};
 
-body {
-  font-family:'Poppins',sans-serif;
-  background: linear-gradient(135deg, #0f0a00 0%, #1a0a00 20%, #0d0520 40%, #001a0d 60%, #1a0a00 80%, #0f0502 100%);
-  min-height:100vh;
-  color:#f5e6cc;
-  overflow-x:hidden;
-}
+        /* Glass Effect */
+        --glass-bg: {{ $theme->glass_bg }};
+        --glass-border: {{ $theme->glass_border }};
+        --glass-blur: blur(20px);
+    }
+
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+
+    body {
+        font-family:'Poppins',sans-serif;
+        background: linear-gradient(135deg, {{ $theme->bg_gradient_1 }} 0%, {{ $theme->bg_gradient_2 }} 20%, {{ $theme->bg_gradient_3 }} 40%, {{ $theme->bg_gradient_4 }} 60%, {{ $theme->bg_gradient_2 }} 80%, {{ $theme->bg_gradient_5 }} 100%);
+        min-height:100vh;
+        color: var(--theme-text-primary);
+        overflow-x:hidden;
+    }
 
 /* Animated Background Particles */
 .particles-container {

@@ -351,6 +351,14 @@ Route::middleware(['auth', 'role:admin|staff'])->group(function () {
             ->name('cms.sections.update');
         Route::delete('/cms/{cms}/sections/{section}', [App\Http\Controllers\Admin\CmsController::class, 'destroySection'])
             ->name('cms.sections.destroy');
+
+        // Theme Settings
+        Route::get('/theme-settings', [App\Http\Controllers\Admin\ThemeSettingController::class, 'index'])
+            ->name('theme-settings.index');
+        Route::put('/theme-settings', [App\Http\Controllers\Admin\ThemeSettingController::class, 'update'])
+            ->name('theme-settings.update');
+        Route::post('/theme-settings/reset', [App\Http\Controllers\Admin\ThemeSettingController::class, 'reset'])
+            ->name('theme-settings.reset');
     });
 });
 

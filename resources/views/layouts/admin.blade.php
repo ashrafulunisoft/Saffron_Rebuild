@@ -584,6 +584,9 @@
                         <a href="{{ route('admin.ecommerce.cms.index') }}" class="submenu-item {{ request()->routeIs('admin.ecommerce.cms.*') ? 'active' : '' }}">
                             <i class="fas fa-file-alt"></i> CMS Pages
                         </a>
+                        <a href="{{ route('admin.ecommerce.theme-settings.index') }}" class="submenu-item {{ request()->routeIs('admin.ecommerce.theme-settings.*') ? 'active' : '' }}">
+                            <i class="fas fa-palette"></i> Theme Settings
+                        </a>
                     </div>
                 </div>
 
