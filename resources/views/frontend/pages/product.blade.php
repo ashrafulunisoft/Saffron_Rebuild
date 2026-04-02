@@ -355,7 +355,7 @@
     left: 0;
     right: 0;
     height: 3px;
-    background: linear-gradient(90deg, #f59e0b, #f43f5e);
+    background: var(--theme-menu-hover);
     border-radius: 16px 16px 0 0;
   }
 
@@ -828,7 +828,7 @@
 
   .review-bar .bar-fill {
     height: 100%;
-    background: linear-gradient(90deg, #fbbf24, #f59e0b);
+    background: linear-gradient(90deg, var(--theme-text-secondary), var(--theme-primary));
     border-radius: 4px;
   }
 
@@ -844,7 +844,7 @@
     width: 45px;
     height: 45px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #f59e0b, #f43f5e);
+    background: var(--theme-btn-gradient);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1019,7 +1019,7 @@
   }
 
   .prod-cart-btn:hover {
-    background: linear-gradient(135deg, #f59e0b, #f43f5e);
+    background: var(--theme-btn-gradient);
     border-color: transparent;
     color: #fff;
     transform: scale(1.1);

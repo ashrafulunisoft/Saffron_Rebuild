@@ -89,7 +89,7 @@
     width: 80px;
     height: 80px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #f59e0b, #f43f5e);
+    background: var(--theme-btn-gradient);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -324,7 +324,7 @@
     width: 36px;
     height: 36px;
     border-radius: 10px;
-    background: linear-gradient(135deg, #f59e0b, #f43f5e);
+    background: var(--theme-btn-gradient);
     border: none;
     color: white;
     display: flex;

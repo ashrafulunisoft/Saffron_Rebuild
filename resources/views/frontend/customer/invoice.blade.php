@@ -116,7 +116,7 @@
         }
 
         .items-table thead {
-            background: #f59e0b;
+            background: var(--theme-primary);
             color: white;
         }
 
@@ -174,7 +174,7 @@
         }
 
         .totals-table .total-row {
-            background: #f59e0b;
+            background: var(--theme-primary);
             color: white;
             font-weight: bold;
             font-size: 16px;
@@ -262,7 +262,7 @@
             top: 20px;
             right: 20px;
             padding: 12px 24px;
-            background: #f59e0b;
+            background: var(--theme-primary);
             color: white;
             border: none;
             border-radius: 6px;

@@ -97,7 +97,7 @@
 
                           <!-- Remove Button -->
                           <button class="remove-item-btn" data-cart-id="{{ $item->id }}"
-                                  style="border: none; background: rgba(244,63,94,0.1); color: #f43f5e; padding: 0.5rem; border-radius: 8px; cursor: pointer; transition: all 0.3s ease;"
+                                  style="border: none; background: rgba(var(--theme-secondary-rgb,244,63,94),0.1); color: var(--theme-secondary); padding: 0.5rem; border-radius: 8px; cursor: pointer; transition: all 0.3s ease;"
                                   onmouseover="this.style.background='rgba(244,63,94,0.2)'"
                                   onmouseout="this.style.background='rgba(244,63,94,0.1)'">
                             <i class="fas fa-trash-alt"></i>
@@ -191,7 +191,7 @@
 
                           <!-- Remove Button -->
                           <button class="remove-item-btn" data-cart-id="{{ $item->id }}"
-                                  style="flex: 0 0 auto; border: none; background: rgba(244,63,94,0.15); color: #f43f5e; padding: 0.6rem 1rem; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; white-space: nowrap; font-size: 0.9rem;"
+                                  style="flex: 0 0 auto; border: none; background: rgba(var(--theme-secondary-rgb,244,63,94),0.15); color: var(--theme-secondary); padding: 0.6rem 1rem; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; white-space: nowrap; font-size: 0.9rem;"
                                   onmouseover="this.style.background='rgba(244,63,94,0.25)'"
                                   onmouseout="this.style.background='rgba(244,63,94,0.15)'">
                             <i class="fas fa-trash-alt me-1" style="font-size: 0.9rem;"></i>Remove
@@ -591,7 +591,7 @@ function applyCoupon() {
   const cartTotal = document.querySelector('.cart-total');
 
   if (!couponCode) {
-    messageDiv.innerHTML = '<span style="color: #f43f5e;"><i class="fas fa-exclamation-circle me-1"></i>Please enter a coupon code</span>';
+    messageDiv.innerHTML = '<span style="color: var(--theme-secondary);"><i class="fas fa-exclamation-circle me-1"></i>Please enter a coupon code</span>';
     return;
   }
 
@@ -647,14 +647,14 @@ function applyCoupon() {
       applyBtn.classList.remove('btn-glow');
       applyBtn.classList.add('btn-success');
     } else {
-      messageDiv.innerHTML = `<span style="color: #f43f5e;"><i class="fas fa-times-circle me-1"></i>${data.message}</span>`;
+      messageDiv.innerHTML = `<span style="color: var(--theme-secondary);"><i class="fas fa-times-circle me-1"></i>${data.message}</span>`;
       applyBtn.disabled = false;
       applyBtn.innerHTML = 'Apply';
     }
   })
   .catch(error => {
     console.error('Error:', error);
-    messageDiv.innerHTML = `<span style="color: #f43f5e;"><i class="fas fa-exclamation-circle me-1"></i>${error.message || 'Failed to apply coupon'}</span>`;
+    messageDiv.innerHTML = `<span style="color: var(--theme-secondary);"><i class="fas fa-exclamation-circle me-1"></i>${error.message || 'Failed to apply coupon'}</span>`;
     applyBtn.disabled = false;
     applyBtn.innerHTML = 'Apply';
   });
@@ -724,7 +724,7 @@ document.addEventListener('DOMContentLoaded', function() {
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(90deg, #f59e0b, #f43f5e);
+  background: var(--theme-menu-hover);
   border-radius: 16px 16px 0 0;
 }
 

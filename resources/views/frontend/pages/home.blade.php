@@ -321,11 +321,11 @@
           </div>
         </div>
         @if($cmsSections && isset($cmsSections['chocolate-paradise']) && $cmsSections['chocolate-paradise']->button_url)
-        <a href="{{ $cmsSections['chocolate-paradise']->button_url }}" class="btn btn-glow mt-4 animate-on-scroll" style="background:linear-gradient(135deg, #f43f5e, #a855f7);">
+        <a href="{{ $cmsSections['chocolate-paradise']->button_url }}" class="btn btn-glow mt-4 animate-on-scroll" style="background:linear-gradient(135deg, var(--theme-secondary), var(--theme-accent));">
           {{ $cmsSections['chocolate-paradise']->button_text_en ?? 'Discover Chocolates' }} <i class="fas fa-arrow-right ms-2"></i>
         </a>
         @else
-        <a href="{{ route('shop') }}" class="btn btn-glow mt-4 animate-on-scroll" style="background:linear-gradient(135deg, #f43f5e, #a855f7);">
+        <a href="{{ route('shop') }}" class="btn btn-glow mt-4 animate-on-scroll" style="background:linear-gradient(135deg, var(--theme-secondary), var(--theme-accent));">
           Discover Chocolates <i class="fas fa-arrow-right ms-2"></i>
         </a>
         @endif
@@ -565,7 +565,7 @@
         @endif
       @else
         <span class="section-badge animate-on-scroll" style="background:linear-gradient(135deg,rgba(244,63,94,0.2),rgba(245,158,11,0.2));border-color:rgba(244,63,94,0.3);"><i class="fas fa-fire me-2"></i>Top Rated</span>
-        <h2 class="section-title mt-3 animate-on-scroll">Best <span id="sellers-text" style="background:linear-gradient(135deg,#f43f5e,#f59e0b);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;"></span></h2>
+        <h2 class="section-title mt-3 animate-on-scroll">Best <span id="sellers-text" style="background:var(--theme-btn-gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;"></span></h2>
         <p class="mt-3 animate-on-scroll" style="color:var(--text-60);max-width:600px;margin:0 auto;">Our most loved products that customers keep coming back for</p>
       @endif
     </div>
@@ -842,7 +842,7 @@
             <div>
               <h4 style="color:var(--theme-text-primary);font-family:'Playfair Display',serif;margin-bottom:0.5rem;">Gift Hampers</h4>
               <p style="color:var(--text-70);margin-bottom:1rem;">Curated sweet boxes with premium packaging</p>
-              <a href="{{ route('shop') }}" class="btn btn-glow btn-sm" style="background:linear-gradient(135deg, #f43f5e, #a855f7);">Send a Gift</a>
+              <a href="{{ route('shop') }}" class="btn btn-glow btn-sm" style="background:linear-gradient(135deg, var(--theme-secondary), var(--theme-accent));">Send a Gift</a>
             </div>
           </div>
         </div>
@@ -1387,7 +1387,7 @@ function toggleWishlist(productId, button) {
 }
 
 .badge-featured {
-  background: linear-gradient(135deg, #f59e0b, #f43f5e);
+  background: var(--theme-btn-gradient);
   color: white;
 }
 

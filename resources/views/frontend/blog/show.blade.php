@@ -32,7 +32,7 @@
           <!-- Blog Image Container -->
           <div style="position:relative;width:100%;border-radius:12px;background:var(--text-02);margin-bottom:1.5rem;">
             @if($post->is_featured)
-              <span style="position:absolute;top:15px;right:15px;background:linear-gradient(135deg,#f59e0b,#f43f5e);color:white;padding:6px 16px;border-radius:20px;font-size:0.75rem;font-weight:700;box-shadow:0 4px 12px rgba(245,158,11,0.4);z-index:2;">⭐ Featured</span>
+              <span style="position:absolute;top:15px;right:15px;background:var(--theme-btn-gradient);color:white;padding:6px 16px;border-radius:20px;font-size:0.75rem;font-weight:700;box-shadow:0 4px 12px rgba(245,158,11,0.4);z-index:2;">⭐ Featured</span>
             @endif
             <img src="{{ asset('storage/' . $post->featured_image) }}" alt="{{ $post->title }}" style="width:100%;height:auto;display:block;border-radius:12px;">
           </div>
@@ -69,7 +69,7 @@
 
           <!-- Post Excerpt -->
           @if($post->excerpt)
-            <div style="background:linear-gradient(135deg,rgba(245,158,11,0.12),rgba(244,63,94,0.08));padding:1.5rem;border-left:4px solid #f59e0b;margin-bottom:2rem;border-radius:0 12px 12px 0;font-size:1.05rem;color:rgba(var(--theme-text-primary-rgb),0.85);font-style:italic;">
+            <div style="background:linear-gradient(135deg,rgba(var(--theme-primary-rgb,245,158,11),0.12),rgba(var(--theme-secondary-rgb,244,63,94),0.08));padding:1.5rem;border-left:4px solid var(--theme-primary);margin-bottom:2rem;border-radius:0 12px 12px 0;font-size:1.05rem;color:rgba(var(--theme-text-primary-rgb),0.85);font-style:italic;">
               {{ $post->excerpt }}
             </div>
           @endif
@@ -120,7 +120,7 @@
           <div class="glass-card" style="padding:1.5rem;margin-bottom:1.5rem;border-radius:16px;">
             <h5 style="color:var(--theme-text-primary);margin-bottom:1rem;font-size:1.1rem;">About the Author</h5>
             <div class="d-flex align-items-center gap-3">
-              <div style="width:60px;height:60px;background:linear-gradient(135deg,#f59e0b,#f43f5e);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.5rem;color:white;font-weight:700;">
+              <div style="width:60px;height:60px;background:var(--theme-btn-gradient);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.5rem;color:white;font-weight:700;">
                 {{ substr($post->user->name, 0, 1) }}
               </div>
               <div>

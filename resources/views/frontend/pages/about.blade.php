@@ -155,7 +155,7 @@
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(90deg, #f59e0b, #f43f5e);
+  background: var(--theme-menu-hover);
   border-radius: 16px 16px 0 0;
 }
 

@@ -115,6 +115,59 @@
         font-size: 0.8rem;
         margin-top: 2px;
     }
+    .theme-preset-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        gap: 1rem;
+        margin-bottom: 1rem;
+    }
+    .theme-preset-card {
+        background: rgba(255,255,255,0.05);
+        border: 2px solid rgba(255,255,255,0.1);
+        border-radius: 16px;
+        padding: 1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-align: center;
+    }
+    .theme-preset-card:hover {
+        border-color: rgba(255,255,255,0.3);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+    }
+    .theme-preset-card.active {
+        border-color: #22c55e;
+        background: rgba(34, 197, 94, 0.1);
+    }
+    .theme-preset-card.active::before {
+        content: '\f00c';
+        font-family: 'Font Awesome 6 Free';
+        font-weight: 900;
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        color: #22c55e;
+        font-size: 1rem;
+    }
+    .theme-preset-card {
+        position: relative;
+    }
+    .preset-preview {
+        width: 100%;
+        height: 60px;
+        border-radius: 10px;
+        margin-bottom: 0.75rem;
+    }
+    .preset-name {
+        color: white;
+        font-weight: 600;
+        font-size: 0.95rem;
+        margin-bottom: 0.25rem;
+    }
+    .preset-description {
+        color: rgba(255,255,255,0.5);
+        font-size: 0.75rem;
+    }
 </style>
 @endpush
 
@@ -151,6 +204,32 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" style="filter: invert(1);"></button>
             </div>
         @endif
+
+        <!-- Theme Presets Section -->
+        <div class="setting-section" style="margin-bottom: 2rem;">
+            <div class="setting-section-title">
+                <i class="fas fa-swatchbook"></i>
+                Theme Presets
+            </div>
+            <p style="color: rgba(255,255,255,0.6); margin-bottom: 1rem; font-size: 0.9rem;">
+                Choose a predefined theme or customize colors manually below.
+            </p>
+            <div class="theme-preset-grid">
+                @php
+                    $presets = \App\Models\ThemeSetting::THEME_PRESETS;
+                    $currentPreset = $theme->theme_preset ?? 'default';
+                @endphp
+                @foreach($presets as $key => $preset)
+                    <div class="theme-preset-card {{ $currentPreset === $key ? 'active' : '' }}"
+                         onclick="applyPreset('{{ $key }}')"
+                         data-preset="{{ $key }}">
+                        <div class="preset-preview" style="background: {{ $preset['preview'] }};"></div>
+                        <div class="preset-name">{{ $preset['name'] }}</div>
+                        <div class="preset-description">{{ $preset['description'] }}</div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
 
         <div class="row">
             <!-- Preview Section -->
@@ -545,6 +624,25 @@ document.addEventListener('DOMContentLoaded', function() {
     window.resetTheme = function() {
         if (confirm('Are you sure you want to reset the theme to default settings?')) {
             document.getElementById('resetThemeForm').submit();
+        }
+    };
+
+    // Apply preset function
+    window.applyPreset = function(presetKey) {
+        if (confirm('Apply the "' + presetKey.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()) + '" theme preset? This will replace your current color settings.')) {
+            // Create a form and submit
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = '{{ route("admin.ecommerce.theme-settings.preset", ["preset" => "PRESET_KEY"]) }}'.replace('PRESET_KEY', presetKey);
+
+            const csrfField = document.createElement('input');
+            csrfField.type = 'hidden';
+            csrfField.name = '_token';
+            csrfField.value = '{{ csrf_token() }}';
+            form.appendChild(csrfField);
+
+            document.body.appendChild(form);
+            form.submit();
         }
     };
 });

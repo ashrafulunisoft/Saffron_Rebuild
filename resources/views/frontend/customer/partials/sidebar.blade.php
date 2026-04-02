@@ -65,7 +65,7 @@
     width: 80px;
     height: 80px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #f59e0b, #f43f5e);
+    background: var(--theme-btn-gradient);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -107,7 +107,7 @@
   }
   .nav-badge {
     margin-left: auto;
-    background: linear-gradient(135deg, #f43f5e, #e11d48);
+    background: linear-gradient(135deg, var(--theme-secondary), var(--theme-secondary-dark));
     color: white;
     padding: 0.2rem 0.6rem;
     border-radius: 20px;

@@ -112,4 +112,22 @@ class ThemeSettingController extends Controller
 
         return response($css)->header('Content-Type', 'text/css');
     }
+
+    /**
+     * Apply a preset theme
+     */
+    public function applyPreset(Request $request, $preset)
+    {
+        try {
+            $theme = ThemeSetting::getActive();
+
+            if ($theme->applyPreset($preset)) {
+                return redirect()->back()->with('success', 'Theme preset applied successfully!');
+            }
+
+            return redirect()->back()->with('error', 'Invalid theme preset selected.');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Failed to apply preset: ' . $e->getMessage());
+        }
+    }
 }

@@ -359,6 +359,8 @@ Route::middleware(['auth', 'role:admin|staff'])->group(function () {
             ->name('theme-settings.update');
         Route::post('/theme-settings/reset', [App\Http\Controllers\Admin\ThemeSettingController::class, 'reset'])
             ->name('theme-settings.reset');
+        Route::post('/theme-settings/preset/{preset}', [App\Http\Controllers\Admin\ThemeSettingController::class, 'applyPreset'])
+            ->name('theme-settings.preset');
     });
 });
 

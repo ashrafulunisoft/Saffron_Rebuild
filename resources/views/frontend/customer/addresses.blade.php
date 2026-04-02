@@ -228,7 +228,7 @@ function setDefaultAddress(element) {
     width: 80px;
     height: 80px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #f59e0b, #f43f5e);
+    background: var(--theme-btn-gradient);
     display: flex;
     align-items: center;
     justify-content: center;

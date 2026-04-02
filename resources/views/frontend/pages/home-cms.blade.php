@@ -293,7 +293,7 @@
           </div>
         </div>
         @if($chocolate->button_url)
-        <a href="{{ $chocolate->button_url }}" class="btn btn-glow mt-4 animate-on-scroll" style="background:linear-gradient(135deg, #f43f5e, #a855f7);">
+        <a href="{{ $chocolate->button_url }}" class="btn btn-glow mt-4 animate-on-scroll" style="background:linear-gradient(135deg, var(--theme-secondary), var(--theme-accent));">
           <i class="fas fa-heart me-2"></i>{{ $chocolate->button_text }}
         </a>
         @endif

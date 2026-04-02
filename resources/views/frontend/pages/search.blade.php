@@ -244,7 +244,7 @@
   }
 
   .prod-cart-btn:hover {
-    background: linear-gradient(135deg, #f59e0b, #f43f5e);
+    background: var(--theme-btn-gradient);
     border-color: transparent;
     color: #fff;
     transform: scale(1.1);
@@ -278,7 +278,7 @@
   }
 
   .pagination-wrapper .page-item.active .page-link {
-    background: linear-gradient(135deg, #f59e0b, #f43f5e);
+    background: var(--theme-btn-gradient);
     border-color: transparent;
     color: #fff;
     box-shadow: 0 4px 12px rgba(245,158,11,0.4);

@@ -228,7 +228,7 @@
     width: 80px;
     height: 80px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #f59e0b, #f43f5e);
+    background: var(--theme-btn-gradient);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -270,7 +270,7 @@
   }
   .nav-badge {
     margin-left: auto;
-    background: linear-gradient(135deg, #f43f5e, #e11d48);
+    background: linear-gradient(135deg, var(--theme-secondary), var(--theme-secondary-dark));
     color: white;
     padding: 0.2rem 0.6rem;
     border-radius: 20px;
@@ -421,7 +421,7 @@
     display: block;
     font-size: 2rem;
     font-weight: 800;
-    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    background: linear-gradient(135deg, var(--theme-text-secondary), var(--theme-primary));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;

@@ -165,7 +165,7 @@
     left: 0;
     right: 0;
     height: 3px;
-    background: linear-gradient(90deg, #f59e0b, #f43f5e);
+    background: var(--theme-menu-hover);
     border-radius: 16px 16px 0 0;
   }
 
@@ -493,7 +493,7 @@
     width: 36px;
     height: 36px;
     border-radius: 10px;
-    background: linear-gradient(135deg, #f59e0b, #f43f5e);
+    background: var(--theme-btn-gradient);
     border: none;
     color: white;
     display: flex;
@@ -539,7 +539,7 @@
   }
 
   .pagination .page-item.active .page-link {
-    background: linear-gradient(135deg, #f59e0b, #f43f5e);
+    background: var(--theme-btn-gradient);
     border-color: transparent;
     color: white;
   }
