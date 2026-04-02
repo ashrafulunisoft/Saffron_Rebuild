@@ -46,6 +46,14 @@ class LoginController extends Controller
             return redirect()->intended(route('customer.profile'));
         }
 
+        // Return JSON for AJAX requests
+        if ($request->expectsJson() || $request->ajax()) {
+            return response()->json([
+                'message' => 'Invalid credentials. Please check your email and password.',
+                'errors' => ['email' => ['Invalid credentials']]
+            ], 422);
+        }
+
         return back()->withErrors(['email' => 'Invalid credentials']);
     }
 

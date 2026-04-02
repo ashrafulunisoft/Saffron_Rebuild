@@ -107,4 +107,11 @@ Saffron Next Task List :
 4.  fix the coupon list for the customer dashboard; 
 5.  show the total coupon used in the orders . 
 6.  in the header search box add the auto 'recommandation while type. 
-
+7.  highly optimize the website speed as the best and fastest now ;
+ 
+----------------------------------------------------
+#download Sir all latest product to the local folder and 
+distribute to the 
+1. update the project to the live server; 
+2. add the theme color change functionality for the admin. 
+3. configure the sslcommerz producttion key
