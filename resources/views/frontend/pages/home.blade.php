@@ -549,6 +549,71 @@
   </div>
 </section>
 
+<!-- TRADITIONAL SWEETS -->
+<section class="section-gap" id="traditional-sweets" style="background:linear-gradient(135deg,rgba(245,158,11,0.05),rgba(251,191,36,0.03));">
+  <div class="container">
+    <div class="text-center mb-5">
+      <span class="section-badge animate-on-scroll" style="background:linear-gradient(135deg,rgba(245,158,11,0.3),rgba(251,191,36,0.2));border-color:rgba(245,158,11,0.4);"><i class="fas fa-cookie me-2"></i>Authentic Taste</span>
+      <h2 class="section-title mt-3 animate-on-scroll">
+        Traditional <span class="gradient-text">Sweets</span>
+      </h2>
+      <p class="mt-3 animate-on-scroll" style="color:var(--text-60);max-width:600px;margin:0 auto;">
+        Experience the rich heritage of Bengal with our authentic traditional sweets, crafted with love and the finest ingredients
+      </p>
+    </div>
+
+    <div class="row g-4">
+      @if(isset($traditionalSweets) && $traditionalSweets->count() > 0)
+        @foreach($traditionalSweets as $product)
+        <div class="col-lg-3 col-md-6">
+          <a href="{{ route('shop.product', $product->slug) }}" class="text-decoration-none">
+            <div class="prod-card prod-item animate-on-scroll">
+              <div class="prod-img-wrapper">
+                @if($product->image)
+                  <img src="{{ asset("storage/{$product->image}") }}" alt="{{ $product->name_en }}" loading="lazy" decoding="async">
+                @else
+                  <div class="prod-img-placeholder">
+                    <i class="fas fa-cookie-bite"></i>
+                  </div>
+                @endif
+                <span class="prod-badge" style="background:linear-gradient(135deg,#f59e0b,#d97706);">🍬 TRADITIONAL</span>
+                <button class="prod-wishlist" data-product-id="{{ $product->id }}" title="Add to Wishlist">
+                  <i class="far fa-heart"></i>
+                </button>
+              </div>
+              <div class="prod-body">
+                <div class="prod-cat">{{ $product->category->name_en ?? 'Traditional Sweets' }}</div>
+                <h5 class="prod-name">{{ $product->name_en }}</h5>
+                <div class="prod-stars">★★★★★ <small>({{ $product->reviews_count ?? 0 }})</small></div>
+                <div class="prod-footer">
+                  <div>
+                    <span class="price-new">৳{{ number_format($product->price) }}</span>
+                    @if($product->sale_price)
+                      <span class="price-old">৳{{ number_format($product->sale_price) }}</span>
+                    @endif
+                  </div>
+                  <button class="add-btn" onclick="addToCart({{ $product->id }}, '{{ $product->name }}', {{ $product->sale_price ?? $product->price }}, '{{ $product->image ?? '' }}', event)"><i class="fas fa-shopping-bag"></i></button>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+        @endforeach
+      @else
+        <div class="col-12 text-center py-5">
+          <p style="color:var(--text-60);">No traditional sweets available at the moment.</p>
+        </div>
+      @endif
+    </div>
+
+    <div class="text-center mt-5">
+      <a href="{{ route('shop.category', 'traditional-sweets') }}" class="btn btn-glow" style="background:linear-gradient(135deg,#f59e0b,#d97706);">
+        <i class="fas fa-arrow-right me-2"></i>View All Traditional Sweets
+      </a>
+    </div>
+  </div>
+</section>
+
 <!-- BEST SELLERS -->
 <section class="section-gap" style="background:linear-gradient(180deg, rgba(244,63,94,0.03), transparent);">
   <div class="container">
