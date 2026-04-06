@@ -119,221 +119,6 @@
   </div>
 </section>
 
-<!-- WHO WE ARE / ABOUT -->
-<section class="section-gap about-split" id="about">
-  <div class="container">
-    <div class="row g-5 align-items-center">
-      <div class="col-lg-6">
-        <div class="about-image-container">
-          <div class="glass-card-glow p-3 animate-on-scroll" style="height:100%;display:flex;align-items:center;justify-content:center;">
-            <div style="font-size:12rem;">{{ $cmsSections['who-we-are']->icon ?? '🏪' }}</div>
-          </div>
-          <div class="about-image-float aif-1 glass-card text-center p-3">
-            <div class="about-badge">👨‍🍳</div>
-            <div class="about-counter">50+</div>
-            <div style="font-size:.8rem;color:var(--text-60);">Expert Chefs</div>
-          </div>
-          <div class="about-image-float aif-2 glass-card text-center p-3">
-            <div class="about-badge">🏆</div>
-            <div class="about-counter">30+</div>
-            <div style="font-size:.8rem;color:var(--text-60);">Awards Won</div>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-6">
-        @if($cmsSections && isset($cmsSections['who-we-are']))
-          <span class="section-badge animate-on-scroll">{{ $cmsSections['who-we-are']->title_en ?? 'Who We Are' }}</span>
-          <h2 class="section-title mt-3 animate-on-scroll">
-            {!! $cmsSections['who-we-are']->subtitle_en ?? 'Authentic Saffron<br/><span class="gradient-text">Sweets & Traditional Bakery</span>' !!}
-          </h2>
-          <p class="mt-4 animate-on-scroll" style="color:var(--text-75);line-height:1.9;font-size:1.05rem;">
-            {!! $cmsSections['who-we-are']->content_en ?? 'Welcome to Saffron, where tradition meets excellence.' !!}
-          </p>
-        @else
-          <span class="section-badge animate-on-scroll">Who We Are</span>
-          <h2 class="section-title mt-3 animate-on-scroll">
-            Authentic Saffron<br/>
-            <span class="gradient-text">Sweets & Traditional Bakery</span>
-          </h2>
-          <p class="mt-4 animate-on-scroll" style="color:var(--text-75);line-height:1.9;font-size:1.05rem;">
-            Welcome to Saffron, where tradition meets excellence. We bring you the finest collection of authentic Bengali sweets and premium bakery items, crafted with love and the purest saffron.
-          </p>
-          <p class="animate-on-scroll" style="color:var(--text-70);line-height:1.9;">
-            Our skilled artisans use time-honored recipes passed down through generations to create mouth-watering treats that will transport you to the streets of Bangladesh. From roshogolla to sandesh, from freshly baked cakes to artisan cookies – every bite is a celebration of flavor.
-          </p>
-        @endif
-        <div class="feature-list animate-on-scroll">
-          <div class="feature-item">
-            <div class="feature-icon-box">✓</div>
-            <div><strong style="color:var(--theme-text-primary);">100% Natural Ingredients</strong><br/><small style="color:var(--text-50);">No preservatives, no artificial colors</small></div>
-          </div>
-          <div class="feature-item">
-            <div class="feature-icon-box">👨‍🍳</div>
-            <div><strong style="color:var(--theme-text-primary);">Expert Chefs</strong><br/><small style="color:var(--text-50);">Skilled artisans with decades of experience</small></div>
-          </div>
-          <div class="feature-item">
-            <div class="feature-icon-box">🚚</div>
-            <div><strong style="color:var(--theme-text-primary);">Fast Delivery</strong><br/><small style="color:var(--text-50);">Quick & safe delivery to your doorstep</small></div>
-          </div>
-          <div class="feature-item">
-            <div class="feature-icon-box">💝</div>
-            <div><strong style="color:var(--theme-text-primary);">Made with Love</strong><br/><small style="color:var(--text-50);">Crafted with passion and care</small></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- SPECIALTY: BENGALI SWEETS -->
-<section class="specialty-section" id="specialty">
-  <div class="specialty-bg"></div>
-  <div class="container">
-    <div class="row g-5 align-items-center">
-      <div class="col-lg-6 order-lg-2">
-        <div class="specialty-card animate-on-scroll">
-          <div style="font-size:8rem;text-align:center;margin-bottom:1rem;">
-            @if($cmsSections && isset($cmsSections['specialty']) && $cmsSections['specialty']->icon)
-              {{ $cmsSections['specialty']->icon }}
-            @else
-              🍮
-            @endif
-          </div>
-          @if($cmsSections && isset($cmsSections['specialty']))
-          <h3 class="text-center" style="font-family:'Playfair Display',serif;color:var(--theme-text-secondary);">Authentic Bengali Sweets</h3>
-          @else
-          <h3 class="text-center" style="font-family:'Playfair Display',serif;color:var(--theme-text-secondary);">Authentic Bengali Sweets</h3>
-          @endif
-        </div>
-      </div>
-      <div class="col-lg-6 order-lg-1">
-        @if($cmsSections && isset($cmsSections['specialty']))
-          <span class="section-badge animate-on-scroll">{{ $cmsSections['specialty']->title_en ?? 'Our Specialty' }}</span>
-          <h2 class="section-title mt-3 animate-on-scroll">
-            {!! $cmsSections['specialty']->subtitle_en ?? 'Authentic Bengali<br/><span class="gradient-text">Sweets Collection</span>' !!}
-          </h2>
-          <p class="mt-4 animate-on-scroll" style="color:var(--text-75);line-height:1.9;">
-            {!! $cmsSections['specialty']->content_en ?? 'Indulge in the rich heritage of Bengal.' !!}
-          </p>
-        @else
-          <span class="section-badge animate-on-scroll">Our Specialty</span>
-          <h2 class="section-title mt-3 animate-on-scroll">
-            Authentic Bengali<br/>
-            <span class="gradient-text">Sweets Collection</span>
-          </h2>
-          <p class="mt-4 animate-on-scroll" style="color:var(--text-75);line-height:1.9;">
-            Indulge in the rich heritage of Bengal with our exquisite collection of traditional sweets, crafted with love and the finest ingredients.
-          </p>
-          <p class="animate-on-scroll" style="color:var(--text-70);line-height:1.9;">
-            From the melt-in-your-mouth roshogolla to the delicate sandesh, our sweets are made using recipes passed down through generations. Each sweet is a celebration of authentic Bengali tradition, bringing you the true taste of home.
-          </p>
-        @endif
-        <div class="specialty-features animate-on-scroll">
-          <div class="sf-item">
-            <div class="sf-icon">🥛</div>
-            <div><div class="sf-title">Pure Milk</div><div class="sf-desc">Farm fresh daily</div></div>
-          </div>
-          <div class="sf-item">
-            <div class="sf-icon">🌸</div>
-            <div><div class="sf-title">Real Saffron</div><div class="sf-desc">Kashmiri premium</div></div>
-          </div>
-          <div class="sf-item">
-            <div class="sf-icon">♨️</div>
-            <div><div class="sf-title">Fresh Daily</div><div class="sf-desc">Made every morning</div></div>
-          </div>
-          <div class="sf-item">
-            <div class="sf-icon">📜</div>
-            <div><div class="sf-title">Traditional</div><div class="sf-desc">Ancient recipes</div></div>
-          </div>
-        </div>
-        @if($cmsSections && isset($cmsSections['specialty']) && $cmsSections['specialty']->button_url)
-        <a href="{{ $cmsSections['specialty']->button_url }}" class="btn btn-glow mt-4 animate-on-scroll">
-          {{ $cmsSections['specialty']->button_text_en ?? 'Discover' }} <i class="fas fa-arrow-right ms-2"></i>
-        </a>
-        @else
-        <a href="{{ route('shop.category', 'traditional-sweets') }}" class="btn btn-glow mt-4 animate-on-scroll">
-          Discover Sweets <i class="fas fa-arrow-right ms-2"></i>
-        </a>
-        @endif
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- CHOCOLATE PARADISE -->
-<section class="specialty-section" style="background:linear-gradient(135deg, rgba(244,63,94,0.05), rgba(139,92,246,0.05));">
-  <div class="container">
-    <div class="row g-5 align-items-center">
-      <div class="col-lg-6">
-        <div class="specialty-card animate-on-scroll" style="background:linear-gradient(135deg, rgba(244,63,94,0.1), rgba(168,85,247,0.1));">
-          <div style="font-size:8rem;text-align:center;margin-bottom:1rem;">
-            @if($cmsSections && isset($cmsSections['chocolate-paradise']) && $cmsSections['chocolate-paradise']->icon)
-              {{ $cmsSections['chocolate-paradise']->icon }}
-            @else
-              🍫
-            @endif
-          </div>
-          @if($cmsSections && isset($cmsSections['chocolate-paradise']))
-          <h3 class="text-center" style="font-family:'Playfair Display',serif;color:var(--theme-text-secondary);">Premium Chocolates</h3>
-          @else
-          <h3 class="text-center" style="font-family:'Playfair Display',serif;color:var(--theme-text-secondary);">Premium Chocolates</h3>
-          @endif
-        </div>
-      </div>
-      <div class="col-lg-6">
-        @if($cmsSections && isset($cmsSections['chocolate-paradise']))
-          <span class="section-badge animate-on-scroll" style="background:linear-gradient(135deg, rgba(244,63,94,0.2), rgba(168,85,247,0.2));border-color:rgba(244,63,94,0.3);">{{ $cmsSections['chocolate-paradise']->title_en ?? 'Chocolate Paradise' }}</span>
-          <h2 class="section-title mt-3 animate-on-scroll">
-            {!! $cmsSections['chocolate-paradise']->subtitle_en ?? 'Premium Chocolate &<br/><span class="gradient-text">Cocoa Delights</span>' !!}
-          </h2>
-          <p class="mt-4 animate-on-scroll" style="color:var(--text-75);line-height:1.9;">
-            {!! $cmsSections['chocolate-paradise']->content_en ?? 'Experience the ultimate indulgence.' !!}
-          </p>
-        @else
-          <span class="section-badge animate-on-scroll" style="background:linear-gradient(135deg, rgba(244,63,94,0.2), rgba(168,85,247,0.2));border-color:rgba(244,63,94,0.3);">Chocolate Paradise</span>
-          <h2 class="section-title mt-3 animate-on-scroll">
-            Premium Chocolate &<br/>
-            <span class="gradient-text">Cocoa Delights</span>
-          </h2>
-          <p class="mt-4 animate-on-scroll" style="color:var(--text-75);line-height:1.9;">
-            Experience the ultimate indulgence with our exquisite collection of handcrafted chocolates, made from the finest cocoa beans sourced from around the world.
-          </p>
-          <p class="animate-on-scroll" style="color:var(--text-70);line-height:1.9;">
-            From silky smooth dark chocolate to creamy milk chocolate truffles, our master chocolatiers create artisanal pieces that will delight your senses. Each chocolate is carefully crafted to deliver an unforgettable taste experience.
-          </p>
-        @endif
-        <div class="specialty-features animate-on-scroll">
-          <div class="sf-item">
-            <div class="sf-icon">🍫</div>
-            <div><div class="sf-title">Premium Cocoa</div><div class="sf-desc">Finest quality beans</div></div>
-          </div>
-          <div class="sf-item">
-            <div class="sf-icon">👨‍🍳</div>
-            <div><div class="sf-title">Expert Makers</div><div class="sf-desc">Master chocolatiers</div></div>
-          </div>
-          <div class="sf-item">
-            <div class="sf-icon">🎁</div>
-            <div><div class="sf-title">Gift Ready</div><div class="sf-desc">Beautiful packaging</div></div>
-          </div>
-          <div class="sf-item">
-            <div class="sf-icon">💝</div>
-            <div><div class="sf-title">Artisan Crafted</div><div class="sf-desc">Made with love</div></div>
-          </div>
-        </div>
-        @if($cmsSections && isset($cmsSections['chocolate-paradise']) && $cmsSections['chocolate-paradise']->button_url)
-        <a href="{{ $cmsSections['chocolate-paradise']->button_url }}" class="btn btn-glow mt-4 animate-on-scroll" style="background:linear-gradient(135deg, var(--theme-secondary), var(--theme-accent));">
-          {{ $cmsSections['chocolate-paradise']->button_text_en ?? 'Discover Chocolates' }} <i class="fas fa-arrow-right ms-2"></i>
-        </a>
-        @else
-        <a href="{{ route('shop') }}" class="btn btn-glow mt-4 animate-on-scroll" style="background:linear-gradient(135deg, var(--theme-secondary), var(--theme-accent));">
-          Discover Chocolates <i class="fas fa-arrow-right ms-2"></i>
-        </a>
-        @endif
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- CATEGORIES - EXPLORE OUR DELICIOUS COLLECTION -->
 <section class="section-gap">
   <div class="container">
@@ -470,6 +255,72 @@
   </div>
 </section>
 
+<!-- WHO WE ARE / ABOUT -->
+<section class="section-gap about-split" id="about">
+  <div class="container">
+    <div class="row g-5 align-items-center">
+      <div class="col-lg-6">
+        <div class="about-image-container">
+          <div class="glass-card-glow p-3 animate-on-scroll" style="height:100%;display:flex;align-items:center;justify-content:center;">
+            <div style="font-size:12rem;">{{ $cmsSections['who-we-are']->icon ?? '🏪' }}</div>
+          </div>
+          <div class="about-image-float aif-1 glass-card text-center p-3">
+            <div class="about-badge">👨‍🍳</div>
+            <div class="about-counter">50+</div>
+            <div style="font-size:.8rem;color:var(--text-60);">Expert Chefs</div>
+          </div>
+          <div class="about-image-float aif-2 glass-card text-center p-3">
+            <div class="about-badge">🏆</div>
+            <div class="about-counter">30+</div>
+            <div style="font-size:.8rem;color:var(--text-60);">Awards Won</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        @if($cmsSections && isset($cmsSections['who-we-are']))
+          <span class="section-badge animate-on-scroll">{{ $cmsSections['who-we-are']->title_en ?? 'Who We Are' }}</span>
+          <h2 class="section-title mt-3 animate-on-scroll">
+            {!! $cmsSections['who-we-are']->subtitle_en ?? 'Authentic Saffron<br/><span class="gradient-text">Sweets & Traditional Bakery</span>' !!}
+          </h2>
+          <p class="mt-4 animate-on-scroll" style="color:var(--text-75);line-height:1.9;font-size:1.05rem;">
+            {!! $cmsSections['who-we-are']->content_en ?? 'Welcome to Saffron, where tradition meets excellence.' !!}
+          </p>
+        @else
+          <span class="section-badge animate-on-scroll">Who We Are</span>
+          <h2 class="section-title mt-3 animate-on-scroll">
+            Authentic Saffron<br/>
+            <span class="gradient-text">Sweets & Traditional Bakery</span>
+          </h2>
+          <p class="mt-4 animate-on-scroll" style="color:var(--text-75);line-height:1.9;font-size:1.05rem;">
+            Welcome to Saffron, where tradition meets excellence. We bring you the finest collection of authentic Bengali sweets and premium bakery items, crafted with love and the purest saffron.
+          </p>
+          <p class="animate-on-scroll" style="color:var(--text-70);line-height:1.9;">
+            Our skilled artisans use time-honored recipes passed down through generations to create mouth-watering treats that will transport you to the streets of Bangladesh. From roshogolla to sandesh, from freshly baked cakes to artisan cookies – every bite is a celebration of flavor.
+          </p>
+        @endif
+        <div class="feature-list animate-on-scroll">
+          <div class="feature-item">
+            <div class="feature-icon-box">✓</div>
+            <div><strong style="color:var(--theme-text-primary);">100% Natural Ingredients</strong><br/><small style="color:var(--text-50);">No preservatives, no artificial colors</small></div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon-box">👨‍🍳</div>
+            <div><strong style="color:var(--theme-text-primary);">Expert Chefs</strong><br/><small style="color:var(--text-50);">Skilled artisans with decades of experience</small></div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon-box">🚚</div>
+            <div><strong style="color:var(--theme-text-primary);">Fast Delivery</strong><br/><small style="color:var(--text-50);">Quick & safe delivery to your doorstep</small></div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon-box">💝</div>
+            <div><strong style="color:var(--theme-text-primary);">Made with Love</strong><br/><small style="color:var(--text-50);">Crafted with passion and care</small></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- NEW ARRIVALS -->
 <section class="section-gap" id="new-arrivals">
   <div class="container">
@@ -545,6 +396,81 @@
         <i class="fas fa-arrow-right me-2"></i>View All New Arrivals
       </a>
       @endif
+    </div>
+  </div>
+</section>
+
+<!-- SPECIALTY: BENGALI SWEETS -->
+<section class="specialty-section" id="specialty">
+  <div class="specialty-bg"></div>
+  <div class="container">
+    <div class="row g-5 align-items-center">
+      <div class="col-lg-6 order-lg-2">
+        <div class="specialty-card animate-on-scroll">
+          <div style="font-size:8rem;text-align:center;margin-bottom:1rem;">
+            @if($cmsSections && isset($cmsSections['specialty']) && $cmsSections['specialty']->icon)
+              {{ $cmsSections['specialty']->icon }}
+            @else
+              🍮
+            @endif
+          </div>
+          @if($cmsSections && isset($cmsSections['specialty']))
+          <h3 class="text-center" style="font-family:'Playfair Display',serif;color:var(--theme-text-secondary);">Authentic Bengali Sweets</h3>
+          @else
+          <h3 class="text-center" style="font-family:'Playfair Display',serif;color:var(--theme-text-secondary);">Authentic Bengali Sweets</h3>
+          @endif
+        </div>
+      </div>
+      <div class="col-lg-6 order-lg-1">
+        @if($cmsSections && isset($cmsSections['specialty']))
+          <span class="section-badge animate-on-scroll">{{ $cmsSections['specialty']->title_en ?? 'Our Specialty' }}</span>
+          <h2 class="section-title mt-3 animate-on-scroll">
+            {!! $cmsSections['specialty']->subtitle_en ?? 'Authentic Bengali<br/><span class="gradient-text">Sweets Collection</span>' !!}
+          </h2>
+          <p class="mt-4 animate-on-scroll" style="color:var(--text-75);line-height:1.9;">
+            {!! $cmsSections['specialty']->content_en ?? 'Indulge in the rich heritage of Bengal.' !!}
+          </p>
+        @else
+          <span class="section-badge animate-on-scroll">Our Specialty</span>
+          <h2 class="section-title mt-3 animate-on-scroll">
+            Authentic Bengali<br/>
+            <span class="gradient-text">Sweets Collection</span>
+          </h2>
+          <p class="mt-4 animate-on-scroll" style="color:var(--text-75);line-height:1.9;">
+            Indulge in the rich heritage of Bengal with our exquisite collection of traditional sweets, crafted with love and the finest ingredients.
+          </p>
+          <p class="animate-on-scroll" style="color:var(--text-70);line-height:1.9;">
+            From the melt-in-your-mouth roshogolla to the delicate sandesh, our sweets are made using recipes passed down through generations. Each sweet is a celebration of authentic Bengali tradition, bringing you the true taste of home.
+          </p>
+        @endif
+        <div class="specialty-features animate-on-scroll">
+          <div class="sf-item">
+            <div class="sf-icon">🥛</div>
+            <div><div class="sf-title">Pure Milk</div><div class="sf-desc">Farm fresh daily</div></div>
+          </div>
+          <div class="sf-item">
+            <div class="sf-icon">🌸</div>
+            <div><div class="sf-title">Real Saffron</div><div class="sf-desc">Kashmiri premium</div></div>
+          </div>
+          <div class="sf-item">
+            <div class="sf-icon">♨️</div>
+            <div><div class="sf-title">Fresh Daily</div><div class="sf-desc">Made every morning</div></div>
+          </div>
+          <div class="sf-item">
+            <div class="sf-icon">📜</div>
+            <div><div class="sf-title">Traditional</div><div class="sf-desc">Ancient recipes</div></div>
+          </div>
+        </div>
+        @if($cmsSections && isset($cmsSections['specialty']) && $cmsSections['specialty']->button_url)
+        <a href="{{ $cmsSections['specialty']->button_url }}" class="btn btn-glow mt-4 animate-on-scroll">
+          {{ $cmsSections['specialty']->button_text_en ?? 'Discover' }} <i class="fas fa-arrow-right ms-2"></i>
+        </a>
+        @else
+        <a href="{{ route('shop.category', 'traditional-sweets') }}" class="btn btn-glow mt-4 animate-on-scroll">
+          Discover Sweets <i class="fas fa-arrow-right ms-2"></i>
+        </a>
+        @endif
+      </div>
     </div>
   </div>
 </section>
@@ -688,6 +614,80 @@ $categoryConfigs = [
     </section>
     @endif
 @endforeach
+
+<!-- CHOCOLATE PARADISE -->
+<section class="specialty-section" style="background:linear-gradient(135deg, rgba(244,63,94,0.05), rgba(139,92,246,0.05));">
+  <div class="container">
+    <div class="row g-5 align-items-center">
+      <div class="col-lg-6">
+        <div class="specialty-card animate-on-scroll" style="background:linear-gradient(135deg, rgba(244,63,94,0.1), rgba(168,85,247,0.1));">
+          <div style="font-size:8rem;text-align:center;margin-bottom:1rem;">
+            @if($cmsSections && isset($cmsSections['chocolate-paradise']) && $cmsSections['chocolate-paradise']->icon)
+              {{ $cmsSections['chocolate-paradise']->icon }}
+            @else
+              🍫
+            @endif
+          </div>
+          @if($cmsSections && isset($cmsSections['chocolate-paradise']))
+          <h3 class="text-center" style="font-family:'Playfair Display',serif;color:var(--theme-text-secondary);">Premium Chocolates</h3>
+          @else
+          <h3 class="text-center" style="font-family:'Playfair Display',serif;color:var(--theme-text-secondary);">Premium Chocolates</h3>
+          @endif
+        </div>
+      </div>
+      <div class="col-lg-6">
+        @if($cmsSections && isset($cmsSections['chocolate-paradise']))
+          <span class="section-badge animate-on-scroll" style="background:linear-gradient(135deg, rgba(244,63,94,0.2), rgba(168,85,247,0.2));border-color:rgba(244,63,94,0.3);">{{ $cmsSections['chocolate-paradise']->title_en ?? 'Chocolate Paradise' }}</span>
+          <h2 class="section-title mt-3 animate-on-scroll">
+            {!! $cmsSections['chocolate-paradise']->subtitle_en ?? 'Premium Chocolate &<br/><span class="gradient-text">Cocoa Delights</span>' !!}
+          </h2>
+          <p class="mt-4 animate-on-scroll" style="color:var(--text-75);line-height:1.9;">
+            {!! $cmsSections['chocolate-paradise']->content_en ?? 'Experience the ultimate indulgence.' !!}
+          </p>
+        @else
+          <span class="section-badge animate-on-scroll" style="background:linear-gradient(135deg, rgba(244,63,94,0.2), rgba(168,85,247,0.2));border-color:rgba(244,63,94,0.3);">Chocolate Paradise</span>
+          <h2 class="section-title mt-3 animate-on-scroll">
+            Premium Chocolate &<br/>
+            <span class="gradient-text">Cocoa Delights</span>
+          </h2>
+          <p class="mt-4 animate-on-scroll" style="color:var(--text-75);line-height:1.9;">
+            Experience the ultimate indulgence with our exquisite collection of handcrafted chocolates, made from the finest cocoa beans sourced from around the world.
+          </p>
+          <p class="animate-on-scroll" style="color:var(--text-70);line-height:1.9;">
+            From silky smooth dark chocolate to creamy milk chocolate truffles, our master chocolatiers create artisanal pieces that will delight your senses. Each chocolate is carefully crafted to deliver an unforgettable taste experience.
+          </p>
+        @endif
+        <div class="specialty-features animate-on-scroll">
+          <div class="sf-item">
+            <div class="sf-icon">🍫</div>
+            <div><div class="sf-title">Premium Cocoa</div><div class="sf-desc">Finest quality beans</div></div>
+          </div>
+          <div class="sf-item">
+            <div class="sf-icon">👨‍🍳</div>
+            <div><div class="sf-title">Expert Makers</div><div class="sf-desc">Master chocolatiers</div></div>
+          </div>
+          <div class="sf-item">
+            <div class="sf-icon">🎁</div>
+            <div><div class="sf-title">Gift Ready</div><div class="sf-desc">Beautiful packaging</div></div>
+          </div>
+          <div class="sf-item">
+            <div class="sf-icon">💝</div>
+            <div><div class="sf-title">Artisan Crafted</div><div class="sf-desc">Made with love</div></div>
+          </div>
+        </div>
+        @if($cmsSections && isset($cmsSections['chocolate-paradise']) && $cmsSections['chocolate-paradise']->button_url)
+        <a href="{{ $cmsSections['chocolate-paradise']->button_url }}" class="btn btn-glow mt-4 animate-on-scroll" style="background:linear-gradient(135deg, var(--theme-secondary), var(--theme-accent));">
+          {{ $cmsSections['chocolate-paradise']->button_text_en ?? 'Discover Chocolates' }} <i class="fas fa-arrow-right ms-2"></i>
+        </a>
+        @else
+        <a href="{{ route('shop') }}" class="btn btn-glow mt-4 animate-on-scroll" style="background:linear-gradient(135deg, var(--theme-secondary), var(--theme-accent));">
+          Discover Chocolates <i class="fas fa-arrow-right ms-2"></i>
+        </a>
+        @endif
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- BEST SELLERS -->
 <section class="section-gap" style="background:linear-gradient(180deg, rgba(244,63,94,0.03), transparent);">
