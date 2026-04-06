@@ -947,22 +947,13 @@ function filterFeaturedProd(btn, cat) {
 
     const featuredGrid = document.getElementById('featured-products-grid');
     if (featuredGrid) {
-        let shown = 0;
-        const maxAll = 12;
-
         featuredGrid.querySelectorAll('.prod-item').forEach(item => {
             const column = item.closest('.col-6, .col-md-4, .col-lg-3');
             if (cat === 'all') {
-                // "All Products": show only first 12
-                if (shown < maxAll) {
-                    item.style.display = 'block';
-                    if (column) column.style.display = 'block';
-                    item.style.animation = 'fadeIn .5s ease';
-                    shown++;
-                } else {
-                    item.style.display = 'none';
-                    if (column) column.style.display = 'none';
-                }
+                // "All Products": show ALL featured products (no limit)
+                item.style.display = 'block';
+                if (column) column.style.display = 'block';
+                item.style.animation = 'fadeIn .5s ease';
             } else {
                 // Category filter: show all matching products
                 if (item.dataset.cat === cat) {

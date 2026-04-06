@@ -386,18 +386,12 @@ Route::middleware(['auth', 'role:receptionist|visitor'])->group(function () {
 Route::get('/', function(){
     $categories = \App\Models\Category::withCount('products')->where('is_active', true)->get();
 
-    // Get featured products evenly distributed across all categories (min 4 per category)
-    $allFeatured = \App\Models\Product::where('is_active', true)
+    // Get ALL featured products (no limit per category)
+    $featuredProducts = \App\Models\Product::where('is_active', true)
         ->where('is_featured', true)
         ->with(['category', 'primaryImage'])
-        ->get()
-        ->groupBy('category_id');
-
-    $featuredProducts = collect();
-
-    foreach ($allFeatured as $group) {
-        $featuredProducts = $featuredProducts->merge($group->take(4));
-    }
+        ->orderBy('created_at', 'desc')
+        ->get();
 
     // Get new arrivals (latest 8 products)
     $newArrivals = \App\Models\Product::where('is_active', true)
