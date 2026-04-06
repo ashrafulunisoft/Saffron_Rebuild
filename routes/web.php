@@ -400,16 +400,24 @@ Route::get('/', function(){
         ->take(8)
         ->get();
 
-    // Get Traditional Sweets category products
-    $traditionalSweetsCategory = \App\Models\Category::where('slug', 'traditional-sweets')->first();
-    $traditionalSweets = collect();
-    if ($traditionalSweetsCategory) {
-        $traditionalSweets = \App\Models\Product::where('is_active', true)
-            ->where('category_id', $traditionalSweetsCategory->id)
-            ->with(['category', 'primaryImage'])
-            ->orderBy('created_at', 'desc')
-            ->take(8)
-            ->get();
+    // Get products by category (for individual sections)
+    $categorySlugs = ['cakes', 'traditional-sweets', 'cookies-biscuits', 'pastries-savories', 'breads', 'buns-rolls', 'dairy-products'];
+    $categoryProducts = [];
+
+    foreach ($categorySlugs as $slug) {
+        $category = \App\Models\Category::where('slug', $slug)->where('is_active', true)->first();
+        if ($category) {
+            $products = \App\Models\Product::where('is_active', true)
+                ->where('category_id', $category->id)
+                ->with(['category', 'primaryImage'])
+                ->orderBy('created_at', 'desc')
+                ->take(8)
+                ->get();
+            $categoryProducts[$slug] = [
+                'category' => $category,
+                'products' => $products
+            ];
+        }
     }
 
     // Get best-selling products (based on order items count)
@@ -456,7 +464,7 @@ Route::get('/', function(){
         ->get()
         ->keyBy('section_key');
 
-    return view('frontend.pages.home', compact('categories', 'featuredProducts', 'newArrivals', 'traditionalSweets', 'bestSellers', 'reviews', 'blogPosts', 'cmsSections'));
+    return view('frontend.pages.home', compact('categories', 'featuredProducts', 'newArrivals', 'categoryProducts', 'bestSellers', 'reviews', 'blogPosts', 'cmsSections'));
 })->name('home');
 
 
