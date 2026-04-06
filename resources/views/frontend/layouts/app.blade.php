@@ -6,6 +6,10 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'Saffron Sweets & Bakery | Authentic Bengali Sweets & Premium Bakery')</title>
 
+    <!-- Favicon - Saffron Cookie Icon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%23f59e0b'/><circle cx='30' cy='35' r='8' fill='%2392400e'/><circle cx='55' cy='25' r='6' fill='%23924e00'/><circle cx='70' cy='45' r='7' fill='%2378350f'/><circle cx='40' cy='60' r='5' fill='%2345102e'/><circle cx='65' cy='70' r='6' fill='%23783e0f'/><circle cx='25' cy='55' r='5' fill='%23784509'/></svg>">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%23f59e0b'/><circle cx='30' cy='35' r='8' fill='%23924e00'/><circle cx='55' cy='25' r='6' fill='%23924e00'/><circle cx='70' cy='45' r='7' fill='%23783e0f'/><circle cx='40' cy='60' r='5' fill='%23783e0f'/><circle cx='65' cy='70' r='6' fill='%23924e00'/><circle cx='25' cy='55' r='5' fill='%23783e0f'/></svg>">
+
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
