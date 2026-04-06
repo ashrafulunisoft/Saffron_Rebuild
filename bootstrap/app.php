@@ -15,6 +15,9 @@ return Application::configure(basePath: dirname(__DIR__))
     )
 
     ->withMiddleware(function (Middleware $middleware) {
+        // Trust all proxies for HTTPS behind load balancer (required for live server)
+        $middleware->trustProxies(at: '*');
+
         $middleware->alias([
              // ✅ Spatie middleware
             'role' => RoleMiddleware::class,
