@@ -32,6 +32,9 @@ return Application::configure(basePath: dirname(__DIR__))
             'payment/cancel',
             'payment/ipn',
         ]);
+
+        // Trust all proxies for HTTPS behind Nginx (fix for insecure connection warning)
+        $middleware->trustProxies(at: '*');
     })
 
     ->withExceptions(function (): void {
