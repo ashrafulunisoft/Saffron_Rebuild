@@ -145,10 +145,16 @@
                 <div class="meta-value">{{ $product->stock > 0 ? 'Available' : 'Out of Stock' }}</div>
               </div>
             </div>
+            {{-- <div class="col-sm-6">
+              <div class="meta-item meta-highlight">
+                <small class="meta-label">Weight:</small>
+                <div class="meta-value"><span class="badge bg-primary">{{ $product->weight ?? '250g' }}</span></div>
+              </div>
+            </div> --}}
             <div class="col-sm-6">
               <div class="meta-item">
-                <small class="meta-label">Weight:</small>
-                <div class="meta-value">{{ $product->weight ?? '250g' }}</div>
+                <small class="meta-label">Freshness:</small>
+                <div class="meta-value">Guaranteed Fresh</div>
               </div>
             </div>
           </div>
