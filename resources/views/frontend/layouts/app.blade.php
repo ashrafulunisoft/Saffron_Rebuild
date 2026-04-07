@@ -2510,9 +2510,11 @@ section {
 .prod-badge {
   position:absolute; top:15px; left:15px;
   padding:.4rem .8rem; border-radius:8px; font-size:.75rem; font-weight:700;
+  background:var(--theme-btn-gradient);
+  color:#fff;
 }
 .badge-hot { background:var(--theme-btn-gradient); color:#fff; }
-.badge-new { background:linear-gradient(135deg, #6366f1, #8b5cf6); color:#fff; }
+.badge-new { background:var(--theme-btn-gradient); color:#fff; }
 .badge-sale { background:linear-gradient(135deg, var(--theme-secondary), var(--theme-secondary-dark)); color:#fff; }
 .prod-actions {
   position:absolute; right:15px; top:15px;
@@ -2529,7 +2531,7 @@ section {
 }
 .act-btn:hover { background:rgba(245,158,11,0.3); color:var(--theme-text-secondary); transform:scale(1.1); }
 .prod-body { padding:1.5rem; }
-.prod-cat { font-size:.75rem; color:#f59e0b; font-weight:600; text-transform:uppercase; letter-spacing:.1em; }
+.prod-cat { font-size:.75rem; color:var(--theme-text-secondary); font-weight:600; text-transform:uppercase; letter-spacing:.1em; }
 .prod-name { font-family:'Playfair Display',serif; font-size:1.2rem; font-weight:600; color:var(--theme-text-primary); margin:.5rem 0; }
 .prod-stars { color:var(--theme-text-secondary); font-size:.9rem; margin-bottom:1rem; }
 .prod-footer { display:flex; align-items:center; justify-content:space-between; }

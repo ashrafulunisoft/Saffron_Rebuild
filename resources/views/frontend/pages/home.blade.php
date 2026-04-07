@@ -476,61 +476,79 @@
 </section>
 
 @php
-// Category section configurations with icons, colors, and descriptions
+// Get theme colors for dynamic gradients
+$themePrimary = $theme->primary_color ?? '#f59e0b';
+$themeSecondary = $theme->secondary_color ?? '#f43f5e';
+$themeAccent = $theme->accent_color ?? '#8b5cf6';
+
+// Convert hex to RGB for rgba usage
+function hexToRgb($hex) {
+    $hex = str_replace('#', '', $hex);
+    return [
+        'r' => hexdec(substr($hex, 0, 2)),
+        'g' => hexdec(substr($hex, 2, 2)),
+        'b' => hexdec(substr($hex, 4, 2))
+    ];
+}
+
+$primaryRgb = hexToRgb($themePrimary);
+$secondaryRgb = hexToRgb($themeSecondary);
+
+// Category section configurations with icons, colors, and descriptions - NOW DYNAMIC
 $categoryConfigs = [
     'cakes' => [
         'icon' => '🎂',
         'badge_icon' => 'fas fa-birthday-cake',
-        'gradient' => 'linear-gradient(135deg,rgba(244,63,94,0.08),rgba(236,72,153,0.05))',
-        'badge_gradient' => 'linear-gradient(135deg,#ec4899,#db2777)',
+        'gradient' => "linear-gradient(135deg,rgba({$secondaryRgb['r']},{$secondaryRgb['g']},{$secondaryRgb['b']},0.08),rgba({$primaryRgb['r']},{$primaryRgb['g']},{$primaryRgb['b']},0.05))",
+        'badge_gradient' => "linear-gradient(135deg,{$themeSecondary},{$themePrimary})",
         'badge_text' => '🎂 CAKES',
         'description' => 'Delicious handcrafted cakes for every celebration, made with premium ingredients and love'
     ],
     'traditional-sweets' => [
         'icon' => '🍬',
         'badge_icon' => 'fas fa-cookie',
-        'gradient' => 'linear-gradient(135deg,rgba(245,158,11,0.05),rgba(251,191,36,0.03))',
-        'badge_gradient' => 'linear-gradient(135deg,#f59e0b,#d97706)',
+        'gradient' => "linear-gradient(135deg,rgba({$primaryRgb['r']},{$primaryRgb['g']},{$primaryRgb['b']},0.05),rgba({$primaryRgb['r']},{$primaryRgb['g']},{$primaryRgb['b']},0.03))",
+        'badge_gradient' => "linear-gradient(135deg,{$themePrimary},{$themeSecondary})",
         'badge_text' => '🍬 TRADITIONAL',
         'description' => 'Experience the rich heritage of Bengal with our authentic traditional sweets'
     ],
     'cookies-biscuits' => [
         'icon' => '🍪',
         'badge_icon' => 'fas fa-cookie-bite',
-        'gradient' => 'linear-gradient(135deg,rgba(34,197,94,0.05),rgba(16,185,129,0.03))',
-        'badge_gradient' => 'linear-gradient(135deg,#22c55e,#16a34a)',
+        'gradient' => "linear-gradient(135deg,rgba({$primaryRgb['r']},{$primaryRgb['g']},{$primaryRgb['b']},0.05),rgba({$secondaryRgb['r']},{$secondaryRgb['g']},{$secondaryRgb['b']},0.03))",
+        'badge_gradient' => "linear-gradient(135deg,{$themePrimary},{$themeSecondary})",
         'badge_text' => '🍪 COOKIES',
         'description' => 'Freshly baked crispy cookies and biscuits, perfect for your tea time'
     ],
     'pastries-savories' => [
         'icon' => '🥧',
         'badge_icon' => 'fas fa-pie-chart',
-        'gradient' => 'linear-gradient(135deg,rgba(139,92,246,0.05),rgba(167,139,250,0.03))',
-        'badge_gradient' => 'linear-gradient(135deg,#8b5cf6,#7c3aed)',
+        'gradient' => "linear-gradient(135deg,rgba({$secondaryRgb['r']},{$secondaryRgb['g']},{$secondaryRgb['b']},0.05),rgba({$primaryRgb['r']},{$primaryRgb['g']},{$primaryRgb['b']},0.03))",
+        'badge_gradient' => "linear-gradient(135deg,{$themeSecondary},{$themePrimary})",
         'badge_text' => '🥧 PASTRIES',
         'description' => 'Flaky pastries and savory delights, baked fresh every day'
     ],
     'breads' => [
         'icon' => '🍞',
         'badge_icon' => 'fas fa-bread-slice',
-        'gradient' => 'linear-gradient(135deg,rgba(234,179,8,0.05),rgba(202,138,4,0.03))',
-        'badge_gradient' => 'linear-gradient(135deg,#eab308,#ca8a04)',
+        'gradient' => "linear-gradient(135deg,rgba({$primaryRgb['r']},{$primaryRgb['g']},{$primaryRgb['b']},0.05),rgba({$secondaryRgb['r']},{$secondaryRgb['g']},{$secondaryRgb['b']},0.03))",
+        'badge_gradient' => "linear-gradient(135deg,{$themePrimary},{$themeSecondary})",
         'badge_text' => '🍞 BREADS',
         'description' => 'Freshly baked breads for your daily needs, soft and delicious'
     ],
     'buns-rolls' => [
         'icon' => '🥯',
         'badge_icon' => 'fas fa-hamburger',
-        'gradient' => 'linear-gradient(135deg,rgba(59,130,246,0.05),rgba(37,99,235,0.03))',
-        'badge_gradient' => 'linear-gradient(135deg,#3b82f6,#2563eb)',
+        'gradient' => "linear-gradient(135deg,rgba({$secondaryRgb['r']},{$secondaryRgb['g']},{$secondaryRgb['b']},0.05),rgba({$primaryRgb['r']},{$primaryRgb['g']},{$primaryRgb['b']},0.03))",
+        'badge_gradient' => "linear-gradient(135deg,{$themeSecondary},{$themePrimary})",
         'badge_text' => '🥯 BUNS & ROLLS',
         'description' => 'Soft buns and rolls, perfect for burgers, sandwiches, and more'
     ],
     'dairy-products' => [
         'icon' => '🥛',
         'badge_icon' => 'fas fa-glass-whiskey',
-        'gradient' => 'linear-gradient(135deg,rgba(6,182,212,0.05),rgba(14,165,233,0.03))',
-        'badge_gradient' => 'linear-gradient(135deg,#06b6d4,#0ea5e9)',
+        'gradient' => "linear-gradient(135deg,rgba({$primaryRgb['r']},{$primaryRgb['g']},{$primaryRgb['b']},0.05),rgba({$secondaryRgb['r']},{$secondaryRgb['g']},{$secondaryRgb['b']},0.03))",
+        'badge_gradient' => "linear-gradient(135deg,{$themePrimary},{$themeSecondary})",
         'badge_text' => '🥛 DAIRY',
         'description' => 'Fresh dairy products, pure and wholesome for your daily nutrition'
     ],
@@ -542,8 +560,8 @@ $categoryConfigs = [
         $config = $categoryConfigs[$slug] ?? [
             'icon' => '🍰',
             'badge_icon' => 'fas fa-star',
-            'gradient' => 'linear-gradient(135deg,rgba(245,158,11,0.05),rgba(251,191,36,0.03))',
-            'badge_gradient' => 'linear-gradient(135deg,#f59e0b,#d97706)',
+            'gradient' => "linear-gradient(135deg,rgba({$primaryRgb['r']},{$primaryRgb['g']},{$primaryRgb['b']},0.05),rgba({$secondaryRgb['r']},{$secondaryRgb['g']},{$secondaryRgb['b']},0.03))",
+            'badge_gradient' => "linear-gradient(135deg,{$themePrimary},{$themeSecondary})",
             'badge_text' => '⭐ FEATURED',
             'description' => 'Discover our delicious products'
         ];
@@ -580,7 +598,7 @@ $categoryConfigs = [
                                         <i class="fas fa-cookie-bite"></i>
                                     </div>
                                 @endif
-                                <span class="prod-badge" style="background:{{ $config['badge_gradient'] }};">{{ $config['badge_text'] }}</span>
+                                <span class="prod-badge">{{ $config['badge_text'] }}</span>
                                 <button class="prod-wishlist" data-product-id="{{ $product->id }}" title="Add to Wishlist">
                                     <i class="far fa-heart"></i>
                                 </button>
@@ -724,7 +742,7 @@ $categoryConfigs = [
                       <i class="fas fa-cookie-bite"></i>
                     </div>
                   @endif
-                  <span class="prod-badge badge-hot" style="background:linear-gradient(135deg,{{ $index === 0 ? '#f43f5e,#e11d48' : ($index === 1 ? '#f59e0b,#d97706' : '#8b5cf6,#7c3aed') }});">#{{ $index + 1 }} {{ $index === 0 ? 'BESTSELLER' : ($index === 1 ? 'TOP RATED' : 'POPULAR') }}</span>
+                  <span class="prod-badge badge-hot" style="background:linear-gradient(135deg,{{ $index === 0 ? "{$themeSecondary},{$themePrimary}" : ($index === 1 ? "{$themePrimary},{$themeSecondary}" : "{$themeAccent},#7c3aed") }});">#{{ $index + 1 }} {{ $index === 0 ? 'BESTSELLER' : ($index === 1 ? 'TOP RATED' : 'POPULAR') }}</span>
                   <button class="prod-wishlist" data-product-id="{{ $product->id }}" title="Add to Wishlist">
                     <i class="far fa-heart"></i>
                   </button>
