@@ -321,80 +321,186 @@
   </div>
 </section>
 
-<!-- NEW ARRIVALS -->
+<!-- NEW ARRIVALS - SLIDER SECTION -->
 <section class="section-gap" id="new-arrivals">
   <div class="container">
-    <div class="text-center mb-5">
-      @if($cmsSections && isset($cmsSections['new-arrivals']))
-        <span class="section-badge animate-on-scroll"><i class="fas fa-sparkles me-2"></i>{{ $cmsSections['new-arrivals']->title_en ?? 'Just Launched' }}</span>
-        <h2 class="section-title mt-3 animate-on-scroll">
-          {!! $cmsSections['new-arrivals']->subtitle_en ?? 'New <span class="gradient-text">Arrivals</span>' !!}
-        </h2>
-        @if($cmsSections['new-arrivals']->content_en)
-        <p class="mt-3 animate-on-scroll" style="color:var(--text-60);max-width:600px;margin:0 auto;">
-          {!! $cmsSections['new-arrivals']->content_en !!}
-        </p>
+    <!-- Section Header -->
+    <div class="d-flex justify-content-between align-items-start flex-wrap gap-3 mb-5">
+      <div class="flex-grow-1">
+        @if($cmsSections && isset($cmsSections['new-arrivals']))
+          <span class="section-badge animate-on-scroll"><i class="fas fa-sparkles me-2"></i>{{ $cmsSections['new-arrivals']->title_en ?? 'Just Launched' }}</span>
+          <h2 class="section-title mt-3 animate-on-scroll">
+            {!! $cmsSections['new-arrivals']->subtitle_en ?? 'New <span class="gradient-text">Arrivals</span>' !!}
+          </h2>
+          @if($cmsSections['new-arrivals']->content_en)
+          <p class="mt-2 animate-on-scroll" style="color:var(--text-60);max-width:500px;">
+            {!! $cmsSections['new-arrivals']->content_en !!}
+          </p>
+          @endif
+        @else
+          <span class="section-badge animate-on-scroll"><i class="fas fa-sparkles me-2"></i>Just Launched</span>
+          <h2 class="section-title mt-3 animate-on-scroll">New <span class="gradient-text">Arrivals</span></h2>
+          <p class="mt-2 animate-on-scroll" style="color:var(--text-60);max-width:500px;">Discover our latest creations - fresh from the oven and ready to delight your taste buds</p>
         @endif
-      @else
-        <span class="section-badge animate-on-scroll"><i class="fas fa-sparkles me-2"></i>Just Launched</span>
-        <h2 class="section-title mt-3 animate-on-scroll">New <span class="gradient-text">Arrivals</span></h2>
-        <p class="mt-3 animate-on-scroll" style="color:var(--text-60);max-width:600px;margin:0 auto;">Discover our latest creations - fresh from the oven and ready to delight your taste buds</p>
-      @endif
+      </div>
+      <div class="flex-shrink-0">
+        @if($cmsSections && isset($cmsSections['new-arrivals']) && $cmsSections['new-arrivals']->button_url)
+          <a href="{{ $cmsSections['new-arrivals']->button_url }}" class="btn btn-glow btn-sm">
+            <i class="fas fa-th-large me-2"></i>View All
+          </a>
+        @else
+          <a href="{{ route('shop') }}" class="btn btn-glow btn-sm">
+            <i class="fas fa-th-large me-2"></i>View All
+          </a>
+        @endif
+      </div>
     </div>
 
-    <div class="row g-4">
-      @if(isset($newArrivals) && $newArrivals->count() > 0)
-        @foreach($newArrivals as $product)
-        <div class="col-lg-3 col-md-6">
-          <a href="{{ route('shop.product', $product->slug) }}" class="text-decoration-none">
-            <div class="prod-card prod-item animate-on-scroll">
-              <div class="prod-img-wrapper">
-                @if($product->image)
-                  <img src="{{ asset("storage/{$product->image}") }}" alt="{{ $product->name_en }}" loading="lazy" decoding="async">
-                @else
-                  <div class="prod-img-placeholder">
-                    <i class="fas fa-cookie-bite"></i>
-                  </div>
-                @endif
-                <span class="prod-badge badge-new">NEW</span>
-                <button class="prod-wishlist" data-product-id="{{ $product->id }}" title="Add to Wishlist">
-                  <i class="far fa-heart"></i>
-                </button>
+    <!-- Products Slider Container -->
+    <div class="new-arrivals-slider-wrapper animate-on-scroll">
+      <!-- Navigation Buttons -->
+      <button class="slider-nav-btn slider-prev" id="newArrivalsPrev" aria-label="Previous">
+        <i class="fas fa-chevron-left"></i>
+      </button>
+
+      <!-- Slider Track -->
+      <div class="new-arrivals-slider" id="newArrivalsSlider">
+        @if(isset($newArrivals) && $newArrivals->count() > 0)
+          @php $slideIndex = 0; @endphp
+          @foreach($newArrivals as $index => $product)
+            <!-- Show "View All" card after 8 products -->
+            @if($index === 8)
+              <div class="slider-product-card view-all-trigger-card" data-slide-index="{{ $slideIndex }}">
+                <div class="view-all-card-content">
+                  <div class="view-all-icon"><i class="fas fa-arrow-right"></i></div>
+                  <h4>View All Products</h4>
+                  <p>Explore our complete collection</p>
+                </div>
               </div>
-              <div class="prod-body">
-                <div class="prod-cat">{{ $product->category->name_en ?? 'Sweets' }}</div>
-                <h5 class="prod-name">{{ $product->name_en }}</h5>
-                <div class="prod-stars">★★★★★ <small>({{ $product->reviews_count ?? 0 }})</small></div>
-                <div class="prod-footer">
-                  <div>
-                    <span class="price-new">৳{{ number_format($product->price) }}</span>
-                    @if($product->sale_price)
-                      <span class="price-old">৳{{ number_format($product->sale_price) }}</span>
+            @endif
+
+            <div class="slider-product-card" data-slide-index="{{ $slideIndex }}">
+              <a href="{{ route('shop.product', $product->slug) }}" class="text-decoration-none">
+                <!-- Product Image -->
+                <div class="product-card-img">
+                  @if($product->image)
+                    <img src="{{ asset("storage/{$product->image}") }}" alt="{{ $product->name_en }}" loading="lazy">
+                  @else
+                    <div class="prod-img-placeholder">
+                      <i class="fas fa-cookie-bite"></i>
+                    </div>
+                  @endif
+
+                  <!-- Category Badge (Top Left) -->
+                  <span class="product-category-badge">{{ $product->category->name_en ?? 'Sweets' }}</span>
+
+                  <!-- Wishlist Icon (Top Right) -->
+                  <button class="product-wishlist-btn" data-product-id="{{ $product->id }}" title="Add to Wishlist" onclick="event.preventDefault(); event.stopPropagation();">
+                    <i class="far fa-heart"></i>
+                  </button>
+
+                  <!-- Add to Cart (On Hover) -->
+                  <div class="product-cart-overlay">
+                    <button class="product-cart-btn" onclick="event.preventDefault(); event.stopPropagation(); addToCart({{ $product->id }}, '{{ $product->name }}', {{ $product->sale_price ?? $product->price }}, '{{ $product->image ?? '' }}', event)">
+                      <i class="fas fa-shopping-cart"></i>
+                      <span>Add to Cart</span>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Product Info -->
+                <div class="product-card-info">
+                  <!-- Category -->
+                  <div class="product-card-category">{{ $product->category->name_en ?? 'Sweets' }}</div>
+
+                  <!-- Product Name (2 lines max) -->
+                  <h5 class="product-card-name">{{ $product->name_en }}</h5>
+
+                  <!-- Rating -->
+                  <div class="product-card-rating">
+                    <div class="rating-stars">
+                      @for($i = 1; $i <= 5; $i++)
+                        @if($i <= ($product->avg_rating ?? 5))
+                          <i class="fas fa-star"></i>
+                        @else
+                          <i class="far fa-star"></i>
+                        @endif
+                      @endfor
+                    </div>
+                    <span class="rating-count">({{ $product->reviews_count ?? 0 }})</span>
+                  </div>
+
+                  <!-- Price Row -->
+                  <div class="product-card-price">
+                    <div class="price-info">
+                      <span class="current-price">৳{{ number_format($product->price) }}</span>
+                      @if($product->sale_price && $product->sale_price < $product->price)
+                        <span class="original-price">৳{{ number_format($product->sale_price) }}</span>
+                        @php
+                          $discount = round(($product->price - $product->sale_price) / $product->price * 100);
+                        @endphp
+                        @if($discount > 0)
+                          <span class="discount-badge">-{{ $discount }}%</span>
+                        @endif
+                      @endif
+                    </div>
+                    @if($product->coupon_code)
+                      <span class="coupon-badge"><i class="fas fa-tag"></i> {{ $product->coupon_code }}</span>
                     @endif
                   </div>
-                  <button class="add-btn" onclick="addToCart({{ $product->id }}, '{{ $product->name }}', {{ $product->sale_price ?? $product->price }}, '{{ $product->image ?? '' }}', event)"><i class="fas fa-shopping-bag"></i></button>
+                </div>
+              </a>
+            </div>
+            @php $slideIndex++; @endphp
+          @endforeach
+
+          <!-- Extra placeholder cards (if less than 12 products) -->
+          @php
+            $remaining = 12 - $newArrivals->count();
+          @endphp
+          @for($i = 0; $i < $remaining; $i++)
+            <div class="slider-product-card slider-placeholder">
+              <div class="product-card-img">
+                <div class="prod-img-placeholder">
+                  <i class="fas fa-cookie-bite"></i>
+                </div>
+              </div>
+              <div class="product-card-info">
+                <div class="product-card-category">Coming Soon</div>
+                <h5 class="product-card-name">New Product</h5>
+                <div class="product-card-rating">
+                  <div class="rating-stars"><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i></div>
+                  <span class="rating-count">(0)</span>
+                </div>
+                <div class="product-card-price">
+                  <span class="current-price">৳---</span>
                 </div>
               </div>
             </div>
-          </a>
-        </div>
-        @endforeach
-      @else
-        <div class="col-12 text-center py-5">
-          <p style="color:var(--text-60);">No new arrivals available at the moment.</p>
-        </div>
-      @endif
+          @endfor
+        @else
+          <div class="col-12 text-center py-5">
+            <p style="color:var(--text-60);">No new arrivals available at the moment.</p>
+          </div>
+        @endif
+      </div>
+
+      <!-- Navigation Buttons -->
+      <button class="slider-nav-btn slider-next" id="newArrivalsNext" aria-label="Next">
+        <i class="fas fa-chevron-right"></i>
+      </button>
     </div>
 
+    <!-- Bottom View All Button -->
     <div class="text-center mt-5">
       @if($cmsSections && isset($cmsSections['new-arrivals']) && $cmsSections['new-arrivals']->button_url)
-      <a href="{{ $cmsSections['new-arrivals']->button_url }}" class="btn btn-glow">
-        <i class="fas fa-arrow-right me-2"></i>{{ $cmsSections['new-arrivals']->button_text_en ?? 'View All New Arrivals' }}
-      </a>
+        <a href="{{ $cmsSections['new-arrivals']->button_url }}" class="btn btn-glow">
+          <i class="fas fa-arrow-right me-2"></i>{{ $cmsSections['new-arrivals']->button_text_en ?? 'View All New Arrivals' }}
+        </a>
       @else
-      <a href="{{ route('shop') }}" class="btn btn-glow">
-        <i class="fas fa-arrow-right me-2"></i>View All New Arrivals
-      </a>
+        <a href="{{ route('shop') }}" class="btn btn-glow">
+          <i class="fas fa-arrow-right me-2"></i>View All Products
+        </a>
       @endif
     </div>
   </div>
@@ -1484,6 +1590,101 @@ function toggleWishlist(productId, button) {
   });
 }
 </script>
+
+<script>
+// New Arrivals Slider Navigation
+document.addEventListener('DOMContentLoaded', function() {
+    const slider = document.getElementById('newArrivalsSlider');
+    const prevBtn = document.getElementById('newArrivalsPrev');
+    const nextBtn = document.getElementById('newArrivalsNext');
+
+    if (!slider || !prevBtn || !nextBtn) return;
+
+    // Calculate scroll amount based on visible cards
+    function getScrollAmount() {
+        const cardWidth = slider.querySelector('.slider-product-card')?.offsetWidth || 200;
+        const gap = 20; // gap between cards
+        return (cardWidth + gap) * 2; // Scroll 2 cards at a time
+    }
+
+    // Update button states
+    function updateButtons() {
+        const maxScroll = slider.scrollWidth - slider.clientWidth;
+        prevBtn.disabled = slider.scrollLeft <= 10;
+        nextBtn.disabled = slider.scrollLeft >= maxScroll - 10;
+
+        prevBtn.style.opacity = prevBtn.disabled ? '0.5' : '1';
+        nextBtn.style.opacity = nextBtn.disabled ? '0.5' : '1';
+    }
+
+    // Scroll to previous
+    prevBtn.addEventListener('click', function() {
+        slider.scrollBy({
+            left: -getScrollAmount(),
+            behavior: 'smooth'
+        });
+    });
+
+    // Scroll to next
+    nextBtn.addEventListener('click', function() {
+        slider.scrollBy({
+            left: getScrollAmount(),
+            behavior: 'smooth'
+        });
+    });
+
+    // Update buttons on scroll
+    slider.addEventListener('scroll', updateButtons);
+
+    // Initial button state
+    updateButtons();
+
+    // Touch/drag support
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+
+    slider.addEventListener('mousedown', (e) => {
+        isDown = true;
+        slider.style.cursor = 'grabbing';
+        startX = e.pageX - slider.offsetLeft;
+        scrollLeft = slider.scrollLeft;
+    });
+
+    slider.addEventListener('mouseleave', () => {
+        isDown = false;
+        slider.style.cursor = 'grab';
+    });
+
+    slider.addEventListener('mouseup', () => {
+        isDown = false;
+        slider.style.cursor = 'grab';
+    });
+
+    slider.addEventListener('mousemove', (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - slider.offsetLeft;
+        const walk = (x - startX) * 2;
+        slider.scrollLeft = scrollLeft - walk;
+    });
+
+    // Set initial cursor
+    slider.style.cursor = 'grab';
+
+    // View All trigger card click handler
+    const viewAllTrigger = slider.querySelector('.view-all-trigger-card');
+    if (viewAllTrigger) {
+        viewAllTrigger.addEventListener('click', function() {
+            @if($cmsSections && isset($cmsSections['new-arrivals']) && $cmsSections['new-arrivals']->button_url)
+                window.location.href = "{{ $cmsSections['new-arrivals']->button_url }}";
+            @else
+                window.location.href = "{{ route('shop') }}";
+            @endif
+        });
+    }
+});
+</script>
 @endpush
 
 @push('styles')
@@ -1651,6 +1852,565 @@ function toggleWishlist(productId, button) {
 
 .prod-wishlist.active i {
   font-weight: 900;
+}
+
+/* =============================================
+   NEW ARRIVALS SECTION - COMPLETE STYLES
+   ============================================= */
+
+/* Slider Wrapper - Contains the track and navigation */
+.new-arrivals-slider-wrapper {
+  position: relative;
+  padding: 0 50px;
+}
+
+/* Slider Track - The scrollable container */
+.new-arrivals-slider {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 1.25rem;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding: 0.5rem 0;
+}
+
+.new-arrivals-slider::-webkit-scrollbar {
+  display: none;
+}
+
+/* Product Card */
+.slider-product-card {
+  flex: 0 0 calc((100% - 6.25rem) / 6);
+  max-width: calc((100% - 6.25rem) / 6);
+  min-width: 200px;
+  background: var(--card-bg, transparent);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  scroll-snap-align: start;
+  border: 1px solid var(--border-color, rgba(0,0,0,0.08));
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.slider-product-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 30px rgba(var(--theme-primary-rgb, 245, 158, 11), 0.15);
+  border-color: var(--theme-primary, #f59e0b);
+}
+
+/* View All Trigger Card - Appears after 8 products */
+.view-all-trigger-card {
+  background: linear-gradient(135deg, rgba(var(--theme-primary-rgb, 245, 158, 11), 0.1), rgba(var(--theme-secondary-rgb, 244, 63, 94), 0.1));
+  border: 2px dashed var(--theme-primary, #f59e0b);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  min-height: 350px;
+}
+
+.view-all-trigger-card:hover {
+  background: linear-gradient(135deg, rgba(var(--theme-primary-rgb, 245, 158, 11), 0.2), rgba(var(--theme-secondary-rgb, 244, 63, 94), 0.15));
+  transform: translateY(-8px);
+}
+
+.view-all-card-content {
+  text-align: center;
+  padding: 2rem;
+}
+
+.view-all-icon {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 1rem;
+  border-radius: 50%;
+  background: var(--theme-btn-gradient, linear-gradient(135deg, #f59e0b, #f43f5e));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.5rem;
+  transition: transform 0.3s ease;
+}
+
+.view-all-trigger-card:hover .view-all-icon {
+  transform: scale(1.1);
+}
+
+.view-all-card-content h4 {
+  color: var(--theme-text-primary, #1a1a2e);
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.view-all-card-content p {
+  color: var(--text-60, #666);
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+/* Product Card Image Container */
+.product-card-img {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  overflow: hidden;
+  background: linear-gradient(135deg, rgba(var(--theme-primary-rgb, 245, 158, 11), 0.05), rgba(var(--theme-secondary-rgb, 244, 63, 94), 0.05));
+}
+
+.product-card-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.slider-product-card:hover .product-card-img img {
+  transform: scale(1.08);
+}
+
+.prod-img-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  color: var(--theme-primary, #f59e0b);
+  background: linear-gradient(135deg, rgba(var(--theme-primary-rgb, 245, 158, 11), 0.1), rgba(var(--theme-secondary-rgb, 244, 63, 94), 0.1));
+}
+
+/* Category Badge - Top Left */
+.product-category-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  padding: 4px 10px;
+  background: rgba(15, 23, 42, 0.8);
+  backdrop-filter: blur(10px);
+  color: white;
+  font-size: 0.7rem;
+  font-weight: 500;
+  border-radius: 20px;
+  z-index: 2;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Wishlist Button - Top Right */
+.product-wishlist-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(15, 23, 42, 0.8);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--theme-text-primary, #fff);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 2;
+  opacity: 0;
+  transform: scale(0.8);
+}
+
+.slider-product-card:hover .product-wishlist-btn {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.product-wishlist-btn:hover {
+  background: rgba(244, 63, 94, 0.9);
+  color: white;
+  transform: scale(1.1);
+}
+
+.product-wishlist-btn.active {
+  background: rgba(244, 63, 94, 0.9);
+  color: white;
+}
+
+.product-wishlist-btn.active i {
+  font-weight: 900;
+}
+
+/* Add to Cart Overlay - On Image Hover */
+.product-cart-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1rem;
+  background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+  z-index: 2;
+}
+
+.slider-product-card:hover .product-cart-overlay {
+  transform: translateY(0);
+}
+
+.product-cart-btn {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: var(--theme-btn-gradient, linear-gradient(135deg, #f59e0b, #f43f5e));
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.product-cart-btn:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 15px rgba(var(--theme-primary-rgb, 245, 158, 11), 0.4);
+}
+
+/* Product Card Info */
+.product-card-info {
+  padding: 1rem;
+}
+
+/* Category Name */
+.product-card-category {
+  font-size: 0.75rem;
+  color: var(--theme-primary, #f59e0b);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.5rem;
+}
+
+/* Product Name - 2 lines max */
+.product-card-name {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--theme-text-primary, #1a1a2e);
+  margin: 0 0 0.5rem 0;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: 2.8em;
+}
+
+/* Rating */
+.product-card-rating {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.rating-stars {
+  display: flex;
+  gap: 2px;
+}
+
+.rating-stars i {
+  font-size: 0.75rem;
+  color: #f59e0b;
+}
+
+.rating-stars i.far {
+  color: #ddd;
+}
+
+.rating-count {
+  font-size: 0.75rem;
+  color: var(--text-60, #666);
+}
+
+/* Price Row */
+.product-card-price {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.price-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.current-price {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--theme-text-primary, #1a1a2e);
+}
+
+.original-price {
+  font-size: 0.85rem;
+  color: var(--text-50, #999);
+  text-decoration: line-through;
+}
+
+.discount-badge {
+  padding: 2px 8px;
+  background: rgba(244, 63, 94, 0.15);
+  color: #f43f5e;
+  font-size: 0.7rem;
+  font-weight: 600;
+  border-radius: 4px;
+}
+
+.coupon-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  background: linear-gradient(135deg, rgba(var(--theme-primary-rgb, 245, 158, 11), 0.1), rgba(var(--theme-secondary-rgb, 244, 63, 94), 0.1));
+  color: var(--theme-primary, #f59e0b);
+  font-size: 0.7rem;
+  font-weight: 500;
+  border-radius: 4px;
+  border: 1px dashed var(--theme-primary, #f59e0b);
+}
+
+/* Navigation Buttons */
+.slider-nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--card-bg, transparent);
+  border: 1px solid var(--border-color, rgba(0,0,0,0.1));
+  color: var(--theme-text-primary, #1a1a2e);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 10;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.slider-nav-btn:hover {
+  background: var(--theme-primary, #f59e0b);
+  color: white;
+  border-color: var(--theme-primary, #f59e0b);
+  box-shadow: 0 4px 15px rgba(var(--theme-primary-rgb, 245, 158, 11), 0.3);
+}
+
+.slider-nav-btn.slider-prev {
+  left: 0;
+}
+
+.slider-nav-btn.slider-next {
+  right: 0;
+}
+
+.slider-nav-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Placeholder Card */
+.slider-placeholder {
+  opacity: 0.6;
+}
+
+.slider-placeholder .product-card-img,
+.slider-placeholder .product-card-info {
+  opacity: 0.7;
+}
+
+/* =============================================
+   RESPONSIVE STYLES
+   ============================================= */
+
+/* Large Desktop - 6 cards visible */
+@media (min-width: 1400px) {
+  .slider-product-card {
+    flex: 0 0 calc((100% - 6.25rem) / 6);
+    max-width: calc((100% - 6.25rem) / 6);
+    min-width: 200px;
+  }
+}
+
+/* Desktop - 5 cards visible */
+@media (max-width: 1399px) {
+  .slider-product-card {
+    flex: 0 0 calc((100% - 5rem) / 5);
+    max-width: calc((100% - 5rem) / 5);
+    min-width: 180px;
+  }
+}
+
+/* Tablet Landscape - 4 cards visible */
+@media (max-width: 1199px) {
+  .slider-product-card {
+    flex: 0 0 calc((100% - 3.75rem) / 4);
+    max-width: calc((100% - 3.75rem) / 4);
+    min-width: 160px;
+  }
+}
+
+/* Tablet Portrait - 3 cards visible */
+@media (max-width: 991px) {
+  .slider-product-card {
+    flex: 0 0 calc((100% - 2.5rem) / 3);
+    max-width: calc((100% - 2.5rem) / 3);
+    min-width: 140px;
+  }
+
+  .new-arrivals-slider-wrapper {
+    padding: 0 45px;
+  }
+
+  .slider-nav-btn {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+/* Mobile Landscape - 2 cards visible */
+@media (max-width: 767px) {
+  .slider-product-card {
+    flex: 0 0 calc((100% - 1rem) / 2);
+    max-width: calc((100% - 1rem) / 2);
+    min-width: 140px;
+  }
+
+  .new-arrivals-slider {
+    gap: 1rem;
+  }
+
+  .new-arrivals-slider-wrapper {
+    padding: 0 40px;
+  }
+
+  .slider-nav-btn {
+    width: 36px;
+    height: 36px;
+    font-size: 0.875rem;
+  }
+
+  .product-card-info {
+    padding: 0.75rem;
+  }
+
+  .product-card-name {
+    font-size: 0.875rem;
+  }
+
+  .current-price {
+    font-size: 0.9rem;
+  }
+
+  .view-all-trigger-card {
+    min-height: 280px;
+  }
+}
+
+/* Mobile Portrait - 2 cards visible */
+@media (max-width: 575px) {
+  .slider-product-card {
+    flex: 0 0 calc((100% - 0.75rem) / 2);
+    max-width: calc((100% - 0.75rem) / 2);
+    min-width: 130px;
+  }
+
+  .new-arrivals-slider {
+    gap: 0.75rem;
+  }
+
+  .new-arrivals-slider-wrapper {
+    padding: 0 35px;
+  }
+
+  .slider-nav-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 0.75rem;
+  }
+
+  .product-category-badge {
+    font-size: 0.6rem;
+    padding: 3px 6px;
+  }
+
+  .product-wishlist-btn {
+    width: 30px;
+    height: 30px;
+    font-size: 0.75rem;
+  }
+
+  .product-card-info {
+    padding: 0.6rem;
+  }
+
+  .product-card-category {
+    font-size: 0.65rem;
+  }
+
+  .product-card-name {
+    font-size: 0.8rem;
+    min-height: 2.4em;
+  }
+
+  .rating-stars i {
+    font-size: 0.65rem;
+  }
+
+  .current-price {
+    font-size: 0.85rem;
+  }
+
+  .original-price {
+    font-size: 0.75rem;
+  }
+
+  .view-all-trigger-card {
+    min-height: 240px;
+  }
+
+  .view-all-icon {
+    width: 50px;
+    height: 50px;
+    font-size: 1.25rem;
+  }
+
+  .view-all-card-content h4 {
+    font-size: 0.9rem;
+  }
+
+  .view-all-card-content p {
+    font-size: 0.75rem;
+  }
+}
+
+/* Touch devices - show wishlist always visible */
+@media (hover: none) {
+  .product-wishlist-btn {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .product-cart-overlay {
+    transform: translateY(0);
+    background: linear-gradient(to top, rgba(0,0,0,0.5), transparent);
+  }
 }
 </style>
 @endpush
