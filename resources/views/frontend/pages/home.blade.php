@@ -2411,6 +2411,36 @@ document.addEventListener('DOMContentLoaded', function() {
   .product-cart-overlay {
     transform: translateY(0);
     background: linear-gradient(to top, rgba(0,0,0,0.5), transparent);
+    padding: 0.4rem;
+  }
+
+  .product-cart-btn {
+    padding: 0.35rem 0.5rem;
+    font-size: 0.7rem;
+    border-radius: 6px;
+  }
+
+  .product-cart-btn span {
+    display: none;
+  }
+
+  .product-cart-btn i {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 575px) {
+  .product-cart-overlay {
+    padding: 0.35rem;
+  }
+
+  .product-cart-btn {
+    padding: 0.3rem;
+    font-size: 0.65rem;
+  }
+
+  .product-cart-btn span {
+    display: none;
   }
 }
 </style>
