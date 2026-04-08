@@ -395,13 +395,13 @@
                   <span class="product-category-badge">{{ $product->category->name_en ?? 'Sweets' }}</span>
 
                   <!-- Wishlist Icon (Top Right) -->
-                  <button class="product-wishlist-btn" data-product-id="{{ $product->id }}" title="Add to Wishlist" onclick="event.preventDefault(); event.stopPropagation();">
+                  <button class="product-wishlist-btn" data-product-id="{{ $product->id }}" title="Add to Wishlist" onclick="event.preventDefault(); event.stopPropagation(); toggleWishlist({{ $product->id }}, this);">
                     <i class="far fa-heart"></i>
                   </button>
 
                   <!-- Add to Cart (On Hover) -->
                   <div class="product-cart-overlay">
-                    <button class="product-cart-btn" onclick="event.preventDefault(); event.stopPropagation(); addToCart({{ $product->id }}, '{{ $product->name }}', {{ $product->sale_price ?? $product->price }}, '{{ $product->image ?? '' }}', event)">
+                    <button class="product-cart-btn" onclick="event.preventDefault(); event.stopPropagation(); addToCart({{ $product->id }}, '{{ $product->name }}', {{ $product->sale_price ?? $product->price }}, '{{ $product->image ?? '' }}', event);">
                       <i class="fas fa-shopping-cart"></i>
                       <span>Add to Cart</span>
                     </button>
@@ -1298,7 +1298,8 @@ function addToCart(productId, productName, price, image, event) {
     event.preventDefault();
     event.stopPropagation();
 
-    const button = event.target.closest('.add-btn');
+    const button = event.target.closest('.product-cart-btn, .add-btn');
+    if (!button) return;
     const originalHTML = button.innerHTML;
 
     // Show loading state
