@@ -366,20 +366,8 @@
       <!-- Slider Track -->
       <div class="new-arrivals-slider" id="newArrivalsSlider">
         @if(isset($newArrivals) && $newArrivals->count() > 0)
-          @php $slideIndex = 0; @endphp
           @foreach($newArrivals as $index => $product)
-            <!-- Show "View All" card after 8 products -->
-            @if($index === 8)
-              <div class="slider-product-card view-all-trigger-card" data-slide-index="{{ $slideIndex }}">
-                <div class="view-all-card-content">
-                  <div class="view-all-icon"><i class="fas fa-arrow-right"></i></div>
-                  <h4>View All Products</h4>
-                  <p>Explore our complete collection</p>
-                </div>
-              </div>
-            @endif
-
-            <div class="slider-product-card" data-slide-index="{{ $slideIndex }}">
+            <div class="slider-product-card">
               <a href="{{ route('shop.product', $product->slug) }}" class="text-decoration-none">
                 <!-- Product Image -->
                 <div class="product-card-img">
@@ -451,33 +439,22 @@
                 </div>
               </a>
             </div>
-            @php $slideIndex++; @endphp
           @endforeach
 
-          <!-- Extra placeholder cards (if less than 12 products) -->
-          @php
-            $remaining = 12 - $newArrivals->count();
-          @endphp
-          @for($i = 0; $i < $remaining; $i++)
-            <div class="slider-product-card slider-placeholder">
-              <div class="product-card-img">
-                <div class="prod-img-placeholder">
-                  <i class="fas fa-cookie-bite"></i>
-                </div>
+          <!-- View All Products Card - Last card in slider -->
+          <div class="slider-product-card view-all-trigger-card">
+            @if($cmsSections && isset($cmsSections['new-arrivals']) && $cmsSections['new-arrivals']->button_url)
+              <a href="{{ $cmsSections['new-arrivals']->button_url }}" class="text-decoration-none" style="width:100%;height:100%;display:flex;">
+            @else
+              <a href="{{ route('shop') }}" class="text-decoration-none" style="width:100%;height:100%;display:flex;">
+            @endif
+              <div class="view-all-card-content">
+                <div class="view-all-icon"><i class="fas fa-arrow-right"></i></div>
+                <h4>View All Products</h4>
+                <p>Explore our complete collection</p>
               </div>
-              <div class="product-card-info">
-                <div class="product-card-category">Coming Soon</div>
-                <h5 class="product-card-name">New Product</h5>
-                <div class="product-card-rating">
-                  <div class="rating-stars"><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i></div>
-                  <span class="rating-count">(0)</span>
-                </div>
-                <div class="product-card-price">
-                  <span class="current-price">৳---</span>
-                </div>
-              </div>
-            </div>
-          @endfor
+            </a>
+          </div>
         @else
           <div class="col-12 text-center py-5">
             <p style="color:var(--text-60);">No new arrivals available at the moment.</p>
