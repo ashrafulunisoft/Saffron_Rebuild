@@ -1865,12 +1865,12 @@ document.addEventListener('DOMContentLoaded', function() {
   flex: 0 0 calc((100% - 6.25rem) / 6);
   max-width: calc((100% - 6.25rem) / 6);
   min-width: 200px;
-  background: var(--card-bg, transparent);
+  background: rgba(255,255,255,0.05);
   border-radius: 16px;
   overflow: hidden;
   transition: all 0.3s ease;
   scroll-snap-align: start;
-  border: 1px solid var(--border-color, rgba(0,0,0,0.08));
+  border: 1px solid rgba(255,255,255,0.1);
   box-shadow: 0 2px 8px rgba(0,0,0,0.04);
 }
 
@@ -2171,8 +2171,8 @@ document.addEventListener('DOMContentLoaded', function() {
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  background: var(--card-bg, transparent);
-  border: 1px solid var(--border-color, rgba(0,0,0,0.1));
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
   color: var(--theme-text-primary, #1a1a2e);
   display: flex;
   align-items: center;
