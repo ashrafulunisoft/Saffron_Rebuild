@@ -395,7 +395,7 @@
                   <span class="product-category-badge">{{ $product->category->name_en ?? 'Sweets' }}</span>
 
                   <!-- Wishlist Icon (Top Right) -->
-                  <button class="product-wishlist-btn" data-product-id="{{ $product->id }}" title="Add to Wishlist" onclick="event.preventDefault(); event.stopPropagation(); toggleWishlist({{ $product->id }}, this);">
+                  <button class="product-wishlist-btn prod-wishlist" data-product-id="{{ $product->id }}" title="Add to Wishlist">
                     <i class="far fa-heart"></i>
                   </button>
 
