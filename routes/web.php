@@ -464,7 +464,14 @@ Route::get('/', function(){
         ->get()
         ->keyBy('section_key');
 
-    return view('frontend.pages.home', compact('categories', 'featuredProducts', 'newArrivals', 'categoryProducts', 'bestSellers', 'reviews', 'blogPosts', 'cmsSections'));
+    // Get active coupons for welcome modal
+    $activeCoupons = \DB::table('coupons')
+        ->where('expires_at', '>', now())
+        ->whereRaw('(usage_limit IS NULL OR usage_count < usage_limit)')
+        ->orderBy('value', 'desc')
+        ->get();
+
+    return view('frontend.pages.home', compact('categories', 'featuredProducts', 'newArrivals', 'categoryProducts', 'bestSellers', 'reviews', 'blogPosts', 'cmsSections', 'activeCoupons'));
 })->name('home');
 
 

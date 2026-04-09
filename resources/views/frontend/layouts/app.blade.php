@@ -2814,6 +2814,22 @@ section {
     </style>
 </head>
 <body>
+    <!-- Preloader -->
+    <div id="sitePreloader" style="position:fixed;inset:0;z-index:99999;background:#0f0a00;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity 0.5s ease;">
+      <div style="margin-bottom:1.5rem;">
+        <i class="fas fa-cookie-bite" style="font-size:3.5rem;background:var(--theme-btn-gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:preloaderBounce 1s ease-in-out infinite;"></i>
+      </div>
+      <div style="font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;background:var(--theme-btn-gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Saffron</div>
+      <div style="color:rgba(245,230,204,0.5);font-size:0.8rem;margin-top:0.25rem;">Sweets & Bakery</div>
+      <div style="margin-top:1.5rem;width:120px;height:3px;border-radius:3px;background:rgba(245,158,11,0.15);overflow:hidden;">
+        <div style="width:40%;height:100%;border-radius:3px;background:var(--theme-btn-gradient);animation:preloaderBar 1.2s ease-in-out infinite;"></div>
+      </div>
+    </div>
+    <style>
+    @keyframes preloaderBounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
+    @keyframes preloaderBar { 0%{transform:translateX(-100%)} 100%{transform:translateX(350%)} }
+    </style>
+
     <!-- Particles Container -->
     <div class="particles-container" id="particles"></div>
 
@@ -3104,5 +3120,96 @@ window.requireAuth = function() {
         }
     }
     </style>
+
+    <!-- Welcome Coupon Modal (homepage only, first visit per session) -->
+    @if(request()->is('/') && isset($activeCoupons) && $activeCoupons->count() > 0)
+    <div id="couponModalOverlay" style="display:none;position:fixed;inset:0;z-index:10001;background:rgba(0,0,0,0.7);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:1rem;">
+      <div id="couponModal" style="background:linear-gradient(135deg,rgba(15,10,0,0.97),rgba(30,20,5,0.97));border:1px solid rgba(245,158,11,0.3);border-radius:20px;max-width:500px;width:100%;max-height:85vh;overflow-y:auto;position:relative;">
+        <!-- Close -->
+        <button id="couponModalClose" style="position:absolute;top:12px;right:12px;background:rgba(255,255,255,0.1);border:none;color:rgba(255,255,255,0.6);width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:1rem;z-index:2;display:flex;align-items:center;justify-content:center;">
+          <i class="fas fa-times"></i>
+        </button>
+        <!-- Header -->
+        <div style="text-align:center;padding:2rem 1.5rem 1rem;">
+          <div style="font-size:2.5rem;margin-bottom:0.5rem;"><i class="fas fa-gift" style="background:var(--theme-btn-gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;"></i></div>
+          <h3 style="font-family:'Playfair Display',serif;font-size:1.5rem;color:#fff;margin-bottom:0.25rem;">Welcome to Saffron!</h3>
+          <p style="color:rgba(255,255,255,0.5);font-size:0.85rem;">Grab your exclusive discounts below</p>
+        </div>
+        <!-- Coupons -->
+        <div style="padding:0 1.5rem 1.5rem;">
+          @foreach($activeCoupons as $coupon)
+          <div style="background:linear-gradient(135deg,rgba(245,158,11,0.12),rgba(244,63,94,0.08));border:1px dashed rgba(245,158,11,0.4);border-radius:14px;padding:1rem;margin-bottom:0.75rem;display:flex;align-items:center;gap:1rem;">
+            <div style="min-width:70px;text-align:center;">
+              <div style="font-size:1.6rem;font-weight:800;background:var(--theme-btn-gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">
+                {{ $coupon->type === 'percent' ? $coupon->value . '%' : '৳' . number_format($coupon->value) }}
+              </div>
+              <div style="font-size:0.65rem;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:1px;">OFF</div>
+            </div>
+            <div style="flex:1;min-width:0;">
+              <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.25rem;">
+                <span style="background:var(--theme-btn-gradient);color:#fff;font-size:0.7rem;font-weight:700;padding:2px 10px;border-radius:6px;letter-spacing:1px;">{{ $coupon->code }}</span>
+              </div>
+              <p style="font-size:0.75rem;color:rgba(255,255,255,0.5);margin:0;">
+                Use code <strong style="color:#f59e0b;">{{ $coupon->code }}</strong> at checkout
+                @if($coupon->expires_at) · Expires {{ \Carbon\Carbon::parse($coupon->expires_at)->format('M d') }}@endif
+              </p>
+            </div>
+            <button onclick="navigator.clipboard.writeText('{{ $coupon->code }}');this.innerHTML='<i class=\'fas fa-check\'></i> Copied';this.style.background='var(--theme-btn-gradient)';this.style.color='#fff';this.style.borderColor='transparent';" style="background:transparent;border:1px solid rgba(245,158,11,0.4);color:#f59e0b;font-size:0.7rem;font-weight:600;padding:6px 14px;border-radius:8px;cursor:pointer;white-space:nowrap;transition:all 0.3s;">
+              <i class="fas fa-copy"></i> Copy
+            </button>
+          </div>
+          @endforeach
+        </div>
+        <!-- Footer -->
+        <div style="text-align:center;padding:0 1.5rem 1.5rem;">
+          <a href="{{ route('shop') }}" style="display:inline-block;background:var(--theme-btn-gradient);color:#fff;padding:0.7rem 2rem;border-radius:12px;text-decoration:none;font-weight:600;font-size:0.9rem;box-shadow:0 4px 15px rgba(245,158,11,0.3);">
+            <i class="fas fa-shopping-bag me-2"></i>Shop Now
+          </a>
+        </div>
+      </div>
+    </div>
+    @endif
+    <script>
+    // Preloader dismiss - runs on ALL pages
+    window.addEventListener('load', function(){
+      var preloader = document.getElementById('sitePreloader');
+      if(preloader){
+        setTimeout(function(){
+          preloader.style.opacity = '0';
+          setTimeout(function(){ preloader.style.display = 'none'; }, 500);
+        }, 800);
+      }
+      // Coupon modal - only if element exists (homepage)
+      if(!sessionStorage.getItem('couponModalShown')){
+        setTimeout(function(){
+          var overlay = document.getElementById('couponModalOverlay');
+          if(overlay){
+            overlay.style.display = 'flex';
+            sessionStorage.setItem('couponModalShown', '1');
+          }
+        }, 2000);
+      }
+    });
+    // Close coupon modal
+    var couponClose = document.getElementById('couponModalClose');
+    if(couponClose){
+      couponClose.addEventListener('click', function(){
+        document.getElementById('couponModalOverlay').style.display = 'none';
+      });
+    }
+    var couponOverlay = document.getElementById('couponModalOverlay');
+    if(couponOverlay){
+      couponOverlay.addEventListener('click', function(e){
+        if(e.target === this) this.style.display = 'none';
+      });
+    }
+    document.addEventListener('keydown', function(e){
+      if(e.key === 'Escape'){
+        var m = document.getElementById('couponModalOverlay');
+        if(m) m.style.display = 'none';
+      }
+    });
+    </script>
+
 </body>
 </html>
