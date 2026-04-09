@@ -224,32 +224,13 @@
     color: var(--theme-text-primary);
   }
 
-  /* Mobile: show wishlist and add-to-cart on tap/hover only */
+  /* Mobile: Completely hide wishlist & add-to-cart buttons */
   @media (max-width: 767px), (hover: none) {
     .row > [class*="col-"] > .slider-product-card .product-wishlist-btn {
-      opacity: 0 !important;
-      transform: scale(0.8) !important;
+      display: none !important;
     }
     .row > [class*="col-"] > .slider-product-card .product-cart-overlay {
-      transform: translateY(100%) !important;
-      background: linear-gradient(to top, rgba(0,0,0,0.7), transparent) !important;
-    }
-    .row > [class*="col-"] > .slider-product-card:hover .product-wishlist-btn,
-    .row > [class*="col-"] > .slider-product-card:active .product-wishlist-btn {
-      opacity: 1 !important;
-      transform: scale(1) !important;
-    }
-    .row > [class*="col-"] > .slider-product-card:hover .product-cart-overlay,
-    .row > [class*="col-"] > .slider-product-card:active .product-cart-overlay {
-      transform: translateY(0) !important;
-    }
-    .row > [class*="col-"] > .slider-product-card .product-cart-btn {
-      padding: 0.45rem 0.75rem;
-      font-size: 0.75rem;
-      border-radius: 8px;
-    }
-    .row > [class*="col-"] > .slider-product-card .product-cart-btn i {
-      font-size: 0.7rem;
+      display: none !important;
     }
   }
 </style>
