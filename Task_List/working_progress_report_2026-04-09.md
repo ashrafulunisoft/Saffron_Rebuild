@@ -8,7 +8,7 @@
 ## Summary
 Completed a comprehensive homepage redesign covering **6 major sections** converted from grid layouts to modern horizontal sliders. Added **database content** (9 blog posts, 10 reviews, 9 featured products, 103 product descriptions), implemented **mobile bottom navigation**, **website preloader animation**, **coupon/discount welcome modal**, fixed **blog category filtering**, **shop category icons**, and resolved **admin/customer menu redirection** issues.
 
-**Total commits:** 17 | **Files changed:** 8 | **Lines changed:** ~4,000+
+**Total commits:** 20 | **Files changed:** 9 | **Lines changed:** ~4,500+
 
 ---
 
@@ -327,7 +327,75 @@ onclick="navigator.clipboard.writeText('COUPON_CODE');
 
 ---
 
-### 9. Database Backup
+---
+
+### 10. Shop Page Product Card Redesign
+- **Commit:** `26d30983` - fix the shop page card
+- **Commit:** `d90a792a` - fix the shop product card
+- **File:** `resources/views/frontend/pages/shop.blade.php`
+- Replaced old `.prod-card` design with homepage-style `.slider-product-card` design
+- Included `new-arrivals.css` for consistent card styling across shop and homepage
+- Glassmorphism transparent background with `var(--glass-bg)` and `backdrop-filter: blur(20px)`
+
+#### Card Features:
+- Category badge (top-left), Featured/Low-Stock badge, Wishlist button (top-right, hover reveal)
+- "Add to Cart" overlay slides up on hover
+- Product info: category, name (2-line clamp), star ratings, price with discount badges
+- Grid layout: 2 cols mobile, 3 cols MD, 4 cols LG/XL
+
+#### Mobile View Fixes:
+- Wishlist and "Add to Cart" buttons **hidden by default**, shown only on tap/hover
+- Overridden `@media (hover: none)` from `new-arrivals.css` with `!important` to hide buttons
+- Buttons appear on `:hover` and `:active` states for touch interaction
+- Compact button size: `padding: 0.45rem`, `font-size: 0.75rem`, `border-radius: 8px`
+
+#### Button Routes Fixed:
+- Wishlist: `onclick="event.preventDefault(); event.stopPropagation();"` prevents `<a>` navigation
+- Add to Cart: JS `closest()` selector updated to match `.product-cart-btn, .prod-cart-btn`
+- Both buttons properly call API endpoints (`/wishlist/toggle`, `/cart/add`) without page redirect
+
+**Code:**
+```css
+@media (max-width: 767px), (hover: none) {
+  .row > [class*="col-"] > .slider-product-card .product-wishlist-btn {
+    opacity: 0 !important;
+    transform: scale(0.8) !important;
+  }
+  .row > [class*="col-"] > .slider-product-card .product-cart-overlay {
+    transform: translateY(100%) !important;
+  }
+  .row > [class*="col-"] > .slider-product-card:hover .product-wishlist-btn,
+  .row > [class*="col-"] > .slider-product-card:active .product-wishlist-btn {
+    opacity: 1 !important;
+    transform: scale(1) !important;
+  }
+  .row > [class*="col-"] > .slider-product-card:hover .product-cart-overlay,
+  .row > [class*="col-"] > .slider-product-card:active .product-cart-overlay {
+    transform: translateY(0) !important;
+  }
+}
+```
+
+---
+
+### 11. Product Details "You May Also Like" Card Redesign
+- **Commit:** `e127b9a4` - fix the you may also like product card design
+- **File:** `resources/views/frontend/pages/product.blade.php`
+- Applied the same homepage card design to the "You May Also Like" related products section
+- Included `new-arrivals.css` for consistent styling
+- Glassmorphism transparent background matching shop page cards
+- Same mobile hover behavior: buttons hidden by default, show on tap
+
+#### Card Features:
+- Full homepage card design: category badge, wishlist, add-to-cart overlay, ratings, discount badges
+- Discount calculation: `$relDiscount = round(($related->compare_price - $related->price) / $related->compare_price * 100)`
+- Updated `addToCart` JS `closest()` selector to `.product-cart-btn, .prod-cart-btn`
+- Mobile CSS override with `!important` to override `@media (hover: none)` from `new-arrivals.css`
+- Compact button size on mobile matching shop page
+
+---
+
+### 12. Database Backup
 - **Commit:** `8f163db6` - bkup the db
 - **File:** `database/backup/saffron_db_09-04-26.sql`
 - Full database backup including all new blog posts, reviews, featured products, and updated product descriptions
@@ -341,7 +409,8 @@ onclick="navigator.clipboard.writeText('COUPON_CODE');
 | `resources/views/frontend/pages/home.blade.php` | 6 sections redesigned to horizontal sliders, review modal, category count hidden, CSS/JS additions |
 | `resources/views/frontend/layouts/app.blade.php` | Mobile bottom nav, website preloader animation, coupon welcome modal |
 | `resources/views/frontend/partials/navigation.blade.php` | Admin dropdown menu fix, mobile nav link fix |
-| `resources/views/frontend/pages/shop.blade.php` | Category item count hidden, category icons added |
+| `resources/views/frontend/pages/shop.blade.php` | Product card redesign (homepage style), category icons, mobile hover fix |
+| `resources/views/frontend/pages/product.blade.php` | "You May Also Like" card redesign (homepage style), mobile hover fix |
 | `resources/views/frontend/blog/index.blade.php` | Removed featured posts, fixed category active state |
 | `app/Http/Controllers/Frontend/BlogController.php` | Dynamic category loading from DB |
 | `routes/web.php` | Updated take() limits, added active coupons query for welcome modal |
@@ -364,10 +433,14 @@ onclick="navigator.clipboard.writeText('COUPON_CODE');
 ## Technical Notes
 
 - All slider sections share a consistent pattern: wrapper div, prev/next buttons, scroll container with drag-to-scroll JS
+- Product card design unified across homepage, shop, and product detail pages using `new-arrivals.css` + `.slider-product-card` class
 - CSS custom properties (`--theme-primary`, `--theme-btn-gradient`, `--theme-primary-rgb`) used throughout for dynamic theming
+- Glassmorphism cards use `var(--glass-bg)` + `backdrop-filter: blur(20px)` for transparent background
 - Mobile bottom nav uses `backdrop-filter: blur(20px)` for glassmorphism effect
+- Mobile product cards: wishlist/cart buttons hidden by default, shown on tap via `:hover`/`:active` with `!important` override of `@media (hover: none)` from `new-arrivals.css`
 - Preloader uses `window.addEventListener('load')` to detect actual page load completion — no artificial delays
 - Coupon modal uses `sessionStorage` to show only once per browser session
 - Admin role detection uses `auth()->user()->hasRole('admin')` from Spatie Laravel Permission package
 - Product descriptions use `<ul><li>` HTML format for proper frontend rendering
 - Preloader dismiss JS runs on all pages (outside `@if` block) while coupon modal HTML is homepage-only
+- Add to Cart JS uses `closest('.product-cart-btn, .prod-cart-btn')` for backward compatibility with old card classes

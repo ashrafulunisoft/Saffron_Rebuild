@@ -3393,5 +3393,15 @@ document.addEventListener('DOMContentLoaded', function() {
     display: none;
   }
 }
+
+/* Mobile: Completely hide wishlist & add-to-cart buttons */
+@media (max-width: 767px), (hover: none) {
+  .new-arrivals-slider .slider-product-card .product-wishlist-btn {
+    display: none !important;
+  }
+  .new-arrivals-slider .slider-product-card .product-cart-overlay {
+    display: none !important;
+  }
+}
 </style>
 @endpush
