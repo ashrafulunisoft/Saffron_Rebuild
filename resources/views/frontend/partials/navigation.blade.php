@@ -194,9 +194,15 @@
 
         @auth
           <li class="nav-item d-lg-none">
-            <a class="nav-link {{ request()->routeIs('customer.dashboard') ? 'active' : '' }}" href="{{ route('customer.dashboard') }}">
-              <i class="fas fa-user me-2"></i>My Dashboard
-            </a>
+            @if(auth()->user()->hasRole('admin'))
+              <a class="nav-link" href="{{ route('admin.dashboard') }}">
+                <i class="fas fa-user me-2"></i>Dashboard
+              </a>
+            @else
+              <a class="nav-link {{ request()->routeIs('customer.dashboard') ? 'active' : '' }}" href="{{ route('customer.dashboard') }}">
+                <i class="fas fa-user me-2"></i>My Dashboard
+              </a>
+            @endif
           </li>
         @endauth
       </ul>
@@ -221,9 +227,15 @@
               <i class="fas fa-user"></i>
             </a>
           @else
-            <a href="{{ route('customer.dashboard') }}" class="nav-icon-btn d-none d-sm-flex" title="Dashboard">
-              <i class="fas fa-user"></i>
-            </a>
+            @if(auth()->user()->hasRole('admin'))
+              <a href="{{ route('admin.dashboard') }}" class="nav-icon-btn d-none d-sm-flex" title="Dashboard">
+                <i class="fas fa-user"></i>
+              </a>
+            @else
+              <a href="{{ route('customer.dashboard') }}" class="nav-icon-btn d-none d-sm-flex" title="Dashboard">
+                <i class="fas fa-user"></i>
+              </a>
+            @endif
           @endguest
 
           @auth
@@ -248,10 +260,14 @@
               <i class="fas fa-user-circle me-2"></i>{{ auth()->user()->name }}
             </button>
             <ul class="dropdown-menu dropdown-menu-end" style="background: rgba(15, 10, 0, 0.95); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1);">
-              <li><a class="dropdown-item" href="{{ route('customer.dashboard') }}" style="color: var(--theme-text-primary);"><i class="fas fa-tachometer-alt me-2"></i>Dashboard</a></li>
-              <li><a class="dropdown-item" href="{{ route('customer.orders') }}" style="color: var(--theme-text-primary);"><i class="fas fa-shopping-bag me-2"></i>My Orders</a></li>
-              <li><a class="dropdown-item" href="{{ route('customer.wishlist') }}" style="color: var(--theme-text-primary);"><i class="fas fa-heart me-2"></i>Wishlist</a></li>
-              <li><a class="dropdown-item" href="{{ route('customer.profile') }}" style="color: var(--theme-text-primary);"><i class="fas fa-user-edit me-2"></i>Profile</a></li>
+              @if(auth()->user()->hasRole('admin'))
+                <li><a class="dropdown-item" href="{{ route('admin.dashboard') }}" style="color: var(--theme-text-primary);"><i class="fas fa-tachometer-alt me-2"></i>Dashboard</a></li>
+              @else
+                <li><a class="dropdown-item" href="{{ route('customer.dashboard') }}" style="color: var(--theme-text-primary);"><i class="fas fa-tachometer-alt me-2"></i>Dashboard</a></li>
+                <li><a class="dropdown-item" href="{{ route('customer.orders') }}" style="color: var(--theme-text-primary);"><i class="fas fa-shopping-bag me-2"></i>My Orders</a></li>
+                <li><a class="dropdown-item" href="{{ route('customer.wishlist') }}" style="color: var(--theme-text-primary);"><i class="fas fa-heart me-2"></i>Wishlist</a></li>
+                <li><a class="dropdown-item" href="{{ route('customer.profile') }}" style="color: var(--theme-text-primary);"><i class="fas fa-user-edit me-2"></i>Profile</a></li>
+              @endif
               <li><hr class="dropdown-divider" style="border-color: rgba(255,255,255,0.1);"></li>
               <li>
                 <form method="POST" action="{{ route('logout') }}">
