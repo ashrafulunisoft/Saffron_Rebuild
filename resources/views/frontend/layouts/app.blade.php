@@ -3028,10 +3028,17 @@ window.requireAuth = function() {
             <span>Cart</span>
         </a>
         @auth
-            <a href="{{ route('profile') }}" class="mobile-nav-item {{ request()->is('profile') || request()->is('orders*') || request()->is('wishlist*') ? 'active' : '' }}">
-                <i class="fas fa-user"></i>
-                <span>Account</span>
-            </a>
+            @if(auth()->user()->hasRole('admin'))
+                <a href="{{ route('admin.dashboard') }}" class="mobile-nav-item {{ request()->is('admin*') ? 'active' : '' }}">
+                    <i class="fas fa-user"></i>
+                    <span>Account</span>
+                </a>
+            @else
+                <a href="{{ route('profile') }}" class="mobile-nav-item {{ request()->is('profile') || request()->is('orders*') || request()->is('wishlist*') ? 'active' : '' }}">
+                    <i class="fas fa-user"></i>
+                    <span>Account</span>
+                </a>
+            @endif
         @else
             <a href="#" class="mobile-nav-item" data-bs-toggle="modal" data-bs-target="#loginModal">
                 <i class="fas fa-user"></i>
