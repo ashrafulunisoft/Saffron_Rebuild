@@ -224,19 +224,32 @@
     color: var(--theme-text-primary);
   }
 
-  /* Mobile: always show wishlist and add-to-cart */
-  @media (max-width: 767px) {
+  /* Mobile: show wishlist and add-to-cart on tap/hover only */
+  @media (max-width: 767px), (hover: none) {
     .row > [class*="col-"] > .slider-product-card .product-wishlist-btn {
-      opacity: 1;
-      transform: scale(1);
+      opacity: 0 !important;
+      transform: scale(0.8) !important;
     }
     .row > [class*="col-"] > .slider-product-card .product-cart-overlay {
-      transform: translateY(0);
-      background: linear-gradient(to top, rgba(0,0,0,0.5), transparent);
+      transform: translateY(100%) !important;
+      background: linear-gradient(to top, rgba(0,0,0,0.7), transparent) !important;
+    }
+    .row > [class*="col-"] > .slider-product-card:hover .product-wishlist-btn,
+    .row > [class*="col-"] > .slider-product-card:active .product-wishlist-btn {
+      opacity: 1 !important;
+      transform: scale(1) !important;
+    }
+    .row > [class*="col-"] > .slider-product-card:hover .product-cart-overlay,
+    .row > [class*="col-"] > .slider-product-card:active .product-cart-overlay {
+      transform: translateY(0) !important;
     }
     .row > [class*="col-"] > .slider-product-card .product-cart-btn {
-      padding: 0.6rem 1rem;
-      font-size: 0.85rem;
+      padding: 0.45rem 0.75rem;
+      font-size: 0.75rem;
+      border-radius: 8px;
+    }
+    .row > [class*="col-"] > .slider-product-card .product-cart-btn i {
+      font-size: 0.7rem;
     }
   }
 </style>
