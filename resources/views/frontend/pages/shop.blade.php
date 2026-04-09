@@ -50,9 +50,21 @@
             <h6 style="color: var(--theme-text-secondary); margin-bottom: 1rem;">Categories</h6>
             <div class="category-list">
               @foreach($categories as $cat)
+                @php
+                  $catIcons = [
+                    'breads' => 'fa-bread-slice',
+                    'cakes' => 'fa-cake-candles',
+                    'cookies-biscuits' => 'fa-cookie-bite',
+                    'traditional-sweets' => 'fa-candy-cane',
+                    'dairy-products' => 'fa-cheese',
+                    'buns-rolls' => 'fa-stroopwafel',
+                    'pastries-savories' => 'fa-pie-chart',
+                  ];
+                  $catIcon = $catIcons[$cat->slug] ?? 'fa-utensils';
+                @endphp
               <a href="{{ route('shop.category', $cat->slug) }}" class="category-link">
-                <span>{{ $cat->name_en }}</span>
-                <span class="badge" style="background: rgba(245,158,11,0.2); color: var(--theme-text-secondary);">{{ $cat->products_count ?? 0 }}</span>
+                <span><i class="fas {{ $catIcon }} me-2" style="color:var(--theme-text-secondary);width:18px;text-align:center;"></i>{{ $cat->name_en }}</span>
+                {{--<span class="badge" style="background: rgba(245,158,11,0.2); color: var(--theme-text-secondary);">{{ $cat->products_count ?? 0 }}</span>--}}
               </a>
               @endforeach
             </div>

@@ -164,7 +164,7 @@
         <a href="{{ route('shop.category', $category->slug) }}" class="cat-card">
           <div class="cat-emoji">{{ $emoji }}</div>
           <div class="cat-name">{{ $category->name_en }}</div>
-          <div class="cat-count">{{ $category->products_count }} items</div>
+          {{--<div class="cat-count">{{ $category->products_count }} items</div>--}}
         </a>
       @endforeach
     </div>
