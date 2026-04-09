@@ -2481,6 +2481,23 @@ document.addEventListener('DOMContentLoaded', function() {
   cursor: pointer;
 }
 
+@media (max-width: 575px) {
+  .testimonial-card-clickable .product-card-img > div {
+    flex-wrap: wrap;
+  }
+  .testimonial-card-clickable .product-card-img > div > div:last-child {
+    min-width: 0;
+    flex: 1 1 100%;
+  }
+  .testimonial-card-clickable .product-card-img > div > div:last-child > div:first-child {
+    white-space: normal;
+    overflow: visible;
+    text-overflow: unset;
+    font-size: 0.8rem;
+    line-height: 1.3;
+  }
+}
+
 /* Review Modal */
 .review-modal-overlay {
   display: none;

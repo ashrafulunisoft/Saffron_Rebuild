@@ -447,7 +447,7 @@ Route::get('/', function(){
     $reviews = \App\Models\Review::approved()
         ->with(['user', 'product'])
         ->orderBy('created_at', 'desc')
-        ->take(3)
+        ->take(13)
         ->get();
 
     // Get latest blog posts
