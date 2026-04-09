@@ -94,38 +94,80 @@
       <div class="col-lg-9">
 
         @if($products->count() > 0)
-          <div class="row g-4">
+          <div class="row g-3">
             @foreach($products as $product)
-            <div class="col-6 col-md-4 col-lg-4">
-              <div class="prod-card">
-                <div class="prod-img-wrapper">
-                  @if($product->image)
-                    <img src="{{ asset("storage/{$product->image}") }}" alt="{{ $product->name }}">
-                  @else
-                    <div class="prod-img-placeholder">
-                      <i class="fas fa-cookie-bite"></i>
-                    </div>
-                  @endif
-                  <button class="prod-wishlist" data-product-id="{{ $product->id }}" title="Add to Wishlist">
-                    <i class="far fa-heart"></i>
-                  </button>
-                  @if($product->stock < 10 && $product->stock > 0)
-                    <span class="prod-badge-low">Low Stock</span>
-                  @elseif($product->is_new)
-                    <span class="prod-badge-new">New</span>
-                  @endif
-                </div>
-                <div class="prod-details">
-                  <span class="prod-cat">{{ $product->category->name_en ?? 'Sweets' }}</span>
-                  <h6 class="prod-title">{{ $product->name }}</h6>
-                  <div class="d-flex justify-content-between align-items-center">
-                    <span class="prod-price">৳{{ number_format($product->price) }}</span>
-                    <button class="prod-cart-btn" onclick="addToCart({{ $product->id }}, '{{ $product->name }}', {{ $product->sale_price ?? $product->price }}, '{{ $product->image ?? '' }}', event)">
-                      <i class="fas fa-shopping-bag"></i>
+            <div class="col-6 col-md-4 col-lg-3 col-xl-3">
+              <div class="slider-product-card">
+                <a href="{{ route('shop.product', $product->slug) }}" class="text-decoration-none">
+                  <!-- Product Image -->
+                  <div class="product-card-img">
+                    @if($product->image)
+                      <img src="{{ asset("storage/{$product->image}") }}" alt="{{ $product->name }}" loading="lazy">
+                    @else
+                      <div class="prod-img-placeholder">
+                        <i class="fas fa-cookie-bite"></i>
+                      </div>
+                    @endif
+
+                    <!-- Category Badge (Top Left) -->
+                    <span class="product-category-badge">{{ $product->category->name_en ?? 'Sweets' }}</span>
+                    @if($product->is_featured)
+                      <span class="product-category-badge" style="left:auto;right:10px;background:var(--theme-btn-gradient);color:#fff;">FEATURED</span>
+                    @endif
+                    @if($product->stock < 10 && $product->stock > 0)
+                      <span class="product-category-badge" style="left:auto;right:10px;background:rgba(239,68,68,0.9);color:#fff;">LOW STOCK</span>
+                    @endif
+
+                    <!-- Wishlist Icon (Top Right) -->
+                    <button class="product-wishlist-btn prod-wishlist" data-product-id="{{ $product->id }}" title="Add to Wishlist">
+                      <i class="far fa-heart"></i>
                     </button>
+
+                    <!-- Add to Cart (On Hover) -->
+                    <div class="product-cart-overlay">
+                      <button class="product-cart-btn" onclick="event.preventDefault(); event.stopPropagation(); addToCart({{ $product->id }}, '{{ $product->name }}', {{ $product->sale_price ?? $product->price }}, '{{ $product->image ?? '' }}', event);">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span>Add to Cart</span>
+                      </button>
+                    </div>
                   </div>
-                </div>
-                <a href="{{ route('shop.product', $product->slug) }}" class="prod-link-overlay"></a>
+
+                  <!-- Product Info -->
+                  <div class="product-card-info">
+                    <div class="product-card-category">{{ $product->category->name_en ?? 'Sweets' }}</div>
+                    <h5 class="product-card-name">{{ $product->name }}</h5>
+
+                    <!-- Rating -->
+                    <div class="product-card-rating">
+                      <div class="rating-stars">
+                        @for($i = 1; $i <= 5; $i++)
+                          @if($i <= ($product->avg_rating ?? 5))
+                            <i class="fas fa-star"></i>
+                          @else
+                            <i class="far fa-star"></i>
+                          @endif
+                        @endfor
+                      </div>
+                      <span class="rating-count">({{ $product->reviews_count ?? 0 }})</span>
+                    </div>
+
+                    <!-- Price Row -->
+                    <div class="product-card-price">
+                      <div class="price-info">
+                        <span class="current-price">৳{{ number_format($product->price) }}</span>
+                        @if($product->compare_price && $product->compare_price > $product->price)
+                          <span class="original-price">৳{{ number_format($product->compare_price) }}</span>
+                          @php
+                            $shopDiscount = round(($product->compare_price - $product->price) / $product->compare_price * 100);
+                          @endphp
+                          @if($shopDiscount > 0)
+                            <span class="discount-badge">-{{ $shopDiscount }}%</span>
+                          @endif
+                        @endif
+                      </div>
+                    </div>
+                  </div>
+                </a>
               </div>
             </div>
             @endforeach
@@ -154,6 +196,34 @@
 @endsection
 
 @push('styles')
+<link rel="stylesheet" href="{{ asset('css/new-arrivals.css') }}">
+<style>
+  /* Shop page grid override for slider-product-card */
+  .row > [class*="col-"] > .slider-product-card {
+    flex: none;
+    max-width: 100%;
+    min-width: 0;
+    width: 100%;
+    background: var(--glass-bg, rgba(255,255,255,0.08));
+    border: 1px solid var(--glass-border, rgba(255,255,255,0.15));
+    backdrop-filter: var(--glass-blur, blur(20px));
+    -webkit-backdrop-filter: var(--glass-blur, blur(20px));
+  }
+  .row > [class*="col-"] > .slider-product-card:hover {
+    background: var(--glass-bg, rgba(255,255,255,0.08));
+    border-color: var(--theme-primary, #f59e0b);
+  }
+  .row > [class*="col-"] > .slider-product-card .product-card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  /* Card text colors for transparent background */
+  .row > [class*="col-"] > .slider-product-card .product-card-name,
+  .row > [class*="col-"] > .slider-product-card .current-price {
+    color: var(--theme-text-primary);
+  }
+</style>
 <style>
   /* Modern Breadcrumb Styles */
   .breadcrumb-modern {

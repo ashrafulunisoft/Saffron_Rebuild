@@ -6,9 +6,9 @@
 ---
 
 ## Summary
-Completed a comprehensive homepage redesign covering **6 major sections** converted from grid layouts to modern horizontal sliders. Added **database content** (9 blog posts, 10 reviews, 9 featured products, 103 product descriptions), implemented **mobile bottom navigation**, fixed **blog category filtering**, and resolved **admin/customer menu redirection** issues.
+Completed a comprehensive homepage redesign covering **6 major sections** converted from grid layouts to modern horizontal sliders. Added **database content** (9 blog posts, 10 reviews, 9 featured products, 103 product descriptions), implemented **mobile bottom navigation**, **website preloader animation**, **coupon/discount welcome modal**, fixed **blog category filtering**, **shop category icons**, and resolved **admin/customer menu redirection** issues.
 
-**Total commits:** 14 | **Files changed:** 7 | **Lines changed:** ~3,500+
+**Total commits:** 17 | **Files changed:** 8 | **Lines changed:** ~4,000+
 
 ---
 
@@ -199,7 +199,135 @@ $categories = BlogPost::published()
 
 ---
 
-### 6. Database Backup
+### 6. Shop Category Icons & Item Count Hidden
+- **Commit:** `48e6c02b` - hide the number of item of each category and add the category icon for the shop page
+- **Files:** `resources/views/frontend/pages/home.blade.php`, `resources/views/frontend/pages/shop.blade.php`
+
+#### Category Item Count Hidden:
+- Commented out `{{ $category->products_count }} items` in homepage "Explore Our Delicious Collection" section (`home.blade.php:167`)
+- Commented out badge count in shop filter sidebar (`shop.blade.php:55`)
+
+#### Shop Category Icons Added:
+- Added Font Awesome icons for each category in the shop filter sidebar:
+
+**Code:**
+```php
+$catIcons = [
+    'breads' => 'fa-bread-slice',
+    'cakes' => 'fa-cake-candles',
+    'cookies-biscuits' => 'fa-cookie-bite',
+    'traditional-sweets' => 'fa-candy-cane',
+    'dairy-products' => 'fa-cheese',
+    'buns-rolls' => 'fa-stroopwafel',
+    'pastries-savories' => 'fa-pie-chart',
+];
+$catIcon = $catIcons[$cat->slug] ?? 'fa-utensils';
+```
+
+| Category | Icon |
+|----------|------|
+| Breads | `fa-bread-slice` |
+| Cakes | `fa-cake-candles` |
+| Cookies & Biscuits | `fa-cookie-bite` |
+| Traditional Sweets | `fa-candy-cane` |
+| Dairy Products | `fa-cheese` |
+| Buns & Rolls | `fa-stroopwafel` |
+| Pastries & Savories | `fa-pie-chart` |
+| Default | `fa-utensils` |
+
+---
+
+### 7. Website Preloader Animation
+- **Commit:** `c08a2699` - show the website preloader animation and coupon modal
+- **Commit:** `b3b749dd` - show the website preloader animation if website is not loading
+- **File:** `resources/views/frontend/layouts/app.blade.php`
+- Full-screen preloader overlay (`z-index: 99999`) shown while page resources are loading
+- Features:
+  - Bouncing cookie icon with gradient text animation (`@keyframes preloaderBounce`)
+  - "Saffron Sweets & Bakery" branding text
+  - Animated loading bar (`@keyframes preloaderBar`)
+  - Fades out immediately when `window.load` fires (no artificial delay)
+  - `transition: opacity 0.5s` for smooth fade-out
+- Preloader JS runs on **all pages** (outside homepage-only `@if` block)
+
+**Code:**
+```html
+<div id="sitePreloader" style="position:fixed;inset:0;z-index:99999;background:#0f0a00;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    transition:opacity 0.5s ease;">
+    <i class="fas fa-cookie-bite" style="font-size:3.5rem;
+        background:var(--theme-btn-gradient);-webkit-background-clip:text;
+        -webkit-text-fill-color:transparent;animation:preloaderBounce 1s ease-in-out infinite;"></i>
+    <div style="font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;
+        background:var(--theme-btn-gradient);-webkit-background-clip:text;
+        -webkit-text-fill-color:transparent;">Saffron</div>
+    <div style="color:rgba(245,230,204,0.5);font-size:0.8rem;margin-top:0.25rem;">
+        Sweets & Bakery</div>
+    <div style="margin-top:1.5rem;width:120px;height:3px;border-radius:3px;
+        background:rgba(245,158,11,0.15);overflow:hidden;">
+        <div style="width:40%;height:100%;border-radius:3px;
+            background:var(--theme-btn-gradient);animation:preloaderBar 1.2s ease-in-out infinite;">
+        </div>
+    </div>
+</div>
+```
+
+**Dismiss JS:**
+```javascript
+window.addEventListener('load', function(){
+    var preloader = document.getElementById('sitePreloader');
+    if(preloader){
+        preloader.style.opacity = '0';
+        setTimeout(function(){ preloader.style.display = 'none'; }, 500);
+    }
+});
+```
+
+---
+
+### 8. Coupon / Discount Welcome Modal
+- **Commit:** `c08a2699` - show the website preloader animation and coupon modal
+- **Files:** `resources/views/frontend/layouts/app.blade.php`, `routes/web.php`
+- Homepage-only modal showing all active coupons from `coupons` table
+- Shows **once per session** using `sessionStorage.getItem('couponModalShown')`
+
+#### Route Update (`routes/web.php`):
+```php
+// Get active coupons for welcome modal
+$activeCoupons = \DB::table('coupons')
+    ->where('expires_at', '>', now())
+    ->whereRaw('(usage_limit IS NULL OR usage_count < usage_limit)')
+    ->orderBy('value', 'desc')
+    ->get();
+```
+
+#### Modal Features:
+- Glassmorphism dark overlay with `backdrop-filter: blur(8px)`
+- Each coupon shows: discount value (% or fixed), coupon code, expiry date
+- **Copy button** — copies coupon code to clipboard with visual "Copied" feedback
+- **Shop Now** button links to shop page
+- Closes on: X button, overlay click, Escape key
+- Appears 2 seconds after page load (after preloader finishes)
+
+#### Active Coupons Displayed:
+| Code | Type | Value | Expires |
+|------|------|-------|---------|
+| BORSHA | percent | 10% | Apr 30 |
+| WELCOME10 | percent | 10% | - |
+| SAVE50 | fixed | ৳50 | - |
+| FIRST20 | percent | 20% | - |
+
+**Copy Button Code:**
+```javascript
+onclick="navigator.clipboard.writeText('COUPON_CODE');
+    this.innerHTML='<i class=\'fas fa-check\'></i> Copied';
+    this.style.background='var(--theme-btn-gradient)';
+    this.style.color='#fff';"
+```
+
+---
+
+### 9. Database Backup
 - **Commit:** `8f163db6` - bkup the db
 - **File:** `database/backup/saffron_db_09-04-26.sql`
 - Full database backup including all new blog posts, reviews, featured products, and updated product descriptions
@@ -210,12 +338,13 @@ $categories = BlogPost::published()
 
 | File | Changes |
 |------|---------|
-| `resources/views/frontend/pages/home.blade.php` | 6 sections redesigned to horizontal sliders, review modal, CSS/JS additions |
-| `resources/views/frontend/layouts/app.blade.php` | Mobile bottom navigation bar with admin/customer routing |
+| `resources/views/frontend/pages/home.blade.php` | 6 sections redesigned to horizontal sliders, review modal, category count hidden, CSS/JS additions |
+| `resources/views/frontend/layouts/app.blade.php` | Mobile bottom nav, website preloader animation, coupon welcome modal |
 | `resources/views/frontend/partials/navigation.blade.php` | Admin dropdown menu fix, mobile nav link fix |
+| `resources/views/frontend/pages/shop.blade.php` | Category item count hidden, category icons added |
 | `resources/views/frontend/blog/index.blade.php` | Removed featured posts, fixed category active state |
 | `app/Http/Controllers/Frontend/BlogController.php` | Dynamic category loading from DB |
-| `routes/web.php` | Updated take() limits for reviews (3->13), blogs (3->9), best sellers (3->12) |
+| `routes/web.php` | Updated take() limits, added active coupons query for welcome modal |
 | `database/backup/saffron_db_09-04-26.sql` | Full database backup |
 
 ---
@@ -228,6 +357,7 @@ $categories = BlogPost::published()
 | `reviews` | Inserted 10 new approved reviews | Total: 13 |
 | `products` | Updated `is_featured` for 9 products | Total featured: 56 |
 | `products` | Updated `description_en` for all 103 products | Total: 103 |
+| `coupons` | Read active coupons for welcome modal | Used: 4 active |
 
 ---
 
@@ -236,5 +366,8 @@ $categories = BlogPost::published()
 - All slider sections share a consistent pattern: wrapper div, prev/next buttons, scroll container with drag-to-scroll JS
 - CSS custom properties (`--theme-primary`, `--theme-btn-gradient`, `--theme-primary-rgb`) used throughout for dynamic theming
 - Mobile bottom nav uses `backdrop-filter: blur(20px)` for glassmorphism effect
+- Preloader uses `window.addEventListener('load')` to detect actual page load completion — no artificial delays
+- Coupon modal uses `sessionStorage` to show only once per browser session
 - Admin role detection uses `auth()->user()->hasRole('admin')` from Spatie Laravel Permission package
 - Product descriptions use `<ul><li>` HTML format for proper frontend rendering
+- Preloader dismiss JS runs on all pages (outside `@if` block) while coupon modal HTML is homepage-only
