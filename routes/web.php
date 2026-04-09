@@ -431,7 +431,7 @@ Route::get('/', function(){
             ->having('order_items_count', '>', 0)
             ->with(['category', 'primaryImage'])
             ->orderBy('order_items_count', 'desc')
-            ->take(3)
+            ->take(12)
             ->get();
     } else {
         // Fallback: Show featured products or most viewed if no orders yet
@@ -439,7 +439,7 @@ Route::get('/', function(){
             ->where('is_featured', true)
             ->with(['category', 'primaryImage'])
             ->orderBy('views', 'desc')
-            ->take(3)
+            ->take(12)
             ->get();
     }
 
