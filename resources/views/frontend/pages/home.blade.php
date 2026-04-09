@@ -854,79 +854,138 @@ $categoryConfigs = [
   </div>
 </section>
 
-<!-- BEST SELLERS -->
+<!-- BEST SELLERS / BEST OFFERS -->
 <section class="section-gap" style="background:linear-gradient(180deg, rgba(244,63,94,0.03), transparent);">
   <div class="container">
-    <div class="text-center mb-5">
-      @if($cmsSections && isset($cmsSections['best-offers']))
-        <span class="section-badge animate-on-scroll" style="background:linear-gradient(135deg,rgba(244,63,94,0.2),rgba(245,158,11,0.2));border-color:rgba(244,63,94,0.3);"><i class="fas fa-fire me-2"></i>{{ $cmsSections['best-offers']->title_en ?? 'Top Rated' }}</span>
-        <h2 class="section-title mt-3 animate-on-scroll">
-          {!! $cmsSections['best-offers']->subtitle_en ?? 'Best <span class="gradient-text">Offers</span>' !!}
-        </h2>
-        @if($cmsSections['best-offers']->content_en)
-        <p class="mt-3 animate-on-scroll" style="color:var(--text-60);max-width:600px;margin:0 auto;">
-          {!! $cmsSections['best-offers']->content_en !!}
-        </p>
+    <!-- Section Header - Left title, Right View All -->
+    <div class="d-flex justify-content-between align-items-start flex-wrap gap-3 mb-5">
+      <div class="flex-grow-1">
+        @if($cmsSections && isset($cmsSections['best-offers']))
+          <span class="section-badge animate-on-scroll" style="background:linear-gradient(135deg,rgba(244,63,94,0.2),rgba(245,158,11,0.2));border-color:rgba(244,63,94,0.3);"><i class="fas fa-fire me-2"></i>{{ $cmsSections['best-offers']->title_en ?? 'Top Rated' }}</span>
+          <h2 class="section-title mt-3 animate-on-scroll">
+            {!! $cmsSections['best-offers']->subtitle_en ?? 'Best <span class="gradient-text">Offers</span>' !!}
+          </h2>
+          @if($cmsSections['best-offers']->content_en)
+          <p class="mt-2 animate-on-scroll" style="color:var(--text-60);max-width:500px;">
+            {!! $cmsSections['best-offers']->content_en !!}
+          </p>
+          @endif
+        @else
+          <span class="section-badge animate-on-scroll" style="background:linear-gradient(135deg,rgba(244,63,94,0.2),rgba(245,158,11,0.2));border-color:rgba(244,63,94,0.3);"><i class="fas fa-fire me-2"></i>Top Rated</span>
+          <h2 class="section-title mt-3 animate-on-scroll">Best <span id="sellers-text" style="background:var(--theme-btn-gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;"></span></h2>
+          <p class="mt-2 animate-on-scroll" style="color:var(--text-60);max-width:500px;">Our most loved products that customers keep coming back for</p>
         @endif
-      @else
-        <span class="section-badge animate-on-scroll" style="background:linear-gradient(135deg,rgba(244,63,94,0.2),rgba(245,158,11,0.2));border-color:rgba(244,63,94,0.3);"><i class="fas fa-fire me-2"></i>Top Rated</span>
-        <h2 class="section-title mt-3 animate-on-scroll">Best <span id="sellers-text" style="background:var(--theme-btn-gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;"></span></h2>
-        <p class="mt-3 animate-on-scroll" style="color:var(--text-60);max-width:600px;margin:0 auto;">Our most loved products that customers keep coming back for</p>
-      @endif
+      </div>
+      <div class="flex-shrink-0">
+        <a href="{{ route('shop') }}" class="btn btn-glow btn-sm">
+          <i class="fas fa-th-large me-2"></i>View All
+        </a>
+      </div>
     </div>
 
-    <div class="row g-4">
-      @if(isset($bestSellers) && $bestSellers->count() > 0)
-        @foreach($bestSellers as $index => $product)
-          <div class="col-lg-4 col-md-6">
+    <!-- Products Slider Container -->
+    <div class="new-arrivals-slider-wrapper animate-on-scroll">
+      <button class="slider-nav-btn slider-prev" id="bestSellersPrev" aria-label="Previous">
+        <i class="fas fa-chevron-left"></i>
+      </button>
+
+      <div class="new-arrivals-slider" id="bestSellersSlider">
+        @if(isset($bestSellers) && $bestSellers->count() > 0)
+          @foreach($bestSellers as $index => $product)
+          <div class="slider-product-card">
             <a href="{{ route('shop.product', $product->slug) }}" class="text-decoration-none">
-              <div class="prod-card prod-item animate-on-scroll" style="border:1px solid rgba(245,158,11,{{ $index === 0 ? '0.3' : '0.2' }});">
-                <div class="prod-img-wrapper">
-                  @if($product->image)
-                    <img src="{{ asset("storage/{$product->image}") }}" alt="{{ $product->name }}" loading="lazy" decoding="async">
-                  @else
-                    <div class="prod-img-placeholder">
-                      <i class="fas fa-cookie-bite"></i>
-                    </div>
-                  @endif
-                  <span class="prod-badge badge-hot" style="background:linear-gradient(135deg,{{ $index === 0 ? "{$themeSecondary},{$themePrimary}" : ($index === 1 ? "{$themePrimary},{$themeSecondary}" : "{$themeAccent},#7c3aed") }});">#{{ $index + 1 }} {{ $index === 0 ? 'BESTSELLER' : ($index === 1 ? 'TOP RATED' : 'POPULAR') }}</span>
-                  <button class="prod-wishlist" data-product-id="{{ $product->id }}" title="Add to Wishlist">
-                    <i class="far fa-heart"></i>
+              <!-- Product Image -->
+              <div class="product-card-img">
+                @if($product->image)
+                  <img src="{{ asset("storage/{$product->image}") }}" alt="{{ $product->name }}" loading="lazy">
+                @else
+                  <div class="prod-img-placeholder">
+                    <i class="fas fa-cookie-bite"></i>
+                  </div>
+                @endif
+
+                <!-- Rank Badge (Top Left) -->
+                <span class="product-category-badge" style="background:linear-gradient(135deg,{{ $index === 0 ? "{$themeSecondary},{$themePrimary}" : ($index === 1 ? "{$themePrimary},{$themeSecondary}" : "{$themeAccent},#7c3aed") }});color:#fff;">#{{ $index + 1 }} {{ $index === 0 ? 'BESTSELLER' : ($index === 1 ? 'TOP RATED' : 'POPULAR') }}</span>
+
+                <!-- Wishlist Icon (Top Right) -->
+                <button class="product-wishlist-btn prod-wishlist" data-product-id="{{ $product->id }}" title="Add to Wishlist">
+                  <i class="far fa-heart"></i>
+                </button>
+
+                <!-- Add to Cart (On Hover) -->
+                <div class="product-cart-overlay">
+                  <button class="product-cart-btn" onclick="event.preventDefault(); event.stopPropagation(); addToCart({{ $product->id }}, '{{ $product->name }}', {{ $product->sale_price ?? $product->price }}, '{{ $product->image ?? '' }}', event);">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>Add to Cart</span>
                   </button>
                 </div>
-                <div class="prod-body">
-                  <div class="prod-cat">{{ $product->category->name_en ?? 'Sweets' }}</div>
-                  <h5 class="prod-name">{{ $product->name }}</h5>
-                  <div class="prod-stars">★★★★★ <small>({{ $product->approved_reviews_count ?? 0 }})</small></div>
-                  <div class="prod-footer">
-                    <div>
-                      <span class="price-new">৳{{ number_format($product->price) }}</span>
-                      @if($product->sale_price)
-                        <span class="price-old">৳{{ number_format($product->sale_price) }}</span>
+              </div>
+
+              <!-- Product Info -->
+              <div class="product-card-info">
+                <div class="product-card-category">{{ $product->category->name_en ?? 'Sweets' }}</div>
+                <h5 class="product-card-name">{{ $product->name }}</h5>
+
+                <!-- Rating -->
+                <div class="product-card-rating">
+                  <div class="rating-stars">
+                    @for($i = 1; $i <= 5; $i++)
+                      @if($i <= ($product->avg_rating ?? 5))
+                        <i class="fas fa-star"></i>
+                      @else
+                        <i class="far fa-star"></i>
                       @endif
-                    </div>
-                    <button class="add-btn" onclick="addToCart({{ $product->id }}, '{{ $product->name }}', {{ $product->sale_price ?? $product->price }}, '{{ $product->image ?? '' }}', event)"><i class="fas fa-shopping-bag"></i></button>
+                    @endfor
+                  </div>
+                  <span class="rating-count">({{ $product->approved_reviews_count ?? 0 }})</span>
+                </div>
+
+                <!-- Price Row -->
+                <div class="product-card-price">
+                  <div class="price-info">
+                    <span class="current-price">৳{{ number_format($product->price) }}</span>
+                    @if($product->sale_price && $product->sale_price < $product->price)
+                      <span class="original-price">৳{{ number_format($product->sale_price) }}</span>
+                      @php
+                        $bestDiscount = round(($product->price - $product->sale_price) / $product->price * 100);
+                      @endphp
+                      @if($bestDiscount > 0)
+                        <span class="discount-badge">-{{ $bestDiscount }}%</span>
+                      @endif
+                    @endif
                   </div>
                 </div>
-                <div class="bestseller-stats">
-                  <div class="stat-item">
-                    <i class="fas fa-shopping-bag"></i>
-                    <span>{{ $product->order_items_count ?? 0 }} sold</span>
-                  </div>
-                  <div class="stat-item">
-                    <i class="fas fa-heart"></i>
-                    <span>{{ $product->approved_reviews_count ?? 0 }} reviews</span>
-                  </div>
+
+                <!-- Sold / Reviews stats -->
+                <div class="product-card-stats">
+                  <span class="stat-pill"><i class="fas fa-shopping-bag"></i> {{ $product->order_items_count ?? 0 }} sold</span>
+                  <span class="stat-pill"><i class="fas fa-heart"></i> {{ $product->approved_reviews_count ?? 0 }} reviews</span>
                 </div>
               </div>
             </a>
           </div>
-        @endforeach
-      @else
-        <div class="col-12 text-center py-5">
-          <p style="color:var(--text-60);">No best-selling products available at the moment.</p>
-        </div>
-      @endif
+          @endforeach
+
+          <!-- View All Products Card -->
+          <div class="slider-product-card view-all-trigger-card">
+            <a href="{{ route('shop') }}" class="text-decoration-none" style="width:100%;height:100%;display:flex;">
+              <div class="view-all-card-content">
+                <div class="view-all-icon"><i class="fas fa-arrow-right"></i></div>
+                <h4>View All Products</h4>
+                <p>Explore our best sellers</p>
+              </div>
+            </a>
+          </div>
+        @else
+          <div class="text-center py-5" style="width:100%;">
+            <p style="color:var(--text-60);">No best-selling products available at the moment.</p>
+          </div>
+        @endif
+      </div>
+
+      <button class="slider-nav-btn slider-next" id="bestSellersNext" aria-label="Next">
+        <i class="fas fa-chevron-right"></i>
+      </button>
     </div>
 
     @if(isset($bestSellers) && $bestSellers->count() > 0)
@@ -1798,10 +1857,116 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 </script>
+
+<script>
+// Best Sellers Slider Navigation
+document.addEventListener('DOMContentLoaded', function() {
+    const slider = document.getElementById('bestSellersSlider');
+    const prevBtn = document.getElementById('bestSellersPrev');
+    const nextBtn = document.getElementById('bestSellersNext');
+
+    if (!slider || !prevBtn || !nextBtn) return;
+
+    function getScrollAmount() {
+        const cardWidth = slider.querySelector('.slider-product-card')?.offsetWidth || 200;
+        const gap = 20;
+        return (cardWidth + gap) * 2;
+    }
+
+    function updateButtons() {
+        const maxScroll = slider.scrollWidth - slider.clientWidth;
+        prevBtn.disabled = slider.scrollLeft <= 10;
+        nextBtn.disabled = slider.scrollLeft >= maxScroll - 10;
+        prevBtn.style.opacity = prevBtn.disabled ? '0.5' : '1';
+        nextBtn.style.opacity = nextBtn.disabled ? '0.5' : '1';
+    }
+
+    prevBtn.addEventListener('click', function() {
+        slider.scrollBy({ left: -getScrollAmount(), behavior: 'smooth' });
+    });
+
+    nextBtn.addEventListener('click', function() {
+        slider.scrollBy({ left: getScrollAmount(), behavior: 'smooth' });
+    });
+
+    slider.addEventListener('scroll', updateButtons);
+    updateButtons();
+
+    // Touch/drag support
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+
+    slider.addEventListener('mousedown', (e) => {
+        isDown = true;
+        slider.style.cursor = 'grabbing';
+        startX = e.pageX - slider.offsetLeft;
+        scrollLeft = slider.scrollLeft;
+    });
+
+    slider.addEventListener('mouseleave', () => {
+        isDown = false;
+        slider.style.cursor = 'grab';
+    });
+
+    slider.addEventListener('mouseup', () => {
+        isDown = false;
+        slider.style.cursor = 'grab';
+    });
+
+    slider.addEventListener('mousemove', (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - slider.offsetLeft;
+        const walk = (x - startX) * 2;
+        slider.scrollLeft = scrollLeft - walk;
+    });
+
+    slider.style.cursor = 'grab';
+});
+</script>
 @endpush
 
 @push('styles')
 <style>
+/* Product Card Stats - Small Pill Badges */
+.product-card-stats {
+  display: flex;
+  gap: 0.4rem;
+  margin-top: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.stat-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  background: rgba(var(--theme-primary-rgb, 245, 158, 11), 0.08);
+  border: 1px solid rgba(var(--theme-primary-rgb, 245, 158, 11), 0.15);
+  border-radius: 20px;
+  font-size: 0.65rem;
+  color: var(--text-60);
+  white-space: nowrap;
+  line-height: 1.4;
+}
+
+.stat-pill i {
+  font-size: 0.6rem;
+  color: var(--theme-text-secondary);
+}
+
+@media (max-width: 767px) {
+  .stat-pill {
+    padding: 2px 6px;
+    font-size: 0.6rem;
+    gap: 3px;
+  }
+  .stat-pill i {
+    font-size: 0.55rem;
+  }
+}
+
 /* Blog Card Styles */
 .blog-card {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
