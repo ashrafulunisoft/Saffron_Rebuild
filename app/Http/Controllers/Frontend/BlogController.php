@@ -24,7 +24,13 @@ class BlogController extends Controller
             ->take(3)
             ->get();
 
-        $categories = ['News', 'Tutorial', 'Recipe', 'Story', 'Announcement'];
+        $categories = BlogPost::published()
+            ->select('category')
+            ->whereNotNull('category')
+            ->distinct()
+            ->orderBy('category')
+            ->pluck('category')
+            ->toArray();
 
         return view('frontend.blog.index', compact('posts', 'featuredPosts', 'categories'));
     }
@@ -70,7 +76,13 @@ class BlogController extends Controller
             ->take(3)
             ->get();
 
-        $categories = ['News', 'Tutorial', 'Recipe', 'Story', 'Announcement'];
+        $categories = BlogPost::published()
+            ->select('category')
+            ->whereNotNull('category')
+            ->distinct()
+            ->orderBy('category')
+            ->pluck('category')
+            ->toArray();
 
         return view('frontend.blog.index', compact('posts', 'featuredPosts', 'categories'));
     }

@@ -24,11 +24,11 @@
 <section class="container" style="margin-top:-2rem;position:relative;">
   <div class="glass-card" style="padding:1rem;">
     <div class="d-flex justify-content-center gap-2 flex-wrap">
-      <a href="{{ route('blog.index') }}" class="filter-btn {{ !request()->route('blog.category') ? 'active' : '' }}">
+      <a href="{{ route('blog.index') }}" class="filter-btn {{ !request()->segment(2) ? 'active' : '' }}">
         <i class="fas fa-th-large me-2"></i>All Posts
       </a>
       @foreach($categories as $category)
-      <a href="{{ route('blog.category', $category) }}" class="filter-btn {{ request()->route('blog.category') == $category ? 'active' : '' }}">
+      <a href="{{ route('blog.category', $category) }}" class="filter-btn {{ request()->segment(2) === 'category' && request()->segment(3) === $category ? 'active' : '' }}">
         {{ $category }}
       </a>
       @endforeach
@@ -37,61 +37,11 @@
 </section>
 @endif
 
-<!-- FEATURED POSTS -->
-@if(isset($featuredPosts) && $featuredPosts->count() > 0)
-<section class="section-gap">
-  <div class="container">
-    <div class="text-center mb-5">
-      <h2 class="section-title">Featured <span class="gradient-text">Posts</span></h2>
-    </div>
-    <div class="row g-4">
-      @foreach($featuredPosts as $post)
-        <div class="col-lg-4 col-md-6">
-          <a href="{{ route('blog.show', $post->slug) }}" class="text-decoration-none">
-            <div class="blog-card glass-card h-100 animate-on-scroll" style="border:2px solid rgba(245,158,11,0.3);">
-              @if($post->featured_image)
-                <div class="blog-img">
-                  <img src="{{ asset('storage/' . $post->featured_image) }}" alt="{{ $post->title }}">
-                  <span class="blog-badge">⭐ Featured</span>
-                </div>
-              @else
-                <div class="blog-img blog-img-placeholder">
-                  <div style="font-size:4rem;">📝</div>
-                  <span class="blog-badge">⭐ Featured</span>
-                </div>
-              @endif
-              <div class="blog-body">
-                @if($post->category)
-                  <span class="blog-category">{{ $post->category }}</span>
-                @endif
-                <h5 class="blog-title">{{ $post->title }}</h5>
-                <p class="blog-excerpt">{{ Str::limit(strip_tags($post->excerpt ?? $post->content), 120) }}</p>
-                <div class="blog-meta">
-                  <span><i class="far fa-calendar"></i> {{ $post->published_at ? $post->published_at->format('M d, Y') : 'Unpublished' }}</span>
-                  <span><i class="far fa-eye"></i> {{ $post->views ?? 0 }}</span>
-                  @if($post->user)
-                    <span><i class="far fa-user"></i> {{ $post->user->name }}</span>
-                  @endif
-                </div>
-              </div>
-            </div>
-          </a>
-        </div>
-      @endforeach
-    </div>
-  </div>
-</section>
-@endif
+<!-- FEATURED POSTS removed -->
 
 <!-- ALL POSTS -->
 <section class="section-gap">
   <div class="container">
-    @if(isset($featuredPosts) && $featuredPosts->count() > 0)
-      <div class="text-center mb-5">
-        <h2 class="section-title">All <span class="gradient-text">Posts</span></h2>
-      </div>
-    @endif
-
     <div class="row g-4">
       @if(isset($posts) && $posts->count() > 0)
         @foreach($posts as $post)
