@@ -174,36 +174,34 @@
 <!-- FEATURED PRODUCTS -->
 <section class="section-gap" id="products">
   <div class="container">
-    <!-- Section Header - Left title, Right View All -->
-    <div class="d-flex justify-content-between align-items-start flex-wrap gap-3 mb-5">
-      <div class="flex-grow-1">
-        @if($cmsSections && isset($cmsSections['featured_products']))
-          <span class="section-badge animate-on-scroll">{{ $cmsSections['featured_products']->title_en ?? 'Our Collection' }}</span>
-          <h2 class="section-title mt-3 animate-on-scroll">
-            {!! $cmsSections['featured_products']->subtitle_en ?? 'Featured <span class="gradient-text">Products</span>' !!}
-          </h2>
-          @if($cmsSections['featured_products']->content_en)
-          <p class="mt-2 animate-on-scroll" style="color:var(--text-60);max-width:500px;">
-            {!! $cmsSections['featured_products']->content_en !!}
-          </p>
-          @endif
-        @else
-          <span class="section-badge animate-on-scroll">Our Collection</span>
-          <h2 class="section-title mt-3 animate-on-scroll">
-            Featured <span class="gradient-text">Products</span>
-          </h2>
-          <p class="mt-2 animate-on-scroll" style="color:var(--text-60);max-width:500px;">Handpicked favorites from our extensive collection</p>
+    <!-- Section Header - Center Aligned -->
+    <div class="text-center mb-4">
+      @if($cmsSections && isset($cmsSections['featured_products']))
+        <span class="section-badge animate-on-scroll">{{ $cmsSections['featured_products']->title_en ?? 'Our Collection' }}</span>
+        <h2 class="section-title mt-3 animate-on-scroll">
+          {!! $cmsSections['featured_products']->subtitle_en ?? 'Featured <span class="gradient-text">Products</span>' !!}
+        </h2>
+        @if($cmsSections['featured_products']->content_en)
+        <p class="mt-2 animate-on-scroll" style="color:var(--text-60);max-width:600px;margin-left:auto;margin-right:auto;">
+          {!! $cmsSections['featured_products']->content_en !!}
+        </p>
         @endif
-      </div>
-      <div class="flex-shrink-0">
+      @else
+        <span class="section-badge animate-on-scroll">Our Collection</span>
+        <h2 class="section-title mt-3 animate-on-scroll">
+          Featured <span class="gradient-text">Products</span>
+        </h2>
+        <p class="mt-2 animate-on-scroll" style="color:var(--text-60);max-width:600px;margin-left:auto;margin-right:auto;">Handpicked favorites from our extensive collection</p>
+      @endif
+      <div class="mt-3">
         <a href="{{ route('shop') }}" class="btn btn-glow btn-sm">
           <i class="fas fa-th-large me-2"></i>View All
         </a>
       </div>
     </div>
 
-    <!-- Category Filters -->
-    <div class="d-flex gap-2 mb-4 flex-wrap">
+    <!-- Category Filters - Center -->
+    <div class="d-flex justify-content-center gap-2 mb-4 flex-wrap">
       <button class="filter-btn active" onclick="filterFeaturedProd(this, 'all')">All Products</button>
       @foreach($categories as $category)
         <button class="filter-btn" onclick="filterFeaturedProd(this, '{{ $category->slug }}')">{{ $category->name_en }}</button>
