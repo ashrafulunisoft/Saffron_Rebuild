@@ -300,33 +300,67 @@
       <h3 class="section-title text-center mb-4">
         You May Also <span class="gradient-text">Like</span>
       </h3>
-      <div class="row g-4">
+      <div class="row g-3">
         @foreach($relatedProducts->take(4) as $related)
-        <div class="col-6 col-md-3">
-          <div class="prod-card">
-            <div class="prod-img-wrapper">
-              @if($related->image)
-                <img src="{{ asset("storage/{$related->image}") }}" alt="{{ $related->name }}">
-              @else
-                <div class="prod-img-placeholder">
-                  <i class="fas fa-cookie-bite"></i>
-                </div>
-              @endif
-              <button class="prod-wishlist" data-product-id="{{ $related->id }}" title="Add to Wishlist">
-                <i class="far fa-heart"></i>
-              </button>
-            </div>
-            <div class="prod-details">
-              <span class="prod-cat">{{ $related->category->name_en ?? 'Sweets' }}</span>
-              <h6 class="prod-title">{{ $related->name }}</h6>
-              <div class="d-flex justify-content-between align-items-center">
-                <span class="prod-price">৳{{ number_format($related->price) }}</span>
-                <button class="prod-cart-btn" onclick="addToCart({{ $related->id }}, '{{ $related->name }}', {{ $related->sale_price ?? $related->price }}, '{{ $related->image ?? '' }}', event)">
-                  <i class="fas fa-shopping-bag"></i>
+        <div class="col-6 col-md-4 col-lg-3">
+          <div class="slider-product-card">
+            <a href="{{ route('shop.product', $related->slug) }}" class="text-decoration-none">
+              <div class="product-card-img">
+                @if($related->image)
+                  <img src="{{ asset("storage/{$related->image}") }}" alt="{{ $related->name }}" loading="lazy">
+                @else
+                  <div class="prod-img-placeholder">
+                    <i class="fas fa-cookie-bite"></i>
+                  </div>
+                @endif
+
+                <span class="product-category-badge">{{ $related->category->name_en ?? 'Sweets' }}</span>
+
+                <button class="product-wishlist-btn prod-wishlist" data-product-id="{{ $related->id }}" title="Add to Wishlist" onclick="event.preventDefault(); event.stopPropagation();">
+                  <i class="far fa-heart"></i>
                 </button>
+
+                <div class="product-cart-overlay">
+                  <button class="product-cart-btn" onclick="event.preventDefault(); event.stopPropagation(); addToCart({{ $related->id }}, '{{ $related->name }}', {{ $related->sale_price ?? $related->price }}, '{{ $related->image ?? '' }}', event);">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>Add to Cart</span>
+                  </button>
+                </div>
               </div>
-            </div>
-            <a href="{{ route('shop.product', $related->slug) }}" class="prod-link-overlay"></a>
+
+              <div class="product-card-info">
+                <div class="product-card-category">{{ $related->category->name_en ?? 'Sweets' }}</div>
+                <h5 class="product-card-name">{{ $related->name }}</h5>
+
+                <div class="product-card-rating">
+                  <div class="rating-stars">
+                    @for($i = 1; $i <= 5; $i++)
+                      @if($i <= ($related->avg_rating ?? 5))
+                        <i class="fas fa-star"></i>
+                      @else
+                        <i class="far fa-star"></i>
+                      @endif
+                    @endfor
+                  </div>
+                  <span class="rating-count">({{ $related->reviews_count ?? 0 }})</span>
+                </div>
+
+                <div class="product-card-price">
+                  <div class="price-info">
+                    <span class="current-price">৳{{ number_format($related->price) }}</span>
+                    @if($related->compare_price && $related->compare_price > $related->price)
+                      <span class="original-price">৳{{ number_format($related->compare_price) }}</span>
+                      @php
+                        $relDiscount = round(($related->compare_price - $related->price) / $related->compare_price * 100);
+                      @endphp
+                      @if($relDiscount > 0)
+                        <span class="discount-badge">-{{ $relDiscount }}%</span>
+                      @endif
+                    @endif
+                  </div>
+                </div>
+              </div>
+            </a>
           </div>
         </div>
         @endforeach
@@ -338,6 +372,55 @@
 @endsection
 
 @push('styles')
+<link rel="stylesheet" href="{{ asset('css/new-arrivals.css') }}">
+<style>
+  /* Related products grid override */
+  .related-products-section .row > [class*="col-"] > .slider-product-card {
+    flex: none;
+    max-width: 100%;
+    min-width: 0;
+    width: 100%;
+    background: var(--glass-bg, rgba(255,255,255,0.08));
+    border: 1px solid var(--glass-border, rgba(255,255,255,0.15));
+    backdrop-filter: var(--glass-blur, blur(20px));
+    -webkit-backdrop-filter: var(--glass-blur, blur(20px));
+  }
+  .related-products-section .row > [class*="col-"] > .slider-product-card:hover {
+    background: var(--glass-bg, rgba(255,255,255,0.08));
+    border-color: var(--theme-primary, #f59e0b);
+  }
+  .related-products-section .slider-product-card .product-card-name,
+  .related-products-section .slider-product-card .current-price {
+    color: var(--theme-text-primary);
+  }
+  @media (max-width: 767px), (hover: none) {
+    .related-products-section .product-wishlist-btn {
+      opacity: 0 !important;
+      transform: scale(0.8) !important;
+    }
+    .related-products-section .product-cart-overlay {
+      transform: translateY(100%) !important;
+      background: linear-gradient(to top, rgba(0,0,0,0.7), transparent) !important;
+    }
+    .related-products-section .slider-product-card:hover .product-wishlist-btn,
+    .related-products-section .slider-product-card:active .product-wishlist-btn {
+      opacity: 1 !important;
+      transform: scale(1) !important;
+    }
+    .related-products-section .slider-product-card:hover .product-cart-overlay,
+    .related-products-section .slider-product-card:active .product-cart-overlay {
+      transform: translateY(0) !important;
+    }
+    .related-products-section .product-cart-btn {
+      padding: 0.45rem 0.75rem;
+      font-size: 0.75rem;
+      border-radius: 8px;
+    }
+    .related-products-section .product-cart-btn i {
+      font-size: 0.7rem;
+    }
+  }
+</style>
 <style>
   /* Modern Breadcrumb Styles */
   .breadcrumb-modern {
@@ -1387,7 +1470,7 @@ function addToCart(productId, productName, price, image, event) {
   event.preventDefault();
   event.stopPropagation();
 
-  const button = event.target.closest('.prod-cart-btn');
+  const button = event.target.closest('.product-cart-btn, .prod-cart-btn');
   const originalHTML = button.innerHTML;
 
   // Show loading state

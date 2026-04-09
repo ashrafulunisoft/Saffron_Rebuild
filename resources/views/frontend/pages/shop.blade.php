@@ -119,7 +119,7 @@
                     @endif
 
                     <!-- Wishlist Icon (Top Right) -->
-                    <button class="product-wishlist-btn prod-wishlist" data-product-id="{{ $product->id }}" title="Add to Wishlist">
+                    <button class="product-wishlist-btn prod-wishlist" data-product-id="{{ $product->id }}" title="Add to Wishlist" onclick="event.preventDefault(); event.stopPropagation();">
                       <i class="far fa-heart"></i>
                     </button>
 
@@ -222,6 +222,22 @@
   .row > [class*="col-"] > .slider-product-card .product-card-name,
   .row > [class*="col-"] > .slider-product-card .current-price {
     color: var(--theme-text-primary);
+  }
+
+  /* Mobile: always show wishlist and add-to-cart */
+  @media (max-width: 767px) {
+    .row > [class*="col-"] > .slider-product-card .product-wishlist-btn {
+      opacity: 1;
+      transform: scale(1);
+    }
+    .row > [class*="col-"] > .slider-product-card .product-cart-overlay {
+      transform: translateY(0);
+      background: linear-gradient(to top, rgba(0,0,0,0.5), transparent);
+    }
+    .row > [class*="col-"] > .slider-product-card .product-cart-btn {
+      padding: 0.6rem 1rem;
+      font-size: 0.85rem;
+    }
   }
 </style>
 <style>
@@ -793,7 +809,7 @@ function addToCart(productId, productName, price, image, event) {
   event.preventDefault();
   event.stopPropagation();
 
-  const button = event.target.closest('.prod-cart-btn');
+  const button = event.target.closest('.product-cart-btn, .prod-cart-btn');
   const originalHTML = button.innerHTML;
 
   // Show loading state
