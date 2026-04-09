@@ -454,7 +454,7 @@ Route::get('/', function(){
     $blogPosts = \App\Models\BlogPost::published()
         ->with('user')
         ->orderBy('published_at', 'desc')
-        ->take(3)
+        ->take(9)
         ->get();
 
     // Load CMS sections for home page
