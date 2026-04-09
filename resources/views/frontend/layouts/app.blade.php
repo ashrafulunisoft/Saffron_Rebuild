@@ -3174,10 +3174,8 @@ window.requireAuth = function() {
     window.addEventListener('load', function(){
       var preloader = document.getElementById('sitePreloader');
       if(preloader){
-        setTimeout(function(){
-          preloader.style.opacity = '0';
-          setTimeout(function(){ preloader.style.display = 'none'; }, 500);
-        }, 800);
+        preloader.style.opacity = '0';
+        setTimeout(function(){ preloader.style.display = 'none'; }, 500);
       }
       // Coupon modal - only if element exists (homepage)
       if(!sessionStorage.getItem('couponModalShown')){
