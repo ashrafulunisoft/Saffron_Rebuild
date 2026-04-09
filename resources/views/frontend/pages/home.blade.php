@@ -174,77 +174,142 @@
 <!-- FEATURED PRODUCTS -->
 <section class="section-gap" id="products">
   <div class="container">
-    <div class="text-center mb-5">
-      @if($cmsSections && isset($cmsSections['featured_products']))
-        <span class="section-badge">{{ $cmsSections['featured_products']->title_en ?? 'Our Collection' }}</span>
-        <h2 class="section-title mt-3">
-          {!! $cmsSections['featured_products']->subtitle_en ?? 'Featured <span class="gradient-text">Products</span>' !!}
-        </h2>
-        @if($cmsSections['featured_products']->content_en)
-        <p style="color:var(--text-70);">{!! $cmsSections['featured_products']->content_en !!}</p>
+    <!-- Section Header - Left title, Right View All -->
+    <div class="d-flex justify-content-between align-items-start flex-wrap gap-3 mb-5">
+      <div class="flex-grow-1">
+        @if($cmsSections && isset($cmsSections['featured_products']))
+          <span class="section-badge animate-on-scroll">{{ $cmsSections['featured_products']->title_en ?? 'Our Collection' }}</span>
+          <h2 class="section-title mt-3 animate-on-scroll">
+            {!! $cmsSections['featured_products']->subtitle_en ?? 'Featured <span class="gradient-text">Products</span>' !!}
+          </h2>
+          @if($cmsSections['featured_products']->content_en)
+          <p class="mt-2 animate-on-scroll" style="color:var(--text-60);max-width:500px;">
+            {!! $cmsSections['featured_products']->content_en !!}
+          </p>
+          @endif
+        @else
+          <span class="section-badge animate-on-scroll">Our Collection</span>
+          <h2 class="section-title mt-3 animate-on-scroll">
+            Featured <span class="gradient-text">Products</span>
+          </h2>
+          <p class="mt-2 animate-on-scroll" style="color:var(--text-60);max-width:500px;">Handpicked favorites from our extensive collection</p>
         @endif
-      @else
-        <span class="section-badge">Our Collection</span>
-        <h2 class="section-title mt-3">
-          Featured <span class="gradient-text">Products</span>
-        </h2>
-        <p style="color:var(--text-70);">Handpicked favorites from our extensive collection</p>
-      @endif
+      </div>
+      <div class="flex-shrink-0">
+        <a href="{{ route('shop') }}" class="btn btn-glow btn-sm">
+          <i class="fas fa-th-large me-2"></i>View All
+        </a>
+      </div>
     </div>
 
     <!-- Category Filters -->
-    <div class="d-flex justify-content-center gap-2 mb-4 flex-wrap">
+    <div class="d-flex gap-2 mb-4 flex-wrap">
       <button class="filter-btn active" onclick="filterFeaturedProd(this, 'all')">All Products</button>
       @foreach($categories as $category)
         <button class="filter-btn" onclick="filterFeaturedProd(this, '{{ $category->slug }}')">{{ $category->name_en }}</button>
       @endforeach
     </div>
 
-    <!-- Products Grid -->
-    <div class="row g-4" id="featured-products-grid">
-      @if(isset($featuredProducts) && $featuredProducts->count() > 0)
-        @foreach($featuredProducts as $product)
-        <div class="col-6 col-md-4 col-lg-3">
-          <a href="{{ route('shop.product', $product->slug) }}" class="text-decoration-none">
-            <div class="prod-card prod-item" data-cat="{{ $product->category->slug ?? 'breads' }}">
-              <div class="prod-img-wrapper">
+    <!-- Products Slider Container -->
+    <div class="new-arrivals-slider-wrapper animate-on-scroll" id="featuredSliderWrapper">
+      <button class="slider-nav-btn slider-prev" id="featuredPrev" aria-label="Previous">
+        <i class="fas fa-chevron-left"></i>
+      </button>
+
+      <div class="new-arrivals-slider" id="featuredSlider">
+        @if(isset($featuredProducts) && $featuredProducts->count() > 0)
+          @foreach($featuredProducts as $product)
+          <div class="slider-product-card" data-cat="{{ $product->category->slug ?? 'breads' }}">
+            <a href="{{ route('shop.product', $product->slug) }}" class="text-decoration-none">
+              <!-- Product Image -->
+              <div class="product-card-img">
                 @if($product->image)
-                  <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" loading="lazy" decoding="async">
+                  <img src="{{ asset("storage/{$product->image}") }}" alt="{{ $product->name }}" loading="lazy">
                 @else
                   <div class="prod-img-placeholder">
                     <i class="fas fa-cookie-bite"></i>
                   </div>
                 @endif
+
+                <!-- Category Badge (Top Left) -->
+                <span class="product-category-badge">{{ $product->category->name_en ?? 'Sweets' }}</span>
                 @if($product->is_featured)
-                  <span class="prod-badge badge-hot">FEATURED</span>
+                  <span class="product-category-badge" style="left:auto;right:10px;background:linear-gradient(135deg,{$themePrimary},{$themeSecondary});color:#fff;">FEATURED</span>
                 @endif
-                <button class="prod-wishlist" data-product-id="{{ $product->id }}" title="Add to Wishlist">
+
+                <!-- Wishlist Icon (Top Right) -->
+                <button class="product-wishlist-btn prod-wishlist" data-product-id="{{ $product->id }}" title="Add to Wishlist">
                   <i class="far fa-heart"></i>
                 </button>
-              </div>
-              <div class="prod-body">
-                <div class="prod-cat">{{ $product->category->name_en ?? 'Sweets' }}</div>
-                <h5 class="prod-name">{{ $product->name }}</h5>
-                <div class="prod-stars">★★★★★ <small>({{ $product->reviews_count ?? 0 }})</small></div>
-                <div class="prod-footer">
-                  <div>
-                    <span class="price-new">৳{{ number_format($product->price) }}</span>
-                    @if($product->compare_price)
-                      <span class="price-old">৳{{ number_format($product->compare_price) }}</span>
-                    @endif
-                  </div>
-                  <button class="add-btn" onclick="addToCart({{ $product->id }}, '{{ $product->name }}', {{ $product->sale_price ?? $product->price }}, '{{ $product->image ?? '' }}', event)"><i class="fas fa-shopping-bag"></i></button>
+
+                <!-- Add to Cart (On Hover) -->
+                <div class="product-cart-overlay">
+                  <button class="product-cart-btn" onclick="event.preventDefault(); event.stopPropagation(); addToCart({{ $product->id }}, '{{ $product->name }}', {{ $product->sale_price ?? $product->price }}, '{{ $product->image ?? '' }}', event);">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>Add to Cart</span>
+                  </button>
                 </div>
               </div>
-            </div>
-          </a>
-        </div>
-        @endforeach
-      @else
-        <div class="col-12 text-center py-5">
-          <p style="color:var(--text-60);">No products available at the moment.</p>
-        </div>
-      @endif
+
+              <!-- Product Info -->
+              <div class="product-card-info">
+                <div class="product-card-category">{{ $product->category->name_en ?? 'Sweets' }}</div>
+                <h5 class="product-card-name">{{ $product->name }}</h5>
+
+                <!-- Rating -->
+                <div class="product-card-rating">
+                  <div class="rating-stars">
+                    @for($i = 1; $i <= 5; $i++)
+                      @if($i <= ($product->avg_rating ?? 5))
+                        <i class="fas fa-star"></i>
+                      @else
+                        <i class="far fa-star"></i>
+                      @endif
+                    @endfor
+                  </div>
+                  <span class="rating-count">({{ $product->reviews_count ?? 0 }})</span>
+                </div>
+
+                <!-- Price Row -->
+                <div class="product-card-price">
+                  <div class="price-info">
+                    <span class="current-price">৳{{ number_format($product->price) }}</span>
+                    @if($product->compare_price && $product->compare_price > $product->price)
+                      <span class="original-price">৳{{ number_format($product->compare_price) }}</span>
+                      @php
+                        $featDiscount = round(($product->compare_price - $product->price) / $product->compare_price * 100);
+                      @endphp
+                      @if($featDiscount > 0)
+                        <span class="discount-badge">-{{ $featDiscount }}%</span>
+                      @endif
+                    @endif
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+          @endforeach
+
+          <!-- View All Products Card -->
+          <div class="slider-product-card view-all-trigger-card">
+            <a href="{{ route('shop') }}" class="text-decoration-none" style="width:100%;height:100%;display:flex;">
+              <div class="view-all-card-content">
+                <div class="view-all-icon"><i class="fas fa-arrow-right"></i></div>
+                <h4>View All Products</h4>
+                <p>Explore our complete collection</p>
+              </div>
+            </a>
+          </div>
+        @else
+          <div class="text-center py-5" style="width:100%;">
+            <p style="color:var(--text-60);">No products available at the moment.</p>
+          </div>
+        @endif
+      </div>
+
+      <button class="slider-nav-btn slider-next" id="featuredNext" aria-label="Next">
+        <i class="fas fa-chevron-right"></i>
+      </button>
     </div>
 
     <div class="text-center mt-5">
@@ -1309,27 +1374,23 @@ function filterFeaturedProd(btn, cat) {
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
 
-    const featuredGrid = document.getElementById('featured-products-grid');
-    if (featuredGrid) {
-        featuredGrid.querySelectorAll('.prod-item').forEach(item => {
-            const column = item.closest('.col-6, .col-md-4, .col-lg-3');
+    const featuredSlider = document.getElementById('featuredSlider');
+    if (featuredSlider) {
+        featuredSlider.querySelectorAll('.slider-product-card[data-cat]').forEach(card => {
             if (cat === 'all') {
-                // "All Products": show ALL featured products (no limit)
-                item.style.display = 'block';
-                if (column) column.style.display = 'block';
-                item.style.animation = 'fadeIn .5s ease';
+                card.style.display = 'block';
+                card.style.animation = 'fadeIn .5s ease';
             } else {
-                // Category filter: show all matching products
-                if (item.dataset.cat === cat) {
-                    item.style.display = 'block';
-                    if (column) column.style.display = 'block';
-                    item.style.animation = 'fadeIn .5s ease';
+                if (card.dataset.cat === cat) {
+                    card.style.display = 'block';
+                    card.style.animation = 'fadeIn .5s ease';
                 } else {
-                    item.style.display = 'none';
-                    if (column) column.style.display = 'none';
+                    card.style.display = 'none';
                 }
             }
         });
+        // Scroll back to start on filter change
+        featuredSlider.scrollTo({ left: 0, behavior: 'smooth' });
     }
 }
 
@@ -1864,6 +1925,74 @@ document.addEventListener('DOMContentLoaded', function() {
     const slider = document.getElementById('bestSellersSlider');
     const prevBtn = document.getElementById('bestSellersPrev');
     const nextBtn = document.getElementById('bestSellersNext');
+
+    if (!slider || !prevBtn || !nextBtn) return;
+
+    function getScrollAmount() {
+        const cardWidth = slider.querySelector('.slider-product-card')?.offsetWidth || 200;
+        const gap = 20;
+        return (cardWidth + gap) * 2;
+    }
+
+    function updateButtons() {
+        const maxScroll = slider.scrollWidth - slider.clientWidth;
+        prevBtn.disabled = slider.scrollLeft <= 10;
+        nextBtn.disabled = slider.scrollLeft >= maxScroll - 10;
+        prevBtn.style.opacity = prevBtn.disabled ? '0.5' : '1';
+        nextBtn.style.opacity = nextBtn.disabled ? '0.5' : '1';
+    }
+
+    prevBtn.addEventListener('click', function() {
+        slider.scrollBy({ left: -getScrollAmount(), behavior: 'smooth' });
+    });
+
+    nextBtn.addEventListener('click', function() {
+        slider.scrollBy({ left: getScrollAmount(), behavior: 'smooth' });
+    });
+
+    slider.addEventListener('scroll', updateButtons);
+    updateButtons();
+
+    // Touch/drag support
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+
+    slider.addEventListener('mousedown', (e) => {
+        isDown = true;
+        slider.style.cursor = 'grabbing';
+        startX = e.pageX - slider.offsetLeft;
+        scrollLeft = slider.scrollLeft;
+    });
+
+    slider.addEventListener('mouseleave', () => {
+        isDown = false;
+        slider.style.cursor = 'grab';
+    });
+
+    slider.addEventListener('mouseup', () => {
+        isDown = false;
+        slider.style.cursor = 'grab';
+    });
+
+    slider.addEventListener('mousemove', (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - slider.offsetLeft;
+        const walk = (x - startX) * 2;
+        slider.scrollLeft = scrollLeft - walk;
+    });
+
+    slider.style.cursor = 'grab';
+});
+</script>
+
+<script>
+// Featured Products Slider Navigation
+document.addEventListener('DOMContentLoaded', function() {
+    const slider = document.getElementById('featuredSlider');
+    const prevBtn = document.getElementById('featuredPrev');
+    const nextBtn = document.getElementById('featuredNext');
 
     if (!slider || !prevBtn || !nextBtn) return;
 
