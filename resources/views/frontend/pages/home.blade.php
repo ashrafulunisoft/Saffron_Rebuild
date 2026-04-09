@@ -1091,82 +1091,200 @@ $categoryConfigs = [
 <!-- TESTIMONIALS -->
 <section class="section-gap" style="background:linear-gradient(135deg,rgba(245,158,11,0.08),rgba(244,63,94,0.05));">
   <div class="container">
-    <div class="text-center mb-5">
-      <span class="section-badge">Testimonials</span>
-      <h2 class="section-title mt-3">
-        What Our <span class="gradient-text">Customers Say</span>
-      </h2>
+    <!-- Section Header - Left title, Right empty for balance -->
+    <div class="d-flex justify-content-between align-items-start flex-wrap gap-3 mb-5">
+      <div class="flex-grow-1">
+        <span class="section-badge animate-on-scroll"><i class="fas fa-quote-left me-2"></i>Testimonials</span>
+        <h2 class="section-title mt-3 animate-on-scroll">
+          What Our <span class="gradient-text">Customers Say</span>
+        </h2>
+        <p class="mt-2 animate-on-scroll" style="color:var(--text-60);max-width:500px;">Real reviews from our happy customers who love our sweets and bakery products</p>
+      </div>
     </div>
-    <div class="row g-4">
-      @if(isset($reviews) && $reviews->count() > 0)
-        <!-- Show real reviews from database -->
-        @foreach($reviews as $review)
-          <div class="col-md-4">
-            <div class="testimonial-card glass-card text-center">
-              <div class="testimonial-avatar">
-                @if($review->user && $review->user->name)
-                  {{ substr($review->user->name, 0, 1) }}
-                @else
-                  👤
-                @endif
+
+    <!-- Testimonials Slider Container -->
+    <div class="new-arrivals-slider-wrapper animate-on-scroll">
+      <button class="slider-nav-btn slider-prev" id="testimonialPrev" aria-label="Previous">
+        <i class="fas fa-chevron-left"></i>
+      </button>
+
+      <div class="new-arrivals-slider" id="testimonialSlider">
+        @if(isset($reviews) && $reviews->count() > 0)
+          @foreach($reviews as $review)
+          <div class="slider-product-card testimonial-card-clickable"
+               data-name="@if($review->user){{ $review->user->name }}@else Anonymous @endif"
+               data-initial="@if($review->user && $review->user->name){{ substr($review->user->name, 0, 1) }}@else👤@endif"
+               data-rating="{{ $review->rating }}"
+               data-comment="{{ htmlspecialchars($review->comment) }}"
+               data-product="@if($review->product){{ $review->product->name }}@endif"
+               data-date="{{ $review->created_at ? $review->created_at->format('M d, Y') : '' }}">
+            <a href="javascript:void(0)" class="text-decoration-none" onclick="return false;">
+              <!-- Testimonial Top - Avatar & Stars -->
+              <div class="product-card-img" style="aspect-ratio:auto;padding:1.5rem 1.5rem 0.5rem;background:linear-gradient(135deg,rgba(var(--theme-primary-rgb,245,158,11),0.08),rgba(var(--theme-secondary-rgb,244,63,94),0.05));">
+                <div style="display:flex;align-items:center;gap:0.75rem;">
+                  <div style="width:48px;height:48px;border-radius:50%;background:var(--theme-btn-gradient);display:flex;align-items:center;justify-content:center;font-size:1.2rem;color:#fff;font-weight:700;flex-shrink:0;">
+                    @if($review->user && $review->user->name)
+                      {{ substr($review->user->name, 0, 1) }}
+                    @else
+                      👤
+                    @endif
+                  </div>
+                  <div style="min-width:0;">
+                    <div style="font-weight:600;color:var(--theme-text-primary);font-size:0.9rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
+                      @if($review->user)
+                        {{ $review->user->name }}
+                      @else
+                        Anonymous
+                      @endif
+                    </div>
+                    <div style="display:flex;align-items:center;gap:0.5rem;">
+                      <div style="color:var(--theme-text-secondary);font-size:0.75rem;">
+                        @for($i = 1; $i <= 5; $i++)
+                          @if($i <= $review->rating)
+                            <i class="fas fa-star"></i>
+                          @else
+                            <i class="far fa-star"></i>
+                          @endif
+                        @endfor
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div class="testimonial-stars">
-                @for($i = 1; $i <= 5; $i++)
-                  @if($i <= $review->rating)
-                    ★
-                  @else
-                    ☆
+
+              <!-- Testimonial Body -->
+              <div class="product-card-info">
+                <p style="font-size:0.85rem;color:var(--text-70);line-height:1.7;margin:0 0 0.75rem;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;font-style:italic;">
+                  "{{ $review->comment }}"
+                </p>
+
+                <div class="product-card-stats">
+                  <span class="stat-pill"><i class="fas fa-check-circle"></i> Verified Buyer</span>
+                  @if($review->product)
+                    <span class="stat-pill"><i class="fas fa-box"></i> {{ Str::limit($review->product->name, 20) }}</span>
                   @endif
-                @endfor
+                  <span class="stat-pill" style="margin-left:auto;"><i class="fas fa-expand-alt"></i> Read more</span>
+                </div>
               </div>
-              <p class="testimonial-text">"{{ $review->comment }}"</p>
-              <h6 class="testimonial-name">
-                @if($review->user)
-                  {{ $review->user->name }}
-                @else
-                  Anonymous
-                @endif
-              </h6>
-              <small class="testimonial-role">
-                @if($review->product)
-                  Verified Buyer - {{ $review->product->name }}
-                @else
-                  Verified Buyer
-                @endif
-              </small>
-            </div>
+            </a>
           </div>
-        @endforeach
-      @else
-        <!-- Show demo reviews when no reviews in database -->
-        <div class="col-md-4">
-          <div class="testimonial-card glass-card text-center">
-            <div class="testimonial-avatar">👩</div>
-            <div class="testimonial-stars">★★★★★</div>
-            <p class="testimonial-text">"The best roshogolla I've ever had! Absolutely authentic taste and the delivery was super fast. Highly recommended!"</p>
-            <h6 class="testimonial-name">Fatima Rahman</h6>
-            <small class="testimonial-role">Dhaka</small>
+          @endforeach
+        @else
+          <!-- Demo reviews when no reviews in database -->
+          <div class="slider-product-card testimonial-card-clickable"
+               data-name="Fatima Rahman"
+               data-initial="F"
+               data-rating="5"
+               data-comment="The best roshogolla I've ever had! Absolutely authentic taste and the delivery was super fast. Highly recommended!"
+               data-product=""
+               data-date="">
+            <a href="javascript:void(0)" class="text-decoration-none" onclick="return false;">
+              <div class="product-card-img" style="aspect-ratio:auto;padding:1.5rem 1.5rem 0.5rem;background:linear-gradient(135deg,rgba(var(--theme-primary-rgb,245,158,11),0.08),rgba(var(--theme-secondary-rgb,244,63,94),0.05));">
+                <div style="display:flex;align-items:center;gap:0.75rem;">
+                  <div style="width:48px;height:48px;border-radius:50%;background:var(--theme-btn-gradient);display:flex;align-items:center;justify-content:center;font-size:1.2rem;color:#fff;font-weight:700;flex-shrink:0;">F</div>
+                  <div>
+                    <div style="font-weight:600;color:var(--theme-text-primary);font-size:0.9rem;">Fatima Rahman</div>
+                    <div style="color:var(--theme-text-secondary);font-size:0.75rem;"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                  </div>
+                </div>
+              </div>
+              <div class="product-card-info">
+                <p style="font-size:0.85rem;color:var(--text-70);line-height:1.7;margin:0 0 0.75rem;font-style:italic;">"The best roshogolla I've ever had! Absolutely authentic taste and the delivery was super fast. Highly recommended!"</p>
+                <div class="product-card-stats">
+                  <span class="stat-pill"><i class="fas fa-check-circle"></i> Verified Buyer</span>
+                  <span class="stat-pill"><i class="fas fa-map-marker-alt"></i> Dhaka</span>
+                  <span class="stat-pill" style="margin-left:auto;"><i class="fas fa-expand-alt"></i> Read more</span>
+                </div>
+              </div>
+            </a>
+          </div>
+          <div class="slider-product-card testimonial-card-clickable"
+               data-name="Rahul Ahmed"
+               data-initial="R"
+               data-rating="5"
+               data-comment="Ordered a custom cake for my daughter's birthday. It was perfect! Beautiful design and delicious taste. Thank you Saffron!"
+               data-product=""
+               data-date="">
+            <a href="javascript:void(0)" class="text-decoration-none" onclick="return false;">
+              <div class="product-card-img" style="aspect-ratio:auto;padding:1.5rem 1.5rem 0.5rem;background:linear-gradient(135deg,rgba(var(--theme-primary-rgb,245,158,11),0.08),rgba(var(--theme-secondary-rgb,244,63,94),0.05));">
+                <div style="display:flex;align-items:center;gap:0.75rem;">
+                  <div style="width:48px;height:48px;border-radius:50%;background:var(--theme-btn-gradient);display:flex;align-items:center;justify-content:center;font-size:1.2rem;color:#fff;font-weight:700;flex-shrink:0;">R</div>
+                  <div>
+                    <div style="font-weight:600;color:var(--theme-text-primary);font-size:0.9rem;">Rahul Ahmed</div>
+                    <div style="color:var(--theme-text-secondary);font-size:0.75rem;"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                  </div>
+                </div>
+              </div>
+              <div class="product-card-info">
+                <p style="font-size:0.85rem;color:var(--text-70);line-height:1.7;margin:0 0 0.75rem;font-style:italic;">"Ordered a custom cake for my daughter's birthday. It was perfect! Beautiful design and delicious taste. Thank you Saffron!"</p>
+                <div class="product-card-stats">
+                  <span class="stat-pill"><i class="fas fa-check-circle"></i> Verified Buyer</span>
+                  <span class="stat-pill"><i class="fas fa-map-marker-alt"></i> Chittagong</span>
+                  <span class="stat-pill" style="margin-left:auto;"><i class="fas fa-expand-alt"></i> Read more</span>
+                </div>
+              </div>
+            </a>
+          </div>
+          <div class="slider-product-card testimonial-card-clickable"
+               data-name="Nusrat Jahan"
+               data-initial="N"
+               data-rating="5"
+               data-comment="Their chocolate collection is amazing! Perfect for gifting. The packaging is beautiful and the quality is top-notch."
+               data-product=""
+               data-date="">
+            <a href="javascript:void(0)" class="text-decoration-none" onclick="return false;">
+              <div class="product-card-img" style="aspect-ratio:auto;padding:1.5rem 1.5rem 0.5rem;background:linear-gradient(135deg,rgba(var(--theme-primary-rgb,245,158,11),0.08),rgba(var(--theme-secondary-rgb,244,63,94),0.05));">
+                <div style="display:flex;align-items:center;gap:0.75rem;">
+                  <div style="width:48px;height:48px;border-radius:50%;background:var(--theme-btn-gradient);display:flex;align-items:center;justify-content:center;font-size:1.2rem;color:#fff;font-weight:700;flex-shrink:0;">N</div>
+                  <div>
+                    <div style="font-weight:600;color:var(--theme-text-primary);font-size:0.9rem;">Nusrat Jahan</div>
+                    <div style="color:var(--theme-text-secondary);font-size:0.75rem;"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                  </div>
+                </div>
+              </div>
+              <div class="product-card-info">
+                <p style="font-size:0.85rem;color:var(--text-70);line-height:1.7;margin:0 0 0.75rem;font-style:italic;">"Their chocolate collection is amazing! Perfect for gifting. The packaging is beautiful and the quality is top-notch."</p>
+                <div class="product-card-stats">
+                  <span class="stat-pill"><i class="fas fa-check-circle"></i> Verified Buyer</span>
+                  <span class="stat-pill"><i class="fas fa-map-marker-alt"></i> Sylhet</span>
+                  <span class="stat-pill" style="margin-left:auto;"><i class="fas fa-expand-alt"></i> Read more</span>
+                </div>
+              </div>
+            </a>
+          </div>
+        @endif
+      </div>
+
+      <button class="slider-nav-btn slider-next" id="testimonialNext" aria-label="Next">
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Review Modal -->
+  <div class="review-modal-overlay" id="reviewModalOverlay">
+    <div class="review-modal" id="reviewModal">
+      <button class="review-modal-close" id="reviewModalClose" aria-label="Close">
+        <i class="fas fa-times"></i>
+      </button>
+
+      <div class="review-modal-header">
+        <div class="review-modal-avatar" id="modalAvatar">👤</div>
+        <div class="review-modal-user">
+          <div class="review-modal-name" id="modalName">Customer</div>
+          <div class="review-modal-stars" id="modalStars"></div>
+          <div class="review-modal-meta">
+            <span class="stat-pill"><i class="fas fa-check-circle"></i> Verified Buyer</span>
+            <span class="stat-pill" id="modalProduct"></span>
+            <span class="stat-pill" id="modalDate"></span>
           </div>
         </div>
-        <div class="col-md-4">
-          <div class="testimonial-card glass-card text-center">
-            <div class="testimonial-avatar">👨</div>
-            <div class="testimonial-stars">★★★★★</div>
-            <p class="testimonial-text">"Ordered a custom cake for my daughter's birthday. It was perfect! Beautiful design and delicious taste. Thank you Saffron!"</p>
-            <h6 class="testimonial-name">Rahul Ahmed</h6>
-            <small class="testimonial-role">Chittagong</small>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="testimonial-card glass-card text-center">
-            <div class="testimonial-avatar">👩</div>
-            <div class="testimonial-stars">★★★★★</div>
-            <p class="testimonial-text">"Their chocolate collection is amazing! Perfect for gifting. The packaging is beautiful and the quality is top-notch."</p>
-            <h6 class="testimonial-name">Nusrat Jahan</h6>
-            <small class="testimonial-role">Sylhet</small>
-          </div>
-        </div>
-      @endif
+      </div>
+
+      <div class="review-modal-body">
+        <i class="fas fa-quote-left review-modal-quote-icon"></i>
+        <p id="modalComment">Review text here</p>
+      </div>
     </div>
   </div>
 </section>
@@ -2173,6 +2291,149 @@ document.addEventListener('DOMContentLoaded', function() {
     slider.style.cursor = 'grab';
 });
 </script>
+
+<script>
+// Testimonials Slider Navigation
+document.addEventListener('DOMContentLoaded', function() {
+    const slider = document.getElementById('testimonialSlider');
+    const prevBtn = document.getElementById('testimonialPrev');
+    const nextBtn = document.getElementById('testimonialNext');
+
+    if (!slider || !prevBtn || !nextBtn) return;
+
+    function getScrollAmount() {
+        const cardWidth = slider.querySelector('.slider-product-card')?.offsetWidth || 200;
+        const gap = 20;
+        return (cardWidth + gap) * 2;
+    }
+
+    function updateButtons() {
+        const maxScroll = slider.scrollWidth - slider.clientWidth;
+        prevBtn.disabled = slider.scrollLeft <= 10;
+        nextBtn.disabled = slider.scrollLeft >= maxScroll - 10;
+        prevBtn.style.opacity = prevBtn.disabled ? '0.5' : '1';
+        nextBtn.style.opacity = nextBtn.disabled ? '0.5' : '1';
+    }
+
+    prevBtn.addEventListener('click', function() {
+        slider.scrollBy({ left: -getScrollAmount(), behavior: 'smooth' });
+    });
+
+    nextBtn.addEventListener('click', function() {
+        slider.scrollBy({ left: getScrollAmount(), behavior: 'smooth' });
+    });
+
+    slider.addEventListener('scroll', updateButtons);
+    updateButtons();
+
+    // Touch/drag support
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+
+    slider.addEventListener('mousedown', (e) => {
+        isDown = true;
+        slider.style.cursor = 'grabbing';
+        startX = e.pageX - slider.offsetLeft;
+        scrollLeft = slider.scrollLeft;
+    });
+
+    slider.addEventListener('mouseleave', () => {
+        isDown = false;
+        slider.style.cursor = 'grab';
+    });
+
+    slider.addEventListener('mouseup', () => {
+        isDown = false;
+        slider.style.cursor = 'grab';
+    });
+
+    slider.addEventListener('mousemove', (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - slider.offsetLeft;
+        const walk = (x - startX) * 2;
+        slider.scrollLeft = scrollLeft - walk;
+    });
+
+    slider.style.cursor = 'grab';
+});
+</script>
+
+<script>
+// Review Modal
+document.addEventListener('DOMContentLoaded', function() {
+    const overlay = document.getElementById('reviewModalOverlay');
+    const modal = document.getElementById('reviewModal');
+    const closeBtn = document.getElementById('reviewModalClose');
+
+    if (!overlay || !modal || !closeBtn) return;
+
+    // Open modal on card click
+    document.querySelectorAll('.testimonial-card-clickable').forEach(function(card) {
+        card.addEventListener('click', function() {
+            const name = card.dataset.name || 'Anonymous';
+            const initial = card.dataset.initial || '👤';
+            const rating = parseInt(card.dataset.rating) || 5;
+            const comment = card.dataset.comment || '';
+            const product = card.dataset.product || '';
+            const date = card.dataset.date || '';
+
+            // Fill modal content
+            document.getElementById('modalAvatar').textContent = initial;
+            document.getElementById('modalName').textContent = name;
+            document.getElementById('modalComment').textContent = '"' + comment + '"';
+
+            // Stars
+            var starsHtml = '';
+            for (var i = 1; i <= 5; i++) {
+                starsHtml += i <= rating
+                    ? '<i class="fas fa-star"></i>'
+                    : '<i class="far fa-star"></i>';
+            }
+            document.getElementById('modalStars').innerHTML = starsHtml;
+
+            // Product pill
+            var productPill = document.getElementById('modalProduct');
+            if (product) {
+                productPill.innerHTML = '<i class="fas fa-box"></i> ' + product;
+                productPill.style.display = '';
+            } else {
+                productPill.style.display = 'none';
+            }
+
+            // Date pill
+            var datePill = document.getElementById('modalDate');
+            if (date) {
+                datePill.innerHTML = '<i class="far fa-calendar"></i> ' + date;
+                datePill.style.display = '';
+            } else {
+                datePill.style.display = 'none';
+            }
+
+            // Show modal
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+    });
+
+    // Close modal
+    function closeModal() {
+        overlay.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    closeBtn.addEventListener('click', closeModal);
+
+    overlay.addEventListener('click', function(e) {
+        if (e.target === overlay) closeModal();
+    });
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') closeModal();
+    });
+});
+</script>
 @endpush
 
 @push('styles')
@@ -2212,6 +2473,154 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   .stat-pill i {
     font-size: 0.55rem;
+  }
+}
+
+/* Testimonial Card Clickable */
+.testimonial-card-clickable {
+  cursor: pointer;
+}
+
+/* Review Modal */
+.review-modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  z-index: 10000;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.review-modal-overlay.active {
+  display: flex;
+  opacity: 1;
+}
+
+.review-modal {
+  background: rgba(15, 10, 0, 0.97);
+  backdrop-filter: blur(30px);
+  border: 1px solid rgba(245, 158, 11, 0.2);
+  border-radius: 24px;
+  max-width: 520px;
+  width: 100%;
+  max-height: 85vh;
+  overflow-y: auto;
+  padding: 2rem;
+  position: relative;
+  animation: reviewModalIn 0.3s ease;
+}
+
+@keyframes reviewModalIn {
+  from { transform: scale(0.9) translateY(20px); opacity: 0; }
+  to { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+.review-modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--theme-text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.review-modal-close:hover {
+  background: rgba(244, 63, 94, 0.3);
+  transform: scale(1.1);
+}
+
+.review-modal-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.review-modal-avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--theme-btn-gradient);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: #fff;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.review-modal-name {
+  font-weight: 700;
+  color: var(--theme-text-primary);
+  font-size: 1.05rem;
+  margin-bottom: 0.25rem;
+}
+
+.review-modal-stars {
+  color: var(--theme-text-secondary);
+  font-size: 0.85rem;
+  margin-bottom: 0.5rem;
+}
+
+.review-modal-meta {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.review-modal-body {
+  position: relative;
+  padding: 1rem 0 0;
+}
+
+.review-modal-quote-icon {
+  font-size: 1.5rem;
+  color: var(--theme-text-secondary);
+  opacity: 0.3;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.review-modal-body p {
+  font-size: 0.95rem;
+  color: var(--text-80);
+  line-height: 1.8;
+  margin: 0;
+  font-style: italic;
+}
+
+@media (max-width: 767px) {
+  .review-modal {
+    padding: 1.5rem;
+    border-radius: 18px;
+    max-height: 90vh;
+  }
+  .review-modal-avatar {
+    width: 44px;
+    height: 44px;
+    font-size: 1.2rem;
+  }
+  .review-modal-name {
+    font-size: 0.95rem;
+  }
+  .review-modal-body p {
+    font-size: 0.9rem;
+    line-height: 1.7;
   }
 }
 
