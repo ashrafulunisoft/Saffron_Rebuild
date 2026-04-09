@@ -3012,5 +3012,90 @@ window.requireAuth = function() {
             });
         </script>
     @endif
+
+    <!-- Mobile Bottom Navigation -->
+    <nav class="mobile-bottom-nav" id="mobileBottomNav">
+        <a href="{{ route('home') }}" class="mobile-nav-item {{ request()->is('/') ? 'active' : '' }}">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+        </a>
+        <a href="{{ route('shop') }}" class="mobile-nav-item {{ request()->is('shop') || request()->is('category/*') ? 'active' : '' }}">
+            <i class="fas fa-th-large"></i>
+            <span>Category</span>
+        </a>
+        <a href="{{ route('cart') }}" class="mobile-nav-item {{ request()->is('cart') ? 'active' : '' }}">
+            <i class="fas fa-shopping-cart"></i>
+            <span>Cart</span>
+        </a>
+        @auth
+            <a href="{{ route('profile') }}" class="mobile-nav-item {{ request()->is('profile') || request()->is('orders*') || request()->is('wishlist*') ? 'active' : '' }}">
+                <i class="fas fa-user"></i>
+                <span>Account</span>
+            </a>
+        @else
+            <a href="#" class="mobile-nav-item" data-bs-toggle="modal" data-bs-target="#loginModal">
+                <i class="fas fa-user"></i>
+                <span>Account</span>
+            </a>
+        @endauth
+    </nav>
+    <style>
+    .mobile-bottom-nav {
+        display: none;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 9999;
+        background: rgba(255,255,255,0.27);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-top: 1px solid rgba(255,255,255,0.15);
+        box-shadow: 0 -4px 20px rgba(0,0,0,0.03);
+        padding: 8px 0 calc(8px + env(safe-area-inset-bottom, 8px));
+        justify-content: space-around;
+        align-items: center;
+    }
+    .mobile-nav-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        color: var(--text-40, #aaa);
+        font-size: 0.6rem;
+        font-weight: 500;
+        padding: 6px 12px;
+        border-radius: 12px;
+        transition: all 0.3s ease;
+        position: relative;
+        min-width: 58px;
+    }
+    .mobile-nav-item i {
+        font-size: 1.15rem;
+        margin-bottom: 2px;
+        transition: all 0.3s ease;
+    }
+    .mobile-nav-item.active {
+        background: var(--theme-btn-gradient);
+        color: #fff;
+        box-shadow: 0 4px 15px rgba(var(--theme-primary-rgb, 245,158,11), 0.35);
+    }
+    .mobile-nav-item.active i {
+        transform: scale(1.1);
+    }
+    .mobile-nav-item:not(.active):hover {
+        color: var(--theme-primary, #f59e0b);
+        background: rgba(var(--theme-primary-rgb, 245,158,11), 0.1);
+    }
+    @media (max-width: 767px) {
+        .mobile-bottom-nav {
+            display: flex;
+        }
+        body {
+            padding-bottom: 76px;
+        }
+    }
+    </style>
 </body>
 </html>
