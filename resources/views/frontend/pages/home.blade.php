@@ -2453,13 +2453,21 @@ document.addEventListener('DOMContentLoaded', function() {
   border: 1px solid rgba(var(--theme-primary-rgb, 245, 158, 11), 0.15);
   border-radius: 20px;
   font-size: 0.65rem;
-  color: #ffffff;
+  color: var(--theme-primary);
   white-space: nowrap;
   line-height: 1.4;
 }
 
 .stat-pill i {
   font-size: 0.6rem;
+  color: var(--theme-primary);
+}
+
+.review-modal .stat-pill {
+  color: #ffffff;
+}
+
+.review-modal .stat-pill i {
   color: #ffffff;
 }
 
