@@ -1047,7 +1047,7 @@ input[type="password"].input-dark:-webkit-autofill::first-line {
   font-family: 'Playfair Display', serif;
   font-size: 1.6rem;
   font-weight: 700;
-  color: var(--theme-text-primary);
+  color: #ffffff;
 }
 .auth-modal .btn-close {
   filter: invert(1);
@@ -1058,7 +1058,7 @@ input[type="password"].input-dark:-webkit-autofill::first-line {
   opacity: 1;
 }
 .auth-subtitle {
-  color: rgba(245, 230, 204, 0.6);
+  color: #ffffff;
   font-size: 0.95rem;
   margin-bottom: 1.5rem;
 }
@@ -1066,6 +1066,7 @@ input[type="password"].input-dark:-webkit-autofill::first-line {
   display: block;
   font-size: 0.85rem;
   font-weight: 500;
+  color: #ffffff;
   color: var(--theme-text-secondary);
   margin-bottom: 0.5rem;
 }
@@ -1091,7 +1092,7 @@ input[type="password"].input-dark:-webkit-autofill::first-line {
   flex: 1;
   background: transparent;
   border: none;
-  color: var(--theme-text-primary);
+  color: #ffffff;
   padding: 0.85rem 0.75rem;
   font-size: 0.95rem;
   outline: none;
@@ -1196,7 +1197,7 @@ input[type="password"].input-dark:-webkit-autofill::first-line {
 }
 .auth-footer {
   text-align: center;
-  color: rgba(245, 230, 204, 0.6);
+  color: #ffffff;
   font-size: 0.9rem;
   margin-bottom: 0;
 }
