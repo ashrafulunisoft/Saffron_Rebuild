@@ -2677,9 +2677,9 @@ section {
 
 /* FOOTER */
 .footer-section {
-  background:#ffffff;
-  border-top:1px solid rgba(255,255,255,0.08);
-  padding:5rem 0 2rem;
+  /* background: #ffffff; */
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 5rem 0 2rem;
 }
 .footer-brand { margin-bottom:1.5rem; }
 .footer-text { color:var(--text-60); line-height:1.8; margin-bottom:2rem; }
