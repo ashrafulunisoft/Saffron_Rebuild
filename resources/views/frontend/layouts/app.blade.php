@@ -929,7 +929,7 @@ input[type="password"].input-dark:-webkit-autofill::first-line {
     padding: 1.5rem;
     border-radius: 20px;
     margin-top: 0.5rem;
-    background: rgba(15, 10, 0, 0.9);
+    background: #ffffff;
     max-height: 80vh;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
