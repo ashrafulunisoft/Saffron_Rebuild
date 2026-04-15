@@ -353,7 +353,7 @@
   top: 100%;
   left: 0;
   right: 0;
-  background: rgba(15, 10, 0, 0.97);
+  background: rgb(214 161 133 / 97%);
   backdrop-filter: blur(25px);
   border: 1px solid rgba(245, 158, 11, 0.2);
   border-radius: 12px;
