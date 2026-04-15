@@ -2453,14 +2453,14 @@ document.addEventListener('DOMContentLoaded', function() {
   border: 1px solid rgba(var(--theme-primary-rgb, 245, 158, 11), 0.15);
   border-radius: 20px;
   font-size: 0.65rem;
-  color: var(--text-60);
+  color: #ffffff;
   white-space: nowrap;
   line-height: 1.4;
 }
 
 .stat-pill i {
   font-size: 0.6rem;
-  color: var(--theme-text-secondary);
+  color: #ffffff;
 }
 
 @media (max-width: 767px) {
@@ -2544,7 +2544,7 @@ document.addEventListener('DOMContentLoaded', function() {
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.12);
-  color: var(--theme-text-primary);
+  color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2581,13 +2581,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
 .review-modal-name {
   font-weight: 700;
-  color: var(--theme-text-primary);
+  color: #ffffff;
   font-size: 1.05rem;
   margin-bottom: 0.25rem;
 }
 
 .review-modal-stars {
-  color: var(--theme-text-secondary);
+  color: #ffffff;
   font-size: 0.85rem;
   margin-bottom: 0.5rem;
 }
@@ -2605,7 +2605,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 .review-modal-quote-icon {
   font-size: 1.5rem;
-  color: var(--theme-text-secondary);
+  color: #ffffff;
   opacity: 0.3;
   margin-bottom: 0.5rem;
   display: block;
@@ -2613,7 +2613,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 .review-modal-body p {
   font-size: 0.95rem;
-  color: var(--text-80);
+  color: #ffffff;
   line-height: 1.8;
   margin: 0;
   font-style: italic;
