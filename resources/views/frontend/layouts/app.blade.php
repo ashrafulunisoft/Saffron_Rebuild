@@ -668,9 +668,10 @@ input[type="password"].input-dark:-webkit-autofill::first-line {
   width: 100%;
   padding: 2.5rem 0;
   margin-top: 0;
-  background: rgba(15, 10, 0, 0.98);
-  backdrop-filter: blur(30px);
-  -webkit-backdrop-filter: blur(30px);
+  /* background: rgba(15, 10, 0, 0.98); */
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(80px) saturate(1.8);
+  -webkit-backdrop-filter: blur(80px) saturate(1.8);
   border: none;
   border-top: 1px solid rgba(245, 158, 11, 0.15);
   border-bottom: 1px solid rgba(245, 158, 11, 0.1);
@@ -811,16 +812,16 @@ input[type="password"].input-dark:-webkit-autofill::first-line {
 /* Menu Columns */
 .glass-mega-col {
   padding: 1.5rem;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: transparent;
+  border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 20px;
   height: 100%;
   transition: all 0.4s ease;
 }
 
 .glass-mega-col:hover {
-  background: rgba(255, 255, 255, 0.06);
-  border-color: rgba(245, 158, 11, 0.2);
+  background: transparent;
+  border-color: rgba(0, 0, 0, 0.2);
   transform: translateY(-3px);
 }
 
@@ -855,7 +856,7 @@ input[type="password"].input-dark:-webkit-autofill::first-line {
   align-items: center;
   gap: 0.75rem;
   padding: 0.5rem 0;
-  color: rgba(245, 230, 204, 0.75);
+  color: #000000;
   font-size: 0.9rem;
   text-decoration: none;
   transition: all 0.3s ease;
@@ -871,7 +872,7 @@ input[type="password"].input-dark:-webkit-autofill::first-line {
 }
 
 .mega-link:hover {
-  color: var(--theme-text-secondary);
+  color: #000000;
   padding-left: 5px;
 }
 
@@ -895,7 +896,7 @@ input[type="password"].input-dark:-webkit-autofill::first-line {
 
 .mega-tag-label {
   font-size: 0.85rem;
-  color: rgba(245, 230, 204, 0.6);
+  color: #000000;
   font-weight: 500;
 }
 
@@ -914,7 +915,7 @@ input[type="password"].input-dark:-webkit-autofill::first-line {
 .mega-tag:hover {
   background: rgba(245, 158, 11, 0.25);
   border-color: rgba(245, 158, 11, 0.4);
-  color: #fff;
+  color: #000000;
   transform: translateY(-2px);
   box-shadow: 0 5px 15px rgba(245, 158, 11, 0.2);
 }
