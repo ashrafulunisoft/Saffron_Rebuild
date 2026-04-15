@@ -23,12 +23,12 @@
       <!-- Contact Form -->
       <div class="col-lg-6">
         <div class="glass-card p-4">
-          <h4 style="color: var(--theme-text-primary); margin-bottom: 1.5rem;">
+          <h4 style="color: #000 !important; margin-bottom: 1.5rem;">
             <i class="fas fa-envelope me-2" style="color: var(--theme-text-secondary);"></i>Get in Touch
           </h4>
 
           @if(session('success'))
-            <div class="alert alert-success" style="background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.3); color: #86efac; margin-bottom: 1.5rem;">
+            <div class="alert alert-success" style="background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.3); color: #000000; margin-bottom: 1.5rem;">
               <i class="fas fa-check-circle me-2"></i>{{ session('success') }}
             </div>
           @endif
@@ -36,28 +36,28 @@
           <form action="{{ route('contact.submit') }}" method="POST">
             @csrf
             <div class="mb-3">
-              <label class="form-label">Your Name</label>
+              <label class="form-label" style="color: #000 !important;">Your Name</label>
               <input type="text" name="name" class="form-control input-dark" placeholder="Enter your name" value="{{ old('name') }}" required>
               @error('name')
                 <div class="text-danger" style="color: #f43f5e; font-size: 0.875rem; margin-top: 0.25rem;">{{ $message }}</div>
               @enderror
             </div>
             <div class="mb-3">
-              <label class="form-label">Email Address</label>
+              <label class="form-label" style="color: #000 !important;">Email Address</label>
               <input type="email" name="email" class="form-control input-dark" placeholder="Enter your email" value="{{ old('email') }}" required>
               @error('email')
                 <div class="text-danger" style="color: #f43f5e; font-size: 0.875rem; margin-top: 0.25rem;">{{ $message }}</div>
               @enderror
             </div>
             <div class="mb-3">
-              <label class="form-label">Subject</label>
+              <label class="form-label" style="color: #000 !important;">Subject</label>
               <input type="text" name="subject" class="form-control input-dark" placeholder="What is this about?" value="{{ old('subject') }}">
               @error('subject')
                 <div class="text-danger" style="color: #f43f5e; font-size: 0.875rem; margin-top: 0.25rem;">{{ $message }}</div>
               @enderror
             </div>
             <div class="mb-3">
-              <label class="form-label">Message</label>
+              <label class="form-label" style="color: #000 !important;">Message</label>
               <textarea name="message" class="form-control input-dark" rows="5" placeholder="Type your message here..." required>{{ old('message') }}</textarea>
               @error('message')
                 <div class="text-danger" style="color: #f43f5e; font-size: 0.875rem; margin-top: 0.25rem;">{{ $message }}</div>
@@ -74,7 +74,7 @@
       <div class="col-lg-6">
         @if($cmsSections && isset($cmsSections['contact_info']))
         <div class="glass-card p-4 mb-4">
-          <h4 style="color: var(--theme-text-primary); margin-bottom: 1.5rem;">
+          <h4 style="color: #000 !important; margin-bottom: 1.5rem;">
             <i class="fas fa-map-marker-alt me-2" style="color: var(--theme-text-secondary);"></i>{!! $cmsSections['contact_info']->title_en ?? 'Contact Information' !!}
           </h4>
 
@@ -118,15 +118,15 @@
               <i class="fas {{ $item['icon'] }}" style="color: var(--theme-text-secondary);"></i>
             </div>
             <div>
-              <h6 style="color: var(--theme-text-primary); margin-bottom: 0.25rem;">{{ ucfirst($item['label']) }}</h6>
-              <p style="color: var(--text-70); margin: 0;">{!! nl2br($item['value']) !!}</p>
+              <h6 style="color: #000 !important; margin-bottom: 0.25rem;">{{ ucfirst($item['label']) }}</h6>
+              <p style="color: #000 !important; margin: 0;">{!! nl2br($item['value']) !!}</p>
             </div>
           </div>
           @endforeach
         </div>
         @else
         <div class="glass-card p-4 mb-4">
-          <h4 style="color: var(--theme-text-primary); margin-bottom: 1.5rem;">
+          <h4 style="color: #000 !important; margin-bottom: 1.5rem;">
             <i class="fas fa-map-marker-alt me-2" style="color: var(--theme-text-secondary);"></i>Contact Information
           </h4>
 
@@ -135,8 +135,8 @@
               <i class="fas fa-phone" style="color: var(--theme-text-secondary);"></i>
             </div>
             <div>
-              <h6 style="color: var(--theme-text-primary); margin-bottom: 0.25rem;">Phone</h6>
-              <p style="color: var(--text-70); margin: 0;">+880 1730 702000</p>
+              <h6 style="color: #000 !important; margin-bottom: 0.25rem;">Phone</h6>
+              <p style="color: #000 !important; margin: 0;">+880 1730 702000</p>
             </div>
           </div>
 
@@ -145,8 +145,8 @@
               <i class="fas fa-envelope" style="color: var(--theme-text-secondary);"></i>
             </div>
             <div>
-              <h6 style="color: var(--theme-text-primary); margin-bottom: 0.25rem;">Email</h6>
-              <p style="color: var(--text-70); margin: 0;">info@saffronsweets.com.bd</p>
+              <h6 style="color: #000 !important; margin-bottom: 0.25rem;">Email</h6>
+              <p style="color: #000 !important; margin: 0;">info@saffronsweets.com.bd</p>
             </div>
           </div>
 
@@ -155,8 +155,8 @@
               <i class="fas fa-clock" style="color: var(--theme-text-secondary);"></i>
             </div>
             <div>
-              <h6 style="color: var(--theme-text-primary); margin-bottom: 0.25rem;">Business Hours</h6>
-              <p style="color: var(--text-70); margin: 0;">Mon - Sat: 9AM - 9PM<br>Sunday: 10AM - 6PM</p>
+              <h6 style="color: #000 !important; margin-bottom: 0.25rem;">Business Hours</h6>
+              <p style="color: #000 !important; margin: 0;">Mon - Sat: 9AM - 9PM<br>Sunday: 10AM - 6PM</p>
             </div>
           </div>
         </div>
@@ -193,7 +193,7 @@
             ];
         @endphp
         <div class="glass-card p-4">
-          <h5 style="color: var(--theme-text-primary); margin-bottom: 1rem;">{!! $cmsSections['social_links']->title_en ?? 'Follow Us' !!}</h5>
+          <h5 style="color: #000 !important; margin-bottom: 1rem;">{!! $cmsSections['social_links']->title_en ?? 'Follow Us' !!}</h5>
           <div class="d-flex gap-2">
             @foreach($socialLinks as $social)
             @php
@@ -208,7 +208,7 @@
         </div>
         @else
         <div class="glass-card p-4">
-          <h5 style="color: var(--theme-text-primary); margin-bottom: 1rem;">Follow Us</h5>
+          <h5 style="color: #000 !important; margin-bottom: 1rem;">Follow Us</h5>
           <div class="d-flex gap-2">
             <a href="#" class="btn btn-glass" style="color: var(--theme-text-secondary);"><i class="fab fa-facebook-f"></i></a>
             <a href="#" class="btn btn-glass" style="color: var(--theme-text-secondary);"><i class="fab fa-instagram"></i></a>
