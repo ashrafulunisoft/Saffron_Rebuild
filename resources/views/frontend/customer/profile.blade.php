@@ -121,6 +121,19 @@
 
 @push('styles')
 <style>
+  /* Scoped dark text overrides for the profile page */
+  .customer-avatar-lg span {
+    color: #1a1a1a;
+  }
+  .form-label {
+    color: #1a1a1a !important;
+  }
+  .input-dark,
+  .form-control.input-dark,
+  .form-select.input-dark {
+    color: #1a1a1a !important;
+  }
+
   .customer-avatar {
     width: 80px;
     height: 80px;
