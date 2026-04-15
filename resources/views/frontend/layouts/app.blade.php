@@ -3053,7 +3053,7 @@ window.requireAuth = function() {
                     <span>Account</span>
                 </a>
             @else
-                <a href="{{ route('profile') }}" class="mobile-nav-item {{ request()->is('profile') || request()->is('orders*') || request()->is('wishlist*') ? 'active' : '' }}">
+                <a href="{{ route('customer.dashboard') }}" class="mobile-nav-item {{ request()->is('customer/dashboard') || request()->is('profile') || request()->is('orders*') || request()->is('wishlist*') ? 'active' : '' }}">
                     <i class="fas fa-user"></i>
                     <span>Account</span>
                 </a>
