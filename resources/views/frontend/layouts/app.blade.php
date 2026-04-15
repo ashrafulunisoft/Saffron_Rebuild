@@ -163,14 +163,15 @@
   box-shadow:0 0 60px rgba(245,158,11,0.15), inset 0 1px 0 rgba(255,255,255,0.1);
 }
 .glass-nav {
-  background:rgba(15,10,0,0.75);
-  backdrop-filter:blur(24px); -webkit-backdrop-filter:blur(24px);
-  border-bottom:1px solid rgba(255,255,255,0.08);
-  transition:all .3s ease;
+  /* background: rgba(15,10,0,0.75); */
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  transition: all .3s ease;
 }
 .glass-nav.scrolled {
-  background:rgba(15,10,0,0.9);
-  box-shadow:0 10px 40px rgba(0,0,0,0.4);
+  /* background: #ffffff; */
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
 }
 
 /* NAVBAR */
@@ -2676,7 +2677,7 @@ section {
 
 /* FOOTER */
 .footer-section {
-  background:linear-gradient(180deg, rgba(15,10,0,0.8), #0a0600);
+  background:#ffffff;
   border-top:1px solid rgba(255,255,255,0.08);
   padding:5rem 0 2rem;
 }
