@@ -288,7 +288,7 @@
           </div>
           @endforeach
 
-          <!-- View All Products Card -->
+          {{-- View All Products Card
           <div class="slider-product-card view-all-trigger-card">
             <a href="{{ route('shop') }}" class="text-decoration-none" style="width:100%;height:100%;display:flex;">
               <div class="view-all-card-content">
@@ -298,6 +298,7 @@
               </div>
             </a>
           </div>
+          --}}
         @else
           <div class="text-center py-5" style="width:100%;">
             <p style="color:var(--text-60);">No products available at the moment.</p>
@@ -310,11 +311,13 @@
       </button>
     </div>
 
+    {{-- View All Products Button
     <div class="text-center mt-5">
       <a href="{{ route('shop') }}" class="btn btn-glow btn-lg">
         View All Products <i class="fas fa-arrow-right ms-2"></i>
       </a>
     </div>
+    --}}
   </div>
 </section>
 
@@ -531,7 +534,7 @@
       </button>
     </div>
 
-    <!-- Bottom View All Button -->
+    {{-- Bottom View All Button
     <div class="text-center mt-5">
       @if($cmsSections && isset($cmsSections['new-arrivals']) && $cmsSections['new-arrivals']->button_url)
         <a href="{{ $cmsSections['new-arrivals']->button_url }}" class="btn btn-glow">
@@ -543,6 +546,7 @@
         </a>
       @endif
     </div>
+    --}}
   </div>
 </section>
 
@@ -832,12 +836,13 @@ $categoryConfigs = [
                 </button>
             </div>
 
-            <!-- Bottom View All Button -->
+            {{-- Bottom View All Button
             <div class="text-center mt-5">
                 <a href="{{ route('shop.category', $category->slug) }}" class="btn btn-glow" style="background:{{ $config['badge_gradient'] }};">
                     <i class="fas fa-arrow-right me-2"></i>View All {{ $category->name_en }}
                 </a>
             </div>
+            --}}
         </div>
     </section>
     @endif
