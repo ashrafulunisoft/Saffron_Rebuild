@@ -31,7 +31,7 @@
     <div class="row align-items-center g-5">
       <div class="col-lg-6 hero-content">
         @if($cmsSections && isset($cmsSections['hero']))
-          <div class="section-badge mb-3 animate-on-scroll">
+          <div class="section-badge mb-1 animate-on-scroll">
             🎂 <i class="fas fa-star text-warning me-2"></i>{{ $cmsSections['hero']->subtitle_en ?? 'Premium Quality Since 1995' }}
           </div>
           <h1 class="hero-title animate-on-scroll">
@@ -51,7 +51,7 @@
             </a>
           </div>
         @else
-          <div class="section-badge mb-3 animate-on-scroll">
+          <div class="section-badge mb-1 animate-on-scroll">
             <i class="fas fa-star text-warning me-2"></i>Premium Quality Since 1995
           </div>
           <h1 class="hero-title animate-on-scroll">
@@ -122,10 +122,10 @@
 <!-- CATEGORIES - EXPLORE OUR DELICIOUS COLLECTION -->
 <section class="section-gap">
   <div class="container">
-    <div class="text-center mb-5">
+    <div class="text-center mb-2">
       @if($cmsSections && isset($cmsSections['browse-categories']))
         <span class="section-badge animate-on-scroll">{{ $cmsSections['browse-categories']->title_en ?? 'Browse Categories' }}</span>
-        <h2 class="section-title mt-3 animate-on-scroll">
+        <h2 class="section-title mt-1 animate-on-scroll">
           {!! $cmsSections['browse-categories']->subtitle_en ?? 'Explore Our <span class="gradient-text">Delicious</span> Collection' !!}
         </h2>
         @if($cmsSections['browse-categories']->content_en)
@@ -135,7 +135,7 @@
         @endif
       @else
         <span class="section-badge animate-on-scroll">Browse Categories</span>
-        <h2 class="section-title mt-3 animate-on-scroll">Explore Our <span class="gradient-text">Delicious</span> Collection</h2>
+        <h2 class="section-title mt-1 animate-on-scroll">Explore Our <span class="gradient-text">Delicious</span> Collection</h2>
       @endif
     </div>
     <div class="category-grid animate-on-scroll">
@@ -175,25 +175,25 @@
 <section class="section-gap" id="products">
   <div class="container">
     <!-- Section Header - Center Aligned -->
-    <div class="text-center mb-4">
+    <div class="text-center mb-2">
       @if($cmsSections && isset($cmsSections['featured_products']))
         <span class="section-badge animate-on-scroll">{{ $cmsSections['featured_products']->title_en ?? 'Our Collection' }}</span>
-        <h2 class="section-title mt-3 animate-on-scroll">
+        <h2 class="section-title mt-1 animate-on-scroll">
           {!! $cmsSections['featured_products']->subtitle_en ?? 'Featured <span class="gradient-text">Products</span>' !!}
         </h2>
         @if($cmsSections['featured_products']->content_en)
-        <p class="mt-2 animate-on-scroll" style="color:var(--text-60);max-width:600px;margin-left:auto;margin-right:auto;">
+        <p class="mt-1 animate-on-scroll" style="color:var(--text-60);max-width:600px;margin-left:auto;margin-right:auto;">
           {!! $cmsSections['featured_products']->content_en !!}
         </p>
         @endif
       @else
         <span class="section-badge animate-on-scroll">Our Collection</span>
-        <h2 class="section-title mt-3 animate-on-scroll">
+        <h2 class="section-title mt-1 animate-on-scroll">
           Featured <span class="gradient-text">Products</span>
         </h2>
-        <p class="mt-2 animate-on-scroll" style="color:var(--text-60);max-width:600px;margin-left:auto;margin-right:auto;">Handpicked favorites from our extensive collection</p>
+        <p class="mt-1 animate-on-scroll" style="color:var(--text-60);max-width:600px;margin-left:auto;margin-right:auto;">Handpicked favorites from our extensive collection</p>
       @endif
-      <div class="mt-3">
+      <div class="mt-1">
         <a href="{{ route('shop') }}" class="btn btn-glow btn-sm">
           <i class="fas fa-th-large me-2"></i>View All
         </a>
@@ -345,19 +345,19 @@
       <div class="col-lg-6">
         @if($cmsSections && isset($cmsSections['who-we-are']))
           <span class="section-badge animate-on-scroll">{{ $cmsSections['who-we-are']->title_en ?? 'Who We Are' }}</span>
-          <h2 class="section-title mt-3 animate-on-scroll">
+          <h2 class="section-title mt-1 animate-on-scroll">
             {!! $cmsSections['who-we-are']->subtitle_en ?? 'Authentic Saffron<br/><span class="gradient-text">Sweets & Traditional Bakery</span>' !!}
           </h2>
-          <p class="mt-4 animate-on-scroll" style="color:var(--text-75);line-height:1.9;font-size:1.05rem;">
+          <p class="mt-1 animate-on-scroll" style="color:var(--text-75);line-height:1.9;font-size:0.85rem;">
             {!! $cmsSections['who-we-are']->content_en ?? 'Welcome to Saffron, where tradition meets excellence.' !!}
           </p>
         @else
           <span class="section-badge animate-on-scroll">Who We Are</span>
-          <h2 class="section-title mt-3 animate-on-scroll">
+          <h2 class="section-title mt-1 animate-on-scroll">
             Authentic Saffron<br/>
             <span class="gradient-text">Sweets & Traditional Bakery</span>
           </h2>
-          <p class="mt-4 animate-on-scroll" style="color:var(--text-75);line-height:1.9;font-size:1.05rem;">
+          <p class="mt-1 animate-on-scroll" style="color:var(--text-75);line-height:1.9;font-size:0.85rem;">
             Welcome to Saffron, where tradition meets excellence. We bring you the finest collection of authentic Bengali sweets and premium bakery items, crafted with love and the purest saffron.
           </p>
           <p class="animate-on-scroll" style="color:var(--text-70);line-height:1.9;">
@@ -391,22 +391,22 @@
 <section class="section-gap" id="new-arrivals">
   <div class="container">
     <!-- Section Header -->
-    <div class="d-flex justify-content-between align-items-start flex-wrap gap-3 mb-5">
+    <div class="d-flex justify-content-between align-items-start flex-wrap gap-3 mb-2">
       <div class="flex-grow-1">
         @if($cmsSections && isset($cmsSections['new-arrivals']))
           <span class="section-badge animate-on-scroll"><i class="fas fa-sparkles me-2"></i>{{ $cmsSections['new-arrivals']->title_en ?? 'Just Launched' }}</span>
-          <h2 class="section-title mt-3 animate-on-scroll">
+          <h2 class="section-title mt-1 animate-on-scroll">
             {!! $cmsSections['new-arrivals']->subtitle_en ?? 'New <span class="gradient-text">Arrivals</span>' !!}
           </h2>
           @if($cmsSections['new-arrivals']->content_en)
-          <p class="mt-2 animate-on-scroll" style="color:var(--text-60);max-width:500px;">
+          <p class="mt-1 animate-on-scroll" style="color:var(--text-60);max-width:500px;">
             {!! $cmsSections['new-arrivals']->content_en !!}
           </p>
           @endif
         @else
           <span class="section-badge animate-on-scroll"><i class="fas fa-sparkles me-2"></i>Just Launched</span>
-          <h2 class="section-title mt-3 animate-on-scroll">New <span class="gradient-text">Arrivals</span></h2>
-          <p class="mt-2 animate-on-scroll" style="color:var(--text-60);max-width:500px;">Discover our latest creations - fresh from the oven and ready to delight your taste buds</p>
+          <h2 class="section-title mt-1 animate-on-scroll">New <span class="gradient-text">Arrivals</span></h2>
+          <p class="mt-1 animate-on-scroll" style="color:var(--text-60);max-width:500px;">Discover our latest creations - fresh from the oven and ready to delight your taste buds</p>
         @endif
       </div>
       <div class="flex-shrink-0">
@@ -574,19 +574,19 @@
       <div class="col-lg-6 order-lg-1">
         @if($cmsSections && isset($cmsSections['specialty']))
           <span class="section-badge animate-on-scroll">{{ $cmsSections['specialty']->title_en ?? 'Our Specialty' }}</span>
-          <h2 class="section-title mt-3 animate-on-scroll">
+          <h2 class="section-title mt-1 animate-on-scroll">
             {!! $cmsSections['specialty']->subtitle_en ?? 'Authentic Bengali<br/><span class="gradient-text">Sweets Collection</span>' !!}
           </h2>
-          <p class="mt-4 animate-on-scroll" style="color:var(--text-75);line-height:1.9;">
+          <p class="mt-1 animate-on-scroll" style="color:var(--text-75);line-height:1.9;">
             {!! $cmsSections['specialty']->content_en ?? 'Indulge in the rich heritage of Bengal.' !!}
           </p>
         @else
           <span class="section-badge animate-on-scroll">Our Specialty</span>
-          <h2 class="section-title mt-3 animate-on-scroll">
+          <h2 class="section-title mt-1 animate-on-scroll">
             Authentic Bengali<br/>
             <span class="gradient-text">Sweets Collection</span>
           </h2>
-          <p class="mt-4 animate-on-scroll" style="color:var(--text-75);line-height:1.9;">
+          <p class="mt-1 animate-on-scroll" style="color:var(--text-75);line-height:1.9;">
             Indulge in the rich heritage of Bengal with our exquisite collection of traditional sweets, crafted with love and the finest ingredients.
           </p>
           <p class="animate-on-scroll" style="color:var(--text-70);line-height:1.9;">
@@ -724,15 +724,15 @@ $categoryConfigs = [
     <section class="section-gap" id="category-{{ $sectionId }}" style="background:{{ $config['gradient'] }};">
         <div class="container">
             <!-- Section Header - Left title, Right View All -->
-            <div class="d-flex justify-content-between align-items-start flex-wrap gap-3 mb-5">
+            <div class="d-flex justify-content-between align-items-start flex-wrap gap-3 mb-2">
                 <div class="flex-grow-1">
                     <span class="section-badge animate-on-scroll" style="background:{{ $config['badge_gradient'] }}40;border-color:{{ $config['badge_gradient'] }};">
                         <i class="{{ $config['badge_icon'] }} me-2"></i>{{ $category->name_en }}
                     </span>
-                    <h2 class="section-title mt-3 animate-on-scroll">
+                    <h2 class="section-title mt-1 animate-on-scroll">
                         {{ $category->name_en }} <span class="gradient-text">Collection</span>
                     </h2>
-                    <p class="mt-2 animate-on-scroll" style="color:var(--text-60);max-width:500px;">
+                    <p class="mt-1 animate-on-scroll" style="color:var(--text-60);max-width:500px;">
                         {{ $config['description'] }}
                     </p>
                 </div>
@@ -871,19 +871,19 @@ $categoryConfigs = [
       <div class="col-lg-6">
         @if($cmsSections && isset($cmsSections['chocolate-paradise']))
           <span class="section-badge animate-on-scroll" style="background:linear-gradient(135deg, rgba(244,63,94,0.2), rgba(168,85,247,0.2));border-color:rgba(244,63,94,0.3);">{{ $cmsSections['chocolate-paradise']->title_en ?? 'Chocolate Paradise' }}</span>
-          <h2 class="section-title mt-3 animate-on-scroll">
+          <h2 class="section-title mt-1 animate-on-scroll">
             {!! $cmsSections['chocolate-paradise']->subtitle_en ?? 'Premium Chocolate &<br/><span class="gradient-text">Cocoa Delights</span>' !!}
           </h2>
-          <p class="mt-4 animate-on-scroll" style="color:var(--text-75);line-height:1.9;">
+          <p class="mt-1 animate-on-scroll" style="color:var(--text-75);line-height:1.9;">
             {!! $cmsSections['chocolate-paradise']->content_en ?? 'Experience the ultimate indulgence.' !!}
           </p>
         @else
           <span class="section-badge animate-on-scroll" style="background:linear-gradient(135deg, rgba(244,63,94,0.2), rgba(168,85,247,0.2));border-color:rgba(244,63,94,0.3);">Chocolate Paradise</span>
-          <h2 class="section-title mt-3 animate-on-scroll">
+          <h2 class="section-title mt-1 animate-on-scroll">
             Premium Chocolate &<br/>
             <span class="gradient-text">Cocoa Delights</span>
           </h2>
-          <p class="mt-4 animate-on-scroll" style="color:var(--text-75);line-height:1.9;">
+          <p class="mt-1 animate-on-scroll" style="color:var(--text-75);line-height:1.9;">
             Experience the ultimate indulgence with our exquisite collection of handcrafted chocolates, made from the finest cocoa beans sourced from around the world.
           </p>
           <p class="animate-on-scroll" style="color:var(--text-70);line-height:1.9;">
@@ -926,22 +926,22 @@ $categoryConfigs = [
 <section class="section-gap" style="background:linear-gradient(180deg, rgba(244,63,94,0.03), transparent);">
   <div class="container">
     <!-- Section Header - Left title, Right View All -->
-    <div class="d-flex justify-content-between align-items-start flex-wrap gap-3 mb-5">
+    <div class="d-flex justify-content-between align-items-start flex-wrap gap-3 mb-2">
       <div class="flex-grow-1">
         @if($cmsSections && isset($cmsSections['best-offers']))
           <span class="section-badge animate-on-scroll" style="background:linear-gradient(135deg,rgba(244,63,94,0.2),rgba(245,158,11,0.2));border-color:rgba(244,63,94,0.3);"><i class="fas fa-fire me-2"></i>{{ $cmsSections['best-offers']->title_en ?? 'Top Rated' }}</span>
-          <h2 class="section-title mt-3 animate-on-scroll">
+          <h2 class="section-title mt-1 animate-on-scroll">
             {!! $cmsSections['best-offers']->subtitle_en ?? 'Best <span class="gradient-text">Offers</span>' !!}
           </h2>
           @if($cmsSections['best-offers']->content_en)
-          <p class="mt-2 animate-on-scroll" style="color:var(--text-60);max-width:500px;">
+          <p class="mt-1 animate-on-scroll" style="color:var(--text-60);max-width:500px;">
             {!! $cmsSections['best-offers']->content_en !!}
           </p>
           @endif
         @else
           <span class="section-badge animate-on-scroll" style="background:linear-gradient(135deg,rgba(244,63,94,0.2),rgba(245,158,11,0.2));border-color:rgba(244,63,94,0.3);"><i class="fas fa-fire me-2"></i>Top Rated</span>
-          <h2 class="section-title mt-3 animate-on-scroll">Best <span id="sellers-text" style="background:var(--theme-btn-gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;"></span></h2>
-          <p class="mt-2 animate-on-scroll" style="color:var(--text-60);max-width:500px;">Our most loved products that customers keep coming back for</p>
+          <h2 class="section-title mt-1 animate-on-scroll">Best <span id="sellers-text" style="background:var(--theme-btn-gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;"></span></h2>
+          <p class="mt-1 animate-on-scroll" style="color:var(--text-60);max-width:500px;">Our most loved products that customers keep coming back for</p>
         @endif
       </div>
       <div class="flex-shrink-0">
@@ -1095,13 +1095,13 @@ $categoryConfigs = [
 <section class="section-gap" style="background:linear-gradient(135deg,rgba(245,158,11,0.08),rgba(244,63,94,0.05));">
   <div class="container">
     <!-- Section Header - Left title, Right empty for balance -->
-    <div class="d-flex justify-content-between align-items-start flex-wrap gap-3 mb-5">
+    <div class="d-flex justify-content-between align-items-start flex-wrap gap-3 mb-2">
       <div class="flex-grow-1">
         <span class="section-badge animate-on-scroll"><i class="fas fa-quote-left me-2"></i>Testimonials</span>
-        <h2 class="section-title mt-3 animate-on-scroll">
+        <h2 class="section-title mt-1 animate-on-scroll">
           What Our <span class="gradient-text">Customers Say</span>
         </h2>
-        <p class="mt-2 animate-on-scroll" style="color:var(--text-60);max-width:500px;">Real reviews from our happy customers who love our sweets and bakery products</p>
+        <p class="mt-1 animate-on-scroll" style="color:var(--text-60);max-width:500px;">Real reviews from our happy customers who love our sweets and bakery products</p>
       </div>
     </div>
 
@@ -1297,22 +1297,22 @@ $categoryConfigs = [
 <section class="section-gap">
   <div class="container">
     <!-- Section Header - Left title, Right View All -->
-    <div class="d-flex justify-content-between align-items-start flex-wrap gap-3 mb-5">
+    <div class="d-flex justify-content-between align-items-start flex-wrap gap-3 mb-2">
       <div class="flex-grow-1">
         @if($cmsSections && isset($cmsSections['blog']))
           <span class="section-badge animate-on-scroll">{{ $cmsSections['blog']->title_en ?? 'Latest News' }}</span>
-          <h2 class="section-title mt-3 animate-on-scroll">
+          <h2 class="section-title mt-1 animate-on-scroll">
             {!! $cmsSections['blog']->subtitle_en ?? 'From Our <span class="gradient-text">Blog</span>' !!}
           </h2>
           @if($cmsSections['blog']->content_en)
-          <p class="mt-2 animate-on-scroll" style="color:var(--text-60);max-width:500px;">
+          <p class="mt-1 animate-on-scroll" style="color:var(--text-60);max-width:500px;">
             {!! $cmsSections['blog']->content_en !!}
           </p>
           @endif
         @else
           <span class="section-badge animate-on-scroll">Latest News</span>
-          <h2 class="section-title mt-3 animate-on-scroll">From Our <span class="gradient-text">Blog</span></h2>
-          <p class="mt-2 animate-on-scroll" style="color:var(--text-60);max-width:500px;">Discover recipes, stories, and sweet updates from our kitchen</p>
+          <h2 class="section-title mt-1 animate-on-scroll">From Our <span class="gradient-text">Blog</span></h2>
+          <p class="mt-1 animate-on-scroll" style="color:var(--text-60);max-width:500px;">Discover recipes, stories, and sweet updates from our kitchen</p>
         @endif
       </div>
       <div class="flex-shrink-0">
@@ -2441,6 +2441,40 @@ document.addEventListener('DOMContentLoaded', function() {
 
 @push('styles')
 <style>
+/* Hero section overrides */
+.hero-section { min-height: auto !important; padding-top: 120px !important; padding-bottom: 20px !important; }
+.hero-title { font-size: 2.2rem !important; margin-bottom: 0.8rem !important; }
+.hero-sub { font-size: 0.9rem !important; line-height: 1.5 !important; margin-bottom: 1rem !important; }
+.hero-stats { gap: 1rem !important; margin-top: 1rem !important; }
+.stat-item { padding: 0.5rem 0.8rem !important; }
+.stat-num { font-size: 1.3rem !important; }
+.hero-showcase { height: 350px !important; }
+.showcase-ring { width: 280px !important; height: 280px !important; }
+.showcase-center { width: 200px !important; height: 200px !important; }
+
+@media (max-width: 991px) {
+  .hero-title { font-size: 1.8rem !important; }
+  .hero-showcase { height: 250px !important; }
+}
+@media (max-width: 768px) {
+  .hero-section { padding-top: 100px !important; padding-bottom: 10px !important; }
+  .hero-title { font-size: 1.5rem !important; }
+  .hero-showcase { height: 200px !important; }
+}
+
+/* Section spacing & typography overrides */
+.section-gap { padding: 3rem 0 !important; }
+.section-title { font-size: 1.6rem !important; }
+.section-badge { font-size: 0.7rem !important; padding: 0.3rem 0.8rem !important; }
+
+@media (max-width: 991px) {
+  .section-title { font-size: 1.3rem !important; }
+}
+@media (max-width: 768px) {
+  .section-gap { padding: 2rem 0 !important; }
+  .section-title { font-size: 1.1rem !important; }
+}
+
 /* Product Card Stats - Small Pill Badges */
 .product-card-stats {
   display: flex;
