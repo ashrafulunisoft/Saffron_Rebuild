@@ -1385,6 +1385,7 @@ $categoryConfigs = [
         @endforeach
 
         <!-- View All Blog Card -->
+        {{-- View All Blog Card
         <div class="slider-product-card view-all-trigger-card">
           @if($cmsSections && isset($cmsSections['blog']) && $cmsSections['blog']->button_url)
             <a href="{{ $cmsSections['blog']->button_url }}" class="text-decoration-none" style="width:100%;height:100%;display:flex;">
@@ -1398,6 +1399,7 @@ $categoryConfigs = [
             </div>
           </a>
         </div>
+        --}}
       </div>
 
       <button class="slider-nav-btn slider-next" id="blogNext" aria-label="Next">
@@ -1405,6 +1407,7 @@ $categoryConfigs = [
       </button>
     </div>
 
+    {{-- View All Posts Button
     <div class="text-center mt-5">
       @if($cmsSections && isset($cmsSections['blog']) && $cmsSections['blog']->button_url)
       <a href="{{ $cmsSections['blog']->button_url }}" class="btn btn-glow">
@@ -1416,6 +1419,7 @@ $categoryConfigs = [
       </a>
       @endif
     </div>
+    --}}
   </div>
 </section>
 @endif
